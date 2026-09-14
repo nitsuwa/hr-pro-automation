@@ -6,6 +6,7 @@ import {
 
 export class SettingsPage {
   readonly page: Page;
+  readonly contributionTimingRadios: Locator;
 
   readonly organizationSetupButton: Locator;
   readonly generalButton: Locator;
@@ -29,6 +30,10 @@ export class SettingsPage {
   constructor(page: Page) {
     this.page = page;
 
+    this.contributionTimingRadios =
+      page.locator(
+        'input[type="radio"][name="contribTiming"]'
+      );
     this.organizationSetupButton =
       page.getByRole('button', {
         name: 'Organization Setup',
@@ -103,4 +108,84 @@ export class SettingsPage {
 
     await this.generalButton.click();
   }
+
+  async selectContributionTiming(
+  timing:
+    | 'every-pay-week'
+    | 'first-four-weeks'
+    | 'selected-weeks'
+    | 'last-pay-week'
+  ) {
+    const indexes = {
+      'every-pay-week': 0,
+      'first-four-weeks': 1,
+      'selected-weeks': 2,
+      'last-pay-week': 3,
+    } as const;
+
+    const radio =
+      this.contributionTimingRadios.nth(
+        indexes[timing]
+      );
+
+    await radio.check();
+
+    await expect(radio).toBeChecked();
+  }
+
+  contributionWeekButton(
+    week: 1 | 2 | 3 | 4 | 5
+  ) {
+    const labels = {
+      1: '1st',
+      2: '2nd',
+      3: '3rd',
+      4: '4th',
+      5: '5th',
+    } as const;
+
+    return this.page.getByRole(
+      'button',
+      {
+        name: labels[week],
+        exact: true,
+      }
+    );
+  }
+
+  async setContributionWeeks(
+    weeks: Array<1 | 2 | 3 | 4 | 5>
+  ) {
+    for (
+      const week of [1, 2, 3, 4, 5] as const
+    ) {
+      const button =
+        this.contributionWeekButton(
+          week
+        );
+
+      const shouldBeSelected =
+        weeks.includes(week);
+
+      const currentlySelected =
+        (await button.getAttribute(
+          'aria-pressed'
+        )) === 'true';
+
+      if (
+        currentlySelected !==
+        shouldBeSelected
+      ) {
+        await button.click();
+      }
+
+      await expect(button).toHaveAttribute(
+        'aria-pressed',
+        shouldBeSelected
+          ? 'true'
+          : 'false'
+      );
+    }
+  }
+
 }
