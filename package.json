@@ -1,0 +1,22 @@
+{
+  "name": "hr-pro-automation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test --project=chromium",
+    "test:smoke": "playwright test tests/smoke --project=chromium",
+    "test:infra": "playwright test tests/infrastructure --project=chromium",
+    "test:full": "playwright test --project=chromium",
+    "test:headed": "playwright test tests/smoke --project=chromium --headed",
+    "test:ui": "playwright test --ui --project=chromium",
+    "test:report": "playwright show-report"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.5.1"
+  }
+}
