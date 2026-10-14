@@ -18,6 +18,7 @@ export class SettingsPage {
   readonly employeeIdYear: Locator;
   readonly employeeIdNumberLength: Locator;
   readonly employeeIdIncludeMonth: Locator;
+  readonly employeeIdSaveFormatButton: Locator;
 
   // Shift
   readonly companyDefaultShift: Locator;
@@ -65,6 +66,12 @@ export class SettingsPage {
 
     this.employeeIdIncludeMonth =
       page.getByLabel('Include month', {
+        exact: true,
+      });
+
+    this.employeeIdSaveFormatButton =
+      page.getByRole('button', {
+        name: 'Save format',
         exact: true,
       });
 

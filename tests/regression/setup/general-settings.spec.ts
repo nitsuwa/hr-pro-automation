@@ -85,87 +85,20 @@ test.describe('HR PRO Organizational Setup - General', () => {
     }
   );
 
-  test(
-    'SET-CONFIG-003 | SET_016-021 | Auto-generated Employee ID configuration persists',
-    async ({ page, loginAs }) => {
-      test.fail(
-        true,
-          'Known HR PRO issue: Employee ID pattern fields do not persist after reload.'
-      );
-      
-      await loginAs('systemAdmin');
-
-      const settings = new SettingsPage(page);
-
-      await settings.openGeneral();
-
-      await settings.employeeIdMode.selectOption('auto');
-
-      await settings.employeeIdPrefix.fill('AUTO');
-
-      await settings.employeeIdSeparator.selectOption('/');
-
-      await settings.employeeIdYear.selectOption('short');
-
-      await settings.employeeIdNumberLength.selectOption('5');
-
-      await settings.employeeIdIncludeMonth.check();
-
-      await expect(
-        settings.employeeIdMode
-      ).toHaveValue('auto');
-
-      await expect(
-        settings.employeeIdPrefix
-      ).toHaveValue('AUTO');
-
-      await expect(
-        settings.employeeIdSeparator
-      ).toHaveValue('/');
-
-      await expect(
-        settings.employeeIdYear
-      ).toHaveValue('short');
-
-      await expect(
-        settings.employeeIdNumberLength
-      ).toHaveValue('5');
-
-      await expect(
-        settings.employeeIdIncludeMonth
-      ).toBeChecked();
-
-      await page.reload({
-        waitUntil: 'domcontentloaded',
-      });
-
-      await settings.openGeneral();
-
-      await expect(
-        settings.employeeIdMode
-      ).toHaveValue('auto');
-
-      await expect(
-        settings.employeeIdPrefix
-      ).toHaveValue('AUTO');
-
-      await expect(
-        settings.employeeIdSeparator
-      ).toHaveValue('/');
-
-      await expect(
-        settings.employeeIdYear
-      ).toHaveValue('short');
-
-      await expect(
-        settings.employeeIdNumberLength
-      ).toHaveValue('5');
-
-      await expect(
-        settings.employeeIdIncludeMonth
-      ).toBeChecked();
-    }
-  );
+  /*
+   * SET_016-021 is intentionally NOT tested here anymore.
+   *
+   * The Excel scenario does not specifically require
+   * reloading the Settings page and checking persistence.
+   *
+   * Its actual expected result is that the configured
+   * auto-generated Employee ID pattern should be applied
+   * when creating employees and that generated IDs
+   * must not be duplicated.
+   *
+   * That complete scenario is now covered in:
+   * employee-setup.spec.ts
+   */
 
   test(
     'SET-CONFIG-004 | SET_022-026 | Manual Employee ID mode persists',

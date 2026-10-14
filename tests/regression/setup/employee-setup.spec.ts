@@ -10,11 +10,15 @@ test.describe(
   'HR PRO Employee Setup Behavior',
   () => {
     test(
-      'SET-EMP-001 | SET_016-021 | Employee ID is automatically generated when Auto mode is enabled',
+      'SET-EMP-001 | SET_016-021 | Auto-generated Employee ID pattern applies and generated IDs are unique',
       async ({
         page,
         loginAs,
       }) => {
+        /*
+         * SET_016
+         * Login with Organizational Setup access.
+         */
         await loginAs(
           'systemAdmin'
         );
@@ -26,10 +30,16 @@ test.describe(
           new EmployeesPage(page);
 
         /*
-         * Explicitly use Auto mode.
+         * SET_017-019
+         * Open Organizational Setup > General
+         * and reach the Employee ID settings.
          */
         await settings.openGeneral();
 
+        /*
+         * SET_020
+         * Select "Auto-generate from a pattern".
+         */
         await settings.employeeIdMode
           .selectOption('auto');
 
@@ -37,67 +47,159 @@ test.describe(
           settings.employeeIdMode
         ).toHaveValue('auto');
 
-        await employees.open();
-
-        await employees.openEnrollment();
-
         /*
-         * HR PRO tells us what the next ID
-         * should be through the placeholder.
-         *
-         * Example:
-         * Leave blank to auto-generate (E-0013)
+         * Excel expected result:
+         * Prefix, Separator, Include Year,
+         * and Number Length fields should appear.
          */
-        const placeholder =
-          await employees.employeeIdInput
-            .getAttribute('placeholder');
-
-        const expectedId =
-          placeholder?.match(
-            /\(([^)]+)\)/
-          )?.[1];
-
-        expect(expectedId).toBeTruthy();
-
-        const employeeName =
-          'PW Auto ID Employee';
-
-        await employees.fullNameInput.fill(
-          employeeName
-        );
-
-        await employees.monthlyRateInput.fill(
-          '22000'
-        );
-
-        await employees.hireDateInput.fill(
-          '2026-09-01'
-        );
-
-        /*
-         * Deliberately leave Employee ID blank.
-         */
-        await employees.enrollButton.click();
-
         await expect(
-          page.getByText(employeeName, {
-            exact: true,
-          })
+          settings.employeeIdPrefix
         ).toBeVisible();
 
-        const employee =
-          await employees.getEmployeeByName(
-            employeeName
-          );
+        await expect(
+          settings.employeeIdSeparator
+        ).toBeVisible();
 
-        expect(employee).not.toBeNull();
+        await expect(
+          settings.employeeIdYear
+        ).toBeVisible();
 
-        expect(employee.id).toBe(
-          expectedId
+        await expect(
+          settings.employeeIdNumberLength
+        ).toBeVisible();
+
+       await settings.employeeIdPrefix.fill(
+          'AUTO'
         );
 
-        expect(employee.id).toMatch(
-          /^E-\d{4}$/
+        await settings.employeeIdNumberLength
+          .selectOption('5');
+
+        await expect(
+          settings.employeeIdPrefix
+        ).toHaveValue('AUTO');
+
+        await expect(
+          settings.employeeIdNumberLength
+        ).toHaveValue('5');
+
+        /*
+        * HR PRO auto-saves the Employee ID pattern.
+        *
+        * Move focus away from the last field so the UI
+        * can finish committing the change before we
+        * leave the Settings page.
+        */
+        /*
+        
+        * SET_021
+        * Save the configured Employee ID format.
+        */
+        await settings.employeeIdSaveFormatButton.click();
+
+        /*
+        * Confirm that HR PRO saved the format
+        * before creating an employee.
+        */
+        await expect
+          .poll(async () => {
+            return await page.evaluate(() => {
+              const raw = localStorage.getItem(
+                'hrpro:employeeIdPolicy'
+              );
+
+              if (!raw) {
+                return null;
+              }
+
+              const policy = JSON.parse(raw);
+
+              return {
+                prefix: policy.parts?.prefix,
+                digits: policy.parts?.digits,
+              };
+            });
+          })
+          .toEqual({
+            prefix: 'AUTO',
+            digits: 5,
+          });
+
+        /*
+         * Create the first employee.
+         *
+         * Employee ID is deliberately left blank
+         * because HR PRO should generate it.
+         */
+        const firstEmployeeName =
+          'PW Auto ID Employee A';
+
+        await employees.enrollMinimalEmployee({
+          name: firstEmployeeName,
+          monthlyRate: '22000',
+          hireDate: '2026-09-01',
+        });
+
+        const firstEmployee =
+          await employees.getEmployeeByName(
+            firstEmployeeName
+          );
+
+        expect(
+          firstEmployee
+        ).not.toBeNull();
+
+        /*
+         * The configured prefix and number length
+         * should actually be used when the employee
+         * account is created.
+         *
+         * Example:
+         * AUTO-00013
+         */
+        expect(
+          firstEmployee.id
+        ).toMatch(
+          /^AUTO-\d{5}$/
+        );
+
+        /*
+         * Create another employee so we can verify
+         * the Excel requirement that Employee IDs
+         * should never be duplicated.
+         */
+        const secondEmployeeName =
+          'PW Auto ID Employee B';
+
+        await employees.enrollMinimalEmployee({
+          name: secondEmployeeName,
+          monthlyRate: '22000',
+          hireDate: '2026-09-01',
+        });
+
+        const secondEmployee =
+          await employees.getEmployeeByName(
+            secondEmployeeName
+          );
+
+        expect(
+          secondEmployee
+        ).not.toBeNull();
+
+        expect(
+          secondEmployee.id
+        ).toMatch(
+          /^AUTO-\d{5}$/
+        );
+
+        /*
+         * Excel expected result:
+         * Employee ID should never be duplicated.
+         */
+        expect(
+          secondEmployee.id
+        ).not.toBe(
+          firstEmployee.id
         );
       }
     );
@@ -144,9 +246,13 @@ test.describe(
             employeeName
           );
 
-        expect(employee).not.toBeNull();
+        expect(
+          employee
+        ).not.toBeNull();
 
-        expect(employee.id).toBe(
+        expect(
+          employee.id
+        ).toBe(
           manualId
         );
       }

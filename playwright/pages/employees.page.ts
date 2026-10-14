@@ -114,11 +114,25 @@ export class EmployeesPage {
 
     await this.enrollButton.click();
 
-    await expect(
-      this.page.getByText(data.name, {
-        exact: true,
+    /*
+     * The Employees table is paginated.
+     * A newly created employee may be saved
+     * but not visible on the current page.
+     *
+     * Instead of checking the visible table,
+     * wait until HR PRO has actually saved
+     * the employee record.
+     */
+    await expect
+      .poll(async () => {
+        const employee =
+          await this.getEmployeeByName(
+            data.name
+          );
+
+        return employee !== null;
       })
-    ).toBeVisible();
+      .toBe(true);
   }
 
   async getEmployeeByName(
