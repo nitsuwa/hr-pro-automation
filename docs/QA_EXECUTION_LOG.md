@@ -82,3 +82,12 @@ Record every full or focused run here with its date, scenario ID, pass/fail/bloc
 - **SET-LOCATION-002 / SET_211:** FAIL — LIKELY PRODUCT DEFECT. After second Add Location and re-opening Work Locations, exactly two rows with the same fresh QA name were present, while expected count was one. Follow-up GitHub issue [#3](https://github.com/nitsuwa/hr-pro-automation/issues/3). Confirm via fresh run; keep assertion failing if duplicate persists.
 - Evidence: UI screenshots and Playwright text error reports supplied by QA operator.
 - **Distinct previously verified passing tests total is now 24** (prior 23 + loan duplicate PASS). This does not mean all workbook scenarios are fully covered.
+
+## 2026-10-19 — Confirmatory retest of duplicate catalogs
+
+- `SET-LOANS-002 / SET_169`: PASS (3.1s), repeated.
+- `SET-DEPT-002 / SET_182`: PASS (3.5s), first successful complete run after adding proper success-dialog dismissal.
+- `SET-JOBPOS-002 / SET_195`: **FAIL — CONFIRMED PROTOTYPE DEFECT.** Fresh record name `QA Dup Position mvem9ehf` appeared in TWO job position rows after re-opening the Settings section. Same assertion failure in two independent runs. GitHub [#2](https://github.com/nitsuwa/hr-pro-automation/issues/2). Keep failure as QA evidence.
+- `SET-LOCATION-002 / SET_211`: **FAIL — CONFIRMED PROTOTYPE DEFECT.** Fresh record name `QA Dup Location mvemihag` appeared in TWO work-location rows after re-opening the Settings section. Same assertion failure in two independent runs. GitHub [#3](https://github.com/nitsuwa/hr-pro-automation/issues/3). Keep failure as QA evidence.
+- Evidence: screenshots and Playwright errors supplied by QA operator.
+- Total **25 distinct passing tests across focused runs**; 2 confirmed failing checks. This is NOT a single full-suite result or proof of full coverage of 59 Excel scenarios.
