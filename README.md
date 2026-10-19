@@ -40,7 +40,7 @@ The default URL and environment can be overridden using shell variables `E2E_BAS
 
 **Start here:** [Team Handoff & Live Demo Guide](docs/TEAM_HANDOFF_DEMO_GUIDE.md) — setup, UI Mode, adding tests, defect triage, demonstration, and next-team maintenance.
 
-**Full Setup suite run (19 October 2026): 46 executed, 44 passed, 2 failed (confirmed application defects), 0 skipped — 95.7% of checks passed.** See [the QA Execution Evidence Log](docs/QA_EXECUTION_LOG.md). Two negative tests are confirmed application defects: [duplicate Job Positions](https://github.com/nitsuwa/hr-pro-automation/issues/2) and [duplicate Work Locations](https://github.com/nitsuwa/hr-pro-automation/issues/3). **The combined Setup suite was executed; it is not all-green because the application defects persist. The 44 passing tests do not establish full coverage of all 59 Setup workbook groups.**
+**Latest full Setup suite (19 October 2026, operator-reported): 50 executed, 47 passed, 3 failed — 94.0% of implemented checks passed.** See [QA Execution Evidence Log](docs/QA_EXECUTION_LOG.md). Two confirmed application defects: [duplicate Job Positions](https://github.com/nitsuwa/hr-pro-automation/issues/2) and [duplicate Work Locations](https://github.com/nitsuwa/hr-pro-automation/issues/3). A third failure, [duplicate Leave Type labels](https://github.com/nitsuwa/hr-pro-automation/issues/4), is a **candidate** pending requirement confirmation. **The 47 passing tests do not establish full coverage of all 59 workbook groups.**
 
 - `npm run test:ui:setup`: recommended for visual, per-test execution and presentation.
 - `tests/infrastructure/`: exploratory probes; do not count these as accepted regression tests.
