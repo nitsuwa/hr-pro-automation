@@ -130,3 +130,12 @@ Verified from operator-provided Playwright UI Mode screenshot:
 - `SET-IMPORT-TEMPLATE / SET_256–259`: PASS (2.9s); validates downloadable, nonempty spreadsheet/template. This is **not** the actual import/upload validation required by SET_260–262.
 
 **Cumulative distinct tests observed passing in focused UI Mode runs = 36.** Two confirmed failing duplicate-validation tests remain.
+
+
+## 2026-10-19 — Salary Structure initial run and official import CSV
+
+- `SET-STRUCT-CREATE / SET_230–237`: **FAIL — automation locator issue**. Salary Structure dialog visibly opened with available Basic Salary rule, but test searched for `Basic SalaryBASIC EARNING` without spaces. Corrected regex to match actual accessible name `Basic Salary BASIC EARNING ＋`. **Retest required**.
+- `SET-STRUCT-EDIT / SET_238–240`: **FAIL — same automation locator issue** inside shared creation helper, before reaching edit flow. Corrected shared helper; **retest required**. Not an HR PRO defect.
+- Official `employee-import-template.csv` uploaded by QA operator. It contains comment lines listing accepted values, **39 header columns** and **no employee records**. Required columns are `Name *`, `Rate *` and `Date of Hiring *`. It documents the approved values for Department/Job Position/Work Location, Salary Type, Pay Schedule and other fields.
+- `tests/regression/setup/employee-import.spec.ts` newly added, **NOT RUN**: downloads current app CSV, fills one fictitious QA employee with official column order, uploads, attempts import and verifies the employee record persists. Distinct from `SET-IMPORT-TEMPLATE` (previously PASS).
+- **Cumulative observed distinct passing count stays 36; two confirmed duplicate defects remain.**
