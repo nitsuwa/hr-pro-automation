@@ -147,3 +147,11 @@ These cases check deletion and persistence after reopening. Their real confirmat
 - `SET-IMPORT-001`: initial **FAIL due to wrong button locator**, while uploaded CSV preview contained one Ready employee. Corrected to `Import 1`, with an explicit Ready-row assertion. **Employee import still unverified** until completion and persistence assertions pass.
 - `SET-STRUCT-CREATE` and `SET-STRUCT-EDIT`: **PASS as reported by local QA operator** after accessible-name whitespace correction.
 - New `SET-STRUCT-REMOVE / SET_241–243`: **NOT RUN**, creates a unique QA structure and confirms its removal and persistence after reopening. Does not touch seeded/default structures. Dialog behavior pending UI confirmation.
+
+## 2026-10-19 — Department Approvers and employee editing interface survey
+
+- New **read-only, non-regression** file `tests/infrastructure/setup-people-controls.spec.ts` (run via `npm run test:ui:people`).
+- The survey opens the real Department Approvers editor and inspects the first dropdown's option structure **without saving**, then follows an existing Employees table link to its details and opens its Edit screen **without submitting changes**.
+- Output: `qa-artifacts/setup-people-controls.json`. Record only control metadata and anonymous option structure; no employee names, IDs, salaries, or emails.
+- Purpose: write real SET_185–189 (approve policies), SET_266–270 (edit/remove employees), SET_275–278 (create user while editing employee) scripts without guessing inaccessible selectors.
+- **No new workbook regression coverage** is claimed for an inventory script. Current cumulative report: 40 distinct previously passing tests, two confirmed failing checks, and significant workbook gaps including some payroll/approval workflows and contribution arithmetic.
