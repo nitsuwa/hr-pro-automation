@@ -38,3 +38,13 @@ Record every full or focused run here with its date, scenario ID, pass/fail/bloc
 - **SET-FILING-002**: PASS (5.4s, screenshot) after changing the date locator to use an available editable attendance row.
 - Scope note: 2/2 in this *focused run*; the original 11/11 Setup run was separate. End-to-end overtime and timekeeping approval workflows are still incomplete.
 - Classification of original SET-FILING-002 failure: test automation hardcoded-date assumption; not a confirmed product defect.
+
+## 2026-10-19 — Catalog and Company Profile focused run
+
+- **SET-LOANS-001**: PASS (3.5s, screenshot).
+- **SET-JOBPOS-001**: PASS (4.1s, screenshot).
+- **SET-LOCATION-001**: PASS (3.6s, screenshot).
+- **SET-COMPANY-001**: PASS (9.5s, screenshot; separate listed green result).
+- UI screenshot shows 3/3 (catalog suite selected) and separately green Company profile test.
+- Running totals *across separate focused runs*: initial 11 + filing approvals 2 + catalog/company 4 = **17 distinct tests observed passing**. This is **not** an assertion that all 17 passed simultaneously in one full run, nor that 17 complete Excel scenarios are covered.
+- Remaining scope: loan duplicate/edit/remove; position/location duplicate/edit/remove; Company profile other required fields/logo; all other missing test groups.
