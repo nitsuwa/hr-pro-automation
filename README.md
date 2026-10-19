@@ -36,14 +36,17 @@ The default URL and environment can be overridden using shell variables `E2E_BAS
 5. Run the named test; capture the Playwright report and update the test map.
 6. Ensure tests can be re-run without damaging other data.
 
-## IMPORTANT — current coverage is incomplete
-The workbook contains **59 scenario groups, 278 IDs (SET_001–SET_278)**. As of the 19 October 2026 audit, 9 groups have permanent scripts, 8 have inspection/reference mapping, and 42 lack identified implementation. **No pass/fail execution results were verified by the audit.**
+## Team handoff and current results
 
-- `tests/infrastructure/` includes exploratory probes; not all are ready as regression tests.
-- Contribution tests currently check configuration persistence only; Excel also requests payroll arithmetic.
-- LILO may require external/manual evidence.
-- SET_001–003 is destructive reset: disposable sandbox only.
-- The workbook has ambiguous copied steps around SET_198–205, SET_218–229 and a repeated header at SET_152.
-- Full audit and beginner guide are provided in the handoff artifacts.
+**Start here:** [Team Handoff & Live Demo Guide](docs/TEAM_HANDOFF_DEMO_GUIDE.md) — setup, UI Mode, adding tests, defect triage, demonstration, and next-team maintenance.
 
-**Do not call a scenario automated/passed until its expected business result has been asserted and the test has actually passed.**
+**Verification to date (19 October 2026):** 44 distinct tests were observed passing across separate local Playwright UI Mode executions, as recorded in [the QA Execution Evidence Log](docs/QA_EXECUTION_LOG.md). Two negative tests are confirmed application defects: [duplicate Job Positions](https://github.com/nitsuwa/hr-pro-automation/issues/2) and [duplicate Work Locations](https://github.com/nitsuwa/hr-pro-automation/issues/3). **These results are not a combined full-suite pass, nor proof that all 59 Setup workbook groups are fully covered.**
+
+- `npm run test:ui:setup`: recommended for visual, per-test execution and presentation.
+- `tests/infrastructure/`: exploratory probes; do not count these as accepted regression tests.
+- Statutory contribution persistence is tested, but requested payroll arithmetic remains incomplete; LILO may require external/manual evidence.
+- SET_001–003 is a destructive reset: use a disposable sandbox only.
+- The workbook has ambiguous copied steps around SET_198–205 and SET_218–229, and a repeated header at SET_152.
+- See [the workbook audit](docs/SETUP_FULL_WORKBOOK_AUDIT.md) for outstanding mapping and limitations.
+
+**Do not mark an Excel scenario as fully automated/passed until all its required business outcomes are asserted and execution evidence exists.**
