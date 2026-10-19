@@ -39,10 +39,10 @@ test('SET-EMP-EDIT | SET_266–268 | Edit QA employee name and verify it persist
   await expect(resultRow, 'Only our newly created QA employee should match').toHaveCount(1);
   await resultRow.getByRole('link', { name: original, exact: true }).click();
 
-  const nameField = page.getByRole('textbox', { name: 'Full Name*', exact: true });
+  const nameField = page.getByRole('textbox', { name: 'Full Name *', exact: true });
   await expect(nameField, 'Employee detail editor must expose the name field').toHaveValue(original);
   await nameField.fill(updated);
-  await page.getByRole('button', { name: 'Save', exact: true }).click();
+  await page.getByRole('button', { name: 'Save changes', exact: true }).click();
 
   // Check actual employee storage and the searchable UI; a successful Save
   // button click alone is not sufficient evidence of persistence.
