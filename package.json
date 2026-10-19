@@ -17,7 +17,8 @@
     "test:ui:smoke": "playwright test tests/smoke --ui --project=chromium",
     "test:ui:inventory": "playwright test tests/infrastructure/setup-ui-inventory.spec.ts --ui --project=chromium",
     "test:ui:forms": "playwright test tests/infrastructure/setup-form-inventory.spec.ts --ui --project=chromium",
-    "test:ui:dialogs": "playwright test tests/infrastructure/setup-dialog-inventory.spec.ts --ui --project=chromium"
+    "test:ui:dialogs": "playwright test tests/infrastructure/setup-dialog-inventory.spec.ts --ui --project=chromium",
+    "test:ui:edits": "playwright test tests/infrastructure/setup-edit-inventory.spec.ts --ui --project=chromium"
   },
   "keywords": [],
   "author": "",
