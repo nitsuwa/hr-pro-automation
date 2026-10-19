@@ -48,8 +48,12 @@ test('INVENTORY-V8 | Approver selectors and Employee edit form', async ({ page, 
             return '';
           }).filter(Boolean).slice(0, 40),
         actionLabels: [...new Set(nodes('button,[role="tab"]').map(e => clean(e.getAttribute('aria-label') || e.textContent))
-          .filter(x => /^(?:Edit|Save|Cancel|Delete|Remove|Archive|Approvers|Create|User account|Personal|Compensation|Employment|Settings|Access|— None|— Company default)/i.test(x))
-          .map(x => /(^— None|^— Company default)/.test(x) ? x : x.slice(0, 75)))].slice(0, 75),
+          .map(x => {
+            if (/^— None/i.test(x)) return 'None dropdown';
+            if (/^— Company default/i.test(x)) return 'Company default dropdown';
+            const kind = x.match(/^(Edit|Save|Cancel|Delete|Remove|Archive|Approvers|Create|User account|Personal|Compensation|Employment|Settings|Access)/i);
+            return kind?.[1] ?? '';
+          }).filter(Boolean))].slice(0, 75),
         fields: nodes('input,select,textarea').slice(0, 90).map(e => {
           const field = e as HTMLInputElement;
           const linked = field.id ? labels.find(l => l.htmlFor === field.id) : undefined;
