@@ -139,3 +139,9 @@ Verified from operator-provided Playwright UI Mode screenshot:
 - Official `employee-import-template.csv` uploaded by QA operator. It contains comment lines listing accepted values, **39 header columns** and **no employee records**. Required columns are `Name *`, `Rate *` and `Date of Hiring *`. It documents the approved values for Department/Job Position/Work Location, Salary Type, Pay Schedule and other fields.
 - `tests/regression/setup/employee-import.spec.ts` newly added, **NOT RUN**: downloads current app CSV, fills one fictitious QA employee with official column order, uploads, attempts import and verifies the employee record persists. Distinct from `SET-IMPORT-TEMPLATE` (previously PASS).
 - **Cumulative observed distinct passing count stays 36; two confirmed duplicate defects remain.**
+## 2026-10-19 — Salary Structure retest and Employee CSV import first execution
+
+- `SET-STRUCT-CREATE / SET_230–237`: **PASS (user-reported)** after fixing Basic Salary accessible button whitespace.
+- `SET-STRUCT-EDIT / SET_238–240`: **PASS (user-reported)** after the same shared helper correction.
+- `SET-IMPORT-001 / SET_260–262`: **FAIL — automation locator issue**. Official CSV upload succeeded: preview showed one QA employee row, status **Ready**, and `1 of 1 row(s) will import`. The UI submit action is `Import 1`, not the test's `Import employees`. Fixed to assert the preview row is Ready and click `Import 1`. **Retest required to confirm employee creation and persistence; no product defect established.**
+- **Running distinct observed passing total = 38**, based on previous 36 plus the user's two Salary Structure pass reports; negative product defect issues #2 and #3 remain confirmed. These are separate focused runs, not one green full suite.
