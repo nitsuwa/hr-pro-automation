@@ -163,3 +163,12 @@ These cases check deletion and persistence after reopening. Their real confirmat
 - New `tests/regression/setup/employee-edit.spec.ts`: **NOT RUN**; SET_266–268 partial. Creates a unique QA-only employee, edits Full Name, and checks it in storage and employee list after reload.
 - New `tests/infrastructure/setup-action-controls.spec.ts`: **READ-ONLY**, run via `npm run test:ui:actions`. Attempts custom Approver dropdown with text locator, captures anonymous UI control metadata, opens employee editor, and checks whether selecting a table checkbox reveals an employee removal action. Result: `qa-artifacts/setup-action-controls.json`.
 - Pending complete employee-remove and editing-associated-account flows (SET_269–270, SET_275–278). Department Approvers SET_185–189 remains pending. No new verified count until local UI Mode execution.
+
+
+## 2026-10-19 — Employee edit correction, Department Approvers and employee deletion candidates
+
+- `SET-EMP-EDIT / SET_266–268`: first execution **FAIL because wrong accessible names** `Full Name*` and `Save`; corrected to `Full Name *` and `Save changes`. **Retest needed**.
+- V9 `setup-action-controls.json` confirms approver options use an accessible `listbox` with 12 `option` children, and selecting an employee reveals a Delete action.
+- New **NOT RUN** `tests/regression/setup/department-approver.spec.ts`: creates a QA-only Department, selects one non-default approver, saves, reopens and checks persistence. It is **partial** SET_185–189: full overtime/timekeeping/leave 2-level approval behavior still missing.
+- New **NOT RUN** `tests/regression/setup/employee-removal.spec.ts`: creates a QA-only Employee, selects ONLY that row, performs Delete with conditional native/in-page confirmation, then searches after reload. Does not touch preexisting employee records.
+- `SET_275–278` (create a user account during editing) still pending; existing form displays Connected User Account as disabled. Need establish supported edit-time account action before adding it.
