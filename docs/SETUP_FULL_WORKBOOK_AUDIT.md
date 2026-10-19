@@ -47,3 +47,14 @@ See companion Excel audit workbook for all 278 step-by-step rows and exact sourc
 - `tests/infrastructure/setup-form-inventory.spec.ts` is a read-only survey for missing forms. It is not a regression assertion of application business behavior.
 
 **Important**: These new cases should NOT be included in any verified passing count until the QA operator runs them and shares results.
+
+## 2026-10-19 — Follow-up after form inventory v2
+
+Evidence uploaded: `setup-form-inventory.json` (UI labels, no form values).
+
+- **Unverified**: `tests/regression/setup/department-creation.spec.ts` covers SET_177–181 using the workbook's Enter-to-save flow. Run in UI Mode; the exact save interaction is not yet proven.
+- **Unverified**: `tests/regression/setup/employee-enrollment.spec.ts` covers SET_263–265: employee enrollment, search result, and persistence.
+- **Inspection only**: `tests/infrastructure/setup-dialog-inventory.spec.ts` captures add forms for Holidays, Leave, Salary Rules, Allowances, Import Records and departmental approvers without saving. Generated output: `qa-artifacts/setup-dialog-inventory.json`.
+- UI inventory confirmed the salary and allowance features live under **Smart Pay > Structures**, rather than Organization Setup.
+- The latest inventory also confirms the setup navigation buttons for Holidays and Leave.
+- **No pass/fail status** for the two new regression tests until the QA operator runs them.
