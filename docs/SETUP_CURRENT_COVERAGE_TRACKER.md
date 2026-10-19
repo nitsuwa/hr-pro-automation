@@ -92,3 +92,11 @@
 4. **Use only authorized prototype/sandbox data.** Some tests modify shared Setup state and create persistent QA records. Repeating duplicate tests creates duplicate catalog entries requiring controlled cleanup.
 
 **Related documents:** [Team Handoff & Live Demo Guide](TEAM_HANDOFF_DEMO_GUIDE.md), [Execution Evidence Log](QA_EXECUTION_LOG.md), [Initial Workbook Audit](SETUP_FULL_WORKBOOK_AUDIT.md).
+
+
+## Scripts created after the full-suite baseline (unverified)
+
+- `SET-HOLIDAY-DUP / SET_219` — new candidate negative regression; **not run**. Holiday duplicate definition inferred from the scenario heading due copied/conflicting steps.
+- `SET-LEAVE-DUP / SET_227` — new candidate negative regression; **not run**. Leave Type duplicate definition inferred from scenario heading.
+- `INVENTORY-V10` — **read-only** control discovery for Holiday Edit and Leave Type management, result `setup-holiday-leave-controls.json`; this is not workbook coverage.
+- The 59-group classification table above is the last **verified baseline**; do not move a candidate from no coverage to passing without the test execution result and business requirement review.
