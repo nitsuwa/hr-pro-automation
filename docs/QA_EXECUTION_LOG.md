@@ -234,3 +234,11 @@ Verified from operator-provided Playwright UI Mode screenshot:
 - `SET-LEAVE-REMOVE / SET_229`: **PASS (operator screenshot)**, 4.4 seconds. A newly created QA Leave Type was removed and stayed absent.
 - `SET-LEAVE-EDIT / SET_228`: **FAIL — missed confirmation modal, not a product defect**. The first `Save changes` opened the application dialog `Update QA Edit Leave ...?` with a correct old-to-new label preview; script incorrectly asserted the changed table row *before clicking the dialog's own Save changes*. Updated Playwright to verify and confirm only the intended QA rename, await dialog dismissal, then assert persistence. **Retest pending**.
 - Combined full-suite baseline remains **46 tests: 44 passed, 2 confirmed prototype defects**. This new Leave Remove pass occurred in a separate focused run. The Leave Duplicate issue #4 remains candidate/pending requirements confirmation.
+
+
+## 2026-10-19 — Leave Edit confirmation retest
+
+- `SET-LEAVE-EDIT / SET_228`: **PASS (operator-reported)** after handling the second `Update ...?` dialog. Test creates a uniquely named QA-only Leave Type, changes its label, explicitly confirms `Save changes` inside the dialog, then checks the renamed record is persisted after reopening.
+- `SET-LEAVE-REMOVE / SET_229`: PASS previously from UI Mode screenshot (4.4s).
+- **New focused runs after the original 46-test full-suite baseline**: `SET-HOLIDAY-DUP` PASS, `SET-LEAVE-DUP` FAIL (candidate duplicate-label defect requiring uniqueness decision), `SET-LEAVE-EDIT` PASS and `SET-LEAVE-REMOVE` PASS.
+- **Cumulative distinct tests observed passing = 47**, including original 44. Two confirmed defects and one candidate Leave Type duplicate failure have been observed. **No updated 50-test combined baseline yet**: original combined execution still 46 total / 44 pass / 2 confirmed fail.
