@@ -88,4 +88,46 @@ test.describe('HR PRO Setup — Salary Structures', () => {
     await expect(page.getByText(renamed, { exact: true }), 'Edited structure should persist').toBeVisible();
     await expect(page.getByText(name, { exact: true }), 'Original structure name should disappear').toHaveCount(0);
   });
+
+  test('SET-STRUCT-REMOVE | SET_241–243 | Remove an added QA salary structure', async ({ page, loginAs }) => {
+    await loginAs('systemAdmin');
+    const name = 'QA Remove Structure ' + Date.now().toString(36);
+    await createStructure(page, name);
+
+    const rowFor = () => page.getByRole('row').filter({
+      has: page.getByRole('cell', { name, exact: true }),
+    });
+    await expect(rowFor(), 'Only the newly created QA structure may be removed').toHaveCount(1);
+
+    // The system may ask for confirmation via a browser confirm or an in-app modal.
+    // Only approve a native dialog explicitly describing removal/deletion.
+    const onDialog = async (dialog: import('@playwright/test').Dialog) => {
+      if (dialog.type() === 'confirm' && /remov|delet/i.test(dialog.message())) {
+        await dialog.accept();
+      } else {
+        await dialog.dismiss();
+      }
+    };
+    page.on('dialog', onDialog);
+    try {
+      await rowFor().getByRole('button', { name: 'Remove', exact: true }).click();
+
+      const confirmation = page.getByRole('alertdialog')
+        .or(page.getByRole('dialog'))
+        .filter({ hasText: /remov|delet|sure/i }).first();
+      if (await confirmation.isVisible()) {
+        const approve = confirmation.getByRole('button', {
+          name: /^(Remove|Delete|Confirm|Yes.*|OK)$/i,
+        }).first();
+        await expect(approve, 'Deletion confirmation must have an explicit action').toBeVisible();
+        await approve.click();
+      }
+
+      await expect(rowFor(), 'The QA structure should disappear after removal').toHaveCount(0);
+      await openStructures(page);
+      await expect(rowFor(), 'Deleted structure must remain absent after reopening').toHaveCount(0);
+    } finally {
+      page.off('dialog', onDialog);
+    }
+  });
 });
