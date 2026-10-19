@@ -31,3 +31,10 @@ Record every full or focused run here with its date, scenario ID, pass/fail/bloc
 - Evidence: UI Mode screenshot and Playwright accessibility snapshot supplied by tester.
 - Fix prepared on QA branch: select an actual editable absence row from the displayed DTR.
 - **Retest needed**: run only `SET-FILING-002` after fetching QA branch updates. Examine any subsequent failure independently.
+
+## 2026-10-19 — Filing & Approvals corrected re-run
+
+- **SET-FILING-001**: PASS (3.3s, screenshot).
+- **SET-FILING-002**: PASS (5.4s, screenshot) after changing the date locator to use an available editable attendance row.
+- Scope note: 2/2 in this *focused run*; the original 11/11 Setup run was separate. End-to-end overtime and timekeeping approval workflows are still incomplete.
+- Classification of original SET-FILING-002 failure: test automation hardcoded-date assumption; not a confirmed product defect.
