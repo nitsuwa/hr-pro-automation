@@ -1,5 +1,7 @@
 # HR PRO Automated QA — Handoff
 
+> **New to the QA project?** Start with the [simple 5-minute user guide](docs/START_HERE.md): install, run a test, read results, and add your own scripts. The full 59-group audit is tracked separately for maintainers.
+
 This project uses Playwright and TypeScript to automate the HR PRO prototype (default URL: https://hrproprototype.netlify.app).
 
 ## Set up on a new computer
