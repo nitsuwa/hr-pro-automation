@@ -62,7 +62,17 @@ test.describe('HR PRO Setup — Leave Type edit and remove', () => {
     await addOwnLeave(page, initialName);
     const field = await openOwnEditor(page, initialName);
     await field.fill(newName);
+    // Clicking Save on the edit form only opens the app's confirmation dialog.
     await page.getByRole('button', { name: 'Save changes', exact: true }).click();
+
+    // Confirm only the intended QA Leave Type rename. The update is not
+    // persisted until the second, dialog-scoped Save changes click.
+    const confirmation = page.getByRole('dialog', { name: /^Update / });
+    await expect(confirmation, 'The application should confirm the pending rename').toBeVisible();
+    await expect(confirmation).toContainText(initialName);
+    await expect(confirmation).toContainText(newName);
+    await confirmation.getByRole('button', { name: 'Save changes', exact: true }).click();
+    await expect(confirmation).toBeHidden();
 
     await expect(leaveButton(page, newName), 'Updated Leave Type should appear once').toHaveCount(1);
     await expect(page.getByRole('cell', { name: initialName, exact: true }),
