@@ -14,7 +14,8 @@
     "test:setup": "playwright test tests/regression/setup --project=chromium",
     "test:exploratory": "playwright test tests/infrastructure --project=chromium",
     "test:ui:setup": "playwright test tests/regression/setup --ui --project=chromium",
-    "test:ui:smoke": "playwright test tests/smoke --ui --project=chromium"
+    "test:ui:smoke": "playwright test tests/smoke --ui --project=chromium",
+    "test:ui:inventory": "playwright test tests/infrastructure/setup-ui-inventory.spec.ts --ui --project=chromium"
   },
   "keywords": [],
   "author": "",
