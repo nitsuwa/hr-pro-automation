@@ -153,3 +153,11 @@ Verified from operator-provided Playwright UI Mode screenshot:
 - **Cumulative distinct observed passing count = 40** across separate focused runs. Two confirmed product-defect checks `SET_195` and `SET_211` remain failing as designed.
 - Evidence for these last two tests is user confirmation in project conversation; separate Playwright screenshot/report for this run was not supplied.
 - This total is **not** the number of fully completed Excel scenarios. Workbook-wide mapping and full-suite run are still pending.
+
+
+## 2026-10-19 — Employee Edit failure and V9 control inspection
+
+- `SET-EMP-EDIT / SET_266–268`: **FAIL — automation locator issue.** Application successfully opened the new QA employee detail page. The accessible textbox is `Full Name *` (space), not `Full Name*`; the button is `Save changes`, not `Save`. Both selectors corrected on QA branch; **awaiting re-run**. No product defect identified.
+- `setup-action-controls.json` uploaded by local QA tester: Approver editor renders a custom `listbox` with 12 `option` controls and a toggle `button[aria-haspopup="listbox"]`. Employee list reveals a Delete action after selecting a row. V9 Employee detail inspector also failed solely from the same whitespace locator.
+- `SET-DEPT-APPROVER` and `SET-EMP-REMOVE` newly scripted as **NOT RUN**. Both use a fresh QA-only target. Do not count them as passes until confirmed by Playwright UI Mode. Edit/create-linked-user flow remains pending.
+- Cumulative distinct passing count **remains 40** across earlier separate runs, plus 2 confirmed duplicate-validation product defects.
