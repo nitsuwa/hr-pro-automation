@@ -38,3 +38,12 @@ SET_001–003 and all SET_152–278 groups. Some groups, especially SET_152–16
 For each group: identify preconditions, write an executable test, assert business outcomes, restore/reset test data, run against approved staging, record result + evidence. Failed or blocked scenarios are NOT passing scenarios.
 
 See companion Excel audit workbook for all 278 step-by-step rows and exact source locations.
+
+## New tests awaiting UI execution — 19 October 2026
+
+- `tests/regression/setup/company-profile.spec.ts`: **UNVERIFIED** SET_172–176, core company identity fields only; employer numbers and logo still require coverage.
+- `tests/regression/setup/catalog-creation.spec.ts`: **UNVERIFIED** SET_163–168 loan source creation, SET_190–194 job position creation, and SET_206–210 work location creation.
+- Catalog duplicate/edit/remove scenarios (SET_169–171, SET_195–197, SET_211–213), Department CRUD (SET_177–189), and other workbook areas are not yet automated.
+- `tests/infrastructure/setup-form-inventory.spec.ts` is a read-only survey for missing forms. It is not a regression assertion of application business behavior.
+
+**Important**: These new cases should NOT be included in any verified passing count until the QA operator runs them and shares results.
