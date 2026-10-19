@@ -55,3 +55,12 @@ Record every full or focused run here with its date, scenario ID, pass/fail/bloc
 - **SET-ENROLL-001 (SET_263–265)**: PASS (4.9s, UI Mode screenshot).
 - **Running observed distinct-pass count: 19 across focused runs**, not one full suite execution.
 - Follow-up: capture more detailed modal forms; `setup-dialog-inventory.json` was shared and validated by the user.
+
+## 2026-10-19 — Holiday/Leave/Allowance and employee-user first runs
+
+- **SET-LEAVE-001 / SET_222–226**: **PASS**, UI screenshot (4.8s).
+- **SET-HOLIDAY-001 / SET_214–218**: **FAIL (automation)** — `getByLabel('Type')` could not find an existing `combobox "Type"` on the Add Holiday form. Corrected to `getByRole('combobox', { name: 'Type', exact: true })`.
+- **SET-ALLOW-001 / SET_244–249**: **FAIL (automation)** — `getByLabel('Tax treatment')` could not find an existing `combobox "Tax treatment"`. Corrected to the appropriate role selector.
+- **SET-USER-001 / SET_271–274**: **FAIL (automation)** — the script called `EmployeesPage.openEnrollment()` while still on Settings; the `+ Enroll Employee` button was not present. Corrected to navigate through `EmployeesPage.open()` first.
+- **Retest needed** for all three corrected tests; these failures did not reach the business assertions, so none establishes a confirmed HR PRO product defect.
+- Across focused runs, the observed distinct passing test count is now **20**, including the new leave creation PASS; the other three do not count yet.
