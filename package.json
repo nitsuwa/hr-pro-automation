@@ -20,7 +20,8 @@
     "test:ui:dialogs": "playwright test tests/infrastructure/setup-dialog-inventory.spec.ts --ui --project=chromium",
     "test:ui:edits": "playwright test tests/infrastructure/setup-edit-inventory.spec.ts --ui --project=chromium",
     "test:ui:advanced": "playwright test tests/infrastructure/setup-advanced-inventory.spec.ts --ui --project=chromium",
-    "test:ui:structures": "playwright test tests/infrastructure/setup-structure-controls.spec.ts --ui --project=chromium"
+    "test:ui:structures": "playwright test tests/infrastructure/setup-structure-controls.spec.ts --ui --project=chromium",
+    "test:ui:template": "playwright test tests/infrastructure/employee-template-capture.spec.ts --ui --project=chromium"
   },
   "keywords": [],
   "author": "",
