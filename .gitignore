@@ -9,3 +9,5 @@ node_modules/
 .env
 .env.*
 !.env.example
+# Read-only QA inventory output
+/qa-artifacts/
