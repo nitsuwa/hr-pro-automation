@@ -175,3 +175,10 @@ Verified from operator-provided Playwright UI Mode screenshot:
 - `SET-DEPT-APPROVER / SET_185–189`: **PASS (operator-reported)** after changing the test to compare the selected approver name only, not the expanded option's job/department details. The test checks the first approver picker is saved and still populated when reopening the QA-only department.
 - Coverage note: **partial** SET_185–189. Other approval categories/second-level approvers and downstream filing results are not yet fully asserted.
 - Cumulative **43 distinct tests observed passing** across separate focused runs. Two previously confirmed product defects (`SET_195` and `SET_211`) remain genuine failing regression cases. A full-suite result is still outstanding.
+
+
+## 2026-10-19 — QA Holiday Removal
+
+- `SET-HOLIDAY-REMOVE / SET_218–221 (partial)`: **PASS (operator-reported)** in Playwright UI Mode. Test created a uniquely named QA holiday, removed only that exact row, and asserted absence after reopening the Holidays section.
+- Source workbook caveat: SET_218–221 contains copied Work Location/Position terminology; treat this as verified **Holiday remove behavior** but **not** complete validation of every written workbook step.
+- **44 distinct tests have now been observed passing across separate UI runs**, plus 2 confirmed duplicate-validation failures (`SET_195`, `SET_211`). There is no combined clean full-suite result.
