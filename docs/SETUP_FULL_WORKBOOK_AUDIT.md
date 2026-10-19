@@ -78,3 +78,9 @@ New **NOT RUN** file: `tests/regression/setup/catalog-duplicates.spec.ts`.
 - SET_211 duplicate work location
 
 All four tests create an isolated QA example, attempt the identical name, reload and assert only one row exists. They check the *duplicate not saved* outcome, **not yet the Excel requirement for a visible duplicate error prompt**. Confirm error text/validation separately before marking the full Excel scenario complete. If a duplicate does persist, verify reproduction to distinguish a product defect from test-data issues.
+
+## 2026-10-19 — Duplicate validation follow-up
+
+- **PASS** SET_169 Loan source duplicate prevention; **PASS** SET_182 Department duplicate prevention.
+- **FAIL, reproduced twice** SET_195 Job Position duplicate prevention (issues #2) and SET_211 Work Location duplicate prevention (issues #3). Do NOT weaken their assertions.
+- Workbook duplicate-error-message UX remains unverified for all four cases; a save-prevention assertion alone does not prove expected user-visible feedback.
