@@ -110,3 +110,15 @@ Remove tests SET_171, SET_184, SET_197, SET_213 require confirmation behavior in
 - SET_213 — Work Location Remove
 
 These cases check deletion and persistence after reopening. Their real confirmation UI behavior is not yet confirmed; inspect any failing steps. These do not remove pre-existing company catalog entries and skip an environment explicitly marked production.
+
+## 2026-10-19 — Allowance maintenance & employee import template candidates
+
+- `tests/regression/setup/allowance-maintenance.spec.ts` — **NOT RUN**:
+  - SET_250–252: Create QA-only allowance, edit it, assert changed name persisted.
+  - SET_253–255: Create QA-only allowance, cancel deletion and verify unchanged, then confirm deletion and verify absent after reopening.
+  - The edit/removal controls were **not** confirmed in the prior blank-form inventory; any failure requires inspecting its actual modal before changing assertions.
+- `tests/regression/setup/employee-import-template.spec.ts` — **NOT RUN**:
+  - SET_256–259: Open import wizard, download employee template, verify correct file extension and nonempty contents.
+  - SET_260–262 (fill template, upload, confirm records) are still **not implemented**.
+- `tests/infrastructure/setup-advanced-inventory.spec.ts` — read-only, UI Mode command `npm run test:ui:advanced`, captures control names for full SET_230–243 salary-structure workflow, SET_266–270 employee edit/delete and SET_185–189 departmental approver workflow. This is an inspection tool, not workbook coverage.
+- Distinction: all 59 workbook groups are still **not complete**, despite 33 distinct observed passing test cases and two recorded prototype defects.
