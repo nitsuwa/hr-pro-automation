@@ -22,7 +22,8 @@
     "test:ui:advanced": "playwright test tests/infrastructure/setup-advanced-inventory.spec.ts --ui --project=chromium",
     "test:ui:structures": "playwright test tests/infrastructure/setup-structure-controls.spec.ts --ui --project=chromium",
     "test:ui:template": "playwright test tests/infrastructure/employee-template-capture.spec.ts --ui --project=chromium",
-    "test:ui:people": "playwright test tests/infrastructure/setup-people-controls.spec.ts --ui --project=chromium"
+    "test:ui:people": "playwright test tests/infrastructure/setup-people-controls.spec.ts --ui --project=chromium",
+    "test:ui:actions": "playwright test tests/infrastructure/setup-action-controls.spec.ts --ui --project=chromium"
   },
   "keywords": [],
   "author": "",
