@@ -84,3 +84,17 @@ All four tests create an isolated QA example, attempt the identical name, reload
 - **PASS** SET_169 Loan source duplicate prevention; **PASS** SET_182 Department duplicate prevention.
 - **FAIL, reproduced twice** SET_195 Job Position duplicate prevention (issues #2) and SET_211 Work Location duplicate prevention (issues #3). Do NOT weaken their assertions.
 - Workbook duplicate-error-message UX remains unverified for all four cases; a save-prevention assertion alone does not prove expected user-visible feedback.
+
+## 2026-10-19 — Catalog edit tests prepared (UNVERIFIED)
+
+Inventory source: local QA operator's `setup-edit-inventory.json`, showing in-row Save/Cancel and edit fields for Department, Job Position, Work Location and Loan Source.
+
+New file: `tests/regression/setup/catalog-edits.spec.ts` with four independent cases:
+- SET_170 Loan source rename
+- SET_183 Department rename
+- SET_196 Job Position rename
+- SET_212 Work Location rename
+
+Each case first creates its OWN unique QA record, never edits a seeded business entry, renames via the actual inline editor and checks persistence after reopening. All four are **NOT RUN** until QA operator provides execution evidence.
+
+Remove tests SET_171, SET_184, SET_197, SET_213 require confirmation behavior inspection; defer until the edit flows are verified. Do not perform destructive tests on seeded records.
