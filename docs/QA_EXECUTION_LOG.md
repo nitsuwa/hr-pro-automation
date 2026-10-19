@@ -113,3 +113,11 @@ Screenshot shows **all four tests green** in `tests/regression/setup/catalog-rem
 
 Each uses a fresh QA-only record and checks removal after reopening the Setup section.
 **Cumulative observed distinct passing tests: 33** across separate focused runs. **Two confirmed prototype defects** remain in duplicate checks SET_195 / SET_211. Do not interpret this as a passing full-suite run or completion of all workbook groups.
+
+## 2026-10-19 — Allowance maintenance and advanced inventory
+
+- `SET-ALLOW-REMOVE / SET_253–255`: **PASS** (5.5s), visible green Playwright UI Mode result. Cancellation preserved the record, confirmed removal deleted it and remained absent after reopen.
+- `SET-ALLOW-EDIT / SET_250–252`: **FAIL — automation locator issue** (18.1s). The edit overlay opens and exposes `heading "Edit Allowance"`, `textbox "Allowance name *"`, `button "Save Changes"` directly, but original test wrongly searched for inline row textbox. No product defect established. Corrected selector in QA branch; **RETEST REQUIRED**.
+- `SET-IMPORT-TEMPLATE / SET_256–259`: **NOT CONFIRMED** in the screenshots provided; please run/check separately.
+- Uploaded `setup-advanced-inventory.json`: Salary Structure blank form exposes `Structure name*`, search rules input and `Add Structure`; Department approvers shows `Save Changes`; employee edit still not captured because inspector remained on Employees list.
+- Cumulative distinct passing checks: **34**, across separate focused runs, not a full-suite run. Confirmed negative product findings #2 and #3 remain unchanged.
