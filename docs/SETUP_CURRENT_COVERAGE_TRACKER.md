@@ -4,9 +4,10 @@
 
 ## Verified test-run baseline
 
-- **46 Setup Playwright checks executed together** in Chromium UI Mode on 19 October 2026: **44 passed, 2 failed, 0 skipped**.
-- The failures are **confirmed HR PRO product behavior**: [duplicate Job Positions (#2)](https://github.com/nitsuwa/hr-pro-automation/issues/2) and [duplicate Work Locations (#3)](https://github.com/nitsuwa/hr-pro-automation/issues/3). **Keep their negative assertions.**
-- The 46 Playwright checks **do not correspond one-to-one** with the 59 Excel groups; some groups have several checks and some scripts only validate part of the expected outcome.
+- **Latest combined Setup run (19 October 2026, operator-reported): 50 executed, 47 passed, 3 failed (94.0% of automated checks passed).** No other failures reported.
+- **Confirmed product defects:** [duplicate Job Positions (#2)](https://github.com/nitsuwa/hr-pro-automation/issues/2) and [duplicate Work Locations (#3)](https://github.com/nitsuwa/hr-pro-automation/issues/3).
+- **Candidate product defect:** [duplicate Leave Type labels (#4)](https://github.com/nitsuwa/hr-pro-automation/issues/4), pending product-owner confirmation that names must be unique.
+- The 50 Playwright checks **do not correspond one-to-one** with the 59 Excel groups; some groups have several checks and some scripts only validate part of the expected outcome. The historical 59-group classification below is provisional and requires complete acceptance review.
 
 ## Scenario-level assessment (provisional)
 
@@ -127,3 +128,10 @@ Read-only V11 editor inventory confirmed a text field with no label, plus `Save 
 - `SET_228` Leave Type edit: **PASS (operator-reported)** after completing the additional confirmation dialog. Test checks persistence across returning to Leave Settings.
 - `SET_229` Leave Type remove: **PASS** on the prior focused run.
 - Subsequent focused testing added four checks beyond the original 46-test run: Holiday Duplicate PASS, Leave Duplicate FAIL (candidate requirement-dependent issue #4), Leave Edit PASS and Leave Remove PASS. **47 distinct passing checks cumulatively**, but original **combined baseline stays 46 executed / 44 PASS / 2 confirmed defect FAIL** pending another combined run. Do not overstate a 50-test pass rate.
+
+## 2026-10-19 — Latest combined 50-test verification
+
+- Operator confirms updated full UI Mode run: **50 tests, 47 pass, 3 fail**; failures confined to the two confirmed duplicate catalog defects and the one Leave Type duplicate-label candidate.
+- New confirmed passing checks since initial 46-test baseline: **Holiday duplicate**, **Leave edit**, **Leave removal**. New failing candidate check: **Leave duplicate**.
+- **The historical 26 core / 12 partial / 2 confirmed defect / 19 unvalidated grouping above is not a refreshed acceptance sign-off.** These later focused tests improve coverage but source workbook contradictions and incomplete deeper assertions still require independent reconciliation.
+- Release posture: handoff-ready as an extensible test framework with accurately documented defects and gaps, **not** a completed 59-of-59 workbook certification.
