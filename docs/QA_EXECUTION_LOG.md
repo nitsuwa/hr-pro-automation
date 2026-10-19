@@ -102,3 +102,14 @@ UI Mode screenshot received: **4 passed** in `tests/regression/setup/catalog-edi
 - `SET-LOCATION-EDIT / SET_212`: PASS (4.2s); QA-created Work Location renamed and verified after reopen.
 
 **Running distinct passing test count across separate UI runs: 29.** Two negative tests remain failing as confirmed prototype defects: SET_195 and SET_211. This total is not a single full suite run or completion of all 59 workbook groups.
+
+## 2026-10-19 — Catalog removals (focused UI Mode run)
+
+Screenshot shows **all four tests green** in `tests/regression/setup/catalog-removals.spec.ts`:
+- `SET-LOANS-REMOVE / SET_171`: PASS (6.3s)
+- `SET-DEPT-REMOVE / SET_184`: PASS (3.7s)
+- `SET-JOBPOS-REMOVE / SET_197`: PASS (3.2s)
+- `SET-LOCATION-REMOVE / SET_213`: PASS (green check; duration not visible in screenshot)
+
+Each uses a fresh QA-only record and checks removal after reopening the Setup section.
+**Cumulative observed distinct passing tests: 33** across separate focused runs. **Two confirmed prototype defects** remain in duplicate checks SET_195 / SET_211. Do not interpret this as a passing full-suite run or completion of all workbook groups.
