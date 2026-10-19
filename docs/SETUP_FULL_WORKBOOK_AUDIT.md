@@ -172,3 +172,10 @@ These cases check deletion and persistence after reopening. Their real confirmat
 - New **NOT RUN** `tests/regression/setup/department-approver.spec.ts`: creates a QA-only Department, selects one non-default approver, saves, reopens and checks persistence. It is **partial** SET_185–189: full overtime/timekeeping/leave 2-level approval behavior still missing.
 - New **NOT RUN** `tests/regression/setup/employee-removal.spec.ts`: creates a QA-only Employee, selects ONLY that row, performs Delete with conditional native/in-page confirmation, then searches after reload. Does not touch preexisting employee records.
 - `SET_275–278` (create a user account during editing) still pending; existing form displays Connected User Account as disabled. Need establish supported edit-time account action before adding it.
+
+## 2026-10-19 — Approvers pass and Holiday removal candidate
+
+- `SET-DEPT-APPROVER / SET_185–189`: **PASS (operator-reported)** after correcting the displayed approver-name assertion. This validates only one approver picker on a QA-created department, not all six approval levels or actual filing decisions.
+- Cumulative distinct previously observed passes: **43**, across multiple focused Playwright UI Mode runs. Two confirmed duplicate-catalog defects remain failing checks (issues #2 and #3).
+- New **NOT RUN** `tests/regression/setup/holiday-removal.spec.ts`: create a unique QA-only holiday, remove that exact row and verify it remains absent after reopening the Holidays panel. This is a **partial interpretation** of `SET_218–221`; the source workbook incorrectly contains Work Location/Job Position language in that group.
+- Need subsequent worksheet review for editing Holiday/Leave, edit-time user account creation, overtime/payroll approval arithmetic, and workbook mappings. This script does not close those gaps.
