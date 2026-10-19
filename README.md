@@ -40,7 +40,7 @@ The default URL and environment can be overridden using shell variables `E2E_BAS
 
 **Start here:** [Team Handoff & Live Demo Guide](docs/TEAM_HANDOFF_DEMO_GUIDE.md) — setup, UI Mode, adding tests, defect triage, demonstration, and next-team maintenance.
 
-**Verification to date (19 October 2026):** 44 distinct tests were observed passing across separate local Playwright UI Mode executions, as recorded in [the QA Execution Evidence Log](docs/QA_EXECUTION_LOG.md). Two negative tests are confirmed application defects: [duplicate Job Positions](https://github.com/nitsuwa/hr-pro-automation/issues/2) and [duplicate Work Locations](https://github.com/nitsuwa/hr-pro-automation/issues/3). **These results are not a combined full-suite pass, nor proof that all 59 Setup workbook groups are fully covered.**
+**Full Setup suite run (19 October 2026): 46 executed, 44 passed, 2 failed (confirmed application defects), 0 skipped — 95.7% of checks passed.** See [the QA Execution Evidence Log](docs/QA_EXECUTION_LOG.md). Two negative tests are confirmed application defects: [duplicate Job Positions](https://github.com/nitsuwa/hr-pro-automation/issues/2) and [duplicate Work Locations](https://github.com/nitsuwa/hr-pro-automation/issues/3). **The combined Setup suite was executed; it is not all-green because the application defects persist. The 44 passing tests do not establish full coverage of all 59 Setup workbook groups.**
 
 - `npm run test:ui:setup`: recommended for visual, per-test execution and presentation.
 - `tests/infrastructure/`: exploratory probes; do not count these as accepted regression tests.
