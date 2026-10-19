@@ -64,3 +64,12 @@ Record every full or focused run here with its date, scenario ID, pass/fail/bloc
 - **SET-USER-001 / SET_271–274**: **FAIL (automation)** — the script called `EmployeesPage.openEnrollment()` while still on Settings; the `+ Enroll Employee` button was not present. Corrected to navigate through `EmployeesPage.open()` first.
 - **Retest needed** for all three corrected tests; these failures did not reach the business assertions, so none establishes a confirmed HR PRO product defect.
 - Across focused runs, the observed distinct passing test count is now **20**, including the new leave creation PASS; the other three do not count yet.
+
+## 2026-10-19 — Corrected Holiday/Allowance/User tests
+
+- **SET-HOLIDAY-001**: PASS (3.8s, Playwright UI screenshot).
+- **SET-ALLOW-001**: PASS (4.2s, Playwright UI screenshot).
+- **SET-USER-001**: PASS (6.3s, Playwright UI screenshot).
+- **SET-LEAVE-001**: Previously PASS; also green (3.5s) in the latest screenshot.
+- **Cumulative distinct observed passing tests: 23 across multiple focused runs**. This is not a full-suite run or confirmation of all expected results for the 59 Setup workbook scenarios.
+- Previous failed attempts were automation selector/navigation errors, since resolved; not confirmed application defects.
