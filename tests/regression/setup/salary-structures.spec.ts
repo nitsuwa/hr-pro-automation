@@ -23,7 +23,7 @@ test.describe('HR PRO Setup — Salary Structures', () => {
   }
 
   async function addBasicSalary(page: Page) {
-    const rule = page.getByRole('button', { name: /^Basic SalaryBASIC EARNING/ });
+    const rule = page.getByRole('button', { name: /^Basic Salary\s+BASIC\s+EARNING\b/ });
     await expect(rule, 'Basic Salary must be an available salary rule').toBeVisible();
     await rule.click();
 
@@ -73,7 +73,7 @@ test.describe('HR PRO Setup — Salary Structures', () => {
     await expect(nameInput).toHaveValue(name);
     await nameInput.fill(renamed);
 
-    const newRule = page.getByRole('button', { name: /^Rice SubsidyRICE EARNING/ });
+    const newRule = page.getByRole('button', { name: /^Rice Subsidy\s+RICE\s+EARNING\b/ });
     await expect(newRule).toBeVisible();
     await newRule.click();
     await expect(
