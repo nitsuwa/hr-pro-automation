@@ -122,3 +122,14 @@ These cases check deletion and persistence after reopening. Their real confirmat
   - SET_260–262 (fill template, upload, confirm records) are still **not implemented**.
 - `tests/infrastructure/setup-advanced-inventory.spec.ts` — read-only, UI Mode command `npm run test:ui:advanced`, captures control names for full SET_230–243 salary-structure workflow, SET_266–270 employee edit/delete and SET_185–189 departmental approver workflow. This is an inspection tool, not workbook coverage.
 - Distinction: all 59 workbook groups are still **not complete**, despite 33 distinct observed passing test cases and two recorded prototype defects.
+
+## 2026-10-19 — Salary Structures and import template follow-up
+
+- `tests/regression/setup/salary-structures.spec.ts`: **UNVERIFIED**, two candidate tests:
+  - `SET-STRUCT-CREATE` (SET_230–237): creates a unique QA Salary Structure, adds Basic Salary rule, saves, reopens and checks the structure exists.
+  - `SET-STRUCT-EDIT` (SET_238–240): creates its own QA structure, renames it, adds a second rule and verifies persistence. Edit selectors have NOT yet been tested in UI Mode.
+  - `SET_241–243` cancel/confirm salary-structure removal still pending.
+  - Both cases deliberately avoid Set as Default.
+- `tests/infrastructure/employee-template-capture.spec.ts`: read-only template download into `qa-artifacts/employee-import-template.csv` or `.xlsx` etc. UI command `npm run test:ui:template`; once provided to QA, use its actual columns to implement an end-to-end SET_260–262 upload/import test with unique fictitious employee data.
+- The earlier `SET-IMPORT-TEMPLATE / SET_256–259` test **PASSED**, but importing a completed file is NOT yet validated.
+- Current operator evidence: **36 distinct passing checks across focused runs, two confirmed negative defect failures**. Not the whole 59-group workbook.
