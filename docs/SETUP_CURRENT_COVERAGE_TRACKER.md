@@ -113,3 +113,10 @@
 ## 2026-10-19 — Leave Edit / Remove ready for first execution
 
 Read-only V11 editor inventory confirmed a text field with no label, plus `Save changes` and `Remove leave type` actions. Two QA-only, independent candidate regression tests now exist in `tests/regression/setup/leave-maintenance.spec.ts`: **SET_228 edit**, **SET_229 remove**. Both are **NOT RUN**, and the scenario text still needs owner clarification. Historical classification table above is unchanged until execution.
+
+
+## 2026-10-19 — Leave maintenance focused execution
+
+- `SET_229` (Remove QA Leave Type): **PASS**, 4.4s focused UI Mode run.
+- `SET_228` (Edit QA Leave Type): **first attempt failed due to missed confirmation dialog**; changed script to click the dialog-scoped `Save changes`, then assert the updated record after reopen. **Retest pending**.
+- Do not add the corrected edit test to verified coverage until the new run passes. Previous full-suite baseline is still 46 executed, 44 passed and 2 confirmed application defect failures, while candidate Leave Duplicate issue #4 remains outside that baseline.
