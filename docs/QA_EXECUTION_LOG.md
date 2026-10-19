@@ -242,3 +242,15 @@ Verified from operator-provided Playwright UI Mode screenshot:
 - `SET-LEAVE-REMOVE / SET_229`: PASS previously from UI Mode screenshot (4.4s).
 - **New focused runs after the original 46-test full-suite baseline**: `SET-HOLIDAY-DUP` PASS, `SET-LEAVE-DUP` FAIL (candidate duplicate-label defect requiring uniqueness decision), `SET-LEAVE-EDIT` PASS and `SET-LEAVE-REMOVE` PASS.
 - **Cumulative distinct tests observed passing = 47**, including original 44. Two confirmed defects and one candidate Leave Type duplicate failure have been observed. **No updated 50-test combined baseline yet**: original combined execution still 46 total / 44 pass / 2 confirmed fail.
+
+## 2026-10-19 — UPDATED FULL SETUP SUITE BASELINE (operator-reported)
+
+- **Environment / mode:** authorized HR PRO prototype; Playwright Chromium UI Mode; `npm run test:ui:setup`.
+- **Combined execution:** **50 tests, 47 PASS, 3 FAIL, 0 other outcomes reported**, matching the operator's latest complete-run confirmation. **47/50 = 94.0%** of implemented Setup checks passing. Evidence: operator's report in project conversation (no consolidated screenshot/report attached to this specific confirmation).
+- The three failures are:
+  1. `SET-JOBPOS-002 / SET_195` — duplicate Job Position persisted twice; **confirmed app defect** [#2](https://github.com/nitsuwa/hr-pro-automation/issues/2).
+  2. `SET-LOCATION-002 / SET_211` — duplicate Work Location persisted twice; **confirmed app defect** [#3](https://github.com/nitsuwa/hr-pro-automation/issues/3).
+  3. `SET-LEAVE-DUP / SET_227` — two Leave Types with the same label persisted; **candidate app defect**, uniqueness requirement not yet confirmed by product owner [#4](https://github.com/nitsuwa/hr-pro-automation/issues/4).
+- No additional automation failures reported. The new Holiday duplicate, Leave edit, and Leave remove checks passed in this combined run.
+- **Coverage warning:** 50 Playwright test cases are not the same as full acceptance of all **59 workbook scenario groups**. The coverage tracker is provisional: deeper statutory arithmetic, overtime/LILO, payroll segregation/approvals and edit-time user account creation are still incomplete or require owner clarification.
+- **Testing freeze candidate for Wednesday handoff:** retain the three negative assertions unchanged, avoid repeated runs that generate QA records, and save a dated Playwright HTML report/screenshots where available. Re-run after product fixes or scenario additions.
