@@ -68,8 +68,13 @@ test('SET-IMPORT-001 | SET_260–262 | Upload filled CSV template and import a Q
     buffer: Buffer.from(filledTemplate, 'utf8'),
   });
 
-  const importButton = page.getByRole('button', { name: 'Import employees', exact: true });
-  await expect(importButton, 'Valid CSV data should enable the import action').toBeEnabled();
+  // The wizard labels its submit button with the count, e.g. "Import 1".
+  // Assert the intended QA employee is marked Ready before submitting.
+  const preview = page.getByRole('row').filter({ hasText: employeeName });
+  await expect(preview, 'The QA employee must appear in the import preview').toHaveCount(1);
+  await expect(preview, 'The generated CSV row must pass the import validator').toContainText('Ready');
+  const importButton = page.getByRole('button', { name: 'Import 1', exact: true });
+  await expect(importButton, 'Valid CSV data should enable the one-employee import action').toBeEnabled();
 
   // Do not automatically approve unrelated confirmations. If the app presents
   // a native import confirmation, only accept one that identifies the action.
