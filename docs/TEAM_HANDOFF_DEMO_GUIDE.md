@@ -23,7 +23,7 @@ The `tests/regression/setup/` folder contains Setup-oriented regression tests wi
 | Run evidence | `docs/QA_EXECUTION_LOG.md` | What was executed, passed, failed, or blocked |
 | Workbook audit | `docs/SETUP_FULL_WORKBOOK_AUDIT.md` | Known scenario mappings and missing coverage |
 
-**As of the latest QA operator report:** 44 distinct regression checks were observed passing **across separate focused UI Mode runs**. Two reproducible negative checks still fail on the prototype: duplicate Job Positions (SET_195, [issue #2](https://github.com/nitsuwa/hr-pro-automation/issues/2)) and duplicate Work Locations (SET_211, [issue #3](https://github.com/nitsuwa/hr-pro-automation/issues/3)). These are not the same as 44 of 59 Excel groups fully accepted. A combined end-to-end Setup suite has **not yet** been established as passing; do not invent a suite pass rate.
+**As of the latest QA operator report:** 44 regression checks passed in the **first complete 46-test Setup suite UI Mode run** (October 19, 2026). Two reproducible negative checks still fail on the prototype: duplicate Job Positions (SET_195, [issue #2](https://github.com/nitsuwa/hr-pro-automation/issues/2)) and duplicate Work Locations (SET_211, [issue #3](https://github.com/nitsuwa/hr-pro-automation/issues/3)). **Combined suite baseline: 44 PASS, 2 FAIL, 0 SKIPPED (95.7% of checks passed)**. The two failures are the confirmed duplicate-validation defects, not new locator failures. These counts are **not** the same as 44 of 59 Excel scenario groups fully accepted.
 
 ## 2. Install on a new Windows computer
 
@@ -164,13 +164,27 @@ Record a failure's test ID, expected/actual, reproduction steps, environment, sc
 
 **Before demonstrating**, run selected tests once on the authorized prototype and ensure test data and login work. Avoid promising a live run will be green; the two duplicate-defect cases should still fail until fixed. Use `SET-LOANS-EDIT` or `SET-LOCATION-EDIT` for a passing demonstration, and `SET-JOBPOS-002` to illustrate defect detection. Each run creates QA test data; use approved environments only.
 
-## 8. What remains and how the next team continues
+## 8. Verified full-suite run and release status
+
+**19 October 2026 — Chromium Setup suite (Playwright UI Mode)**
+
+| Executed | Passed | Failed | Skipped | Product bugs |
+| ---: | ---: | ---: | ---: | ---: |
+| 46 | 44 | 2 | 0 | 2 |
+
+- All 46 tests were executed in one selected-run baseline, not estimated by adding screenshots from isolated executions.
+- Known failing checks: `SET-JOBPOS-002 / SET_195` and `SET-LOCATION-002 / SET_211`; they **correctly** reject the application's persisted duplicate records. Preserve failures as evidence for Issues #2 and #3.
+- No other Setup test failures were observed in this baseline.
+- This does **not** mean all 59 workbook scenario groups, all business outcome assertions, or HR GO are complete.
+- Full run can create new persistent QA catalog rows; repeated duplicate tests in particular create two entries per test. Only an authorized QA cleanup procedure should remove them.
+
+## 9. What remains and how the next team continues
 
 The workbook includes business outcomes beyond Setup field persistence, including statutory contribution arithmetic, overtime, LILO external evidence, filing approvals, and payroll segregation of duties. Many of these still have exploratory scripts or partial tests only. The Leave/Holiday wording and some other workbook rows contain copied instructions; do not “fix” expected results silently.
 
 Before release of the handoff:
 - Reconcile every one of the **59 groups** to executable coverage and actual expected results.
-- Run the Setup suite as one controlled baseline and log the **real** pass/fail/skipped counts.
+- **Baseline run completed 19 Oct 2026: 46 total, 44 PASS, 2 FAIL (confirmed defects), 0 SKIPPED.** After product fixes or additional scripts, repeat the Setup suite and record the new counts.
 - Review shared-state interactions and restore mutable Settings where possible.
 - Export available Playwright report/trace evidence and attach it to a dated execution log.
 - Confirm open defects and known limitations with the team lead.
