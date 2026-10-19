@@ -155,3 +155,11 @@ These cases check deletion and persistence after reopening. Their real confirmat
 - Output: `qa-artifacts/setup-people-controls.json`. Record only control metadata and anonymous option structure; no employee names, IDs, salaries, or emails.
 - Purpose: write real SET_185–189 (approve policies), SET_266–270 (edit/remove employees), SET_275–278 (create user while editing employee) scripts without guessing inaccessible selectors.
 - **No new workbook regression coverage** is claimed for an inventory script. Current cumulative report: 40 distinct previously passing tests, two confirmed failing checks, and significant workbook gaps including some payroll/approval workflows and contribution arithmetic.
+
+## 2026-10-19 — Employee edit candidate and focused approver/removal survey
+
+- Uploaded `setup-people-controls.json` (V8) confirms an existing employee link opens the actual editable employee details **directly**, with `Full Name*`, `Connected User Account`, `Monthly Rate (₱)*` and Save/Cancel. The V8 follow-up attempt to find another Edit button failed because the form was already open — an **inspection locator issue**, not a product defect.
+- Department Approvers editor opened, but the custom dropdown did not match the initial accessible-name locator. V8 provided no usable option structure; do **not** claim approver configuration automation is ready.
+- New `tests/regression/setup/employee-edit.spec.ts`: **NOT RUN**; SET_266–268 partial. Creates a unique QA-only employee, edits Full Name, and checks it in storage and employee list after reload.
+- New `tests/infrastructure/setup-action-controls.spec.ts`: **READ-ONLY**, run via `npm run test:ui:actions`. Attempts custom Approver dropdown with text locator, captures anonymous UI control metadata, opens employee editor, and checks whether selecting a table checkbox reveals an employee removal action. Result: `qa-artifacts/setup-action-controls.json`.
+- Pending complete employee-remove and editing-associated-account flows (SET_269–270, SET_275–278). Department Approvers SET_185–189 remains pending. No new verified count until local UI Mode execution.
