@@ -23,7 +23,7 @@ The `tests/regression/setup/` folder contains Setup-oriented regression tests wi
 | Run evidence | `docs/QA_EXECUTION_LOG.md` | What was executed, passed, failed, or blocked |
 | Workbook audit | `docs/SETUP_FULL_WORKBOOK_AUDIT.md` | Known scenario mappings and missing coverage |
 
-**As of the latest QA operator report:** 44 regression checks passed in the **first complete 46-test Setup suite UI Mode run** (October 19, 2026). Two reproducible negative checks still fail on the prototype: duplicate Job Positions (SET_195, [issue #2](https://github.com/nitsuwa/hr-pro-automation/issues/2)) and duplicate Work Locations (SET_211, [issue #3](https://github.com/nitsuwa/hr-pro-automation/issues/3)). **Combined suite baseline: 44 PASS, 2 FAIL, 0 SKIPPED (95.7% of checks passed)**. The two failures are the confirmed duplicate-validation defects, not new locator failures. These counts are **not** the same as 44 of 59 Excel scenario groups fully accepted.
+**Latest complete Playwright Setup suite run (19 October 2026, operator-reported): 50 executed, 47 PASS, 3 FAIL (94.0% of implemented checks passed).** Two failures are confirmed prototype defects: duplicate Job Positions (SET_195, [issue #2](https://github.com/nitsuwa/hr-pro-automation/issues/2)) and duplicate Work Locations (SET_211, [issue #3](https://github.com/nitsuwa/hr-pro-automation/issues/3)). The third, duplicate Leave Type labels (SET_227, [candidate issue #4](https://github.com/nitsuwa/hr-pro-automation/issues/4)), awaits product-owner confirmation of uniqueness rules. These counts **do not establish that all 59 Excel groups are fully covered**.
 
 ## 2. Install on a new Windows computer
 
@@ -172,11 +172,11 @@ Record a failure's test ID, expected/actual, reproduction steps, environment, sc
 
 | Executed | Passed | Failed | Skipped | Product bugs |
 | ---: | ---: | ---: | ---: | ---: |
-| 46 | 44 | 2 | 0 | 2 |
+| 50 | 47 | 3 | 0 reported | 2 confirmed + 1 candidate |
 
-- All 46 tests were executed in one selected-run baseline, not estimated by adding screenshots from isolated executions.
-- Known failing checks: `SET-JOBPOS-002 / SET_195` and `SET-LOCATION-002 / SET_211`; they **correctly** reject the application's persisted duplicate records. Preserve failures as evidence for Issues #2 and #3.
-- No other Setup test failures were observed in this baseline.
+- The operator reports a full combined 50-test Setup run after adding Holiday/Leave checks; **47 passed, 3 failed**, with no new automation failures reported.
+- Confirmed product findings: `SET-JOBPOS-002 / SET_195` and `SET-LOCATION-002 / SET_211`. Preserve their strict negative assertions.
+- Candidate finding: `SET-LEAVE-DUP / SET_227`, duplicate Leave Type labels despite distinct codes. Ask the product owner whether labels must be unique before claiming a confirmed bug.
 - This does **not** mean all 59 workbook scenario groups, all business outcome assertions, or HR GO are complete.
 - Full run can create new persistent QA catalog rows; repeated duplicate tests in particular create two entries per test. Only an authorized QA cleanup procedure should remove them.
 
@@ -186,7 +186,7 @@ The workbook includes business outcomes beyond Setup field persistence, includin
 
 Before release of the handoff:
 - Reconcile every one of the **59 groups** to executable coverage and actual expected results.
-- **Baseline run completed 19 Oct 2026: 46 total, 44 PASS, 2 FAIL (confirmed defects), 0 SKIPPED.** After product fixes or additional scripts, repeat the Setup suite and record the new counts.
+- **Updated combined baseline 19 Oct 2026: 50 total, 47 PASS, 3 FAIL (2 confirmed defects, 1 candidate).** After product fixes or more scripts, repeat the Setup suite and record the new counts.
 - Review shared-state interactions and restore mutable Settings where possible.
 - Export available Playwright report/trace evidence and attach it to a dated execution log.
 - Confirm open defects and known limitations with the team lead.
