@@ -120,3 +120,10 @@ Read-only V11 editor inventory confirmed a text field with no label, plus `Save 
 - `SET_229` (Remove QA Leave Type): **PASS**, 4.4s focused UI Mode run.
 - `SET_228` (Edit QA Leave Type): **first attempt failed due to missed confirmation dialog**; changed script to click the dialog-scoped `Save changes`, then assert the updated record after reopen. **Retest pending**.
 - Do not add the corrected edit test to verified coverage until the new run passes. Previous full-suite baseline is still 46 executed, 44 passed and 2 confirmed application defect failures, while candidate Leave Duplicate issue #4 remains outside that baseline.
+
+
+## 2026-10-19 — Leave Edit confirmed passing
+
+- `SET_228` Leave Type edit: **PASS (operator-reported)** after completing the additional confirmation dialog. Test checks persistence across returning to Leave Settings.
+- `SET_229` Leave Type remove: **PASS** on the prior focused run.
+- Subsequent focused testing added four checks beyond the original 46-test run: Holiday Duplicate PASS, Leave Duplicate FAIL (candidate requirement-dependent issue #4), Leave Edit PASS and Leave Remove PASS. **47 distinct passing checks cumulatively**, but original **combined baseline stays 46 executed / 44 PASS / 2 confirmed defect FAIL** pending another combined run. Do not overstate a 50-test pass rate.
