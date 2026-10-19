@@ -91,3 +91,14 @@ Record every full or focused run here with its date, scenario ID, pass/fail/bloc
 - `SET-LOCATION-002 / SET_211`: **FAIL — CONFIRMED PROTOTYPE DEFECT.** Fresh record name `QA Dup Location mvemihag` appeared in TWO work-location rows after re-opening the Settings section. Same assertion failure in two independent runs. GitHub [#3](https://github.com/nitsuwa/hr-pro-automation/issues/3). Keep failure as QA evidence.
 - Evidence: screenshots and Playwright errors supplied by QA operator.
 - Total **25 distinct passing tests across focused runs**; 2 confirmed failing checks. This is NOT a single full-suite result or proof of full coverage of 59 Excel scenarios.
+
+## 2026-10-19 — Four catalog edit tests
+
+UI Mode screenshot received: **4 passed** in `tests/regression/setup/catalog-edits.spec.ts`:
+
+- `SET-LOANS-EDIT / SET_170`: PASS (7.5s); QA-created loan source renamed and verified after reopen.
+- `SET-DEPT-EDIT / SET_183`: PASS (4.2s); QA-created Department renamed and verified after reopen.
+- `SET-JOBPOS-EDIT / SET_196`: PASS (4.4s); QA-created Job Position renamed and verified after reopen.
+- `SET-LOCATION-EDIT / SET_212`: PASS (4.2s); QA-created Work Location renamed and verified after reopen.
+
+**Running distinct passing test count across separate UI runs: 29.** Two negative tests remain failing as confirmed prototype defects: SET_195 and SET_211. This total is not a single full suite run or completion of all 59 workbook groups.
