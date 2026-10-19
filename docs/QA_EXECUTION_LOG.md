@@ -145,3 +145,11 @@ Verified from operator-provided Playwright UI Mode screenshot:
 - `SET-STRUCT-EDIT / SET_238–240`: **PASS (user-reported)** after the same shared helper correction.
 - `SET-IMPORT-001 / SET_260–262`: **FAIL — automation locator issue**. Official CSV upload succeeded: preview showed one QA employee row, status **Ready**, and `1 of 1 row(s) will import`. The UI submit action is `Import 1`, not the test's `Import employees`. Fixed to assert the preview row is Ready and click `Import 1`. **Retest required to confirm employee creation and persistence; no product defect established.**
 - **Running distinct observed passing total = 38**, based on previous 36 plus the user's two Salary Structure pass reports; negative product defect issues #2 and #3 remain confirmed. These are separate focused runs, not one green full suite.
+
+## 2026-10-19 — Import completion and salary structure removal (operator-confirmed)
+
+- `SET-IMPORT-001 / SET_260–262`: **PASS (operator-reported)** after updating the wizard action to `Import 1`. The test checks the generated QA employee appears in Employees and remains visible after reloading.
+- `SET-STRUCT-REMOVE / SET_241–243`: **PASS (operator-reported)**; deletes only the newly created QA structure and verifies it remains absent after reopening.
+- **Cumulative distinct observed passing count = 40** across separate focused runs. Two confirmed product-defect checks `SET_195` and `SET_211` remain failing as designed.
+- Evidence for these last two tests is user confirmation in project conversation; separate Playwright screenshot/report for this run was not supplied.
+- This total is **not** the number of fully completed Excel scenarios. Workbook-wide mapping and full-suite run are still pending.
