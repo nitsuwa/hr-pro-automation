@@ -164,7 +164,7 @@ Record a failure's test ID, expected/actual, reproduction steps, environment, sc
 
 **Before demonstrating**, run selected tests once on the authorized prototype and ensure test data and login work. Avoid promising a live run will be green; the two duplicate-defect cases should still fail until fixed. Use `SET-LOANS-EDIT` or `SET-LOCATION-EDIT` for a passing demonstration, and `SET-JOBPOS-002` to illustrate defect detection. Each run creates QA test data; use approved environments only.
 
-**Current coverage matrix:** [59-group Setup Coverage Tracker](SETUP_CURRENT_COVERAGE_TRACKER.md) — reconciles the 46 automated checks to workbook groups, separating core checks, partial scenarios, confirmed defects and missing coverage.
+**Current coverage matrix:** [59-group Setup Coverage Tracker](SETUP_CURRENT_COVERAGE_TRACKER.md) — reconciles the latest 50 automated checks with core, partial, confirmed-defect, candidate-defect and missing workbook groups. **For the detailed reasons and a step-by-step demonstration using the unfinished SET_169 visible-error assertion, read [Why the Workbook Is Not Fully Automated & Live Test Demo](WORKBOOK_GAPS_AND_TEST_AUTHORING_DEMO.md).**
 
 ## 8. Verified full-suite run and release status
 
