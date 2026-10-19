@@ -141,3 +141,9 @@ These cases check deletion and persistence after reopening. Their real confirmat
 - User-provided official `employee-import-template.csv` has **39 columns**, comments describing valid values, and **no employee row**. Required: `Name *`, `Rate *`, `Date of Hiring *`; other valid fields tested selectively.
 - New **UNVERIFIED** `tests/regression/setup/employee-import.spec.ts` implements SET_260–262 as one employee import E2E candidate: dynamically download official template; preserve 39-column format; upload one fictitious QA record; confirm presence after reload.
 - Import uses a disposable QA record and skips an environment explicitly marked `production`. Do not run against live employee/payroll data.
+
+## 2026-10-19 — Import action and salary structure removal candidate
+
+- `SET-IMPORT-001`: initial **FAIL due to wrong button locator**, while uploaded CSV preview contained one Ready employee. Corrected to `Import 1`, with an explicit Ready-row assertion. **Employee import still unverified** until completion and persistence assertions pass.
+- `SET-STRUCT-CREATE` and `SET-STRUCT-EDIT`: **PASS as reported by local QA operator** after accessible-name whitespace correction.
+- New `SET-STRUCT-REMOVE / SET_241–243`: **NOT RUN**, creates a unique QA structure and confirms its removal and persistence after reopening. Does not touch seeded/default structures. Dialog behavior pending UI confirmation.
