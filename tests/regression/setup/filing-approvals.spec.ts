@@ -65,7 +65,7 @@ test.describe('HR PRO Setup — Filing & Approvals', () => {
     // Select a REAL editable absence row from the rendered DTR rather than
     // assuming the old inspection date (Sep 16) is always present.
     const dateRow = page
-      .getByRole('row', { name: /^[A-Z][a-z]{2} \\d{1,2} (?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)\\b/ })
+      .getByRole('row', { name: /^[A-Z][a-z]{2} \d{1,2} (?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)\b/ })
       .filter({ hasText: 'Absent (no leave)' })
       .filter({ has: page.getByRole('combobox') })
       .first();
