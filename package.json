@@ -12,7 +12,9 @@
     "test:ui": "playwright test --ui --project=chromium",
     "test:report": "playwright show-report",
     "test:setup": "playwright test tests/regression/setup --project=chromium",
-    "test:exploratory": "playwright test tests/infrastructure --project=chromium"
+    "test:exploratory": "playwright test tests/infrastructure --project=chromium",
+    "test:ui:setup": "playwright test tests/regression/setup --ui --project=chromium",
+    "test:ui:smoke": "playwright test tests/smoke --ui --project=chromium"
   },
   "keywords": [],
   "author": "",
