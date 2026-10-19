@@ -35,9 +35,18 @@ test('INVENTORY-V8 | Approver selectors and Employee edit form', async ({ page, 
       const labels = Array.from(document.querySelectorAll('label'));
       return {
         // Do not include heading texts containing employee names from details pages.
+        // Return category tokens only: profile headings may contain full names.
         headings: nodes('h1,h2,h3').map(e => clean(e.textContent))
-          .filter(x => /^(?:Employees|Employee|Edit|Approvers|Department|Profile|Compensation|Personal|Account|Access)/i.test(x) && x.length < 50)
-          .slice(0, 40),
+          .map(x => {
+            if (/^Approvers/i.test(x)) return 'Approvers';
+            if (/^Employees$/i.test(x)) return 'Employees';
+            if (/^Edit/i.test(x)) return 'Edit';
+            if (/^Compensation/i.test(x)) return 'Compensation';
+            if (/^Personal/i.test(x)) return 'Personal';
+            if (/^Employment/i.test(x)) return 'Employment';
+            if (/^Profile/i.test(x)) return 'Profile';
+            return '';
+          }).filter(Boolean).slice(0, 40),
         actionLabels: [...new Set(nodes('button,[role="tab"]').map(e => clean(e.getAttribute('aria-label') || e.textContent))
           .filter(x => /^(?:Edit|Save|Cancel|Delete|Remove|Archive|Approvers|Create|User account|Personal|Compensation|Employment|Settings|Access|— None|— Company default)/i.test(x))
           .map(x => /(^— None|^— Company default)/.test(x) ? x : x.slice(0, 75)))].slice(0, 75),
