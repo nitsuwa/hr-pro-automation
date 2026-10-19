@@ -24,7 +24,8 @@
     "test:ui:template": "playwright test tests/infrastructure/employee-template-capture.spec.ts --ui --project=chromium",
     "test:ui:people": "playwright test tests/infrastructure/setup-people-controls.spec.ts --ui --project=chromium",
     "test:ui:actions": "playwright test tests/infrastructure/setup-action-controls.spec.ts --ui --project=chromium",
-    "test:ui:holiday-leave-inspect": "playwright test tests/infrastructure/setup-holiday-leave-controls.spec.ts --ui --project=chromium"
+    "test:ui:holiday-leave-inspect": "playwright test tests/infrastructure/setup-holiday-leave-controls.spec.ts --ui --project=chromium",
+    "test:ui:leave-editor": "playwright test tests/infrastructure/setup-leave-editor.spec.ts --ui --project=chromium"
   },
   "keywords": [],
   "author": "",
