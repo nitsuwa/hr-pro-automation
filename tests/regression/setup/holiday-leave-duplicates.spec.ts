@@ -29,7 +29,7 @@ test.describe('HR PRO Setup — Holiday and Leave duplicate prevention', () => {
   const sameHolidayRow = (page: Page, name: string) => page.getByRole('row')
     .filter({ has: page.getByText(name, { exact: true }) });
 
-  async function addHoliday(page: Page, name: string, date: string) {
+  async function addHoliday(page: Page, name: string, date: string, duplicateAttempt = false) {
     await page.getByRole('button', { name: '+ Add Holiday', exact: true }).click();
     await expect(page.getByRole('heading', { name: 'Add Holiday', exact: true })).toBeVisible();
 
@@ -47,7 +47,15 @@ test.describe('HR PRO Setup — Holiday and Leave duplicate prevention', () => {
     if ((await location.locator('option').count()) > 1) {
       await location.selectOption({ index: 1 });
     }
-    await page.getByRole('button', { name: 'Add Holiday', exact: true }).click();
+    const save = page.getByRole('button', { name: 'Add Holiday', exact: true });
+    if (!duplicateAttempt) {
+      await expect(save).toBeEnabled();
+      await save.click();
+    } else if (await save.isEnabled()) {
+      await save.click();
+    } else {
+      await expect(save, 'Disabling duplicate creation is a valid rejection').toBeDisabled();
+    }
   }
 
   test('SET-HOLIDAY-DUP | SET_219 | An identical Holiday should not be saved twice', async ({ page, loginAs }) => {
@@ -65,7 +73,7 @@ test.describe('HR PRO Setup — Holiday and Leave duplicate prevention', () => {
 
     // Reload before the second attempt to avoid stale dialog state.
     await openTab(page, 'Holidays');
-    await addHoliday(page, name, date);
+    await addHoliday(page, name, date, true);
 
     // Reload dismisses any duplicate warning and proves persistence outcome.
     await page.reload({ waitUntil: 'domcontentloaded' });
@@ -82,18 +90,26 @@ test.describe('HR PRO Setup — Holiday and Leave duplicate prevention', () => {
     await openTab(page, 'Leave');
 
     const name = 'QA Dup Leave ' + id();
-    const add = async () => {
+    const add = async (duplicateAttempt = false) => {
       await page.getByRole('button', { name: '+ Add Leave Type', exact: true }).click();
       await expect(page.getByRole('heading', { name: 'Add leave type', exact: true })).toBeVisible();
       await page.getByPlaceholder('e.g. Bereavement Leave', { exact: true }).fill(name);
-      await page.getByRole('button', { name: 'Add leave type', exact: true }).click();
+      const save = page.getByRole('button', { name: 'Add leave type', exact: true });
+      if (!duplicateAttempt) {
+        await expect(save).toBeEnabled();
+        await save.click();
+      } else if (await save.isEnabled()) {
+        await save.click();
+      } else {
+        await expect(save, 'Disabling duplicate creation is a valid rejection').toBeDisabled();
+      }
     };
 
     await add();
     await expect(page.getByRole('button', { name: new RegExp(name) })).toHaveCount(1);
 
     await openTab(page, 'Leave');
-    await add();
+    await add(true);
     await page.reload({ waitUntil: 'domcontentloaded' });
     await openTab(page, 'Leave');
 
