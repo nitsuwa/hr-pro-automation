@@ -23,3 +23,11 @@ This file distinguishes scripts that exist from scripts that have been executed 
 ## Evidence rules
 
 Record every full or focused run here with its date, scenario ID, pass/fail/blocked classification and short defect reproduction steps. Do not count an inspection script that prints console logs without business assertions as a passing regression case.
+
+## 2026-10-19 — Filing & Approvals first run
+
+- **SET-FILING-001**: PASS (checkbox configuration persists).
+- **SET-FILING-002**: FAIL — automation fixture/date assumption; selector looked for `Sep 16 Wed`, while the Review screen displayed `Oct 16–31`. The test stopped before the leave submission, so this is **not evidence of an HR PRO functional defect**.
+- Evidence: UI Mode screenshot and Playwright accessibility snapshot supplied by tester.
+- Fix prepared on QA branch: select an actual editable absence row from the displayed DTR.
+- **Retest needed**: run only `SET-FILING-002` after fetching QA branch updates. Examine any subsequent failure independently.
