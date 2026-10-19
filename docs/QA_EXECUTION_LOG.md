@@ -217,3 +217,13 @@ Verified from operator-provided Playwright UI Mode screenshot:
 - `INVENTORY-V11`: **FAIL (inspection data dependency, not HR PRO defect)**. In this run, Leave Types listed only seeded SIL, VL, SL, while V11 expected an earlier `QA Leave` entry to remain. The environment did not retain/show the old QA row, so the locator found no element.
 - Updated inspector to **open seeded `VL Vacation Leave` read-only**, without filling, saving, or deleting anything, and to capture UI-control metadata. **Retest needed**. Do not assume QA rows persist across independent sessions/runs.
 - Earlier `SET-LEAVE-DUP` candidate bug #4 remains based on two same-label entries observed together *within its own test after reload*. The separate later run showing only seeded rows neither resolves nor confirms its uniqueness requirement.
+
+
+## 2026-10-19 — V11 Leave Type editor inspection received / next tests prepared
+
+- Read-only `setup-leave-editor.json` inspection **SUCCEEDED** using seeded Vacation Leave without modification. Confirmed visible actions `Remove leave type`, `Cancel`, `Save changes`. Form exposed exactly one text input (no accessible label), one numeric input and three checkboxes; no role=dialog.
+- Added **NOT RUN** `tests/regression/setup/leave-maintenance.spec.ts`:
+  - `SET-LEAVE-EDIT / SET_228`: create unique QA-only Leave Type, rename via verified editor textbox, save and reopen.
+  - `SET-LEAVE-REMOVE / SET_229`: create unique QA-only Leave Type, remove via verified action and assert absent after reopening.
+- Both require a local Playwright UI Mode run before claiming coverage. The workbook contains copied/ambiguous step text for these IDs.
+- Last combined suite baseline: **46 executed, 44 passed, 2 confirmed product-defect failures**. Separate Holiday DUP passed, Leave DUP failed as candidate issue #4; the combined baseline has not been rerun.
