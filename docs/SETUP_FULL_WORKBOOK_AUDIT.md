@@ -58,3 +58,11 @@ Evidence uploaded: `setup-form-inventory.json` (UI labels, no form values).
 - UI inventory confirmed the salary and allowance features live under **Smart Pay > Structures**, rather than Organization Setup.
 - The latest inventory also confirms the setup navigation buttons for Holidays and Leave.
 - **No pass/fail status** for the two new regression tests until the QA operator runs them.
+
+## Further candidate tests — 2026-10-19
+
+- **PASS observed** `tests/regression/setup/department-creation.spec.ts` (SET_177–181).
+- **PASS observed** `tests/regression/setup/employee-enrollment.spec.ts` (SET_263–265).
+- **NOT RUN** `tests/regression/setup/holiday-leave-allowance-creation.spec.ts` (SET_214–218, SET_222–226, SET_244–249). Three create-and-persistence cases; other steps/CRUD variations not covered.
+- `setup-dialog-inventory.json` supports forms for Holidays, Leave Types, Salary Rules, Allowances, import wizard and Users & Access.
+- Distinction: **Salary Rules** screen is not proof of full Excel **Salary Structures** workflow (SET_230–243); structure creation/edit/rule assignment/delete remain pending.
