@@ -1,8 +1,37 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HR PRO QA | Help Center</title>
-<style>
+<script>(function(){var t=null;try{t=localStorage.getItem('hrpro-qa-theme')}catch(e){};var dark=t==='dark'||(t!=='light'&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.dataset.theme=dark?'dark':'light'})();</script><style>
 :root{--navy:#292854;--blue:#3064b1;--teal:#16877f;--ink:#263353;--muted:#64728b;--line:#dde5ef;--bg:#f5f7fb}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font:15px/1.6 "Segoe UI",Arial,sans-serif;color:var(--ink);background:var(--bg)}a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}header{background:#fff;border-bottom:1px solid var(--line);padding:20px max(24px,calc((100% - 1180px)/2));display:flex;align-items:center;justify-content:space-between;gap:20px}header strong{font-size:19px;color:var(--blue);letter-spacing:.05em}header span{color:var(--muted);font-size:12px}.layout{display:grid;grid-template-columns:245px minmax(0,850px);max-width:1180px;margin:auto}aside{position:sticky;top:0;align-self:start;background:#fff;border-right:1px solid var(--line);min-height:100vh;padding:30px 20px}aside b{display:block;margin:18px 9px 9px;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#76849d}aside a{display:block;padding:10px 12px;border-radius:8px;color:#52617b;font-weight:600;font-size:13px}aside a:hover{background:#e6f4f1;color:#0a776d;text-decoration:none}main{padding:42px 54px 90px}section{scroll-margin-top:30px;margin-bottom:55px;padding-bottom:38px;border-bottom:1px solid var(--line)}h1{font-size:37px;line-height:1.16;letter-spacing:-.035em;color:var(--navy);margin:14px 0}h2{font-size:26px;color:var(--navy);margin:4px 0 15px;letter-spacing:-.025em}h3{font-size:15px;margin:0 0 4px;color:var(--navy)}p{margin:0 0 15px}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.12em;font-weight:800;color:var(--teal)}.lead{font-size:17px;color:var(--muted)}.intro,.card{background:#fff;border:1px solid var(--line);border-radius:13px;padding:23px;margin:16px 0}.row{display:grid;grid-template-columns:165px 1fr;gap:15px;padding:13px 16px;border-bottom:1px solid var(--line);font-size:13px;background:#fff}.row:nth-child(2n){background:#fafcff}.row:first-child{border-radius:9px 9px 0 0}.row:last-child{border:0;border-radius:0 0 9px 9px}.steps{display:grid;gap:8px;margin:18px 0}.step{background:#fff;border:1px solid var(--line);padding:14px 17px;border-radius:9px}.step b{color:var(--teal);margin-right:12px}.step p{margin:4px 0 0 38px;color:var(--muted);font-size:13px}.code{background:#212449;border-radius:10px;overflow:hidden;margin:15px 0}.code label{display:block;color:#95d4ca;padding:10px 15px;font-size:11px;font-weight:800;letter-spacing:.08em;border-bottom:1px solid #47496e}pre{white-space:pre-wrap;overflow-wrap:anywhere;padding:16px;color:#fff;font:13px/1.7 Consolas,monospace;margin:0}.notice{border-left:4px solid var(--teal);background:#e8f4f0;border-radius:7px;padding:15px 18px;margin:18px 0;font-size:13px}.notice.warn{border-color:#dea742;background:#fff3d8}.notice b{color:var(--navy)}.actions a{display:inline-block;margin:6px 7px 0 0;padding:9px 14px;background:var(--navy);color:#fff;border-radius:8px;font-weight:700;font-size:13px}.actions a.alt{background:#e8f4f0;color:#147268}.mini{font-size:12px;color:var(--muted)}code{font-family:Consolas,monospace}footer{color:var(--muted);font-size:12px;margin-top:45px}@media(max-width:760px){header{padding:15px 20px}.layout{display:block}aside{position:static;min-height:0;border-bottom:1px solid var(--line);padding:10px 16px;display:flex;flex-wrap:wrap;gap:5px}aside b{display:none}aside a{padding:6px 8px}main{padding:28px 20px}h1{font-size:31px}.row{grid-template-columns:1fr;gap:3px}h2{font-size:24px}}@media print{header,aside{display:none}.layout{display:block}main{padding:0}}
+
+:root{color-scheme:light}
+html[data-theme="dark"]{color-scheme:dark;--navy:#eef2ff;--blue:#9abfff;--teal:#74e4d2;--ink:#e0eaf7;--muted:#b5c3d9;--line:#374765;--bg:#111827}
+.theme-toggle{border:1px solid var(--line);border-radius:999px;padding:7px 12px;background:transparent;color:inherit;font:700 12px "Segoe UI",Arial,sans-serif;white-space:nowrap;cursor:pointer}
+.theme-toggle:hover{border-color:var(--teal);background:#e8f4f2}
+.theme-toggle:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+.theme-toggle__icon{font-size:15px;margin-right:6px}
+.top-actions{display:flex;align-items:center;gap:20px}
+html[data-theme="dark"] header,html[data-theme="dark"] aside,html[data-theme="dark"] .intro,html[data-theme="dark"] .card,html[data-theme="dark"] .step,html[data-theme="dark"] details,html[data-theme="dark"] .route article,html[data-theme="dark"] .ui-illustration{background:#19243a;border-color:var(--line)}
+html[data-theme="dark"] .theme-toggle:hover{background:#254950}
+html[data-theme="dark"] aside a{color:#bfcee6}
+html[data-theme="dark"] aside a:hover{background:#255052;color:#a8ffef}
+html[data-theme="dark"] .lead,html[data-theme="dark"] .step p,html[data-theme="dark"] .route p,html[data-theme="dark"] .mini,html[data-theme="dark"] .row,html[data-theme="dark"] footer{color:#c0cde0}
+html[data-theme="dark"] .row,html[data-theme="dark"] .line{background:#19243a;border-color:var(--line)}
+html[data-theme="dark"] .row:nth-child(2n),html[data-theme="dark"] .line:nth-child(even){background:#202e48}
+html[data-theme="dark"] .notice{background:#1a403e}
+html[data-theme="dark"] .notice.warn{background:#48381f}
+html[data-theme="dark"] .code{background:#0e172a}
+html[data-theme="dark"] .actions a{background:#405a90}
+html[data-theme="dark"] .actions a.alt{background:#244849;color:#c0fff4}
+html[data-theme="dark"] .ui-tests,html[data-theme="dark"] .ui-work{background:#1d2b44;border-color:var(--line)}
+html[data-theme="dark"] .ui-tests div{color:#c5d6ec}
+html[data-theme="dark"] .ui-tests div.pass{background:#1b493a;color:#9af3cb}
+html[data-theme="dark"] .ui-tests div.fail{background:#4c2837;color:#ffb8c6}
+html[data-theme="dark"] .ui-timeline{border-color:#607492;color:#add2ff}
+html[data-theme="dark"] .ui-bottom div{background:#202e48;border-color:var(--line);color:#d5e1f4}
+html[data-theme="dark"] .ui-bottom .err{border-color:#9f5672;color:#ffb1be}
+@media(max-width:760px){.top-actions>a{display:none}.top-actions{gap:8px}header{padding:14px 16px}.theme-toggle{padding:6px 10px}.theme-toggle__label{display:none}}
+@media print{html[data-theme="dark"] body{background:#fff;color:#263353}}
 </style></head><body>
-<header><strong>▦ HR PRO <span> / QA AUTOMATION HELP CENTER</span></strong><a href="https://github.com/nitsuwa/hr-pro-automation">GitHub repository ↗</a></header>
+<header><strong>▦ HR PRO <span> / QA AUTOMATION HELP CENTER</span></strong><div class="top-actions"><a href="https://github.com/nitsuwa/hr-pro-automation">GitHub repository ↗</a><button type="button" id="theme-toggle" class="theme-toggle" aria-label="Switch to dark mode" aria-pressed="false"><span class="theme-toggle__icon" aria-hidden="true">☾</span><span class="theme-toggle__label">Dark mode</span></button></div></header>
 <div class="layout"><aside><b>Get started</b><a href="#welcome">Overview</a><a href="#install">Install</a><a href="#run">Run a test</a><b>Learn</b><a href="#results">Read results</a><a href="#write">Create a test</a><b>Reference</b><a href="#files">Project structure</a><a href="#update">Update & help</a></aside><main>
 <section id="welcome"><div class="eyebrow">HR PRO / QA TEAM</div><h1>Automated testing,<br>made straightforward.</h1><p class="lead">A practical help center for the team's Playwright automation system—not a project report.</p><div class="actions"><a href="#install">Start here →</a><a class="alt" href="#run">Run a test</a><a class="alt" href="./README.md">Offline files & Word manual</a></div><div class="notice"><b>One system, three ways to use it.</b> This help center explains the workflow. The Word file in the handoff package is its offline companion. <a href="https://github.com/nitsuwa/hr-pro-automation">GitHub</a> contains the actual test scripts, issues and current execution records.</div></section>
 <section id="install"><div class="eyebrow">01 · First-time setup</div><h2>Install the project</h2><p>Install VS Code, Git and Node.js. Ask for repository access and an approved non-production HR PRO testing environment.</p><div class="steps"><div class="step"><b>01</b><strong>Open VS Code → Terminal → New Terminal</strong></div><div class="step"><b>02</b><strong>Clone the repo and install dependencies</strong><p>Use a folder where you want the project saved.</p></div></div><div class="code"><label>POWERSHELL / TERMINAL</label><pre>git clone https://github.com/nitsuwa/hr-pro-automation.git
@@ -27,4 +56,22 @@ test('QA-START | Settings is visible', async ({ page, loginAs }) => {
 git status
 git fetch origin
 git merge --ff-only origin/qa/setup-handoff-2026-10-19</pre></div><div class="notice"><b>Latest verified Setup baseline:</b> 50 checks executed in Chromium UI Mode: 47 passed, 3 failed. Two failures are confirmed duplicate-validation defects; Leave Type uniqueness needs requirement confirmation. This is not 59-of-59 workbook acceptance.</div><p>Need details? Read <a href="https://github.com/nitsuwa/hr-pro-automation/blob/qa/setup-handoff-2026-10-19/docs/QA_EXECUTION_LOG.md">execution records</a>, <a href="https://github.com/nitsuwa/hr-pro-automation/blob/qa/setup-handoff-2026-10-19/docs/SETUP_CURRENT_COVERAGE_TRACKER.md">remaining workbook coverage</a>, or <a href="https://github.com/nitsuwa/hr-pro-automation/issues">GitHub Issues</a>.</p><p>To use the Word file offline, download the handoff folder containing this HTML page and <code>HR_PRO_QA_Automation_Manual.docx</code>. The repository README is the team's documentation entry point.</p><footer>HR PRO QA · Playwright + TypeScript · October 2026</footer></section>
-</main></div></body></html>
+</main></div><script>
+const themeButton=document.getElementById('theme-toggle');
+function applyTheme(theme,save){
+  const dark=theme==='dark';
+  document.documentElement.dataset.theme=dark?'dark':'light';
+  themeButton.querySelector('.theme-toggle__icon').textContent=dark?'☀':'☾';
+  themeButton.querySelector('.theme-toggle__label').textContent=dark?'Light mode':'Dark mode';
+  themeButton.setAttribute('aria-label',dark?'Switch to light mode':'Switch to dark mode');
+  themeButton.setAttribute('aria-pressed',String(dark));
+  if(save)try{localStorage.setItem('hrpro-qa-theme',theme)}catch(e){}
+}
+applyTheme(document.documentElement.dataset.theme,false);
+themeButton.addEventListener('click',()=>applyTheme(document.documentElement.dataset.theme==='dark'?'light':'dark',true));
+if(window.matchMedia){
+  const systemTheme=matchMedia('(prefers-color-scheme: dark)');
+  const changed=e=>{let set=false;try{set=['dark','light'].includes(localStorage.getItem('hrpro-qa-theme'))}catch(e){}if(!set)applyTheme(e.matches?'dark':'light',false)};
+  if(systemTheme.addEventListener)systemTheme.addEventListener('change',changed);
+}
+</script></body></html>
