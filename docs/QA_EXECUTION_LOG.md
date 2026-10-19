@@ -182,3 +182,15 @@ Verified from operator-provided Playwright UI Mode screenshot:
 - `SET-HOLIDAY-REMOVE / SET_218–221 (partial)`: **PASS (operator-reported)** in Playwright UI Mode. Test created a uniquely named QA holiday, removed only that exact row, and asserted absence after reopening the Holidays section.
 - Source workbook caveat: SET_218–221 contains copied Work Location/Position terminology; treat this as verified **Holiday remove behavior** but **not** complete validation of every written workbook step.
 - **44 distinct tests have now been observed passing across separate UI runs**, plus 2 confirmed duplicate-validation failures (`SET_195`, `SET_211`). There is no combined clean full-suite result.
+
+
+## 2026-10-19 — FIRST COMPLETE SETUP SUITE BASELINE (Playwright UI Mode)
+
+- **Command:** `npm run test:ui:setup`; Chromium project, `tests/regression/setup/` (46 tests).
+- **Observed:** **46/46 completed: 44 PASS, 2 FAIL**, **0 skipped** shown; **95.7% passing** (44/46). This is the first combined full Setup execution, as distinct from earlier focused runs. Screenshots and full Playwright error/snapshot text supplied by QA operator.
+- **PASS:** All other 44 Setup tests, including Company Profile, Contribution Settings, Employee Management, Catalog CRUD (aside from duplicate validation), Department Approvers, Salary Structure tests, and Holiday/Leave/Allowance cases.
+- **FAIL — confirmed prototype defect `SET-JOBPOS-002 / SET_195`:** Adding the same freshly generated Job Position twice creates **two persisted table rows** with exact title `QA Dup Position mvetckbh`. After returning to Settings > Job Positions, `toHaveCount(1)` received 2. Issue: https://github.com/nitsuwa/hr-pro-automation/issues/2
+- **FAIL — confirmed prototype defect `SET-LOCATION-002 / SET_211`:** Adding the same freshly generated Work Location twice creates **two persisted rows** with exact name `QA Dup Location mvetcwm8`. After returning to Settings > Work Locations, `toHaveCount(1)` received 2. Issue: https://github.com/nitsuwa/hr-pro-automation/issues/3
+- **Classification:** These are application duplicate-validation failures, **not broken test locators**. **Keep the failing assertions** until HR PRO itself prevents duplicates and the same negative scenarios pass.
+- **Coverage caveat:** 46 automated tests does **not** mean all 59 Excel scenario groups or every expected business result is covered. Workbook has unresolved copied/ambiguous steps and substantial overtime, LILO, contribution arithmetic, payroll segregation/approvals and edit-time user-account workflow gaps.
+- **Test-data hygiene:** Each repeat of the two known failing cases creates two uniquely named QA records. Avoid running the entire suite repeatedly until a cleanup strategy is established; test-run browser isolation does not guarantee persistent application test data is removed.
