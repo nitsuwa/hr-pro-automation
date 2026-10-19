@@ -194,3 +194,11 @@ Verified from operator-provided Playwright UI Mode screenshot:
 - **Classification:** These are application duplicate-validation failures, **not broken test locators**. **Keep the failing assertions** until HR PRO itself prevents duplicates and the same negative scenarios pass.
 - **Coverage caveat:** 46 automated tests does **not** mean all 59 Excel scenario groups or every expected business result is covered. Workbook has unresolved copied/ambiguous steps and substantial overtime, LILO, contribution arithmetic, payroll segregation/approvals and edit-time user-account workflow gaps.
 - **Test-data hygiene:** Each repeat of the two known failing cases creates two uniquely named QA records. Avoid running the entire suite repeatedly until a cleanup strategy is established; test-run browser isolation does not guarantee persistent application test data is removed.
+
+
+## 2026-10-19 — Next Holiday and Leave validations prepared (NOT RUN)
+
+- Two NEW negative tests in `tests/regression/setup/holiday-leave-duplicates.spec.ts`: `SET-HOLIDAY-DUP / SET_219` and `SET-LEAVE-DUP / SET_227`. Each creates its own uniquely named fictional QA entry and attempts to add it again; then reloads and asserts exactly one remains. **Both await UI Mode execution**; a red result from 2 persisted entries may be a product defect needing reproduction.
+- Source workbook for SET_219 and SET_227 has contradictory/copy-pasted wording; QA/business interpretation of duplicate prevention needs owner acceptance. These scripts are candidate negative checks, **not proof of complete Excel acceptance**.
+- Read-only UI inspection `tests/infrastructure/setup-holiday-leave-controls.spec.ts`, command `npm run test:ui:holiday-leave-inspect`, writes `qa-artifacts/setup-holiday-leave-controls.json` and will enable safe Holiday Edit / Leave Edit / Leave Remove scripts.
+- **Baseline remains 46 executed, 44 PASS, 2 known product-defect FAIL**. New candidates not included in this result; live QA data may persist between runs.
