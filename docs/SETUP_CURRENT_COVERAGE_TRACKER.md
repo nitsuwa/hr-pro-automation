@@ -14,12 +14,13 @@
 | Classification | Scenario groups | Interpretation |
 | --- | ---: | --- |
 | Core check passed | 26 | A mapped regression check passed; not automatic certification of every Excel step |
-| Partial verification | 12 | At least one relevant check passed, but material required outcomes still need assertions or owner confirmation |
+| Partial verification | 15 | At least one relevant check passed, but material required outcomes still need assertions or owner confirmation |
 | Defect confirmed | 2 | Negative assertions correctly catch behavior currently failing the workbook requirement |
-| No validated coverage | 19 | No dedicated permanent, verified check of the scenario's intended business result |
+| Candidate defect | 1 | Two matching Leave labels were observed; uniqueness requirement awaits owner confirmation | 
+| No validated coverage | 15 | No dedicated permanent, verified check of the scenario's intended business result |
 | **Total** | **59** | |
 
-**Work remaining:** 19 groups do not have dedicated validated coverage; four of those (`SET_198–205`) are contradictory/copy-pasted workbook entries that may be resolved by requirements clarification and mapping to existing Work Location tests. This leaves **up to 15 distinct unaddressed groups** before accounting for the 12 partial ones. **This is NOT a promise that 15 new scripts/files are sufficient**; an individual group may need multiple assertions or manual/external evidence.
+**Work remaining:** 15 groups have no dedicated validated coverage and 15 are partially verified. Four of the 15 uncovered groups (`SET_198–205`) contain contradictory/copy-pasted instructions that may be resolved through owner clarification and mapping to existing Work Location tests. Thus, at most **11 distinct uncovered groups** remain if all four conflicts turn out to be duplications, **in addition to the 15 partial groups and one candidate defect**. These are scenario groups, **not a count of scripts or files required**.
 
 ## 59-group checklist
 
@@ -67,13 +68,13 @@
 | 40 | SET_212 | Edit work location | Core check passed | Existing regression check passed; validate full workbook step mapping before final sign-off |
 | 41 | SET_213 | Remove work location | Core check passed | Existing regression check passed; validate full workbook step mapping before final sign-off |
 | 42 | SET_214–218 | Create holiday | Core check passed | Existing regression check passed; validate full workbook step mapping before final sign-off |
-| 43 | SET_219 | Duplicate holiday | No validated coverage | Clarify copied wording; add QA-only duplicate Holiday regression |
+| 43 | SET_219 | Duplicate holiday | Partial verification | QA-only duplicate prevention test passed in updated 50-test run; copied workbook wording still needs owner confirmation |
 | 44 | SET_220 | Edit holiday | No validated coverage | Clarify copied wording; add QA-only edit Holiday regression |
 | 45 | SET_221 | Remove holiday | Partial verification | Holiday removal test passed; worksheet contains contradictory copied wording |
 | 46 | SET_222–226 | Create leave type | Core check passed | Existing regression check passed; validate full workbook step mapping before final sign-off |
-| 47 | SET_227 | Duplicate leave type | No validated coverage | Clarify copied Holiday wording; add Leave duplicate validation |
-| 48 | SET_228 | Edit leave type | No validated coverage | Clarify copied Work Location wording; add Leave edit persistence |
-| 49 | SET_229 | Remove leave type | No validated coverage | Clarify copied wording; add Leave removal |
+| 47 | SET_227 | Duplicate leave type | Candidate defect | Identical Leave labels persisted under different codes; issue #4; require owner decision about label uniqueness |
+| 48 | SET_228 | Edit leave type | Partial verification | QA-only Leave rename persisted after confirming Save Changes; copied workbook instructions need owner reconciliation |
+| 49 | SET_229 | Remove leave type | Partial verification | QA-only Leave removal and persistence passed; copied workbook instructions need owner reconciliation |
 | 50 | SET_230–243 | Salary structure create/edit/remove and rules | Partial verification | Create/edit/remove scripts passed; reconcile rule ordering/default settings to full expected steps |
 | 51 | SET_244–249 | Create allowance | Core check passed | Existing regression check passed; validate full workbook step mapping before final sign-off |
 | 52 | SET_250–252 | Edit allowance | Core check passed | Existing regression check passed; validate full workbook step mapping before final sign-off |
@@ -87,12 +88,12 @@
 
 ## Priorities for the October 21 team presentation
 
-1. **Present what is already real:** 46-test UI Mode baseline; 44 green checks; two intentionally failing product defects; setup, execution, trace inspection, and authoring a new test.
+1. **Present what is already real:** updated 50-test UI Mode baseline; 47 green checks; two confirmed product defects and one candidate; setup, execution, trace inspection, and authoring a new test.
 2. **Mark exceptions clearly:** statutory calculations are not fully tested by persistence assertions; LILO/overtime/payroll SoD needs real workflow evidence; some workbook steps have copied text.
-3. **Do not claim 59 of 59 complete.** Present a maintainable framework and a prioritized backlog for the next QA owner.
+3. **Do not claim 59 of 59 complete.** Present a maintainable framework, the [reason for remaining coverage](WORKBOOK_GAPS_AND_TEST_AUTHORING_DEMO.md), and a prioritized backlog for the next QA owner.
 4. **Use only authorized prototype/sandbox data.** Some tests modify shared Setup state and create persistent QA records. Repeating duplicate tests creates duplicate catalog entries requiring controlled cleanup.
 
-**Related documents:** [Team Handoff & Live Demo Guide](TEAM_HANDOFF_DEMO_GUIDE.md), [Execution Evidence Log](QA_EXECUTION_LOG.md), [Initial Workbook Audit](SETUP_FULL_WORKBOOK_AUDIT.md).
+**Related documents:** [Why Remaining Scenarios Are Incomplete + Live Demo](WORKBOOK_GAPS_AND_TEST_AUTHORING_DEMO.md), [Team Handoff & Live Demo Guide](TEAM_HANDOFF_DEMO_GUIDE.md), [Execution Evidence Log](QA_EXECUTION_LOG.md), [Initial Workbook Audit](SETUP_FULL_WORKBOOK_AUDIT.md).
 
 
 ## Scripts created after the full-suite baseline (unverified)
