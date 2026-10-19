@@ -15,6 +15,7 @@ test('SET-USER-001 | SET_271–274 | Enrolling an employee with account option a
   await settings.employeeIdMode.selectOption('auto');
 
   const employees = new EmployeesPage(page);
+  await employees.open();
   await employees.openEnrollment();
 
   const suffix = Date.now().toString(36);
