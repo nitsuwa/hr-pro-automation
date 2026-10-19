@@ -66,3 +66,5 @@ Evidence uploaded: `setup-form-inventory.json` (UI labels, no form values).
 - **NOT RUN** `tests/regression/setup/holiday-leave-allowance-creation.spec.ts` (SET_214–218, SET_222–226, SET_244–249). Three create-and-persistence cases; other steps/CRUD variations not covered.
 - `setup-dialog-inventory.json` supports forms for Holidays, Leave Types, Salary Rules, Allowances, import wizard and Users & Access.
 - Distinction: **Salary Rules** screen is not proof of full Excel **Salary Structures** workflow (SET_230–243); structure creation/edit/rule assignment/delete remain pending.
+
+- **NOT RUN** `tests/regression/setup/employee-user-creation.spec.ts` (SET_271–274) now tests creation of employee plus corresponding user in Users & Access, using a unique example.com address. All tests are isolated browser contexts and the app says invitations are simulated. Separate SET_275–278 (create user when editing employee) remains pending.
