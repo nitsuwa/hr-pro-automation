@@ -34,12 +34,12 @@ test.describe('HR PRO Setup — Holidays, Leave Types, and Allowances', () => {
     await page.getByLabel('Date*', { exact: true }).fill(date);
     await page.getByLabel('Holiday name*', { exact: true }).fill(name);
 
-    const type = page.getByLabel('Type', { exact: true });
+    const type = page.getByRole('combobox', { name: 'Type', exact: true });
     await expect(type).toBeVisible();
     expect(await type.locator('option').count(), 'A holiday type should be selectable').toBeGreaterThan(1);
     await type.selectOption({ index: 1 });
 
-    const location = page.getByLabel('Work Location', { exact: true });
+    const location = page.getByRole('combobox', { name: 'Work Location', exact: true });
     await expect(location).toBeVisible();
     // Location is optional; select a concrete one when the test fixture provides it.
     if (await location.locator('option').count() > 1) {
@@ -87,7 +87,7 @@ test.describe('HR PRO Setup — Holidays, Leave Types, and Allowances', () => {
     await page.getByLabel('Allowance name*', { exact: true }).fill(name);
 
     for (const label of ['Tax treatment', 'Frequency'] as const) {
-      const select = page.getByLabel(label, { exact: true });
+      const select = page.getByRole('combobox', { name: label, exact: true });
       await expect(select).toBeVisible();
       // Retain an explicit default if the form has no alternate choice.
       const count = await select.locator('option').count();
