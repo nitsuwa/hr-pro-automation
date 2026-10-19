@@ -108,3 +108,8 @@
 - `SET-LEAVE-DUP / SET_227`: **FAIL observed** with two identical leave labels saved under different codes. Candidate bug [#4](https://github.com/nitsuwa/hr-pro-automation/issues/4); leave label uniqueness needs owner confirmation and follow-up reproduction.
 - V10 inspection: Holiday list showed Remove only, no Edit control; Leave expanded panel did not reveal generic Edit/Remove/Save controls.
 - **Do not revise the 46-test baseline counts** to include these later focused runs; a new combined suite run is required for updated total.
+
+
+## 2026-10-19 — Leave Edit / Remove ready for first execution
+
+Read-only V11 editor inventory confirmed a text field with no label, plus `Save changes` and `Remove leave type` actions. Two QA-only, independent candidate regression tests now exist in `tests/regression/setup/leave-maintenance.spec.ts`: **SET_228 edit**, **SET_229 remove**. Both are **NOT RUN**, and the scenario text still needs owner clarification. Historical classification table above is unchanged until execution.
