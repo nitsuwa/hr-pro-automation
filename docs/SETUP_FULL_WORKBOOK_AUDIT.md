@@ -1,6 +1,6 @@
 # Setup Workbook Coverage Audit — 19 October 2026
 
-> **Read first:** The opening counts below capture the **initial audit**, before subsequent tests were implemented. For the latest observed execution results, see `docs/QA_EXECUTION_LOG.md`. As of the latest operator update, **44 distinct tests were observed passing across separate runs and 2 duplicate-validation checks are confirmed failing application defects**. Neither count measures completed Excel scenario groups. Full 59-group reconciliation is still pending. See `docs/TEAM_HANDOFF_DEMO_GUIDE.md` for handoff instructions.
+> **Read first:** The opening counts below capture the **initial audit**, before subsequent tests were implemented. For the latest observed execution results, see `docs/QA_EXECUTION_LOG.md`. The first combined Setup UI Mode baseline on 19 October 2026 ran **46 tests: 44 passed, 2 failed (confirmed application duplicate-validation defects), 0 skipped**. Neither count measures completed Excel scenario groups. Full 59-group reconciliation is still pending. See `docs/TEAM_HANDOFF_DEMO_GUIDE.md` for handoff instructions.
 
 Source: `HR PRO + Set up (1).xlsx`, tab **Set up**, `SET_001`–`SET_278`.
 
