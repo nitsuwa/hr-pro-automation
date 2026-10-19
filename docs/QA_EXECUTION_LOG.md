@@ -161,3 +161,10 @@ Verified from operator-provided Playwright UI Mode screenshot:
 - `setup-action-controls.json` uploaded by local QA tester: Approver editor renders a custom `listbox` with 12 `option` controls and a toggle `button[aria-haspopup="listbox"]`. Employee list reveals a Delete action after selecting a row. V9 Employee detail inspector also failed solely from the same whitespace locator.
 - `SET-DEPT-APPROVER` and `SET-EMP-REMOVE` newly scripted as **NOT RUN**. Both use a fresh QA-only target. Do not count them as passes until confirmed by Playwright UI Mode. Edit/create-linked-user flow remains pending.
 - Cumulative distinct passing count **remains 40** across earlier separate runs, plus 2 confirmed duplicate-validation product defects.
+
+## 2026-10-19 — Employee edit/removal and Department Approvers
+
+- `SET-EMP-EDIT / SET_266–268`: **PASS (operator-reported)** after fixing accessible field/button names.
+- `SET-EMP-REMOVE / SET_269–270`: **PASS (operator-reported)** for a freshly created QA employee.
+- `SET-DEPT-APPROVER / SET_185–189`: **FAIL — automation assertion issue**, not a demonstrated application defect. Clicking an option succeeded and the collapsed picker visibly showed the chosen name. Original test compared the entire expanded option string (name + job position + department) with the collapsed name-only string. Now only the approver name (first line) is asserted, both before saving and after reopening. **Retest needed** for Save/persistence; partial scenario coverage only.
+- Observed cumulative distinct passing test count: **42** across separate runs, with 2 confirmed duplicate-validation prototype defects. All 59 Excel groups are not yet fully verified.
