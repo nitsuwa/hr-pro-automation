@@ -227,3 +227,10 @@ Verified from operator-provided Playwright UI Mode screenshot:
   - `SET-LEAVE-REMOVE / SET_229`: create unique QA-only Leave Type, remove via verified action and assert absent after reopening.
 - Both require a local Playwright UI Mode run before claiming coverage. The workbook contains copied/ambiguous step text for these IDs.
 - Last combined suite baseline: **46 executed, 44 passed, 2 confirmed product-defect failures**. Separate Holiday DUP passed, Leave DUP failed as candidate issue #4; the combined baseline has not been rerun.
+
+
+## 2026-10-19 — Leave Type Edit/Remove first execution
+
+- `SET-LEAVE-REMOVE / SET_229`: **PASS (operator screenshot)**, 4.4 seconds. A newly created QA Leave Type was removed and stayed absent.
+- `SET-LEAVE-EDIT / SET_228`: **FAIL — missed confirmation modal, not a product defect**. The first `Save changes` opened the application dialog `Update QA Edit Leave ...?` with a correct old-to-new label preview; script incorrectly asserted the changed table row *before clicking the dialog's own Save changes*. Updated Playwright to verify and confirm only the intended QA rename, await dialog dismissal, then assert persistence. **Retest pending**.
+- Combined full-suite baseline remains **46 tests: 44 passed, 2 confirmed prototype defects**. This new Leave Remove pass occurred in a separate focused run. The Leave Duplicate issue #4 remains candidate/pending requirements confirmation.
