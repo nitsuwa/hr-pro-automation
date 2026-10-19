@@ -45,7 +45,7 @@ test.describe('HR PRO Setup — Filing & Approvals', () => {
     await loginAs('systemAdmin');
     await requireFilingApprovals(page);
 
-    // Uses the seeded demo employee/date from the earlier inspection script.
+    // Uses the seeded demo employee; select an editable DTR date dynamically.
     await page.goto('/timesheet', { waitUntil: 'domcontentloaded' });
     await page.getByLabel('Payroll date', { exact: true }).fill('2026-09-20');
     await page.getByLabel(/^Batch name/).fill(`QA_SET087_${Date.now()}`);
@@ -61,12 +61,20 @@ test.describe('HR PRO Setup — Filing & Approvals', () => {
     await expect(reviewRow).toBeVisible();
     await reviewRow.click();
 
-    const dateRow = page.getByRole('row', { name: /^Sep 16 Wed/ });
-    await expect(dateRow).toBeVisible();
+    // The active review cutoff can differ from the payroll date entered above.
+    // Select a REAL editable absence row from the rendered DTR rather than
+    // assuming the old inspection date (Sep 16) is always present.
+    const dateRow = page
+      .getByRole('row', { name: /^[A-Z][a-z]{2} \\d{1,2} (?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)\\b/ })
+      .filter({ hasText: 'Absent (no leave)' })
+      .filter({ has: page.getByRole('combobox') })
+      .first();
+    await expect(dateRow, 'An editable absence row must exist in the active DTR').toBeVisible();
+    const selectedDate = (await dateRow.getByRole('cell').first().innerText()).trim();
     const statusSelect = dateRow.getByRole('combobox');
     const options = await statusSelect.locator('option').allTextContents();
     const leaveName = options.find((option) => /SIL leave/i.test(option));
-    expect(leaveName, 'Seeded employee should offer SIL leave for Sep 16').toBeTruthy();
+    expect(leaveName, `Seeded employee should offer SIL leave for ${selectedDate}`).toBeTruthy();
 
     const getApprovalState = () => page.evaluate(() => ({
       requests: localStorage.getItem('hrpro:leaveRequests'),
