@@ -57,7 +57,9 @@ test('SET-DEPT-APPROVER | SET_185–189 | New QA department approver assignment 
   const candidate = listbox.getByRole('option')
     .filter({ hasNotText: /^(?:\s*—?\s*None|.*Company default)/i }).first();
   await expect(candidate, 'A selectable approver must be available in the QA fixture').toBeVisible();
-  const chosen = (await candidate.innerText()).trim();
+  // The expanded option includes the employee name PLUS job/department
+  // metadata; the collapsed picker only renders the employee name.
+  const chosen = (await candidate.innerText()).split(/\r?\n/)[0].trim();
   expect(chosen, 'Approver display name should not be blank').not.toBe('');
   await candidate.click();
   await expect(firstApprover, 'Selection must be shown in the edit form').toContainText(chosen);
