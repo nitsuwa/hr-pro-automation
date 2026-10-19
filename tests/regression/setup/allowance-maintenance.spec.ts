@@ -6,8 +6,8 @@ import type { Page } from '@playwright/test';
  * Both tests create their own QA-only Allowance, never alter seeded entries.
  * They require an approved non-production HR PRO test environment.
  *
- * NOTE: These are initial candidates: the inventory captured the Add form,
- * but the edit and removal dialogs require verification in UI Mode.
+ * The Edit Allowance overlay is verified by the Playwright accessibility
+ * snapshot; remove behavior has a verified passing UI Mode run.
  */
 test.describe('HR PRO Setup — Allowance maintenance', () => {
   test.skip(
@@ -43,22 +43,15 @@ test.describe('HR PRO Setup — Allowance maintenance', () => {
     const row = await createAllowance(page, original);
     await row.getByRole('button', { name: 'Edit', exact: true }).click();
 
-    const editor = page.getByRole('dialog').or(page.getByRole('form')).filter({
-      has: page.getByRole('button', { name: /save changes/i }),
-    }).first();
-
-    // The app may use an inline editing row, so fall back to a visible textbox
-    // scoped to the original QA row; do not edit any other allowance.
-    const dialogInput = editor.getByRole('textbox', { name: /Allowance name/i });
-    const inlineInput = allowanceRow(page, original).getByRole('textbox');
-    if (await dialogInput.count() && await dialogInput.isVisible()) {
-      await dialogInput.fill(updated);
-      await editor.getByRole('button', { name: /save changes/i }).click();
-    } else {
-      await expect(inlineInput, 'An allowance editor should be opened').toBeVisible();
-      await inlineInput.fill(updated);
-      await allowanceRow(page, original).getByRole('button', { name: /^save/i }).click();
-    }
+    // The Edit Allowance overlay is a plain modal container, not an
+    // accessible role="dialog" or an inline table editor. Its controls
+    // are exposed directly in the accessibility tree.
+    await expect(page.getByRole('heading', { name: 'Edit Allowance', exact: true })).toBeVisible();
+    const nameInput = page.getByRole('textbox', { name: 'Allowance name *', exact: true });
+    await expect(nameInput).toHaveValue(original);
+    await nameInput.fill(updated);
+    await page.getByRole('button', { name: 'Save Changes', exact: true }).click();
+    await expect(page.getByRole('heading', { name: 'Edit Allowance', exact: true })).toBeHidden();
 
     await expect(allowanceRow(page, updated), 'Updated allowance should replace original').toHaveCount(1);
     await expect(allowanceRow(page, original)).toHaveCount(0);
