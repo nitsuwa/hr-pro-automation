@@ -48,3 +48,10 @@ Record every full or focused run here with its date, scenario ID, pass/fail/bloc
 - UI screenshot shows 3/3 (catalog suite selected) and separately green Company profile test.
 - Running totals *across separate focused runs*: initial 11 + filing approvals 2 + catalog/company 4 = **17 distinct tests observed passing**. This is **not** an assertion that all 17 passed simultaneously in one full run, nor that 17 complete Excel scenarios are covered.
 - Remaining scope: loan duplicate/edit/remove; position/location duplicate/edit/remove; Company profile other required fields/logo; all other missing test groups.
+
+## 2026-10-19 — Department and employee enrollment
+
+- **SET-DEPT-001 (SET_177–181)**: PASS (Playwright UI Mode green check, screenshot provided).
+- **SET-ENROLL-001 (SET_263–265)**: PASS (4.9s, UI Mode screenshot).
+- **Running observed distinct-pass count: 19 across focused runs**, not one full suite execution.
+- Follow-up: capture more detailed modal forms; `setup-dialog-inventory.json` was shared and validated by the user.
