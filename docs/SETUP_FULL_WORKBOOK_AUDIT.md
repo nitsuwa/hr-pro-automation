@@ -133,3 +133,11 @@ These cases check deletion and persistence after reopening. Their real confirmat
 - `tests/infrastructure/employee-template-capture.spec.ts`: read-only template download into `qa-artifacts/employee-import-template.csv` or `.xlsx` etc. UI command `npm run test:ui:template`; once provided to QA, use its actual columns to implement an end-to-end SET_260–262 upload/import test with unique fictitious employee data.
 - The earlier `SET-IMPORT-TEMPLATE / SET_256–259` test **PASSED**, but importing a completed file is NOT yet validated.
 - Current operator evidence: **36 distinct passing checks across focused runs, two confirmed negative defect failures**. Not the whole 59-group workbook.
+
+
+## 2026-10-19 — Salary rule locator correction and real CSV import candidate
+
+- Initial `salary-structures.spec.ts` test run: **both FAIL from a mistaken accessible name** `Basic SalaryBASIC EARNING` (missing spaces). Page snapshot confirms real accessible button `Basic Salary BASIC EARNING ＋`. Fixed to whitespace-tolerant regex. Both need retest; no HR PRO product defect identified.
+- User-provided official `employee-import-template.csv` has **39 columns**, comments describing valid values, and **no employee row**. Required: `Name *`, `Rate *`, `Date of Hiring *`; other valid fields tested selectively.
+- New **UNVERIFIED** `tests/regression/setup/employee-import.spec.ts` implements SET_260–262 as one employee import E2E candidate: dynamically download official template; preserve 39-column format; upload one fictitious QA record; confirm presence after reload.
+- Import uses a disposable QA record and skips an environment explicitly marked `production`. Do not run against live employee/payroll data.
