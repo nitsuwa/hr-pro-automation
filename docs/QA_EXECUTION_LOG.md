@@ -121,3 +121,12 @@ Each uses a fresh QA-only record and checks removal after reopening the Setup se
 - `SET-IMPORT-TEMPLATE / SET_256–259`: **NOT CONFIRMED** in the screenshots provided; please run/check separately.
 - Uploaded `setup-advanced-inventory.json`: Salary Structure blank form exposes `Structure name*`, search rules input and `Add Structure`; Department approvers shows `Save Changes`; employee edit still not captured because inspector remained on Employees list.
 - Cumulative distinct passing checks: **34**, across separate focused runs, not a full-suite run. Confirmed negative product findings #2 and #3 remain unchanged.
+
+## 2026-10-19 — Allowance Edit and Import Template retest
+
+Verified from operator-provided Playwright UI Mode screenshot:
+- `SET-ALLOW-EDIT / SET_250–252`: PASS (8.9s) after correcting Edit Allowance modal locators.
+- `SET-ALLOW-REMOVE / SET_253–255`: PASS again (4.8s), was already counted.
+- `SET-IMPORT-TEMPLATE / SET_256–259`: PASS (2.9s); validates downloadable, nonempty spreadsheet/template. This is **not** the actual import/upload validation required by SET_260–262.
+
+**Cumulative distinct tests observed passing in focused UI Mode runs = 36.** Two confirmed failing duplicate-validation tests remain.
