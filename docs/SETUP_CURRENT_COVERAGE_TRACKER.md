@@ -100,3 +100,11 @@
 - `SET-LEAVE-DUP / SET_227` — new candidate negative regression; **not run**. Leave Type duplicate definition inferred from scenario heading.
 - `INVENTORY-V10` — **read-only** control discovery for Holiday Edit and Leave Type management, result `setup-holiday-leave-controls.json`; this is not workbook coverage.
 - The 59-group classification table above is the last **verified baseline**; do not move a candidate from no coverage to passing without the test execution result and business requirement review.
+
+
+## 2026-10-19 — New focused negative tests after the 46-test baseline
+
+- `SET-HOLIDAY-DUP / SET_219`: **PASS observed**, but original workbook text still needs clarification. It is a new test added after the baseline.
+- `SET-LEAVE-DUP / SET_227`: **FAIL observed** with two identical leave labels saved under different codes. Candidate bug [#4](https://github.com/nitsuwa/hr-pro-automation/issues/4); leave label uniqueness needs owner confirmation and follow-up reproduction.
+- V10 inspection: Holiday list showed Remove only, no Edit control; Leave expanded panel did not reveal generic Edit/Remove/Save controls.
+- **Do not revise the 46-test baseline counts** to include these later focused runs; a new combined suite run is required for updated total.
