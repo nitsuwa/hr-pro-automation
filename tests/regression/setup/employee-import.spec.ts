@@ -52,7 +52,6 @@ test('SET-IMPORT-001 | SET_260–262 | Upload filled CSV template and import a Q
     'Rate *': '22000',
     'Pay Schedule': 'Semi-Monthly',
     'Date of Hiring *': '2026-10-01',
-    'OT Applicable': 'Yes',
     'Employment Type': 'Regular',
     'Employment Status': 'Active',
   };
