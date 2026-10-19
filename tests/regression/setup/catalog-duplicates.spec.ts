@@ -34,12 +34,21 @@ test.describe('HR PRO Setup — Duplicate catalog validation', () => {
     if (await add.isEnabled()) await add.click();
   }
 
-  async function enterDepartmentName(page: Page, name: string) {
+  async function enterDepartmentName(page: Page, name: string, dismissSuccess = false) {
     await page.getByRole('button', { name: '+ Add Department', exact: true }).click();
     const input = page.getByRole('textbox', { name: 'Department name', exact: true });
     await expect(input).toBeVisible();
     await input.fill(name);
     await input.press('Enter');
+
+    // The first successful creation displays a blocking alertdialog.
+    // Dismiss it through the UI; never bypass overlays with force-click.
+    if (dismissSuccess) {
+      const dialog = page.getByRole('alertdialog', { name: /^Added / });
+      await expect(dialog).toBeVisible();
+      await dialog.getByRole('button', { name: 'OK', exact: true }).click();
+      await expect(dialog).toBeHidden();
+    }
   }
 
   async function enterPositionName(page: Page, name: string) {
@@ -73,7 +82,7 @@ test.describe('HR PRO Setup — Duplicate catalog validation', () => {
     await loginAs('systemAdmin');
     await openSetupTab(page, 'Departments');
     const name = `QA Dup Dept ${runId()}`;
-    await enterDepartmentName(page, name);
+    await enterDepartmentName(page, name, true);
     await expect(page.getByRole('row').filter({ hasText: name })).toHaveCount(1);
 
     await enterDepartmentName(page, name);
