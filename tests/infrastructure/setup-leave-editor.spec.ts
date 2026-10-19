@@ -3,19 +3,23 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 /**
- * READ ONLY — opens a QA-created Leave Type to discover its edit/remove
- * controls. Does not save, change, delete, or remove any record.
+ * READ ONLY — opens the existing Vacation Leave (VL) edit panel to
+ * discover available controls. Never fills, saves, removes, or confirms.
+ * Does not depend on QA-created records persisting across test runs.
  * Captures generic control names and field metadata, NOT field values.
  */
-test('INVENTORY-V11 | Open existing QA Leave Type edit panel (read-only)', async ({ page, loginAs }) => {
+test('INVENTORY-V11 | Inspect Leave Type edit panel (read-only)', async ({ page, loginAs }) => {
   await loginAs('systemAdmin');
   await page.goto('/settings', { waitUntil: 'domcontentloaded' });
   await page.getByRole('button', { name: 'Organization Setup', exact: true }).click();
   await page.getByRole('button', { name: 'Leave', exact: true }).click();
 
-  const qaLeave = page.getByRole('button', { name: /^QA (?:Dup )?Leave / }).first();
-  await expect(qaLeave, 'Only an existing QA test Leave Type may be inspected').toBeVisible();
-  await qaLeave.click();
+  // The previous inventory wrongly relied on a QA record from another run.
+  // Seeded Vacation Leave is always visible in this prototype. Opening its
+  // editor is safe because this inspection never enters or saves any values.
+  const leaveType = page.getByRole('button', { name: /^VL Vacation Leave\b/ });
+  await expect(leaveType, 'Seeded Vacation Leave should be present').toBeVisible();
+  await leaveType.click();
 
   // Inspect accessible controls without reading stored personal or field data.
   const result = await page.evaluate(() => {
@@ -54,7 +58,7 @@ test('INVENTORY-V11 | Open existing QA Leave Type edit panel (read-only)', async
   const folder = resolve(process.cwd(), 'qa-artifacts');
   mkdirSync(folder, { recursive: true });
   writeFileSync(resolve(folder, 'setup-leave-editor.json'), JSON.stringify({
-    description: 'Non-mutating structural inventory of a QA-only Leave Type edit view',
+    description: 'Non-mutating structural inventory of seeded Vacation Leave edit controls; no changes saved',
     result,
   }, null, 2));
   expect(result).toHaveProperty('inputs');
