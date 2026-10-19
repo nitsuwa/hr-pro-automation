@@ -73,3 +73,12 @@ Record every full or focused run here with its date, scenario ID, pass/fail/bloc
 - **SET-LEAVE-001**: Previously PASS; also green (3.5s) in the latest screenshot.
 - **Cumulative distinct observed passing tests: 23 across multiple focused runs**. This is not a full-suite run or confirmation of all expected results for the 59 Setup workbook scenarios.
 - Previous failed attempts were automation selector/navigation errors, since resolved; not confirmed application defects.
+
+## 2026-10-19 — Duplicate catalog negative tests (first attempt)
+
+- **SET-LOANS-002 / SET_169:** PASS (2.5s, UI Mode screenshot). Duplicate was not saved; visible error feedback is not yet asserted.
+- **SET-DEPT-002 / SET_182:** AUTOMATION BLOCKED (46.1s). A *success* `alertdialog` reading `Added "QA Dup Dept ..."` covered the `+ Add Department` button. First record created, second attempt never happened. Fixed helper to dismiss that success dialog; **awaiting retest**.
+- **SET-JOBPOS-002 / SET_195:** FAIL — LIKELY PRODUCT DEFECT. After second Add Position and re-opening Job Positions, exactly two rows with the same fresh QA title were present, while expected count was one. Follow-up GitHub issue [#2](https://github.com/nitsuwa/hr-pro-automation/issues/2). Confirm via fresh run; keep assertion failing if duplicate persists.
+- **SET-LOCATION-002 / SET_211:** FAIL — LIKELY PRODUCT DEFECT. After second Add Location and re-opening Work Locations, exactly two rows with the same fresh QA name were present, while expected count was one. Follow-up GitHub issue [#3](https://github.com/nitsuwa/hr-pro-automation/issues/3). Confirm via fresh run; keep assertion failing if duplicate persists.
+- Evidence: UI screenshots and Playwright text error reports supplied by QA operator.
+- **Distinct previously verified passing tests total is now 24** (prior 23 + loan duplicate PASS). This does not mean all workbook scenarios are fully covered.
