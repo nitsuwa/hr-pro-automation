@@ -98,3 +98,15 @@ New file: `tests/regression/setup/catalog-edits.spec.ts` with four independent c
 Each case first creates its OWN unique QA record, never edits a seeded business entry, renames via the actual inline editor and checks persistence after reopening. All four are **NOT RUN** until QA operator provides execution evidence.
 
 Remove tests SET_171, SET_184, SET_197, SET_213 require confirmation behavior inspection; defer until the edit flows are verified. Do not perform destructive tests on seeded records.
+
+## 2026-10-19 — Catalog Remove cases added (NOT RUN)
+
+`tests/regression/setup/catalog-edits.spec.ts`: four edit tests **PASS** in user's Playwright UI Mode screenshot (SET_170, SET_183, SET_196, SET_212). Total 29 distinct tests observed passing, two confirmed duplicate defects.
+
+`tests/regression/setup/catalog-removals.spec.ts`: four new **UNVERIFIED** negative/destructive-path checks. All first create a unique QA-only record and remove only that exact row:
+- SET_171 — Loan Source Remove
+- SET_184 — Department Remove
+- SET_197 — Job Position Remove
+- SET_213 — Work Location Remove
+
+These cases check deletion and persistence after reopening. Their real confirmation UI behavior is not yet confirmed; inspect any failing steps. These do not remove pre-existing company catalog entries and skip an environment explicitly marked production.
