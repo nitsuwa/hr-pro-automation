@@ -1,4 +1,5 @@
-import { test, expect, type Page } from '../../../playwright/fixtures/hrpro.fixture';
+import { test, expect } from '../../../playwright/fixtures/hrpro.fixture';
+import type { Page } from '@playwright/test';
 
 /**
  * Positive creation cases from the HR PRO Setup workbook.
