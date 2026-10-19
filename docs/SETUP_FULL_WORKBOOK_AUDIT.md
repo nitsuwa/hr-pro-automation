@@ -68,3 +68,13 @@ Evidence uploaded: `setup-form-inventory.json` (UI labels, no form values).
 - Distinction: **Salary Rules** screen is not proof of full Excel **Salary Structures** workflow (SET_230–243); structure creation/edit/rule assignment/delete remain pending.
 
 - **NOT RUN** `tests/regression/setup/employee-user-creation.spec.ts` (SET_271–274) now tests creation of employee plus corresponding user in Users & Access, using a unique example.com address. All tests are isolated browser contexts and the app says invitations are simulated. Separate SET_275–278 (create user when editing employee) remains pending.
+
+## 2026-10-19 — Duplicate prevention candidate suite
+
+New **NOT RUN** file: `tests/regression/setup/catalog-duplicates.spec.ts`.
+- SET_169 duplicate loan source
+- SET_182 duplicate department
+- SET_195 duplicate job position
+- SET_211 duplicate work location
+
+All four tests create an isolated QA example, attempt the identical name, reload and assert only one row exists. They check the *duplicate not saved* outcome, **not yet the Excel requirement for a visible duplicate error prompt**. Confirm error text/validation separately before marking the full Excel scenario complete. If a duplicate does persist, verify reproduction to distinguish a product defect from test-data issues.
