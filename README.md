@@ -47,6 +47,6 @@ The default URL and environment can be overridden using shell variables `E2E_BAS
 - Statutory contribution persistence is tested, but requested payroll arithmetic remains incomplete; LILO may require external/manual evidence.
 - SET_001–003 is a destructive reset: use a disposable sandbox only.
 - The workbook has ambiguous copied steps around SET_198–205 and SET_218–229, and a repeated header at SET_152.
-- See [the current 59-group coverage tracker](docs/SETUP_CURRENT_COVERAGE_TRACKER.md) for the updated breakdown, and [the original workbook audit](docs/SETUP_FULL_WORKBOOK_AUDIT.md) for source issues.
+- See [the 59-group coverage tracker](docs/SETUP_CURRENT_COVERAGE_TRACKER.md), [explanation of incomplete groups and live test-authoring demo](docs/WORKBOOK_GAPS_AND_TEST_AUTHORING_DEMO.md), and [the original workbook audit](docs/SETUP_FULL_WORKBOOK_AUDIT.md) for source ambiguities.
 
 **Do not mark an Excel scenario as fully automated/passed until all its required business outcomes are asserted and execution evidence exists.**
