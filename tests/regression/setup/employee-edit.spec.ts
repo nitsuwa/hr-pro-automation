@@ -6,10 +6,12 @@ import { EmployeesPage } from '../../../playwright/pages/employees.page';
  * Excel SET_266–268 (partial): update an employee's core profile and verify
  * that the change persists in the Employees list and after a reload.
  *
+ * Updates the name AND contact email of its own QA employee. A saved change
+ * is verified by reopening the editor as well as by the searchable list.
  * This test only edits the QA employee it creates; it must run in a
  * non-production/test environment. It does not touch real employee records.
  */
-test('SET-EMP-EDIT | SET_266–268 | Edit QA employee name and verify it persists', async ({ page, loginAs }) => {
+test('SET-EMP-EDIT | SET_266–268 | Edit QA employee name/email and verify persistence', async ({ page, loginAs }) => {
   test.skip(
     (process.env.E2E_ENV ?? 'staging').toLowerCase() === 'production',
     'Employee mutation tests require an approved non-production environment.',
@@ -24,6 +26,7 @@ test('SET-EMP-EDIT | SET_266–268 | Edit QA employee name and verify it persist
   const suffix = Date.now().toString(36);
   const original = 'QA Employee Edit ' + suffix;
   const updated = original + ' Updated';
+  const updatedEmail = `qa.employee.edit.${suffix}@example.com`;
 
   await employees.enrollMinimalEmployee({
     name: original,
@@ -42,6 +45,9 @@ test('SET-EMP-EDIT | SET_266–268 | Edit QA employee name and verify it persist
   const nameField = page.getByRole('textbox', { name: 'Full Name *', exact: true });
   await expect(nameField, 'Employee detail editor must expose the name field').toHaveValue(original);
   await nameField.fill(updated);
+  const emailField = page.getByRole('textbox', { name: 'Email', exact: true });
+  await expect(emailField, 'Employee detail editor should expose the email field').toBeVisible();
+  await emailField.fill(updatedEmail);
   await page.getByRole('button', { name: 'Save changes', exact: true }).click();
 
   // Check actual employee storage and the searchable UI; a successful Save
@@ -53,10 +59,20 @@ test('SET-EMP-EDIT | SET_266–268 | Edit QA employee name and verify it persist
 
   await employees.open();
   await page.getByRole('textbox', { name: 'Search', exact: true }).fill(updated);
-  await expect(page.getByRole('row').filter({ hasText: updated })).toHaveCount(1);
+  const updatedRow = page.getByRole('row').filter({ hasText: updated });
+  await expect(updatedRow).toHaveCount(1);
 
+  // Reopen the real editor to verify an additional workbook field was saved.
+  await updatedRow.getByRole('link', { name: updated, exact: true }).click();
+  await expect(page.getByRole('textbox', { name: 'Email', exact: true }),
+    'Updated email must persist after saving the employee').toHaveValue(updatedEmail);
+
+  await employees.open();
   await page.reload({ waitUntil: 'domcontentloaded' });
   await page.getByRole('textbox', { name: 'Search', exact: true }).fill(updated);
-  await expect(page.getByRole('row').filter({ hasText: updated }),
-    'Updated name should persist after a full reload').toHaveCount(1);
+  const persistedRow = page.getByRole('row').filter({ hasText: updated });
+  await expect(persistedRow, 'Updated name should persist after a full reload').toHaveCount(1);
+  await persistedRow.getByRole('link', { name: updated, exact: true }).click();
+  await expect(page.getByRole('textbox', { name: 'Email', exact: true }),
+    'Updated email must also persist after a full reload').toHaveValue(updatedEmail);
 });
