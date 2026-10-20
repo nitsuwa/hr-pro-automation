@@ -15,9 +15,9 @@ The repository is private, and the HTML file is **not a published website**. Git
 
 **Set up → Run a test → Verify its result → Create a test → Share it for review.**
 
-- Just running tests? Start with [Setup](USER_MANUAL.md#2-set-up-on-your-computer) and [Run](USER_MANUAL.md#3-run-an-existing-test).
-- Writing tests? Continue to [Verify](USER_MANUAL.md#4-check-if-the-test-really-passed) and [Create](USER_MANUAL.md#5-create-your-first-test).
-- Maintaining the project? Read [Share through GitHub](USER_MANUAL.md#6-share-a-test-through-github).
+- Just running tests? Start with [Setup](USER_MANUAL.md#1-first-time-setup) and [Run](USER_MANUAL.md#2-run-one-test).
+- Writing tests? Continue to [Verify](USER_MANUAL.md#3-verify-what-really-happened) and [Create](USER_MANUAL.md#4-add-a-new-test).
+- Maintaining the project? Read [Share through GitHub](USER_MANUAL.md#5-share-a-test-through-github).
 
 ### Where to find the details
 
