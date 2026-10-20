@@ -6,7 +6,7 @@
 
 | Resource | Why you would use it |
 | --- | --- |
-| [HTML Help Center](index.html) | Pictures and clickable, beginner-friendly instructions. After cloning, open `docs/help/index.html` in Chrome/Edge with its `assets/` folder |
+| [HTML Help Center](index.html) | Pictures and clickable, beginner-friendly instructions. After cloning, open `docs/help/index.html` in Chrome/Edge ; illustrations are embedded directly |
 | **Word manual** in the handoff ZIP | Editable, printable offline copy |
 | [GitHub repository](../../README.md) | Actual scripts, changes, reported problems and results |
 
@@ -75,7 +75,24 @@ test('QA-START | Settings available', async ({ page, loginAs }) => {
 
 A real test to study: `SET-LOANS-002` in `catalog-duplicates.spec.ts`. It checks that no duplicate Loan Source is saved, but the separate visible-message requirement is still not explicitly asserted.
 
-## 5. Share a test through GitHub
+## 5. Test a feature that isn't in Excel
+
+**The old 59 workbook groups are not the limit.** For any brand-new HR PRO feature, start from a feature ticket, user story, or approved acceptance checklist.
+
+1. **Ask the owner:** What should happen, who may use it, what should be rejected, and what fictional test data is allowed?
+2. **Make a small plan:** Test a successful action, an invalid case, role permissions, and saved-result persistence where applicable. Give each case a clear ID such as \`FEAT-SEARCH-001\`.
+3. **Inspect the app:** Try it manually in the authorized QA environment. Confirm actual labels, dialogs, and outcomes. Do not make up selectors.
+4. **Write or ask AI for a draft:** Reuse the Playwright fixture and page objects. Require meaningful \`expect(...)\` assertions and clear notes about unknowns.
+5. **Verify yourself:** Run in UI Mode, inspect the recorded actions and outcomes, reopen saved records, and classify PASS / TEST ISSUE / APP DEFECT / BLOCKED.
+6. **Share it:** Record evidence and send a pull request for review. Group new tests by feature so the repository stays manageable.
+
+**Good AI prompt to copy:**
+
+> I need to test a new HR PRO feature, not listed in the old workbook. The approved requirement is [describe], with authorized role [role] and fictional test data [data]. First propose a short positive/negative/permission/persistence test plan. Then draft one small Playwright TypeScript test using our existing fixtures and page objects, based only on real UI evidence I provide. Mark assumptions and missing selectors clearly. Do not invent requirements or claim it passed; I will review and run it myself.
+
+**Never send AI passwords, tokens, real employee records or confidential internal data.** If expected behavior is unclear, ask the feature owner before treating AI-generated checks as acceptance criteria.
+
+## 6. Share a test through GitHub
 
 **Branch** = your safe copy. **Commit** = save your changes. **Pull request (PR)** = ask the team to review before merging.
 
@@ -91,7 +108,7 @@ git push -u origin qa/check-employee-search
 
 Replace the example file and branch names with your actual work. On GitHub, click **Compare & pull request**, choose the agreed target branch, explain what you tested, and ask for review. Never commit passwords, real employee data, or unrelated changes.
 
-## 6. When you need help
+## 7. When you need help
 
 | Problem | Next step |
 | --- | --- |
