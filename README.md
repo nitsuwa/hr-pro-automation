@@ -24,10 +24,10 @@
 
 ## How QA work continues after handoff
 
-**Requirement → Inspect HR PRO → Write or update test → Run it → Verify real result → Save evidence → Share changes for review.**
+**Any approved requirement (including a brand-new feature) → Inspect HR PRO → Draft test → Run it → Verify the business result → Record evidence → Submit for review.**
 
-Use the [User Manual](docs/help/USER_MANUAL.md#4-add-a-new-test) for the beginner steps and [GitHub workflow](docs/help/USER_MANUAL.md#5-share-a-test-through-github) for adding future tests safely.
+For a feature not covered by Excel, see [How to test a new feature](docs/help/USER_MANUAL.md#5-test-a-feature-that-isnt-in-excel). Use the [User Manual](docs/help/USER_MANUAL.md#4-add-a-new-test) for the beginner steps and [GitHub workflow](docs/help/USER_MANUAL.md#6-share-a-test-through-github) for adding future tests safely.
 
-**Last reported full Setup run (19 Oct 2026): 50 checks, 47 passed, 3 failed.** Two failures are confirmed duplicate-validation defects; one Leave Type duplicate-label issue needs a requirements decision. This is **not** full acceptance of all 59 workbook groups. Technical details remain in the [coverage tracker](docs/SETUP_CURRENT_COVERAGE_TRACKER.md).
+**Last reported full Setup run (19 Oct 2026): 50 checks, 47 passed, 3 failed.** Two failures are confirmed duplicate-validation defects; one Leave Type duplicate-label issue needs a requirements decision. This is **not** full acceptance of all original workbook groups; new features are not limited to that workbook. Technical details remain in the [coverage tracker](docs/SETUP_CURRENT_COVERAGE_TRACKER.md).
 
 **Maintainers:** Update the HTML and GitHub manual when workflows change, then refresh the offline Word copy for the next handoff.
