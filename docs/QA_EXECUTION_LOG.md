@@ -285,3 +285,16 @@ The last complete operator-reported regression baseline remains **50 run, 47 PAS
 - Fixed the inventory to target the unique `button.subtab` matching Company/Holidays by exact text. **Fix not yet rerun**.
 - Pending: execute `npm run test:ui:remaining-fields` again, send `qa-artifacts/setup-remaining-fields.json`, and plan additional Company and Holiday regression cases from confirmed control structure.
 - Previous full combined Setup baseline remains **50 run, 47 passed, 3 failed** until a new complete run is recorded. Targeted passes must not be added to that total.
+
+
+## 2026-10-20 — Company / Holiday structural inspection received
+
+Operator supplied `qa-artifacts/setup-remaining-fields.json` from `INVENTORY-REMAINING-FIELDS`. This is **read-only structural evidence**, not a workbook test PASS.
+
+- **Company**: seven visible inputs without an explicit `type` attribute, one `type="file"` upload input, and a Save Changes action. The first inventory reported empty field labels/placeholders because it only checked `label[for=id]` and aria-label; the absence of detected labels **does not establish inaccessible form fields**. 
+- **Holidays**: no visible inputs in the closed view; + Add Holiday and many Remove controls; no visible Edit action captured by the action-name filter. This **does not conclusively prove** an edit workflow is absent.
+- Existing Company regression covers name/code/address only and restores original values; remaining employer identifiers and file/logo behavior need approved test plans.
+- Updated the same *read-only* inspector to resolve native/wrapping labels and report aggregate Holiday row control counts. **New version has not been run**, and no additional scenario has been certified.
+- The last combined baseline remains **50 checks run / 47 PASS / 3 FAIL** until a full suite rerun; targeted operator-reported improvements are logged separately.
+
+Next action: rerun `npm run test:ui:remaining-fields`, inspect the new structural JSON (do not share input values or PII), then decide whether any Company fields or Holiday edit workflow can be given permanent acceptance tests.
