@@ -151,3 +151,10 @@ A focused [59-scenario completion plan](SETUP_59_COMPLETION_PLAN.md) now priorit
 - LILO, destructive reset, payroll arithmetic and multi-role/payroll authorization groups remain excluded from this *quick-win* batch pending approved prerequisites.
 
 See [Execution Log](QA_EXECUTION_LOG.md). Historical 59-group provisional classifications above have **not been changed** and are not a 59/59 pass certificate.
+
+
+## 2026-10-20 — Operator feedback and inventory fix
+
+- Targeted re-execution reported **1 Employee Edit + 3 Salary Structure checks passed** after assertions were strengthened. This improves verified behavior within the existing workbook groups; it is not a +4-group addition or an updated full-suite tally.
+- Read-only Company/Holiday inventory failed due to two identical-label Holidays buttons in separate Settings areas. Script locator fixed to scope to Setup `button.subtab`; **rerun pending**, so no inventory artifact or additional workbook acceptance yet.
+- On a successful inventory rerun, use the structural JSON (no field values) to decide which parts of `SET_172–176` and `SET_220` are implementable.
