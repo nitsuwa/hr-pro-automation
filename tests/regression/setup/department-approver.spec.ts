@@ -77,13 +77,20 @@ test('SET-DEPT-APPROVER | SET_185–189 | New QA department two-level approvers 
   await expect(listbox).toBeVisible();
   const alternatives = listbox.getByRole('option')
     .filter({ hasNotText: /^(?:\s*—?\s*None|.*Company default)/i });
-  const optionTexts = await alternatives.allTextContents();
-  const secondIndex = optionTexts.findIndex((text) => {
-    const name = text.split(/\r?\n/)[0].trim();
-    return name.length > 0 && name !== chosen;
-  });
+  // innerText matches the visible first line; textContent can concatenate
+  // job metadata and fail to match the collapsed picker display.
+  const optionCount = await alternatives.count();
+  let secondIndex = -1;
+  let secondChosen = '';
+  for (let index = 0; index < optionCount; index += 1) {
+    const visibleName = (await alternatives.nth(index).innerText()).split(/\r?\n/)[0].trim();
+    if (visibleName && visibleName !== chosen) {
+      secondIndex = index;
+      secondChosen = visibleName;
+      break;
+    }
+  }
   expect(secondIndex, 'A second distinct QA approver must be available').toBeGreaterThanOrEqual(0);
-  const secondChosen = optionTexts[secondIndex].split(/\r?\n/)[0].trim();
   await alternatives.nth(secondIndex).click();
   await expect(secondApprover, 'Second approver must be shown in the edit form')
     .toContainText(secondChosen);
