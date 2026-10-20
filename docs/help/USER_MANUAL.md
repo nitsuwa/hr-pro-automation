@@ -1,22 +1,22 @@
-# HR PRO QA · Simple User Manual
+# HR PRO QA · User Manual
 
-*A beginner-friendly guide to running tests, checking results, and continuing the project.*
+**What is this?** HR PRO is the system we test. Playwright runs browser checks. GitHub stores the tests so future QA employees can reuse and improve them.
 
-## 1. Understand the three parts
+**The learning path:** **Set up → Run → Verify → Add a test → Share it.** Start with one passing test rather than running everything.
 
-**HR PRO** is the application being tested. **Playwright** is the tool that opens a browser, performs actions, and checks expected results. **GitHub** stores the test scripts so the next QA employee can use and improve them.
+| Resource | Why you would use it |
+| --- | --- |
+| [HTML Help Center](index.html) | Pictures and clickable, beginner-friendly instructions. After cloning, open `docs/help/index.html` in Chrome/Edge with its `assets/` folder |
+| **Word manual** in the handoff ZIP | Editable, printable offline copy |
+| [GitHub repository](../../README.md) | Actual scripts, changes, reported problems and results |
 
-- **HTML Help Center:** Visual instructions with screenshots; open [`index.html`](index.html) locally in Chrome/Edge after downloading the repository. Keep the `assets` folder with it.
-- **Word file:** An offline/printable copy in the handoff ZIP.
-- **This GitHub repository:** The actual tests, record of changes, results and reported problems. It is private; request access first.
+This repository is **private**. GitHub displays the HTML source; it is not yet a hosted website.
 
-**Main workflow:** Read a requirement → inspect HR PRO → write a test → run it → check the real result → share the change.
+## 1. First-time setup
 
-## 2. Set up on your computer
+Install **VS Code, Git and Node.js**, then get access to the GitHub repository and approved HR PRO test environment.
 
-**Before starting:** Have Visual Studio Code, Node.js, Git, approved HR PRO test access, and private GitHub repository access.
-
-Open **Visual Studio Code → Terminal → New Terminal** and run:
+In VS Code choose **Terminal → New Terminal** and run:
 
 ```powershell
 git clone https://github.com/nitsuwa/hr-pro-automation.git
@@ -27,95 +27,79 @@ npm ci
 npx playwright install chromium
 ```
 
-If you already have that branch locally, run `git switch qa/setup-handoff-2026-10-19` instead of the `--track` command.
+If the QA branch already exists locally, use `git switch qa/setup-handoff-2026-10-19` instead.
 
-**Important:** Ask which test environment is approved. Check `playwright.config.ts` and `E2E_BASE_URL` before running anything. The default URL is the HR PRO prototype. Some tests save, change or remove data, so **never use real employee information or an unapproved production environment**.
+**Check the test environment first:** `playwright.config.ts` defaults to the HR PRO prototype, while `E2E_BASE_URL` can change the target. Only run data-changing tests on an **approved non-production environment** with fictional records.
 
-## 3. Run an existing test
+## 2. Run one test
 
-1. In the terminal, enter `npm run test:ui:setup`.
-2. In the Playwright window, expand a file in the left panel.
-3. Choose **one** test and click **▶ Run**.
-4. After it finishes, select the test and inspect **Actions**, the screen preview, and **Errors** (if any).
+Run `npm run test:ui:setup` in the VS Code terminal. In Playwright UI Mode, expand one test file → click **▶ Run** beside one test → review the **Actions**, preview and **Errors** tabs.
 
-**Green = the script's assertions passed. Red = investigate.** It does not automatically mean HR PRO is broken.
+Green means the script's checks passed. Red means **investigate**—it could be incorrect test code, missing data, unclear requirements or an application defect.
 
-Other useful commands: `npm run test:ui:smoke` (basic checks), `npm run test:setup` (Setup tests without UI Mode), `npm run test:report` (latest available HTML report).
+Other commands: `npm run test:ui:smoke` (basic navigation), `npm run test:report` (latest available report).
 
-## 4. Check if the test really passed
+## 3. Verify what really happened
 
-A test is only useful if it checks the **right result**. A green check alone is not proof that the full Excel requirement is complete.
+A green check **does not prove every Excel requirement is complete**. Before marking PASS:
 
-1. **Expected:** What does the approved Excel scenario say should happen?
-2. **Script:** Find `expect(...)` in the code. Does it check that result, or merely that a button can be clicked?
-3. **Actual:** Look at Playwright's Actions and screen preview. If a record was saved or changed, reopen/reload the page and check that it stayed correct.
-4. **Decision:** Mark **PASS** when the needed outcome is verified; **TEST ISSUE** when a locator or setup is wrong; **APP DEFECT** when HR PRO violates an accepted requirement; **PARTIAL/BLOCKED** when evidence or requirements are missing.
-5. **Evidence:** Record the test ID, date, environment, expected/actual results, screenshots or trace, and issue link in [QA Execution Log](../QA_EXECUTION_LOG.md).
+1. **Read the expected result** in the approved Excel scenario.
+2. **Find `expect(...)`** in the test. Does it actually check that expected behavior?
+3. **Inspect HR PRO** in the Actions/preview. For saved data, reopen or reload to check it stayed saved.
+4. **Decide:** PASS (requirement checked), TEST ISSUE (wrong locator/data), APP DEFECT (approved rule violated), or PARTIAL/BLOCKED (not enough evidence).
+5. **Record the result** in [Execution Log](../QA_EXECUTION_LOG.md): test ID, environment/date, expected versus actual, trace/screenshot, and issue link.
 
-**Example:** For duplicate Job Positions, a rule may say only one matching record is allowed. If the application saves two, a test expecting `toHaveCount(1)` should stay **red**. Changing it to `toHaveCount(2)` would hide the problem.
+If duplicates are prohibited but two were saved, **keep the correct red assertion**. Do not change the expected count just to turn the test green. AI can suggest code, but a human must inspect and run it.
 
-**AI can suggest code, but a human must check the requirement, inspect the app, and run the test.**
+## 4. Add a new test
 
-## 5. Create your first test
+1. Pick **one** clear workbook scenario and confirm its expected outcome.
+2. Try it manually in the approved HR PRO test environment.
+3. Find a similar script in [Setup tests](../../tests/regression/setup/).
+4. Reuse login helpers and page objects; create `tests/regression/setup/<feature>.spec.ts` or extend an existing file.
+5. Include actions **and** `expect(...)` assertions. Run the test alone, verify the result, and record evidence.
 
-1. Pick **one** approved workbook scenario with clear expected behavior.
-2. Try its steps manually in the approved HR PRO environment. Notice the actual buttons, fields, and confirmation messages.
-3. Look for a similar test inside [`tests/regression/setup/`](../../tests/regression/setup/) so you can reuse working login and navigation patterns.
-4. If needed, create a file named `<feature>.spec.ts` in that folder. Reuse helpers from `playwright/pages/` and `playwright/fixtures/`.
-5. Add assertions for the outcome, not only clicks. Run that test alone in UI Mode, check its result, and record evidence.
-
-**Tiny training example** (checks navigation only, not a complete workbook scenario):
+Starter example (**navigation only, not full workbook coverage**):
 
 ```ts
 import { test, expect } from '../../../playwright/fixtures/hrpro.fixture';
 
-test('QA-START | Organization Setup is available', async ({ page, loginAs }) => {
+test('QA-START | Settings available', async ({ page, loginAs }) => {
   await loginAs('systemAdmin');
   await page.goto('/settings');
   await expect(page.getByRole('button', {
-    name: 'Organization Setup', exact: true,
+    name: 'Organization Setup', exact: true
   })).toBeVisible();
 });
 ```
 
-**A real example to study:** `tests/regression/setup/catalog-duplicates.spec.ts` → `SET-LOANS-002`. It verifies that a second duplicate Loan Source was not saved. The workbook also asks for a visible error message; that extra behavior is **not yet asserted**, so do not claim full coverage.
+A real test to study: `SET-LOANS-002` in `catalog-duplicates.spec.ts`. It checks that no duplicate Loan Source is saved, but the separate visible-message requirement is still not explicitly asserted.
 
-## 6. Share a test through GitHub
+## 5. Share a test through GitHub
 
-**GitHub words made simple:** A *branch* is your safe copy of the code. A *commit* is a saved set of changes. A *pull request (PR)* asks another team member to review before merging.
+**Branch** = your safe copy. **Commit** = save your changes. **Pull request (PR)** = ask the team to review before merging.
 
-After the maintainer confirms the destination branch:
+Start from the approved QA branch and a clean `git status`. Ask the maintainer which branch should receive your work. Then:
 
-1. Start from an updated, clean QA branch (`git status` should show no uncommitted work).
-2. Create **your own branch**: `git switch -c qa/my-test-change` (use a descriptive, unique name).
-3. Edit the test and run it. **Do not commit passwords, real employee data, or unnecessary screenshots.**
-4. Review files with `git status` and `git diff`, then save your changes:
-   ```powershell
-   git add tests/regression/setup/<feature>.spec.ts
-   git commit -m "test: cover <scenario ID>"
-   git push -u origin qa/my-test-change
-   ```
-5. On GitHub, select **Compare & pull request**. Choose the **QA branch or other branch agreed by your team** as the target. Explain what changed, which test you ran, the outcome, and any limitations.
-6. Ask a reviewer to approve and merge. Then update the execution log and coverage records as needed.
+```powershell
+git switch -c qa/check-employee-search
+# Edit and verify your own test, then:
+git add tests/regression/setup/employee-search.spec.ts
+git commit -m "test: cover employee search"
+git push -u origin qa/check-employee-search
+```
 
-If you do not have push permission, ask the maintainer for the approved contribution process. Never reset or overwrite someone else's changes to make Git work.
+Replace the example file and branch names with your actual work. On GitHub, click **Compare & pull request**, choose the agreed target branch, explain what you tested, and ask for review. Never commit passwords, real employee data, or unrelated changes.
 
-## 7. If something goes wrong
+## 6. When you need help
 
-| What you see | What to check |
+| Problem | Next step |
 | --- | --- |
-| Element not found | Wrong page, changed button/field name, missing dialog |
-| Test times out | Disabled button, overlay, missing prerequisite data |
-| Green but workbook still incomplete | Test assertions cover only part of the requirement |
-| Test fails with unexpected saved data | Recheck the actual HR PRO behavior and approved rule |
-| Git refuses your update | Check branch and `git status`; ask before overwriting files |
+| Button or field not found | Inspect the current page and actual label |
+| Click blocked / timeout | Check for dialog, overlay, permissions or missing data |
+| Test green but workbook still unclear | Mark partial and ask for expected outcome |
+| Git refuses update | Check branch and `git status`; don't reset a teammate's changes |
 
-To get changes when your branch is clean, use `git fetch origin` followed by `git merge --ff-only origin/qa/setup-handoff-2026-10-19` from the matching QA branch.
+**After the OJT:** run a known passing test, study one failing trace, pick an incomplete scenario from the [coverage tracker](../SETUP_CURRENT_COVERAGE_TRACKER.md), add a verified test, record evidence, and submit a PR.
 
-## 8. What happens after handoff?
-
-The next QA maintainer should: **run a known passing example; inspect one known failure; select a missing or partial requirement; extend a script; verify it; document it; submit it for review.**
-
-Keep the everyday manual short. Detailed test mapping belongs in the [coverage tracker](../SETUP_CURRENT_COVERAGE_TRACKER.md); execution evidence belongs in the [log](../QA_EXECUTION_LOG.md); reproducible product problems belong in [GitHub Issues](https://github.com/nitsuwa/hr-pro-automation/issues).
-
-**Last reported full Setup run (19 October 2026): 50 checks executed, 47 passed, 3 failed** (two confirmed duplicate-validation defects; one Leave Type uniqueness question). That is the result of implemented checks—not proof that all 59 workbook groups are complete. HR GO remains future work.
+**Reported combined Setup run (19 Oct 2026): 50 checks, 47 passed, 3 failed** (two confirmed duplicate-validation defects; one Leave Type uniqueness question). This is not certification of all 59 workbook groups.
