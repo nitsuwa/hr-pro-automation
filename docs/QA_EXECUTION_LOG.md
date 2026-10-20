@@ -307,3 +307,14 @@ Operator-supplied label-aware `setup-remaining-fields.json` includes:
 - Holidays: 21 table rows, zero links within rows, zero row Edit buttons, Add and Remove controls only. This **does not prove absence of every possible edit UI**; `SET_220` requires owner clarification before any regression claim.
 
 Created `tests/regression/setup/company-employer-ids.spec.ts` as an **opt-in, NOT RUN** candidate for the four registration fields. It requires `E2E_APPROVED_COMPANY_EDIT=1` and four approved synthetic values, checks saved persistence, and attempts to restore/verify original field values in `finally`. Interrupted runs may still require an environment restore; run only in a disposable approved tenant. The candidate is not counted as PASS and does not change the previous **50 executed / 47 passed / 3 failed** combined suite baseline.
+
+
+## 2026-10-20 — Browser Local Storage evidence / isolation check prepared
+
+Operator showed Chrome DevTools **Application → Local Storage** for `https://hrproprototype.netlify.app`, including HR PRO-prefixed company, employee and setup data keys; **IndexedDB showed no database for the page**. Operator also observed that changes made in normal Chrome did not appear in an Incognito profile while seeded records did.
+
+These observations strongly suggest important prototype state is browser-local, but **do not prove all writes are local-only or that no backend is shared**. Data from browser storage must not be exported or posted to AI because it can contain real profile/employee information.
+
+Added **NOT RUN** `tests/infrastructure/browser-storage-isolation.spec.ts` and focused UI command `npm run test:ui:storage-isolation`. The test writes/removes only temporary `qa:isolation:*` markers and checks localStorage separation between two fresh Playwright browser contexts; it never edits HR PRO application keys or records. It **does not prove absence of shared backend**. Keep `SET-COMPANY-IDS` gated on a disposable authorized environment and approved test data.
+
+No changes to operator-reported full Setup baseline: **50 executed, 47 passed, 3 failed**; 59-group completion remains separate.
