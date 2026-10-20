@@ -1,18 +1,22 @@
-# HR PRO QA Automation — User Manual
+# HR PRO QA · Simple User Manual
 
-**Purpose:** Help a new QA employee install the Playwright framework, run tests, verify results independently, add new scripts, and maintain the repository.
+*A beginner-friendly guide to running tests, checking results, and continuing the project.*
 
-**Read it in the browser:** [HTML Help Center](index.html) — download the HTML and open it in Chrome/Edge (GitHub does not render the HTML as a website).  
-**Offline copy:** `HR_PRO_QA_Automation_Manual.docx` — supplied in the team handoff package.  
-**Source of truth:** [GitHub repository](../../README.md) — actual tests, configuration, issues, run history, and scenario gaps.
+## 1. Understand the three parts
 
-> The HTML Help Center is the interactive learning experience. The Word file is an editable offline/printable version. GitHub contains the working system and its current evidence. These are **three connected ways to use one project**, not three different instructions.
+**HR PRO** is the application being tested. **Playwright** is the tool that opens a browser, performs actions, and checks expected results. **GitHub** stores the test scripts so the next QA employee can use and improve them.
 
-## 1. Install the project
+- **HTML Help Center:** Visual instructions with screenshots; open [`index.html`](index.html) locally in Chrome/Edge after downloading the repository. Keep the `assets` folder with it.
+- **Word file:** An offline/printable copy in the handoff ZIP.
+- **This GitHub repository:** The actual tests, record of changes, results and reported problems. It is private; request access first.
 
-**You need:** Git, Node.js, Visual Studio Code, private repository access, and an approved *non-production* HR PRO test environment.
+**Main workflow:** Read a requirement → inspect HR PRO → write a test → run it → check the real result → share the change.
 
-In Visual Studio Code select **Terminal → New Terminal**, then run:
+## 2. Set up on your computer
+
+**Before starting:** Have Visual Studio Code, Node.js, Git, approved HR PRO test access, and private GitHub repository access.
+
+Open **Visual Studio Code → Terminal → New Terminal** and run:
 
 ```powershell
 git clone https://github.com/nitsuwa/hr-pro-automation.git
@@ -23,127 +27,95 @@ npm ci
 npx playwright install chromium
 ```
 
-Already have the branch? Use `git switch qa/setup-handoff-2026-10-19` instead of `--track`.
+If you already have that branch locally, run `git switch qa/setup-handoff-2026-10-19` instead of the `--track` command.
 
-**Safety check:** Read `playwright.config.ts`. It currently defaults to `https://hrproprototype.netlify.app`, but `E2E_BASE_URL` can override it. Do not assume `E2E_ENV=staging` guarantees a safe target. Get approval for the actual test URL and use only fictional QA data. Some tests create, modify or delete persistent records.
+**Important:** Ask which test environment is approved. Check `playwright.config.ts` and `E2E_BASE_URL` before running anything. The default URL is the HR PRO prototype. Some tests save, change or remove data, so **never use real employee information or an unapproved production environment**.
 
-## 2. Run a test
+## 3. Run an existing test
 
-Run:
+1. In the terminal, enter `npm run test:ui:setup`.
+2. In the Playwright window, expand a file in the left panel.
+3. Choose **one** test and click **▶ Run**.
+4. After it finishes, select the test and inspect **Actions**, the screen preview, and **Errors** (if any).
 
-```powershell
-npm run test:ui:setup
-```
+**Green = the script's assertions passed. Red = investigate.** It does not automatically mean HR PRO is broken.
 
-In Playwright UI Mode: expand a file → select **one** test → click **▶ Run** → inspect **Actions**, **Preview**, **Errors**, and the timeline.
+Other useful commands: `npm run test:ui:smoke` (basic checks), `npm run test:setup` (Setup tests without UI Mode), `npm run test:report` (latest available HTML report).
 
-| Command | Purpose |
-|---|---|
-| `npm run test:ui:smoke` | Open basic navigation/smoke tests |
-| `npm run test:setup` | Run Setup regression checks from the terminal |
-| `npm run test:report` | Open the latest available HTML report |
-| `npx playwright test --grep "SET-LOANS-002" --project=chromium` | Run one named test in the terminal |
+## 4. Check if the test really passed
 
-The HTML Help Center includes an annotated Playwright UI Mode guide. A **green** check means that the implemented assertions passed—not necessarily that every related Excel requirement was covered.
+A test is only useful if it checks the **right result**. A green check alone is not proof that the full Excel requirement is complete.
 
-## 3. How to verify the result *without trusting AI*
+1. **Expected:** What does the approved Excel scenario say should happen?
+2. **Script:** Find `expect(...)` in the code. Does it check that result, or merely that a button can be clicked?
+3. **Actual:** Look at Playwright's Actions and screen preview. If a record was saved or changed, reopen/reload the page and check that it stayed correct.
+4. **Decision:** Mark **PASS** when the needed outcome is verified; **TEST ISSUE** when a locator or setup is wrong; **APP DEFECT** when HR PRO violates an accepted requirement; **PARTIAL/BLOCKED** when evidence or requirements are missing.
+5. **Evidence:** Record the test ID, date, environment, expected/actual results, screenshots or trace, and issue link in [QA Execution Log](../QA_EXECUTION_LOG.md).
 
-1. **Read the expected result** from the approved workbook or requirement. Specify what the application should save, reject, display or calculate.
-2. **Read the script's assertions.** Find `expect(...)` and ask whether it checks the **actual business outcome**, not just a button click.
-3. **Inspect the real app** via Playwright Actions, preview, and (for failures) retained trace/screenshot/video. After changing records, revisit or reload the page to verify persistence.
-4. **Classify the outcome:** PASS = accepted requirement genuinely checked; AUTOMATION ISSUE = locator/data/setup failure; APPLICATION DEFECT = accepted rule violated; BLOCKED/PARTIAL = evidence or requirements missing.
-5. **Document the evidence** in `docs/QA_EXECUTION_LOG.md`: test ID, date, approved environment, expected versus actual, supporting trace/screenshots and issue link.
+**Example:** For duplicate Job Positions, a rule may say only one matching record is allowed. If the application saves two, a test expecting `toHaveCount(1)` should stay **red**. Changing it to `toHaveCount(2)` would hide the problem.
 
-**Example:** A successful `Save` click is not proof that data persisted. A script that reopens the page and asserts `toHaveCount(1)` for a uniquely named record provides much stronger evidence.
+**AI can suggest code, but a human must check the requirement, inspect the app, and run the test.**
 
-**Never change correct assertions to make a test look green.** If the application violates a confirmed duplicate-prevention rule, keep the failing assertion and file an issue.
+## 5. Create your first test
 
-## 4. Create or extend a test
+1. Pick **one** approved workbook scenario with clear expected behavior.
+2. Try its steps manually in the approved HR PRO environment. Notice the actual buttons, fields, and confirmation messages.
+3. Look for a similar test inside [`tests/regression/setup/`](../../tests/regression/setup/) so you can reuse working login and navigation patterns.
+4. If needed, create a file named `<feature>.spec.ts` in that folder. Reuse helpers from `playwright/pages/` and `playwright/fixtures/`.
+5. Add assertions for the outcome, not only clicks. Run that test alone in UI Mode, check its result, and record evidence.
 
-1. Choose one scenario ID; identify prerequisites and expected business behavior. Ask for clarification if the Excel steps conflict.
-2. Try the scenario **manually in the approved QA environment**. Inspect the actual accessible labels, dialogs, roles, and saved outcome.
-3. Reuse a matching script from `tests/regression/setup/`, shared fixtures from `playwright/fixtures/`, and page objects in `playwright/pages/`.
-4. Create `tests/regression/setup/<feature>.spec.ts` or extend an existing file. Add **actions and assertions**, not just clicks.
-5. Run the new test alone in UI Mode; check its assertion and persisted outcome. Record the result.
-
-Starter illustration:
+**Tiny training example** (checks navigation only, not a complete workbook scenario):
 
 ```ts
 import { test, expect } from '../../../playwright/fixtures/hrpro.fixture';
 
-test('QA-START | Organization Setup visible', async ({ page, loginAs }) => {
+test('QA-START | Organization Setup is available', async ({ page, loginAs }) => {
   await loginAs('systemAdmin');
   await page.goto('/settings');
   await expect(page.getByRole('button', {
-    name: 'Organization Setup', exact: true
+    name: 'Organization Setup', exact: true,
   })).toBeVisible();
 });
 ```
 
-This teaches the syntax; it does **not** prove a full workbook scenario. For a real example, inspect `SET-LOANS-002` in `tests/regression/setup/catalog-duplicates.spec.ts`. It verifies a duplicate Loan Source was not saved. The workbook also asks for a visible error message; **that separate result is not yet asserted**, so the requirement remains partially verified.
+**A real example to study:** `tests/regression/setup/catalog-duplicates.spec.ts` → `SET-LOANS-002`. It verifies that a second duplicate Loan Source was not saved. The workbook also asks for a visible error message; that extra behavior is **not yet asserted**, so do not claim full coverage.
 
-## 5. How to use AI responsibly
+## 6. Share a test through GitHub
 
-AI can draft scripts, explain failures, suggest reusable code, and help write documentation. **AI cannot certify that a scenario passed.** Before accepting any generated script:
+**GitHub words made simple:** A *branch* is your safe copy of the code. A *commit* is a saved set of changes. A *pull request (PR)* asks another team member to review before merging.
 
-- Check requirements and preconditions against the approved Excel scenario.
-- Confirm the proposed selectors and UI flow against the *real application*.
-- Inspect assertions for the intended saved/rejected/calculated outcome.
-- Reject guessed labels, arbitrary timeouts, forced clicks, blanket skips, and weakened expectations intended to make a test pass.
-- Run the test yourself, review Playwright evidence, and record actual results.
+After the maintainer confirms the destination branch:
 
-Useful request to an AI assistant:
+1. Start from an updated, clean QA branch (`git status` should show no uncommitted work).
+2. Create **your own branch**: `git switch -c qa/my-test-change` (use a descriptive, unique name).
+3. Edit the test and run it. **Do not commit passwords, real employee data, or unnecessary screenshots.**
+4. Review files with `git status` and `git diff`, then save your changes:
+   ```powershell
+   git add tests/regression/setup/<feature>.spec.ts
+   git commit -m "test: cover <scenario ID>"
+   git push -u origin qa/my-test-change
+   ```
+5. On GitHub, select **Compare & pull request**. Choose the **QA branch or other branch agreed by your team** as the target. Explain what changed, which test you ran, the outcome, and any limitations.
+6. Ask a reviewer to approve and merge. Then update the execution log and coverage records as needed.
 
-> “Using this specific Excel scenario and the real current UI, propose the smallest Playwright test using our existing fixtures/page objects. Separate verified observations from assumptions. Include meaningful assertions. Do not claim the code passed; I will run and validate it.”
+If you do not have push permission, ask the maintainer for the approved contribution process. Never reset or overwrite someone else's changes to make Git work.
 
-## 6. Troubleshoot failures
+## 7. If something goes wrong
 
-| Symptom | Check first |
-|---|---|
-| Locator not found | Correct page, role and accessible name; unexpected dialog or changed UI |
-| Element click times out | Overlay, modal confirmation, disabled element or incomplete prerequisite |
-| Saved result not found | Test-data scope, persistence, timing, and actual workflow |
-| Wrong duplicate count | Inspect if the app genuinely accepted duplicates; preserve correct negative assertion |
-| Report unavailable | Run a Playwright terminal test, then `npm run test:report` |
+| What you see | What to check |
+| --- | --- |
+| Element not found | Wrong page, changed button/field name, missing dialog |
+| Test times out | Disabled button, overlay, missing prerequisite data |
+| Green but workbook still incomplete | Test assertions cover only part of the requirement |
+| Test fails with unexpected saved data | Recheck the actual HR PRO behavior and approved rule |
+| Git refuses your update | Check branch and `git status`; ask before overwriting files |
 
-Do not rerun data-mutating suites repeatedly without checking persistent QA data and cleanup permissions.
+To get changes when your branch is clean, use `git fetch origin` followed by `git merge --ff-only origin/qa/setup-handoff-2026-10-19` from the matching QA branch.
 
-## 7. Update and maintain the project
+## 8. What happens after handoff?
 
-Close UI Mode, confirm the current branch and working tree, then update:
+The next QA maintainer should: **run a known passing example; inspect one known failure; select a missing or partial requirement; extend a script; verify it; document it; submit it for review.**
 
-```powershell
-git branch --show-current
-git status
-git fetch origin
-git merge --ff-only origin/qa/setup-handoff-2026-10-19
-```
+Keep the everyday manual short. Detailed test mapping belongs in the [coverage tracker](../SETUP_CURRENT_COVERAGE_TRACKER.md); execution evidence belongs in the [log](../QA_EXECUTION_LOG.md); reproducible product problems belong in [GitHub Issues](https://github.com/nitsuwa/hr-pro-automation/issues).
 
-If there are uncommitted changes, do not reset or overwrite them to force a merge. Ask the maintainer for the proper review workflow.
-
-| Path | Purpose |
-|---|---|
-| `tests/regression/setup/` | Permanent Setup regression tests |
-| `tests/infrastructure/` | Investigation scripts; not automatically acceptance tests |
-| `playwright/pages/` | Reusable page objects |
-| `playwright/fixtures/` | Shared login/test setup |
-| `playwright.config.ts` | Base URL, browser, traces and reports |
-| [QA Execution Log](../QA_EXECUTION_LOG.md) | Historical run evidence |
-| [Coverage Tracker](../SETUP_CURRENT_COVERAGE_TRACKER.md) | Incomplete scenario details, separated from this beginner guide |
-| [GitHub Issues](https://github.com/nitsuwa/hr-pro-automation/issues) | Confirmed defects and questions |
-
-## 8. Current verification snapshot
-
-**19 October 2026, operator-reported combined Chromium Setup run:** **50 automated checks executed, 47 passed, 3 failed**. Two failures are confirmed duplicate-validation application defects (Job Positions and Work Locations); the duplicate Leave Type label result needs a uniqueness decision. These are results of **implemented checks**, not proof that all 59 original Excel scenario groups are fully accepted.
-
-HR GO tests have not been completed. The Playwright framework can be extended after its requirements and test data are confirmed.
-
-## 9. Handoff checklist
-
-- [ ] Repository and approved QA environment access granted
-- [ ] New QA member can run one known passing test and inspect one failing trace
-- [ ] New QA member can explain which requirement an assertion verifies
-- [ ] New QA member can create one test with meaningful assertions, not only clicks
-- [ ] New QA member knows where to file evidence, bugs and incomplete acceptance work
-
-**Help center:** [index.html](index.html). For the complete offline Word manual and accompanying screenshots, use the delivered handoff ZIP.
+**Last reported full Setup run (19 October 2026): 50 checks executed, 47 passed, 3 failed** (two confirmed duplicate-validation defects; one Leave Type uniqueness question). That is the result of implemented checks—not proof that all 59 workbook groups are complete. HR GO remains future work.
