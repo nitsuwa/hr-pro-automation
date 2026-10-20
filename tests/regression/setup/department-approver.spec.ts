@@ -5,13 +5,13 @@ import type { Page } from '@playwright/test';
  * Excel SET_185–189 (PARTIAL): department approval routing.
  *
  * Creates a unique QA-only Department; assigns an available approver to the
- * first dropdown of its approver editor, saves, and reopens to verify.
+ * first and second Overtime approvers, saves, and reopens to verify both.
  * All seeded departments remain unchanged. Covers setting persistence, not
- * the downstream filing/approval behavior across all six routing fields.
+ * downstream filing/approval behavior or the other routing fields.
  *
  * Source: approved local UI inventory V9 (listbox/option DOM semantics).
  */
-test('SET-DEPT-APPROVER | SET_185–189 | New QA department approver assignment persists', async ({ page, loginAs }) => {
+test('SET-DEPT-APPROVER | SET_185–189 | New QA department two-level approvers persist', async ({ page, loginAs }) => {
   test.skip(
     (process.env.E2E_ENV ?? 'staging').toLowerCase() === 'production',
     'Department approvals may only be altered in an approved QA environment',
@@ -48,8 +48,15 @@ test('SET-DEPT-APPROVER | SET_185–189 | New QA department approver assignment 
   // V9 confirms the approver pickers are buttons with aria-haspopup=listbox,
   // while their choices use role=option. Avoid name guesses or nth-based option
   // selection of a specific existing employee.
-  const firstApprover = page.locator('button[aria-haspopup="listbox"]').first();
+  // The approved approver editor UI shows Overtime 1st and 2nd pickers
+  // together, followed by Timekeeping, Leave and Payroll routing pickers.
+  const approvalPickers = page.locator('button[aria-haspopup="listbox"]');
+  expect(await approvalPickers.count(), 'Expected at least first and second approver pickers')
+    .toBeGreaterThanOrEqual(2);
+  const firstApprover = approvalPickers.nth(0);
+  const secondApprover = approvalPickers.nth(1);
   await expect(firstApprover).toBeVisible();
+  await expect(secondApprover).toBeVisible();
   await firstApprover.click();
 
   const listbox = page.getByRole('listbox');
@@ -62,7 +69,26 @@ test('SET-DEPT-APPROVER | SET_185–189 | New QA department approver assignment 
   const chosen = (await candidate.innerText()).split(/\r?\n/)[0].trim();
   expect(chosen, 'Approver display name should not be blank').not.toBe('');
   await candidate.click();
-  await expect(firstApprover, 'Selection must be shown in the edit form').toContainText(chosen);
+  await expect(firstApprover, 'First approver must be shown in the edit form').toContainText(chosen);
+
+  // Pick a *different* second Overtime approver from the actual available
+  // list. Never assume a particular seeded employee is present.
+  await secondApprover.click();
+  await expect(listbox).toBeVisible();
+  const alternatives = listbox.getByRole('option')
+    .filter({ hasNotText: /^(?:\s*—?\s*None|.*Company default)/i });
+  const optionTexts = await alternatives.allTextContents();
+  const secondIndex = optionTexts.findIndex((text) => {
+    const name = text.split(/\r?\n/)[0].trim();
+    return name.length > 0 && name !== chosen;
+  });
+  expect(secondIndex, 'A second distinct QA approver must be available').toBeGreaterThanOrEqual(0);
+  const secondChosen = optionTexts[secondIndex].split(/\r?\n/)[0].trim();
+  await alternatives.nth(secondIndex).click();
+  await expect(secondApprover, 'Second approver must be shown in the edit form')
+    .toContainText(secondChosen);
+  await expect(firstApprover, 'Selecting the second approver must not replace the first')
+    .toContainText(chosen);
 
   await page.getByRole('button', { name: 'Save Changes', exact: true }).click();
   const saved = page.getByRole('alertdialog');
@@ -74,6 +100,9 @@ test('SET-DEPT-APPROVER | SET_185–189 | New QA department approver assignment 
   await expect(rowForDepartment()).toHaveCount(1);
   await rowForDepartment().getByRole('button', { name: 'Approvers', exact: true }).click();
   await expect(page.getByRole('heading', { name: /^Approvers —/ })).toBeVisible();
-  await expect(page.locator('button[aria-haspopup="listbox"]').first(),
-    'The chosen approver must remain assigned after reopening').toContainText(chosen);
+  const savedPickers = page.locator('button[aria-haspopup="listbox"]');
+  await expect(savedPickers.nth(0),
+    'First approver must remain assigned after reopening').toContainText(chosen);
+  await expect(savedPickers.nth(1),
+    'Second approver must remain assigned after reopening').toContainText(secondChosen);
 });
