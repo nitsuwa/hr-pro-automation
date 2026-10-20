@@ -1,52 +1,33 @@
 # HR PRO QA Automation
 
-**Playwright + TypeScript** automation for the [HR PRO prototype](https://hrproprototype.netlify.app). The QA team can run existing checks, investigate failures and add new scenarios without rebuilding the project.
+**New to the project? Start here.** This repository contains automated browser tests for HR PRO. A test follows steps in the application and checks whether the expected result happened.
 
-## Start here — one connected help center
+## Choose what you need
 
-**[Open the QA Documentation Home](docs/help/README.md)**
-
-- **[HTML Help Center](docs/help/index.html)** — primary, browser-style instructions. Download the HTML and open it in Chrome/Edge; GitHub itself shows HTML source, not the rendered site.
-- **[GitHub-readable User Manual](docs/help/USER_MANUAL.md)** — the complete text instructions available in the repository. An editable **Word copy**, `HR_PRO_QA_Automation_Manual.docx`, is included in the delivered handoff ZIP for offline use.
-- **This repository** — the single home for test scripts, QA issues, execution history and future updates.
-
-All guides teach the same sequence: **Install → Run → Verify actual results → Create → Maintain**. The emphasis is on human review of requirements, meaningful Playwright assertions, and evidence—not trusting AI-generated scripts blindly. Detailed workbook scenario mapping is kept separate from the everyday guide.
-
-## Quick start
-
-Requires Git, Node.js, VS Code and access to an approved HR PRO testing environment.
-
-```powershell
-git clone https://github.com/nitsuwa/hr-pro-automation.git
-cd hr-pro-automation
-git fetch origin
-git switch --track origin/qa/setup-handoff-2026-10-19
-npm ci
-npx playwright install chromium
-npm run test:ui:setup
-```
-
-Use the green ▶ icon beside a single test in Playwright UI Mode. For already cloned repos, check `git status` and your current branch before fetching and merging.
-
-**Safety:** Verify `playwright.config.ts` and the actual `E2E_BASE_URL` before running. The default is the HR PRO prototype; tests may create, edit, or delete persistent shared records. **Never run against unapproved production data.**
-
-## Useful paths
-
-| Path | Purpose |
+| I want to… | Go here |
 | --- | --- |
-| `tests/regression/setup/` | Permanent Setup regression checks |
-| `tests/smoke/` | Basic application/navigation checks |
-| `tests/infrastructure/` | Read-only and exploratory inspection scripts, **not** accepted regressions |
-| `playwright/pages/` | Reusable page objects |
-| `playwright/fixtures/` | Shared login fixture |
-| `playwright.config.ts` | Browser and URL configuration |
+| **Learn with pictures and short steps** | [HTML Help Center](docs/help/index.html) |
+| **Read a simple guide on GitHub** | [User Manual](docs/help/USER_MANUAL.md) |
+| **Print or share instructions** | `HR_PRO_QA_Automation_Manual.docx` in the handoff ZIP |
+| **See test scripts** | [Setup tests](tests/regression/setup/) |
+| **See test results or known problems** | [Execution log](docs/QA_EXECUTION_LOG.md) · [Issues](https://github.com/nitsuwa/hr-pro-automation/issues) |
 
-## Current verification (19 October 2026)
+**HTML access:** GitHub shows the HTML source instead of a normal website. After cloning the repo, open `docs/help/index.html` in Chrome or Edge. Keep the `assets` folder beside it. There is no confirmed live documentation website.
 
-Latest combined Setup UI Mode run: **50 executed, 47 passed, 3 failed**. Two failures are confirmed prototype duplicate-validation defects; a third concerns duplicate Leave Type labels and needs product-owner confirmation. Passing implemented tests **do not** establish full acceptance of the original 59 Setup workbook groups.
+## First time? Do these 3 things
 
-- [Execution log](docs/QA_EXECUTION_LOG.md) — dated evidence
-- [Workbook coverage tracker](docs/SETUP_CURRENT_COVERAGE_TRACKER.md) — partial and missing requirements
-- [Issue reports](https://github.com/nitsuwa/hr-pro-automation/issues) — bug triage
+1. Install **Git, Node.js, and Visual Studio Code**. Get access to this **private repository** and an **approved HR PRO test environment**.
+2. Follow the [step-by-step setup instructions](docs/help/USER_MANUAL.md#2-set-up-on-your-computer).
+3. In VS Code, run `npm run test:ui:setup`, select **one** test, and click **▶ Run**.
 
-**Next team:** keep the HTML Help Center and [GitHub-readable manual](docs/help/USER_MANUAL.md) in sync when code/commands change; update the offline Word companion at handoff revisions. Keep accepted test evidence in the execution log. HR GO is a **future** workflow; it does not yet have a completed automated suite.
+**Before running tests:** Check the actual URL configured in `playwright.config.ts` or `E2E_BASE_URL`. Its default is the HR PRO prototype. Tests may change saved records; use only an approved test environment and fictional data.
+
+## How QA work continues after handoff
+
+**Requirement → Inspect HR PRO → Write or update test → Run it → Verify real result → Save evidence → Share changes for review.**
+
+Use the [User Manual](docs/help/USER_MANUAL.md#5-create-your-first-test) for the beginner steps and [GitHub workflow](docs/help/USER_MANUAL.md#6-share-a-test-through-github) for adding future tests safely.
+
+**Last reported full Setup run (19 Oct 2026): 50 checks, 47 passed, 3 failed.** Two failures are confirmed duplicate-validation defects; one Leave Type duplicate-label issue needs a requirements decision. This is **not** full acceptance of all 59 workbook groups. Technical details remain in the [coverage tracker](docs/SETUP_CURRENT_COVERAGE_TRACKER.md).
+
+**Maintainers:** Update the HTML and GitHub manual when workflows change, then refresh the offline Word copy for the next handoff.
