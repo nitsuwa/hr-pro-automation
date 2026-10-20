@@ -158,3 +158,11 @@ See [Execution Log](QA_EXECUTION_LOG.md). Historical 59-group provisional classi
 - Targeted re-execution reported **1 Employee Edit + 3 Salary Structure checks passed** after assertions were strengthened. This improves verified behavior within the existing workbook groups; it is not a +4-group addition or an updated full-suite tally.
 - Read-only Company/Holiday inventory failed due to two identical-label Holidays buttons in separate Settings areas. Script locator fixed to scope to Setup `button.subtab`; **rerun pending**, so no inventory artifact or additional workbook acceptance yet.
 - On a successful inventory rerun, use the structural JSON (no field values) to decide which parts of `SET_172–176` and `SET_220` are implementable.
+
+
+## 2026-10-20 — Company and Holiday label-aware inventory result
+
+- Latest operator-supplied **read-only** `setup-remaining-fields.json` identified seven labeled Company fields: **Company name**, **Company code**, **Address**, **SSS Employer No.**, **PhilHealth Employer No.**, **Pag-IBIG (HDMF) Employer No.**, and **BIR TIN**. It also found one `type=file` input without a label in the structural capture. Do **not** assume upload behavior or access rights from this alone.
+- The Holidays table had **21 rows, 0 row links and 0 Edit buttons**. Only `+ Add Holiday` and `Remove` controls were identified. This suggests `SET_220` Holiday editing is **currently blocked / awaiting product-owner confirmation of the supported workflow**; the inspector alone cannot establish a product defect or prove editing is impossible through all routes.
+- A new **opt-in, NOT RUN** `tests/regression/setup/company-employer-ids.spec.ts` is available to check whether the four employer registration fields save, reload and are restored. It requires an authorized **disposable QA tenant** and four approved synthetic, format-valid ID values from environment variables. The original Company identity check remains unchanged.
+- **No change to the historical 59-group status counts.** Company full acceptance still needs the registration test's real result and logo behavior decision.
