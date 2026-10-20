@@ -136,3 +136,7 @@ Read-only V11 editor inventory confirmed a text field with no label, plus `Save 
 - New confirmed passing checks since initial 46-test baseline: **Holiday duplicate**, **Leave edit**, **Leave removal**. New failing candidate check: **Leave duplicate**.
 - **The historical 26 core / 12 partial / 2 confirmed defect / 19 unvalidated grouping above is not a refreshed acceptance sign-off.** These later focused tests improve coverage but source workbook contradictions and incomplete deeper assertions still require independent reconciliation.
 - Release posture: handoff-ready as an extensible test framework with accurately documented defects and gaps, **not** a completed 59-of-59 workbook certification.
+
+## 2026-10-20 — 59-group closure plan and next inspection
+
+A focused [59-scenario completion plan](SETUP_59_COMPLETION_PLAN.md) now prioritizes truly missing business assertions, not just adding scripts. A new **exploratory, NOT-RUN** probe at `tests/infrastructure/setup-duplicate-feedback-probe.spec.ts` checks what visible duplicate feedback the current HR PRO interface actually produces for `SET_169` and `SET_182`; the results should inform permanent regression assertions. This is **not yet additional verified workbook coverage**. It requires authorized non-production persistent QA records and explicit `E2E_APPROVED_MUTATIONS=1`.
