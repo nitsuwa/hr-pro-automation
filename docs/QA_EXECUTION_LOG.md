@@ -261,3 +261,18 @@ Verified from operator-provided Playwright UI Mode screenshot:
 - Added **NOT RUN** `tests/infrastructure/setup-duplicate-feedback-probe.spec.ts` and `npm run test:ui:duplicate-feedback`. It will inspect the actual duplicate-message UI for SET_169 (Loan Source) and SET_182 (Department), then save `qa-artifacts/setup-duplicate-feedback.json` locally. It is an exploratory probe, **not a passing regression or product-defect finding**.
 - Requires authorized test environment, fictional QA data, and explicit `E2E_APPROVED_MUTATIONS=1` due to persisted record creation.
 - See [59-group completion plan](SETUP_59_COMPLETION_PLAN.md) for the remaining quick wins and integration/payroll blockers. **No 59/59 acceptance sign-off is claimed**.
+
+
+## 2026-10-20 — Focused acceptance improvements prepared (NOT YET RUN)
+
+Uploaded `setup-duplicate-feedback.json` was reviewed: for `SET_169` (Loan Source) and `SET_182` (Department), a second duplicate did not persist (`persistedRows: 1` for both). The structural probe returned `feedback: []` for both. **This is not proof that no feedback exists**; the workbook also expects a visible duplication error, which remains unverified. No new defect has been confirmed.
+
+New stronger regression assertions on QA branch, **awaiting operator UI Mode run**:
+- `SET-EMP-EDIT / SET_266–268`: verify QA-created employee email alongside name after save and reload.
+- `SET-STRUCT-CREATE / SET_230–237`: reopen created salary structure, assert Basic Salary remains selected.
+- `SET-STRUCT-EDIT / SET_238–240`: reopen renamed structure, assert both Basic Salary and Rice Subsidy remain selected.
+- `SET-STRUCT-REMOVE / SET_241–243`: cancel deletion, verify structure still exists after reopen, then confirm removal and check absence.
+
+New **read-only, NOT-RUN** inventory: `tests/infrastructure/setup-remaining-fields-inventory.spec.ts` (`npm run test:ui:remaining-fields`). Captures control *structure only* for Company Profile and Holiday management into `qa-artifacts/setup-remaining-fields.json` to support further scenario design without guessing selectors. No stored values or employee data are captured.
+
+The last complete operator-reported regression baseline remains **50 run, 47 PASS, 3 FAIL**. The improved tests cannot be counted as additionally passed or as completed workbook coverage until re-executed and reviewed.
