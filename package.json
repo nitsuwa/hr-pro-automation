@@ -28,7 +28,8 @@
     "test:ui:leave-editor": "playwright test tests/infrastructure/setup-leave-editor.spec.ts --ui --project=chromium",
     "test:ui:duplicate-feedback": "playwright test tests/infrastructure/setup-duplicate-feedback-probe.spec.ts --ui --project=chromium",
     "test:ui:remaining-fields": "playwright test tests/infrastructure/setup-remaining-fields-inventory.spec.ts --ui --project=chromium",
-    "test:ui:company-ids": "playwright test tests/regression/setup/company-employer-ids.spec.ts --ui --project=chromium"
+    "test:ui:company-ids": "playwright test tests/regression/setup/company-employer-ids.spec.ts --ui --project=chromium",
+    "test:ui:storage-isolation": "playwright test tests/infrastructure/browser-storage-isolation.spec.ts --ui --project=chromium"
   },
   "keywords": [],
   "author": "",
