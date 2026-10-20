@@ -54,6 +54,19 @@ test.describe('HR PRO Setup — Salary Structures', () => {
 
     await openStructures(page);
     await expect(page.getByText(name, { exact: true }), 'Structure should survive reopening the catalog').toBeVisible();
+
+    // SET_237 requires the saved structure to retain its selected salary rule,
+    // not merely its display name in the catalog.
+    const savedRow = page.getByRole('row').filter({
+      has: page.getByRole('cell', { name, exact: true }),
+    });
+    await expect(savedRow).toHaveCount(1);
+    await savedRow.getByRole('button', { name: 'Edit', exact: true }).click();
+    await expect(page.getByRole('heading', { name: 'Edit Structure', exact: true })).toBeVisible();
+    await expect(
+      page.getByRole('button', { name: /^Basic Salary\s+BASIC\s+EARNING\b/ }),
+      'Basic Salary must remain selected in the saved structure',
+    ).toContainText(/added/i);
   });
 
   test('SET-STRUCT-EDIT | SET_238–240 | Edit QA structure name and add another rule', async ({ page, loginAs }) => {
@@ -87,9 +100,26 @@ test.describe('HR PRO Setup — Salary Structures', () => {
     await openStructures(page);
     await expect(page.getByText(renamed, { exact: true }), 'Edited structure should persist').toBeVisible();
     await expect(page.getByText(name, { exact: true }), 'Original structure name should disappear').toHaveCount(0);
+
+    // SET_240 also requires the new salary rule to survive saving.
+    const renamedRow = page.getByRole('row').filter({
+      has: page.getByRole('cell', { name: renamed, exact: true }),
+    });
+    await expect(renamedRow).toHaveCount(1);
+    await renamedRow.getByRole('button', { name: 'Edit', exact: true }).click();
+    await expect(page.getByRole('heading', { name: 'Edit Structure', exact: true })).toBeVisible();
+    for (const ruleName of [
+      /^Basic Salary\s+BASIC\s+EARNING\b/,
+      /^Rice Subsidy\s+RICE\s+EARNING\b/,
+    ]) {
+      await expect(
+        page.getByRole('button', { name: ruleName }),
+        'Both the original and added salary rules must be saved',
+      ).toContainText(/added/i);
+    }
   });
 
-  test('SET-STRUCT-REMOVE | SET_241–243 | Remove an added QA salary structure', async ({ page, loginAs }) => {
+  test('SET-STRUCT-REMOVE | SET_241–243 | Cancel then confirm QA salary structure removal', async ({ page, loginAs }) => {
     await loginAs('systemAdmin');
     const name = 'QA Remove Structure ' + Date.now().toString(36);
     await createStructure(page, name);
@@ -99,7 +129,37 @@ test.describe('HR PRO Setup — Salary Structures', () => {
     });
     await expect(rowFor(), 'Only the newly created QA structure may be removed').toHaveCount(1);
 
-    // The system may ask for confirmation via a browser confirm or an in-app modal.
+    // SET_243: first CANCEL removal. A confirmed cancellation must keep the
+    // newly created QA structure after reopening (not just on screen).
+    let browserCancelSeen = false;
+    const cancelDialog = async (dialog: import('@playwright/test').Dialog) => {
+      if (dialog.type() === 'confirm' && /remov|delet/i.test(dialog.message())) {
+        browserCancelSeen = true;
+      }
+      await dialog.dismiss();
+    };
+    page.on('dialog', cancelDialog);
+    try {
+      await rowFor().getByRole('button', { name: 'Remove', exact: true }).click();
+      const modal = page.getByRole('alertdialog').or(page.getByRole('dialog'))
+        .filter({ hasText: /remov|delet|sure/i }).first();
+      let modalCancelSeen = false;
+      if (await modal.isVisible()) {
+        const cancel = modal.getByRole('button', { name: /^(Cancel|No|Keep.*)$/i });
+        await expect(cancel, 'Cancel removal must be possible').toBeVisible();
+        await cancel.click();
+        modalCancelSeen = true;
+      }
+      expect(browserCancelSeen || modalCancelSeen,
+        'Removing a salary structure must ask for confirmation and allow cancellation').toBe(true);
+      await expect(rowFor(), 'Cancelled removal must keep the QA structure').toHaveCount(1);
+      await openStructures(page);
+      await expect(rowFor(), 'Cancelled removal must remain cancelled after reopening').toHaveCount(1);
+    } finally {
+      page.off('dialog', cancelDialog);
+    }
+
+    // SET_241–242: now CONFIRM removal of that same uniquely named QA structure.
     // Only approve a native dialog explicitly describing removal/deletion.
     const onDialog = async (dialog: import('@playwright/test').Dialog) => {
       if (dialog.type() === 'confirm' && /remov|delet/i.test(dialog.message())) {
