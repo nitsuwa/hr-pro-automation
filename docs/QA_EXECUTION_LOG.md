@@ -254,3 +254,10 @@ Verified from operator-provided Playwright UI Mode screenshot:
 - No additional automation failures reported. The new Holiday duplicate, Leave edit, and Leave remove checks passed in this combined run.
 - **Coverage warning:** 50 Playwright test cases are not the same as full acceptance of all **59 workbook scenario groups**. The coverage tracker is provisional: deeper statutory arithmetic, overtime/LILO, payroll segregation/approvals and edit-time user account creation are still incomplete or require owner clarification.
 - **Testing freeze candidate for Wednesday handoff:** retain the three negative assertions unchanged, avoid repeated runs that generate QA records, and save a dated Playwright HTML report/screenshots where available. Re-run after product fixes or scenario additions.
+
+## 2026-10-20 — Next planned test improvements (no new outcomes yet)
+
+- Reviewed the source Setup workbook and historical coverage classifications; 50/47/3 remains the last complete **operator-reported** combined suite result.
+- Added **NOT RUN** `tests/infrastructure/setup-duplicate-feedback-probe.spec.ts` and `npm run test:ui:duplicate-feedback`. It will inspect the actual duplicate-message UI for SET_169 (Loan Source) and SET_182 (Department), then save `qa-artifacts/setup-duplicate-feedback.json` locally. It is an exploratory probe, **not a passing regression or product-defect finding**.
+- Requires authorized test environment, fictional QA data, and explicit `E2E_APPROVED_MUTATIONS=1` due to persisted record creation.
+- See [59-group completion plan](SETUP_59_COMPLETION_PLAN.md) for the remaining quick wins and integration/payroll blockers. **No 59/59 acceptance sign-off is claimed**.
