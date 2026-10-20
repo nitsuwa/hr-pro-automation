@@ -17,7 +17,7 @@
 ## First time? Do these 3 things
 
 1. Install **Git, Node.js, and Visual Studio Code**. Get access to this **private repository** and an **approved HR PRO test environment**.
-2. Follow the [step-by-step setup instructions](docs/help/USER_MANUAL.md#2-set-up-on-your-computer).
+2. Follow the [step-by-step setup instructions](docs/help/USER_MANUAL.md#1-first-time-setup).
 3. In VS Code, run `npm run test:ui:setup`, select **one** test, and click **▶ Run**.
 
 **Before running tests:** Check the actual URL configured in `playwright.config.ts` or `E2E_BASE_URL`. Its default is the HR PRO prototype. Tests may change saved records; use only an approved test environment and fictional data.
@@ -26,7 +26,7 @@
 
 **Requirement → Inspect HR PRO → Write or update test → Run it → Verify real result → Save evidence → Share changes for review.**
 
-Use the [User Manual](docs/help/USER_MANUAL.md#5-create-your-first-test) for the beginner steps and [GitHub workflow](docs/help/USER_MANUAL.md#6-share-a-test-through-github) for adding future tests safely.
+Use the [User Manual](docs/help/USER_MANUAL.md#4-add-a-new-test) for the beginner steps and [GitHub workflow](docs/help/USER_MANUAL.md#5-share-a-test-through-github) for adding future tests safely.
 
 **Last reported full Setup run (19 Oct 2026): 50 checks, 47 passed, 3 failed.** Two failures are confirmed duplicate-validation defects; one Leave Type duplicate-label issue needs a requirements decision. This is **not** full acceptance of all 59 workbook groups. Technical details remain in the [coverage tracker](docs/SETUP_CURRENT_COVERAGE_TRACKER.md).
 
