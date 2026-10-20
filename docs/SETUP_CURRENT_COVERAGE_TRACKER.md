@@ -166,3 +166,10 @@ See [Execution Log](QA_EXECUTION_LOG.md). Historical 59-group provisional classi
 - The Holidays table had **21 rows, 0 row links and 0 Edit buttons**. Only `+ Add Holiday` and `Remove` controls were identified. This suggests `SET_220` Holiday editing is **currently blocked / awaiting product-owner confirmation of the supported workflow**; the inspector alone cannot establish a product defect or prove editing is impossible through all routes.
 - A new **opt-in, NOT RUN** `tests/regression/setup/company-employer-ids.spec.ts` is available to check whether the four employer registration fields save, reload and are restored. It requires an authorized **disposable QA tenant** and four approved synthetic, format-valid ID values from environment variables. The original Company identity check remains unchanged.
 - **No change to the historical 59-group status counts.** Company full acceptance still needs the registration test's real result and logo behavior decision.
+
+## 2026-10-20 — Department approver second-level regression prepared
+
+- The operator reports the latest full Setup suite had the **same result** as the earlier 47-pass / 3-fail combined baseline; no new screenshot/count breakdown was provided in this turn. Do not count the protected company-ID skip as a pass.
+- Strengthened the existing `SET-DEPT-APPROVER / SET_185–189` QA-only regression to select **distinct first and second Overtime approvers**, verify both in the edit form, save, reopen, and assert both persisted. **NOT RUN after the change.**
+- This remains **partial** for the full workbook group: Timekeeping, Leave and Payroll routing and actual downstream filing/approval actions need separately approved test data and evidence.
+- Keep confirmed duplicate Job Position / Work Location failures and the Leave Type uniqueness candidate recorded without changing expected assertions.
