@@ -51,7 +51,7 @@ test('INVENTORY-REMAINING-FIELDS | Company inputs and Holiday edit controls (rea
             ? Array.from(node.labels ?? []).map(label => clean(label.textContent))
             : [];
           const labelIds = (node.getAttribute('aria-labelledby') ?? '')
-            .split(/\\s+/).filter(Boolean);
+            .trim().split(' ').filter(Boolean);
           const ariaLinked = labelIds
             .map(id => clean(document.getElementById(id)?.textContent))
             .filter(Boolean);
