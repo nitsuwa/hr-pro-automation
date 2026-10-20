@@ -298,3 +298,12 @@ Operator supplied `qa-artifacts/setup-remaining-fields.json` from `INVENTORY-REM
 - The last combined baseline remains **50 checks run / 47 PASS / 3 FAIL** until a full suite rerun; targeted operator-reported improvements are logged separately.
 
 Next action: rerun `npm run test:ui:remaining-fields`, inspect the new structural JSON (do not share input values or PII), then decide whether any Company fields or Holiday edit workflow can be given permanent acceptance tests.
+
+
+## 2026-10-20 — Follow-up read-only inventory and new test candidate (NOT RUN)
+
+Operator-supplied label-aware `setup-remaining-fields.json` includes:
+- Company Profile: seven labeled text inputs (Company name, code, address, SSS Employer No., PhilHealth Employer No., Pag-IBIG (HDMF) Employer No., BIR TIN), one separate unlabeled file upload, `Save Changes`.
+- Holidays: 21 table rows, zero links within rows, zero row Edit buttons, Add and Remove controls only. This **does not prove absence of every possible edit UI**; `SET_220` requires owner clarification before any regression claim.
+
+Created `tests/regression/setup/company-employer-ids.spec.ts` as an **opt-in, NOT RUN** candidate for the four registration fields. It requires `E2E_APPROVED_COMPANY_EDIT=1` and four approved synthetic values, checks saved persistence, and attempts to restore/verify original field values in `finally`. Interrupted runs may still require an environment restore; run only in a disposable approved tenant. The candidate is not counted as PASS and does not change the previous **50 executed / 47 passed / 3 failed** combined suite baseline.
