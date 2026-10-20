@@ -173,3 +173,11 @@ See [Execution Log](QA_EXECUTION_LOG.md). Historical 59-group provisional classi
 - Strengthened the existing `SET-DEPT-APPROVER / SET_185–189` QA-only regression to select **distinct first and second Overtime approvers**, verify both in the edit form, save, reopen, and assert both persisted. **NOT RUN after the change.**
 - This remains **partial** for the full workbook group: Timekeeping, Leave and Payroll routing and actual downstream filing/approval actions need separately approved test data and evidence.
 - Keep confirmed duplicate Job Position / Work Location failures and the Leave Type uniqueness candidate recorded without changing expected assertions.
+
+
+## 2026-10-21 — Two-level Overtime PASSED; Timekeeping and Leave candidate prepared
+
+- **Operator screenshot:** `SET-DEPT-APPROVER | SET_185–189` passed (**1/1 Chromium**, ~10.1 seconds). The existing QA-only department test proved two different **Overtime** approvers persisted after reopening.
+- **New candidate, NOT RUN:** `tests/regression/setup/department-approver-other-routing.spec.ts` creates a second unique QA department, assigns first/second **Timekeeping Adjustments** and **Leave** approvers, saves, reopens and checks all four persisted. The picker order comes from the previously inspected eight-picker editor UI; this assumption must be confirmed by the actual run.
+- **Scope boundary:** neither test proves actual downstream approval/filing or every payroll approval rule. Keep `SET_185–189` marked **PARTIAL** until those outcomes are tested or formally deferred.
+- **Accounting:** do not add the existing Overtime 1/1 pass to a previous 50-test combined total. The new candidate is not counted as passed; there has been no new full suite run since the previously reported result.
