@@ -4,7 +4,7 @@
 
 | Format | Purpose | How to open |
 | --- | --- | --- |
-| **[HTML Help Center](index.html)** | The easiest, visual way to learn | Download or clone this repository; open `docs/help/index.html` in Chrome/Edge with the `assets` folder beside it |
+| **[HTML Help Center](index.html)** | The easiest, visual way to learn | Download or clone this repository; open `docs/help/index.html` in Chrome/Edge —images are embedded, so no assets folder is needed |
 | **[User Manual](USER_MANUAL.md)** | Short written steps with copyable commands | Open it directly on GitHub |
 | **Word manual** | Editable, offline and printable copy | Open `HR_PRO_QA_Automation_Manual.docx` from the handoff ZIP in Word |
 | **[Repository](../../README.md)** | Actual code and maintenance history | Use GitHub or VS Code with repository access |
@@ -13,11 +13,12 @@ The repository is private, and the HTML file is **not a published website**. Git
 
 ## What to learn
 
-**Set up → Run a test → Verify its result → Create a test → Share it for review.**
+**Set up → Run a test → Verify its result → Create or test a new feature → Share it for review.**
 
 - Just running tests? Start with [Setup](USER_MANUAL.md#1-first-time-setup) and [Run](USER_MANUAL.md#2-run-one-test).
 - Writing tests? Continue to [Verify](USER_MANUAL.md#3-verify-what-really-happened) and [Create](USER_MANUAL.md#4-add-a-new-test).
-- Maintaining the project? Read [Share through GitHub](USER_MANUAL.md#5-share-a-test-through-github).
+- Testing something not in Excel? See [New features](USER_MANUAL.md#5-test-a-feature-that-isnt-in-excel).
+- Maintaining the project? Read [Share through GitHub](USER_MANUAL.md#6-share-a-test-through-github).
 
 ### Where to find the details
 
