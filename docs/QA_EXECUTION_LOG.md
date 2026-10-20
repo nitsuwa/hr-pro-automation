@@ -318,3 +318,12 @@ These observations strongly suggest important prototype state is browser-local, 
 Added **NOT RUN** `tests/infrastructure/browser-storage-isolation.spec.ts` and focused UI command `npm run test:ui:storage-isolation`. The test writes/removes only temporary `qa:isolation:*` markers and checks localStorage separation between two fresh Playwright browser contexts; it never edits HR PRO application keys or records. It **does not prove absence of shared backend**. Keep `SET-COMPANY-IDS` gated on a disposable authorized environment and approved test data.
 
 No changes to operator-reported full Setup baseline: **50 executed, 47 passed, 3 failed**; 59-group completion remains separate.
+
+
+## 2026-10-21 — Department two-level approver persistence passed
+
+- **Operator screenshot:** Playwright Chromium UI Mode, **1/1 passed**, approximately **10.1 seconds**, no errors.
+- **Test:** `tests/regression/setup/department-approver.spec.ts` — `SET-DEPT-APPROVER | SET_185–189`.
+- **Verified assertions:** distinct first and second **Overtime** approver selections for a newly created QA department persisted after Save Changes and reopening the Approvers editor.
+- **Scope boundary:** does **not** verify Timekeeping or Leave routing, payroll-level approvals, actual downstream filing or approval decisions; workbook group `SET_185–189` stays **PARTIAL**.
+- **Suite accounting:** targeted rerun of an existing check, not an additional Excel group or an update to the previously operator-reported full-suite total (50 checks, 47 passed, 3 failed; protected Company IDs test skipped as appropriate).
