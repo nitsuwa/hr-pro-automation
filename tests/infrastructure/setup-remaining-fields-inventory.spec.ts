@@ -1,11 +1,11 @@
 import { test, expect } from '../../playwright/fixtures/hrpro.fixture';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import type { Page } from '@playwright/test';
 
 /**
  * Read-only inspection for workbook gaps SET_172–176 (Company Profile)
- * and SET_220 (Holiday Edit).
+ * and SET_220 (Holiday Edit). Includes associated/wrapping HTML labels and
+ * aggregate Holiday row interaction counts, never stored field values.
  *
  * Do NOT capture existing field values, uploaded files, records, IDs,
  * employee details or secrets. Only report visible field structure and
@@ -44,10 +44,31 @@ test('INVENTORY-REMAINING-FIELDS | Company inputs and Holiday edit controls (rea
             ? [...document.querySelectorAll('label')]
               .find(label => label.htmlFor === node.id)
             : undefined;
+          // Native labels include both label[for=id] and labels that wrap
+          // the input. The first inventory only checked label[for=id].
+          // Read static label text only; never read or write input.value.
+          const nativeLabels = 'labels' in node
+            ? Array.from(node.labels ?? []).map(label => clean(label.textContent))
+            : [];
+          const labelIds = (node.getAttribute('aria-labelledby') ?? '')
+            .split(/\\s+/).filter(Boolean);
+          const ariaLinked = labelIds
+            .map(id => clean(document.getElementById(id)?.textContent))
+            .filter(Boolean);
+          const nearestLabel = node.closest('label')
+            ?? node.parentElement?.querySelector(':scope > label')
+            ?? node.parentElement?.parentElement?.querySelector(':scope > label');
+          const label = [
+            clean(node.getAttribute('aria-label')),
+            ...ariaLinked,
+            ...nativeLabels,
+            clean(relatedLabel?.textContent),
+            clean(nearestLabel?.textContent),
+          ].find(Boolean) ?? '';
           return {
             tag: node.tagName.toLowerCase(),
             type: clean(node.getAttribute('type') || ''),
-            label: clean(node.getAttribute('aria-label') || relatedLabel?.textContent),
+            label,
             placeholder: clean(node.getAttribute('placeholder')),
             required: node.required,
             disabled: node.disabled,
@@ -62,6 +83,13 @@ test('INVENTORY-REMAINING-FIELDS | Company inputs and Holiday edit controls (rea
         fields,
         actions,
         fileInputCount: fields.filter(field => field.type === 'file').length,
+        // Only structure and counts. Avoid row contents, input values, or names.
+        tableRowCount: document.querySelectorAll('main table tbody tr').length,
+        rowLinksCount: document.querySelectorAll('main table tbody tr a').length,
+        rowEditButtonCount: [...document.querySelectorAll('main table tbody tr button')]
+          .filter(visible)
+          .filter(button => /edit/i.test(clean(button.getAttribute('aria-label') || button.textContent)))
+          .length,
       };
     });
   }
