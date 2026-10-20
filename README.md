@@ -7,10 +7,10 @@
 **[Open the QA Documentation Home](docs/help/README.md)**
 
 - **[HTML Help Center](docs/help/index.html)** — primary, browser-style instructions. Download the HTML and open it in Chrome/Edge; GitHub itself shows HTML source, not the rendered site.
-- **Offline Word User Manual** — included in the handoff ZIP as `HR_PRO_QA_Automation_Manual.docx`. Upload to `docs/help/` to keep the GitHub copy alongside the HTML.
+- **[GitHub-readable User Manual](docs/help/USER_MANUAL.md)** — the complete text instructions available in the repository. An editable **Word copy**, `HR_PRO_QA_Automation_Manual.docx`, is included in the delivered handoff ZIP for offline use.
 - **This repository** — the single home for test scripts, QA issues, execution history and future updates.
 
-Both guides teach the same sequence: **Install → Run → Troubleshoot → Create**. Detailed workbook scenario mapping is kept separate from the everyday guide.
+All guides teach the same sequence: **Install → Run → Verify actual results → Create → Maintain**. The emphasis is on human review of requirements, meaningful Playwright assertions, and evidence—not trusting AI-generated scripts blindly. Detailed workbook scenario mapping is kept separate from the everyday guide.
 
 ## Quick start
 
@@ -49,4 +49,4 @@ Latest combined Setup UI Mode run: **50 executed, 47 passed, 3 failed**. Two fai
 - [Workbook coverage tracker](docs/SETUP_CURRENT_COVERAGE_TRACKER.md) — partial and missing requirements
 - [Issue reports](https://github.com/nitsuwa/hr-pro-automation/issues) — bug triage
 
-**Next team:** maintain the HTML and Word guides together when repository commands change, and keep acceptance evidence in the execution log. HR GO is a **future** workflow; it does not yet have a completed automated suite.
+**Next team:** keep the HTML Help Center and [GitHub-readable manual](docs/help/USER_MANUAL.md) in sync when code/commands change; update the offline Word companion at handoff revisions. Keep accepted test evidence in the execution log. HR GO is a **future** workflow; it does not yet have a completed automated suite.
