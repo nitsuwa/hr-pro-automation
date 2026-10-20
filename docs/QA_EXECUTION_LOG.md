@@ -327,3 +327,13 @@ No changes to operator-reported full Setup baseline: **50 executed, 47 passed, 3
 - **Verified assertions:** distinct first and second **Overtime** approver selections for a newly created QA department persisted after Save Changes and reopening the Approvers editor.
 - **Scope boundary:** does **not** verify Timekeeping or Leave routing, payroll-level approvals, actual downstream filing or approval decisions; workbook group `SET_185–189` stays **PARTIAL**.
 - **Suite accounting:** targeted rerun of an existing check, not an additional Excel group or an update to the previously operator-reported full-suite total (50 checks, 47 passed, 3 failed; protected Company IDs test skipped as appropriate).
+
+
+## 2026-10-21 — Timekeeping/Leave two-level approver test passed
+
+- **Operator screenshot:** Playwright Chromium UI Mode, **1/1 passed**, approximately **12.9 seconds**, no errors.
+- **Test:** `SET-DEPT-OTHER-ROUTING | SET_185–189` in `tests/regression/setup/department-approver-other-routing.spec.ts`.
+- **Verified:** New QA department had first/second **Timekeeping Adjustment** approvers and first/second **Leave** approvers selected; after saving and reopening all four selections persisted.
+- **Scope:** Does not establish that timekeeping or leave filing decisions actually route/approve correctly. Workbook group `SET_185–189` stays **PARTIAL**. This is a targeted additional check, not a new complete scenario group.
+- **New read-only probe, NOT RUN:** `tests/infrastructure/setup-overtime-review-controls.spec.ts` (`npm run test:ui:overtime-inspect`) records structural Review/Overtime controls only to assess native HR PRO overtime scenarios `SET_097–124`, with **no approvals, filing, edits or employee data captured**.
+- **Accounting:** Previous operator-reported full Setup suite had the same three known failures; exact new combined totals not established. Preserve reported full-run baseline separately.
