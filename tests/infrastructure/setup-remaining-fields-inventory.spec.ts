@@ -17,32 +17,12 @@ test('INVENTORY-REMAINING-FIELDS | Company inputs and Holiday edit controls (rea
   const openSetup = async (tab: 'Company' | 'Holidays') => {
     await page.goto('/settings', { waitUntil: 'domcontentloaded' });
     await page.getByRole('button', { name: 'Organization Setup', exact: true }).click();
-    // The Holidays label exists both as a Setup subtab and a Settings
-    // jump-link. Scope to the actual Setup subtab (observed class: subtab)
-    // so Playwright never guesses between two identically named buttons.
+    // A Holidays button also exists in the Settings jump navigation.
+    // Restrict selection to the Organization Setup subtabs.
     const setupTab = page.locator('button.subtab').filter({
-      hasText: new RegExp(`^${tab}import { test, expect } from '../../playwright/fixtures/hrpro.fixture';
-import { mkdirSync, writeFileSync } from 'node:fs';
-import { resolve } from 'node:path';
-import type { Page } from '@playwright/test';
-
-/**
- * Read-only inspection for workbook gaps SET_172–176 (Company Profile)
- * and SET_220 (Holiday Edit).
- *
- * Do NOT capture existing field values, uploaded files, records, IDs,
- * employee details or secrets. Only report visible field structure and
- * possible edit/remove control labels. This is not regression evidence.
- */
-test('INVENTORY-REMAINING-FIELDS | Company inputs and Holiday edit controls (read-only)', async ({ page, loginAs }) => {
-  await loginAs('systemAdmin');
-
-  const openSetup = async (tab: 'Company' | 'Holidays') => {
-    await page.goto('/settings', { waitUntil: 'domcontentloaded' });
-    await page.getByRole('button', { name: 'Organization Setup', exact: true }).click();
-),
+      hasText: new RegExp('^' + tab + '$'),
     });
-    await expect(setupTab, `Unique ${tab} Organization Setup tab`).toHaveCount(1);
+    await expect(setupTab, 'Unique Organization Setup tab').toHaveCount(1);
     await setupTab.click();
   };
 
