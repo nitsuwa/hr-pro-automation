@@ -181,3 +181,11 @@ See [Execution Log](QA_EXECUTION_LOG.md). Historical 59-group provisional classi
 - **New candidate, NOT RUN:** `tests/regression/setup/department-approver-other-routing.spec.ts` creates a second unique QA department, assigns first/second **Timekeeping Adjustments** and **Leave** approvers, saves, reopens and checks all four persisted. The picker order comes from the previously inspected eight-picker editor UI; this assumption must be confirmed by the actual run.
 - **Scope boundary:** neither test proves actual downstream approval/filing or every payroll approval rule. Keep `SET_185–189` marked **PARTIAL** until those outcomes are tested or formally deferred.
 - **Accounting:** do not add the existing Overtime 1/1 pass to a previous 50-test combined total. The new candidate is not counted as passed; there has been no new full suite run since the previously reported result.
+
+
+## 2026-10-21 — Timekeeping and Leave approver persistence confirmed
+
+- **Operator screenshot 1/1 PASS (~12.9s Chromium):** `SET-DEPT-OTHER-ROUTING` selected distinct first/second Timekeeping Adjustment approvers and first/second Leave approvers for a new QA-only department and verified all persisted after saving/reopening. This complements the **1/1 PASS** of two-level Overtime approver persistence.
+- `SET_185–189` remains **PARTIAL** because actual filing/approval outcomes and payroll approver routing are not yet validated; do not add one workbook group to an artificial completed tally.
+- **Next possibility:** `SET_097–124` native HR PRO overtime approval, separate from external LILO integration. New **read-only, NOT RUN** inspection `tests/infrastructure/setup-overtime-review-controls.spec.ts` maps Review and Overtime UI without changing data. Must review its JSON before deciding if a business-outcome regression is feasible.
+- No change to provisional 59-group counts or the last complete operator-reported pass/fail total.
