@@ -140,3 +140,14 @@ Read-only V11 editor inventory confirmed a text field with no label, plus `Save 
 ## 2026-10-20 — 59-group closure plan and next inspection
 
 A focused [59-scenario completion plan](SETUP_59_COMPLETION_PLAN.md) now prioritizes truly missing business assertions, not just adding scripts. A new **exploratory, NOT-RUN** probe at `tests/infrastructure/setup-duplicate-feedback-probe.spec.ts` checks what visible duplicate feedback the current HR PRO interface actually produces for `SET_169` and `SET_182`; the results should inform permanent regression assertions. This is **not yet additional verified workbook coverage**. It requires authorized non-production persistent QA records and explicit `E2E_APPROVED_MUTATIONS=1`.
+
+
+## 2026-10-20 — New assertions awaiting execution
+
+- `SET_169` and `SET_182`: a focused duplicate-feedback structural probe observed **one persisted row** in each case but collected **no candidate visible warning text**. Duplicate blocking works in that run; **workbook-visible feedback is not verified**. Do not reclassify as fully accepted.
+- `SET_266–268`: Employee Edit regression now checks email persistence as well as name. **NOT RUN** after modification.
+- `SET_230–243`: Salary Structure regressions now verify saved selected rules and cancellation before confirmed deletion. **NOT RUN** after modification.
+- `SET_172–176` (Company) and `SET_220` (Holiday editing): a new read-only control inventory is prepared to identify realistic additional coverage. **NOT RUN**.
+- LILO, destructive reset, payroll arithmetic and multi-role/payroll authorization groups remain excluded from this *quick-win* batch pending approved prerequisites.
+
+See [Execution Log](QA_EXECUTION_LOG.md). Historical 59-group provisional classifications above have **not been changed** and are not a 59/59 pass certificate.
