@@ -80,9 +80,9 @@ A real test to study: `SET-LOANS-002` in `catalog-duplicates.spec.ts`. It checks
 **The old 59 workbook groups are not the limit.** For any brand-new HR PRO feature, start from a feature ticket, user story, or approved acceptance checklist.
 
 1. **Ask the owner:** What should happen, who may use it, what should be rejected, and what fictional test data is allowed?
-2. **Make a small plan:** Test a successful action, an invalid case, role permissions, and saved-result persistence where applicable. Give each case a clear ID such as \`FEAT-SEARCH-001\`.
+2. **Make a small plan:** Test a successful action, an invalid case, role permissions, and saved-result persistence where applicable. Give each case a clear ID such as `FEAT-SEARCH-001`.
 3. **Inspect the app:** Try it manually in the authorized QA environment. Confirm actual labels, dialogs, and outcomes. Do not make up selectors.
-4. **Write or ask AI for a draft:** Reuse the Playwright fixture and page objects. Require meaningful \`expect(...)\` assertions and clear notes about unknowns.
+4. **Write or ask AI for a draft:** Reuse the Playwright fixture and page objects. Require meaningful `expect(...)` assertions and clear notes about unknowns.
 5. **Verify yourself:** Run in UI Mode, inspect the recorded actions and outcomes, reopen saved records, and classify PASS / TEST ISSUE / APP DEFECT / BLOCKED.
 6. **Share it:** Record evidence and send a pull request for review. Group new tests by feature so the repository stays manageable.
 
