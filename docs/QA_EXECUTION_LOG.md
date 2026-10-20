@@ -276,3 +276,12 @@ New stronger regression assertions on QA branch, **awaiting operator UI Mode run
 New **read-only, NOT-RUN** inventory: `tests/infrastructure/setup-remaining-fields-inventory.spec.ts` (`npm run test:ui:remaining-fields`). Captures control *structure only* for Company Profile and Holiday management into `qa-artifacts/setup-remaining-fields.json` to support further scenario design without guessing selectors. No stored values or employee data are captured.
 
 The last complete operator-reported regression baseline remains **50 run, 47 PASS, 3 FAIL**. The improved tests cannot be counted as additionally passed or as completed workbook coverage until re-executed and reviewed.
+
+
+## 2026-10-20 — Operator-reported focused rerun / inventory selector correction
+
+- Operator reports **all four strengthened regression checks passed**: `employee-edit.spec.ts` (name/email persistence) and three tests in `salary-structures.spec.ts` (selected-rule persistence and cancel/confirm deletion). These are **operator-reported targeted results**; no full suite rerun is claimed.
+- Read-only `INVENTORY-REMAINING-FIELDS` initially failed at `setup-remaining-fields-inventory.spec.ts:20` due to **two different Holidays buttons** (Organization Setup subtab and Settings jump navigation). This is a **locator ambiguity / test issue**, not an application defect.
+- Fixed the inventory to target the unique `button.subtab` matching Company/Holidays by exact text. **Fix not yet rerun**.
+- Pending: execute `npm run test:ui:remaining-fields` again, send `qa-artifacts/setup-remaining-fields.json`, and plan additional Company and Holiday regression cases from confirmed control structure.
+- Previous full combined Setup baseline remains **50 run, 47 passed, 3 failed** until a new complete run is recorded. Targeted passes must not be added to that total.
