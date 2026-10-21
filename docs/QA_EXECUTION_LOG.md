@@ -372,3 +372,12 @@ No changes to operator-reported full Setup baseline: **50 executed, 47 passed, 3
 - **Disposition:** DEFER `SET_097–124` pending real approved overtime-request prerequisites and expected approval/rejection behavior. Do **not** count a passing inventory as workbook acceptance; do not classify empty state as an application defect.
 - **Next practical regression, NOT RUN:** a distinct `SET-HOLIDAY-DUP-FEEDBACK | SET_219` test was added alongside the existing duplicate-prevention check in `tests/regression/setup/holiday-leave-duplicates.spec.ts`. It verifies a **user-visible duplicate warning** through native or in-page alert/status UI and still asserts only one saved QA Holiday afterward. Current duplicate-prevention test is unchanged.
 - The updated Holiday warning test may expose a real UX mismatch or a feedback-locator gap and therefore requires Playwright UI evidence. No new pass is claimed; historical workbook and full-suite tallies remain unchanged.
+
+
+## 2026-10-21 — Holiday duplicate feedback locator issue and override behavior
+
+- **Observed:** Operator Playwright UI Mode screenshot + failure text for `SET-HOLIDAY-DUP-FEEDBACK | SET_219`, **1 failed** after 13.2s. The screenshot and Playwright page snapshot **prove HR PRO did display an in-page `role=dialog`** named "There's already a declared holiday on this date," with **Cancel** and **Add it anyway** choices.
+- **Classification:** The failure is a **test locator issue**, not evidence of missing duplicate-warning feedback. The script had polled for alerts/status regions and missed the accessible `dialog`.
+- **Behavior nuance:** HR PRO **allows an explicit override** ("Add it anyway"). The observed warning is not strict duplicate prevention. Whether same-date holiday declarations may legitimately coexist requires product-owner clarification of `SET_219`.
+- **Changes prepared, NOT RUN:** `tests/regression/setup/holiday-leave-duplicates.spec.ts` now asserts the visible accessible dialog, its explanation and optional override button, chooses **Cancel**, and verifies exactly one original fictional QA holiday persists. Also corrected the earlier `SET-HOLIDAY-DUP` test to explicitly cancel rather than implicitly discard the dialog through a reload.
+- **Accounting:** Do not count either modified Holiday test as a passing rerun until the operator executes them. Keep `SET_219` classified as partial pending the workbook interpretation and confirmation of the new assertions.
