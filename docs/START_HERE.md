@@ -13,4 +13,4 @@ The guide shows you exactly how to:
 
 **Want the actual code?** Visit the [repository README](../README.md).
 
-Detailed technical [QA execution evidence](QA_EXECUTION_LOG.md) is kept separately from the beginner guide. No Word file is required.
+Detailed technical [QA execution evidence](QA_EXECUTION_LOG.md) is kept separately from this beginner guide.
