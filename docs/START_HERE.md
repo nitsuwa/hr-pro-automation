@@ -1,13 +1,16 @@
-# Start Here — HR PRO QA Automation
+# HR PRO QA — Start Here
 
-**The official entry point is now the [QA Documentation Home](help/README.md).** It connects the browser-style [HTML Help Center](help/index.html), its offline Word companion (provided in the handoff bundle), and the GitHub source/tests.
+**New to automated testing?** Open the **[HR PRO QA Guide](https://hr-pro-automation.netlify.app)**. It is the main training website.
 
-Use the **same four-step workflow** in either guide: **Install → Run → Troubleshoot → Create**.
+The guide shows you exactly how to:
 
-The project itself remains in the [repository root](../README.md). Current QA evidence is in [Execution Log](QA_EXECUTION_LOG.md), and the detailed Excel scenario gaps remain in [Coverage Tracker](SETUP_CURRENT_COVERAGE_TRACKER.md).
+1. [Install the repository](https://hr-pro-automation.netlify.app/#install).
+2. [Run one Playwright test](https://hr-pro-automation.netlify.app/#run) in UI Mode.
+3. [Check what passed or failed](https://hr-pro-automation.netlify.app/#verify).
+4. [Understand assertions](https://hr-pro-automation.netlify.app/#syntax).
+5. [Create a new test with or without Excel—with AI assistance](https://hr-pro-automation.netlify.app/#create).
+6. [Share the test with GitHub](https://hr-pro-automation.netlify.app/#github).
 
-> Latest verified combined Setup run (19 Oct 2026): 50 implemented automated checks, 47 passed, 3 failed (two confirmed application defects, one requirement-dependent candidate). This is not 59-of-59 Excel acceptance coverage.
+**Want the actual code?** Visit the [repository README](../README.md).
 
-**To run tests after installation:** `npm run test:ui:setup`. Confirm the approved non-production test URL first.
-
-This file is only a navigation link, not a second separate manual.
+Detailed technical [QA execution evidence](QA_EXECUTION_LOG.md) is kept separately from the beginner guide. No Word file is required.
