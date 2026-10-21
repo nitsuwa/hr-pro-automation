@@ -1,32 +1,43 @@
 # HR PRO QA Automation
 
-**New to the project? Start here.** This repository contains automated browser tests for HR PRO. A test follows steps in the application and checks whether the expected result happened.
+Automated browser tests for **HR PRO**, built with [Playwright](https://playwright.dev/).
 
-## Choose what you need
+**[Open the HR PRO QA Guide](https://hr-pro-automation.netlify.app)** — start here for installation, running tests, checking results, and adding new tests.
 
-| I want to… | Go here |
+## Quick start
+
+Install **Git**, **Node.js**, and **VS Code**, then get access to this repository and an approved HR PRO test environment.
+
+Open the VS Code terminal:
+
+```powershell
+git clone https://github.com/nitsuwa/hr-pro-automation.git
+cd hr-pro-automation
+npm ci
+npx playwright install chromium
+npm run test:ui:smoke
+```
+
+In Playwright UI Mode, select a test and click **▶ Run**. To run approved Setup checks, use `npm run test:ui:setup`.
+
+**Before running:** check `playwright.config.ts` and `E2E_BASE_URL` for the correct environment. Some tests change records. Use only approved non-production data, never real employee information.
+
+## Where things are
+
+| Location | Purpose |
 | --- | --- |
-| **Learn with pictures and short steps** | [Official HTML Help Center](https://gleaming-muffin-23e8b0.netlify.app) |
-| **Read a simple guide on GitHub** | [User Manual](docs/help/USER_MANUAL.md) |
-| **See test scripts** | [Setup tests](tests/regression/setup/) |
-| **See test results or known problems** | [Execution log](docs/QA_EXECUTION_LOG.md) · [Issues](https://github.com/nitsuwa/hr-pro-automation/issues) |
+| [QA Guide](https://hr-pro-automation.netlify.app) | Main documentation website |
+| [Setup tests](tests/regression/setup/) | Automated feature checks |
+| [Smoke tests](tests/smoke/) | Basic navigation checks |
+| [Fixtures & page objects](playwright/) | Shared login and reusable actions |
+| [Playwright config](playwright.config.ts) | Environment, browser, and reports |
+| [Execution log](docs/QA_EXECUTION_LOG.md) | Detailed QA run records |
+| [User manual](docs/help/USER_MANUAL.md) | Written reference |
 
-**Documentation website:** https://gleaming-muffin-23e8b0.netlify.app. This is the official beginner guide. It can also be opened offline at `docs/help/index.html` after cloning (illustrations are embedded). The code repository remains private: team members need GitHub access to run and maintain tests.
+## Add a test
 
-## First time? Do these 3 things
+**Requirement → Inspect HR PRO → Write assertions → Run in UI Mode → Verify results → Pull request.**
 
-1. Install **Git, Node.js, and Visual Studio Code**. Get access to this **private repository** and an **approved HR PRO test environment**.
-2. Follow the [step-by-step setup instructions](docs/help/USER_MANUAL.md#1-first-time-setup).
-3. In VS Code, run `npm run test:ui:setup`, select **one** test, and click **▶ Run**.
+Create a new branch from updated `main`, add or change a test, and submit a pull request for team review. Use existing fixtures and tests as examples. For new features, define expected behavior even if no Excel scenario exists.
 
-**Before running tests:** Check the actual URL configured in `playwright.config.ts` or `E2E_BASE_URL`. Its default is the HR PRO prototype. Tests may change saved records; use only an approved test environment and fictional data.
-
-## How QA work continues after handoff
-
-**Any approved requirement (including a brand-new feature) → Inspect HR PRO → Draft test → Run it → Verify the business result → Record evidence → Submit for review.**
-
-For a feature not covered by Excel, see [How to test a new feature](docs/help/USER_MANUAL.md#5-test-a-feature-that-isnt-in-excel). Use the [User Manual](docs/help/USER_MANUAL.md#4-add-a-new-test) for the beginner steps and [GitHub workflow](docs/help/USER_MANUAL.md#6-share-a-test-through-github) for adding future tests safely.
-
-**Last reported full Setup run (19 Oct 2026): 50 checks, 47 passed, 3 failed.** Two failures are confirmed duplicate-validation defects; one Leave Type duplicate-label issue needs a requirements decision. This is **not** full acceptance of all original workbook groups; new features are not limited to that workbook. Technical details remain in the [coverage tracker](docs/SETUP_CURRENT_COVERAGE_TRACKER.md).
-
-**Maintainers:** Update `docs/help/index.html` for beginner instructions and `docs/help/USER_MANUAL.md` for detailed steps. Once changes are reviewed and merged to `main`, Netlify redeploys the documentation website automatically. Keep test assertions and results accurate.
+**Maintaining the guide:** edit `docs/help/index.html` in a reviewed branch. After merging into `main`, Netlify publishes the updated documentation.
