@@ -389,3 +389,12 @@ No changes to operator-reported full Setup baseline: **50 executed, 47 passed, 3
 - **Verified scope claimed by this focused result:** warning/confirmation dialog with **Cancel** and **Add it anyway**, and cancellation leaving exactly one newly created QA Holiday. The previous screenshot and trace conclusively identified `role=dialog` as the warning surface; the previous red status was a selector error.
 - **Boundary:** HR PRO offers an explicit override, so this does not certify strict duplicate prevention on confirmation. Product-owner requirement clarification remains necessary before `SET_219` can be marked fully accepted. The separate earlier `SET-HOLIDAY-DUP` test, also updated, was **not rerun in this reported result**.
 - **Accounting:** This is a focused rerun of an existing Excel group, not an additional 59th group, and does not revise the previously recorded full-suite baseline.
+
+
+## 2026-10-21 — SET_169 and SET_182 focused duplicate prevention rerun
+
+- **Operator reported:** Both focused regression tests passed in local Playwright UI Mode after running `catalog-duplicates.spec.ts` with `--grep "SET-LOANS-002|SET-DEPT-002"`; no screenshot or error-message snapshot supplied in this turn.
+- **SET-LOANS-002 / SET_169:** PASS (operator-reported) for adding a unique QA loan source, attempting the duplicate, navigating/reloading the page via Setup, and asserting exactly **one matching row** remains.
+- **SET-DEPT-002 / SET_182:** PASS (operator-reported) for creating a unique QA department, attempting the duplicate, navigating via Setup, and asserting exactly **one matching row** remains.
+- **Scope boundary:** Neither focused test asserts that a **visible duplicate error message** appears. That workbook expected result remains pending a UI screenshot and its own assertion. These are 2 tests, not 2 newly completed workbook groups.
+- **Accounting:** Do not add these targeted checks to the earlier full-suite totals or mark either scenario fully accepted from the pass report alone.
