@@ -1,19 +1,33 @@
-# HR PRO Automated Testing
+# HR PRO QA Automation
 
-End-to-end automated regression testing for HR PRO using Playwright and TypeScript.
+**New to the project? Start here.** This repository contains automated browser tests for HR PRO. A test follows steps in the application and checks whether the expected result happened.
 
-## Current Test Environment
+## Choose what you need
 
-https://hrproprototype.netlify.app
+| I want to… | Go here |
+| --- | --- |
+| **Learn with pictures and short steps** | [HTML Help Center](docs/help/index.html) |
+| **Read a simple guide on GitHub** | [User Manual](docs/help/USER_MANUAL.md) |
+| **Print or share instructions** | `HR_PRO_QA_Automation_Manual.docx` in the handoff ZIP |
+| **See test scripts** | [Setup tests](tests/regression/setup/) |
+| **See test results or known problems** | [Execution log](docs/QA_EXECUTION_LOG.md) · [Issues](https://github.com/nitsuwa/hr-pro-automation/issues) |
 
-## Requirements
+**HTML access:** GitHub shows the HTML source instead of a normal website. After cloning the repo, open `docs/help/index.html` in Chrome or Edge. Keep the `assets` folder beside it. There is no confirmed live documentation website.
 
-- Node.js
-- npm
-- Playwright Chromium
+## First time? Do these 3 things
 
-## Install
+1. Install **Git, Node.js, and Visual Studio Code**. Get access to this **private repository** and an **approved HR PRO test environment**.
+2. Follow the [step-by-step setup instructions](docs/help/USER_MANUAL.md#1-first-time-setup).
+3. In VS Code, run `npm run test:ui:setup`, select **one** test, and click **▶ Run**.
 
-```bash
-npm install
-npx playwright install chromium
+**Before running tests:** Check the actual URL configured in `playwright.config.ts` or `E2E_BASE_URL`. Its default is the HR PRO prototype. Tests may change saved records; use only an approved test environment and fictional data.
+
+## How QA work continues after handoff
+
+**Any approved requirement (including a brand-new feature) → Inspect HR PRO → Draft test → Run it → Verify the business result → Record evidence → Submit for review.**
+
+For a feature not covered by Excel, see [How to test a new feature](docs/help/USER_MANUAL.md#5-test-a-feature-that-isnt-in-excel). Use the [User Manual](docs/help/USER_MANUAL.md#4-add-a-new-test) for the beginner steps and [GitHub workflow](docs/help/USER_MANUAL.md#6-share-a-test-through-github) for adding future tests safely.
+
+**Last reported full Setup run (19 Oct 2026): 50 checks, 47 passed, 3 failed.** Two failures are confirmed duplicate-validation defects; one Leave Type duplicate-label issue needs a requirements decision. This is **not** full acceptance of all original workbook groups; new features are not limited to that workbook. Technical details remain in the [coverage tracker](docs/SETUP_CURRENT_COVERAGE_TRACKER.md).
+
+**Maintainers:** Update the HTML and GitHub manual when workflows change, then refresh the offline Word copy for the next handoff.
