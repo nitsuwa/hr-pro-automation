@@ -4,12 +4,11 @@
 
 | Format | Purpose | How to open |
 | --- | --- | --- |
-| **[HTML Help Center](index.html)** | The easiest, visual way to learn | Download or clone this repository; open `docs/help/index.html` in Chrome/Edge —images are embedded, so no assets folder is needed |
+| **[Official HTML Help Center](https://gleaming-muffin-23e8b0.netlify.app)** | Main beginner-facing documentation website | Open online; an offline copy lives at `docs/help/index.html` with embedded illustrations |
 | **[User Manual](USER_MANUAL.md)** | Short written steps with copyable commands | Open it directly on GitHub |
-| **Word manual** | Editable, offline and printable copy | Open `HR_PRO_QA_Automation_Manual.docx` from the handoff ZIP in Word |
 | **[Repository](../../README.md)** | Actual code and maintenance history | Use GitHub or VS Code with repository access |
 
-The repository is private, and the HTML file is **not a published website**. GitHub displays HTML source; opening the downloaded file in a browser renders the help center. Team members need access to the repository.
+The Help Center is hosted on Netlify at https://gleaming-muffin-23e8b0.netlify.app. The **GitHub repository remains private**, so team members need repository access to run or maintain tests. A public help website does not grant access to private source code.
 
 ## What to learn
 
@@ -26,4 +25,4 @@ The repository is private, and the HTML file is **not a published website**. Git
 - [Issue tracker](https://github.com/nitsuwa/hr-pro-automation/issues) — bugs and questions
 - [Workbook coverage](../SETUP_CURRENT_COVERAGE_TRACKER.md) — requirements still needing more checks
 
-The HTML, Word, and GitHub manuals all teach the same workflow. They are **not three separate systems**.
+The HTML Help Center is the **official user guide**. The GitHub manual supplements it with copyable text; the repository provides the actual Playwright scripts. Maintain them together, not as separate systems.
