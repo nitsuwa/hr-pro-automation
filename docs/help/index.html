@@ -171,6 +171,23 @@ code{font:12.5px Consolas,"Courier New",monospace;overflow-wrap:anywhere}
 .mini-code{margin:10px 0}.mini-code pre{padding:9px 12px}
 @media(max-width:700px){.visual-key{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:520px){.visual-key,.two-up{grid-template-columns:1fr}.requirement-sheet{grid-template-columns:1fr}.requirement-sheet>span{margin-top:7px}}
+
+.hrpro-walkthrough{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-top:16px;font-size:12px}
+.hrpro-walk-top{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--surface);padding:12px 16px;color:var(--muted);font-size:10px;letter-spacing:.08em;font-weight:750}
+.mini-brand{color:var(--brand);font-size:16px;letter-spacing:.1em;font-weight:850}
+.tiny-squares{font-size:22px;letter-spacing:0}
+.hrpro-menu{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 13px;background:var(--nav);color:#e2e6f4}
+.hrpro-menu>span,.hrpro-menu>strong{padding:7px 10px}
+.hrpro-menu>strong{background:#238b82;color:#fff;border-radius:5px}
+.hrpro-inner{padding:15px;background:var(--surface-soft)}
+.fake-tabs{display:flex;gap:10px;align-items:center;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px;color:var(--muted)}
+.fake-tabs>b{border-bottom:2px solid var(--teal);color:var(--ink);padding-bottom:6px}
+.fake-tabs.small{margin-top:11px;font-size:11px}
+.fake-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) auto;gap:8px;align-items:center;margin-top:13px}
+.fake-list>div{border:1px solid var(--line);border-radius:5px;padding:9px;font-weight:650;color:var(--ink)}
+.fake-list small{display:block;color:var(--muted);font-weight:400}
+.fake-list>strong{background:var(--nav);color:#fff;border-radius:6px;padding:11px;font-size:11px;white-space:nowrap}
+@media(max-width:660px){.fake-list{grid-template-columns:repeat(2,minmax(0,1fr))}.fake-list>strong{white-space:normal}}
 </style>
 </head>
 <body>
@@ -314,6 +331,14 @@ test('QA-EXAMPLE | Settings opens', async ({ page, loginAs }) => {
 <div class="example-panel" data-panel="excel">
 <b>Example: SET_177–181 — Create a department</b>
 <div class="requirement-sheet"><span>Manual steps</span><p>Settings → Organization Setup → Departments → Add Department → enter a unique QA name → save.</p><span>Expected result</span><p>Department appears once and is still there after refreshing the page.</p><span>Existing reference</span><p><a href="https://github.com/nitsuwa/hr-pro-automation/blob/main/tests/regression/setup/department-creation.spec.ts" target="_blank" rel="noopener noreferrer"><code>department-creation.spec.ts</code> ↗</a></p></div>
+<div class="hrpro-walkthrough" aria-label="Illustrated HR PRO Settings navigation">
+ <div class="hrpro-walk-top"><span class="mini-brand"><span class="tiny-squares" aria-hidden="true">▦</span> HR PRO</span><span>SETTINGS · EXAMPLE VIEW</span></div>
+ <div class="hrpro-menu"><span>Home</span><span>Timesheet</span><span>Employees</span><strong>① Settings</strong></div>
+ <div class="hrpro-inner"><div class="fake-tabs"><b>② Organization Setup</b><span>Users &amp; Access</span><span>Modules</span></div>
+ <div class="fake-tabs small"><span>General</span><b>③ Departments</b><span>Job Positions</span><span>Work Locations</span></div>
+ <div class="fake-list"><div>OPERATIONS</div><div>SECURITY</div><div>QA DEPARTMENT <small>Saved test record</small></div><strong>④ + Add Department</strong></div></div>
+</div>
+<p class="mini" style="margin-top:8px">Illustration of the HR PRO path, not a live screenshot. Follow the labels in your own approved test environment.</p>
 </div>
 <div class="example-panel" data-panel="new" hidden>
 <b>Example: Add employee search coverage</b>
@@ -412,6 +437,20 @@ git push -u origin qa/employee-search</pre></div>
       }
     });
   }
+  var exampleButtons = document.querySelectorAll('.example-choice');
+  exampleButtons.forEach(function(choice) {
+    choice.addEventListener('click', function() {
+      var selected = choice.getAttribute('data-example');
+      exampleButtons.forEach(function(button) {
+        var isSelected = button === choice;
+        button.classList.toggle('selected', isSelected);
+        button.setAttribute('aria-pressed', String(isSelected));
+      });
+      document.querySelectorAll('.example-panel').forEach(function(panel) {
+        panel.hidden = panel.getAttribute('data-panel') !== selected;
+      });
+    });
+  });
   var links = document.querySelectorAll('.primary-nav a[href^="#"]');
   links.forEach(function(link) {
     link.addEventListener('click', function() {
