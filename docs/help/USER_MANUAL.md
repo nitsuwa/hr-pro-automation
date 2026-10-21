@@ -6,11 +6,10 @@
 
 | Resource | Why you would use it |
 | --- | --- |
-| [HTML Help Center](index.html) | Pictures and clickable, beginner-friendly instructions. After cloning, open `docs/help/index.html` in Chrome/Edge ; illustrations are embedded directly |
-| **Word manual** in the handoff ZIP | Editable, printable offline copy |
+| [Official HTML Help Center](https://gleaming-muffin-23e8b0.netlify.app) | Public-facing beginner guide; open online, or open `docs/help/index.html` locally after cloning |
 | [GitHub repository](../../README.md) | Actual scripts, changes, reported problems and results |
 
-This repository is **private**. GitHub displays the HTML source; it is not yet a hosted website.
+The Help Center is live at https://gleaming-muffin-23e8b0.netlify.app. The GitHub repository remains **private** and requires authorized access. The website describes how to use the QA system; the repository holds its source code.
 
 ## 1. First-time setup
 
@@ -21,13 +20,13 @@ In VS Code choose **Terminal → New Terminal** and run:
 ```powershell
 git clone https://github.com/nitsuwa/hr-pro-automation.git
 cd hr-pro-automation
-git fetch origin
-git switch --track origin/qa/setup-handoff-2026-10-19
+git switch main
+git pull --ff-only origin main
 npm ci
 npx playwright install chromium
 ```
 
-If the QA branch already exists locally, use `git switch qa/setup-handoff-2026-10-19` instead.
+For an existing local clone, check `git status` first; if the working tree is clean, update with `git switch main`, `git fetch origin`, and `git merge --ff-only origin/main`.
 
 **Check the test environment first:** `playwright.config.ts` defaults to the HR PRO prototype, while `E2E_BASE_URL` can change the target. Only run data-changing tests on an **approved non-production environment** with fictional records.
 
@@ -96,9 +95,12 @@ A real test to study: `SET-LOANS-002` in `catalog-duplicates.spec.ts`. It checks
 
 **Branch** = your safe copy. **Commit** = save your changes. **Pull request (PR)** = ask the team to review before merging.
 
-Start from the approved QA branch and a clean `git status`. Ask the maintainer which branch should receive your work. Then:
+Start from an up-to-date `main` with a clean `git status`. Ask the maintainer which branch should receive your work. Then:
 
 ```powershell
+git switch main
+git fetch origin
+git merge --ff-only origin/main
 git switch -c qa/check-employee-search
 # Edit and verify your own test, then:
 git add tests/regression/setup/employee-search.spec.ts
