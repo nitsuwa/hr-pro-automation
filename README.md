@@ -2,7 +2,7 @@
 
 Automated browser tests for **HR PRO**, built with [Playwright](https://playwright.dev/).
 
-**[Open the HR PRO QA Guide](https://hr-pro-automation.netlify.app)** — start here for installation, running tests, checking results, and adding new tests.
+**[HR PRO QA Guide](https://hr-pro-automation.netlify.app)** — the team's main step-by-step training website. No automation experience required.
 
 ## Quick start
 
@@ -18,7 +18,7 @@ npx playwright install chromium
 npm run test:ui:smoke
 ```
 
-In Playwright UI Mode, select a test and click **▶ Run**. To run approved Setup checks, use `npm run test:ui:setup`.
+In Playwright UI Mode, run **SMOKE-018 (Settings)** first and inspect its actions. Follow the [hands-on test walkthrough](https://hr-pro-automation.netlify.app/#run). To run approved Setup checks, use `npm run test:ui:setup`.
 
 **Before running:** check `playwright.config.ts` and `E2E_BASE_URL` for the correct environment. Some tests change records. Use only approved non-production data, never real employee information.
 
@@ -35,6 +35,8 @@ In Playwright UI Mode, select a test and click **▶ Run**. To run approved Setu
 | [User manual](docs/help/USER_MANUAL.md) | Written reference |
 
 ## Add a test
+
+Use the [guided new-test tutorial](https://hr-pro-automation.netlify.app/#create) for **Excel scenarios or features not in Excel**. It includes a real HR PRO example, locator inspection, an AI prompt, and independent verification.
 
 **Requirement → Inspect HR PRO → Write assertions → Run in UI Mode → Verify results → Pull request.**
 
