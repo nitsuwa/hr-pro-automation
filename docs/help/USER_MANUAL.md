@@ -20,8 +20,9 @@ npx playwright install chromium
 For an existing clone, first check your branch and working tree:
 
 ```powershell
-git switch main
 git status
+# Continue only with a clean working tree.
+git switch main
 git fetch origin
 git merge --ff-only origin/main
 ```
@@ -34,7 +35,7 @@ Only switch or merge with a clean working tree. Do not reset or discard someone 
 npm run test:ui:smoke
 ```
 
-Choose one test from the left panel, click **▶ Run**, and inspect **Actions**, **Before/After**, and **Errors**. For approved Setup checks: `npm run test:ui:setup`.
+For a first read-only practice, run **SMOKE-018 (Settings)** from `navigation.spec.ts` in the test list. Click **▶ Run** and inspect **Actions**, **Before/After**, and **Errors**. See the [guided UI Mode exercise](https://hr-pro-automation.netlify.app/#run). For approved Setup checks: `npm run test:ui:setup`.
 
 **Check the test URL first.** The default URL is configured in `playwright.config.ts`; `E2E_BASE_URL` may override it. Use an approved non-production environment and fictional data for tests that change records.
 
@@ -80,7 +81,7 @@ That snippet checks navigation only. Tests of saved settings should also verify 
 5. Run the test in UI Mode, verify its result, and record evidence.
 6. Propose the change with a GitHub pull request.
 
-You can use AI to draft a test **from real UI evidence**, but a person must review, run, and verify it. Never share secrets or real employee records.
+Use the [step-by-step creation tutorial](https://hr-pro-automation.netlify.app/#create) for both Excel cases and new features. It explains how to inspect controls, write assertions, and give AI a prompt based on real UI evidence. A person must review, run, and verify every generated test. Never share secrets or real employee records.
 
 ## 6. Share changes in GitHub
 
