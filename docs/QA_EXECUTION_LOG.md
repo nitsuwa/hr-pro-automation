@@ -355,3 +355,11 @@ No changes to operator-reported full Setup baseline: **50 executed, 47 passed, 3
 - Updated the **same opt-in inspector** (`tests/infrastructure/setup-overtime-populated-review.spec.ts`) to navigate an exact **Approvals** tab/button/link and record read-only controls there. It never clicks Approve, Reject or payroll submission actions. **Updated version NOT RUN.**
 - The updated inspection still submits a new QA batch. Run only in an approved disposable, non-production context using `E2E_APPROVED_MUTATIONS=1`; do not leave the flag enabled afterward.
 - Historical 59-group classification and full Setup regression outcomes are unchanged.
+
+
+## 2026-10-21 — Approvals navigation exposed Overtime control
+
+- **Uploaded structural JSON:** `setup-overtime-populated-review.json` with three snapshots. The submitted QA batch produced 1 Review row; opening its detail produced 18 rows and 12 selects; the **Approvals** view displayed a generic **Overtime navigation** control, with zero table rows at the moment inspected.
+- **Interpretation:** HR PRO's native Approvals page has an Overtime entry point. There is **no evidence yet** that an overtime request can be filed, approved, rejected, or reflected in attendance/payroll. All `SET_097–124` acceptance outcomes remain pending.
+- **Next inspection prepared, NOT RUN:** Improved existing `tests/infrastructure/setup-overtime-review-controls.spec.ts` to open **Approvals → Overtime** without creating a new batch or submitting any decision. The selector only opens the Overtime button if it has navigation semantics. Output: `qa-artifacts/setup-overtime-review-controls.json`.
+- **Safety / accounting:** This inspection is read-only and separate from the opt-in batch-creating survey. Do not claim an additional workbook PASS or change the combined Setup totals.
