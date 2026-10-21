@@ -224,3 +224,10 @@ See [Execution Log](QA_EXECUTION_LOG.md). Historical 59-group provisional classi
 - The failed `SET-HOLIDAY-DUP-FEEDBACK` run **did show** a real `role=dialog` warning ("There's already a declared holiday on this date"). It offered **Cancel** and **Add it anyway**. The old assertion ignored plain dialogs, so the red check was a **test locator issue**, not a missing warning.
 - GitHub scripts updated (NOT RUN): both `SET-HOLIDAY-DUP` and `SET-HOLIDAY-DUP-FEEDBACK` now explicitly use **Cancel** and assert exactly one original QA Holiday persists. The latter also verifies the actual confirmation text and override choice.
 - These checks will **not** prove that duplicates are universally forbidden: HR PRO currently allows an explicit override, and product-owner clarification of that behavior versus workbook `SET_219` is required. Keep the group **PARTIAL** until accepted criteria and rerun evidence are available. Do not artificially increase workbook or full-suite pass totals.
+
+
+## 2026-10-21 — Corrected Holiday warning test: operator reports PASS
+
+- `SET-HOLIDAY-DUP-FEEDBACK | SET_219`: **PASS (operator-reported)** after locator correction. The regression now checks the actual accessible duplicate-date confirmation and chooses **Cancel**, then asserts the original fictional QA Holiday remains the only matching record.
+- The warning explicitly offers **"Add it anyway"**, so accepted behavior is **warning + user choice**, not universal duplicate rejection. Continue to classify `SET_219` as **PARTIAL / expectation clarification needed** until product-owner confirmation of override policy. The original `SET-HOLIDAY-DUP` test was modified but not rerun in this message.
+- **Do not increment the 59-group completed count or full-suite test totals** based on this focused operator-reported pass.
