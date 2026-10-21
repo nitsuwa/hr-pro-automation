@@ -346,3 +346,12 @@ No changes to operator-reported full Setup baseline: **50 executed, 47 passed, 3
 - New **NOT RUN** opt-in inspection: `tests/infrastructure/setup-overtime-populated-review.spec.ts` and `npm run test:ui:overtime-populated`. It reuses known Timesheet → Review attendance → Submit to Review navigation, then records only generic labels and counts; asserts Review has rows.
 - **Safety:** This new inspection **creates/submits a QA batch** (unlike the earlier read-only inspection) and is *skipped by default*. Needs disposable non-production environment and explicit `E2E_APPROVED_MUTATIONS=1`. Does **not** approve/reject overtime or release payroll. Do not run without permission.
 - `SET_097–124` remain unverified. The infrastructure inventory does not count toward 59 groups or change the full-suite baseline.
+
+
+## 2026-10-21 — Populated Review controls observed
+
+- Operator uploaded `setup-overtime-populated-review.json`. The initial submitted QA batch showed **one Review row**, and opening its details exposed **18 rows and 12 select controls**. The generic **Approvals** navigation control appeared in both snapshots; no Overtime tab was identified.
+- This indicates the previous empty Review inventory lacked an active QA review batch. It does **not** establish that overtime requests/approval decisions work or that `SET_097–124` are complete. The JSON is exploratory UI evidence, not a regression PASS.
+- Updated the **same opt-in inspector** (`tests/infrastructure/setup-overtime-populated-review.spec.ts`) to navigate an exact **Approvals** tab/button/link and record read-only controls there. It never clicks Approve, Reject or payroll submission actions. **Updated version NOT RUN.**
+- The updated inspection still submits a new QA batch. Run only in an approved disposable, non-production context using `E2E_APPROVED_MUTATIONS=1`; do not leave the flag enabled afterward.
+- Historical 59-group classification and full Setup regression outcomes are unchanged.
