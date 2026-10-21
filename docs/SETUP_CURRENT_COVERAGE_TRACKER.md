@@ -210,3 +210,10 @@ See [Execution Log](QA_EXECUTION_LOG.md). Historical 59-group provisional classi
 - Latest opt-in populated Review survey (operator-uploaded JSON) successfully navigated to **Approvals**, where a generic **Overtime navigation** control exists. Counts: Review 1 row; Review details 18 rows/12 selects; Approvals 0 rows/7 buttons.
 - **This is structural evidence, not overtime functional acceptance.** `SET_097–124` remain unverified for submitted overtime requests, authorization and post-approval behavior.
 - Existing **read-only** `setup-overtime-review-controls.spec.ts` has been enhanced to navigate **Approvals → Overtime** without generating another QA batch. It records generic control categories and counts only. **Not yet rerun.**
+
+
+## 2026-10-21 — Overtime deferred after confirmed empty view
+
+- Latest read-only `setup-overtime-review-controls.json` successfully navigated **Review → Approvals → Overtime**. No rows, selects, or textareas were visible in the new browser context. This confirms the navigation exists, **not** the actual overtime approval business flow.
+- **Decision:** defer `SET_097–124` until a valid overtime request and authorized roles/expected behavior are available; do not run additional inventories just to inflate test count.
+- **Quick-win candidate prepared, NOT RUN:** separate `SET-HOLIDAY-DUP-FEEDBACK | SET_219` assertion in `holiday-leave-duplicates.spec.ts` will test the workbook's **visible duplicate warning** requirement, using a unique QA Holiday. The old test that verifies a duplicate was not saved remains untouched. This is not yet full acceptance and requires direct UI Mode evidence.
