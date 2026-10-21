@@ -4,7 +4,19 @@
 
 This project uses **Playwright** to automatically check HR PRO in a browser. It can do the same steps a manual tester does—open pages, enter test data, click buttons—and then **check whether the result is correct**.
 
-**[Open the step-by-step QA Guide](https://hr-pro-automation.netlify.app)** · **[Learn to create tests with AI](https://hr-pro-automation.netlify.app/#create)**
+**[Open the HR PRO QA Guide](https://hr-pro-automation.netlify.app)** · **[Create a test with AI](https://hr-pro-automation.netlify.app/#ai)**
+
+### Quick links
+
+| Get started | Learn the tools | Create &amp; share |
+| :--- | :--- | :--- |
+| [**Install**](https://hr-pro-automation.netlify.app/#install) | [**Verify a result**](https://hr-pro-automation.netlify.app/#verify) | [**New test walkthrough**](https://hr-pro-automation.netlify.app/#create) |
+| [**Run a test**](https://hr-pro-automation.netlify.app/#run) | [**Playwright syntax**](https://hr-pro-automation.netlify.app/#syntax) | [**AI Help + copyable prompt**](https://hr-pro-automation.netlify.app/#ai) |
+| [**UI Mode guide**](https://playwright.dev/docs/test-ui-mode) | [**Locators**](https://playwright.dev/docs/locators) | [**GitHub workflow**](https://hr-pro-automation.netlify.app/#github) |
+
+<img src="docs/help/assets/qa-workflow.svg" alt="The five stages from manual testing to Playwright automation: plan, inspect HR PRO, write a test, verify, and share." width="960">
+
+*Illustrated workflow: start with a requirement, inspect the real UI, write assertions, verify results, and request review.*
 
 ## Start here — run your first test
 
@@ -43,6 +55,10 @@ Use the same process for an **Excel test case** or a **new feature not covered b
 **Requirement → Try HR PRO manually → Inspect buttons and fields → Ask AI for a draft → Add assertions → Run and verify → Pull request.**
 
 [**Follow the guided AI-assisted test tutorial →**](https://hr-pro-automation.netlify.app/#create)
+
+<img src="docs/help/assets/locator-inspector.svg" alt="Illustrated HR PRO Departments screen beside a Playwright getByRole locator and an assertion" width="760">
+
+*Illustration: inspect the actual HR PRO control label, then use a Playwright locator and assertion. The [AI Help prompt](https://hr-pro-automation.netlify.app/#ai) shows what details to give ChatGPT or Claude.*
 
 The guide includes a **copyable AI prompt**, a real Department test example, a new Employee Search example, and instructions for finding locators. You do not need to know TypeScript before starting.
 
