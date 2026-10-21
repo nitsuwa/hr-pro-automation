@@ -231,3 +231,11 @@ See [Execution Log](QA_EXECUTION_LOG.md). Historical 59-group provisional classi
 - `SET-HOLIDAY-DUP-FEEDBACK | SET_219`: **PASS (operator-reported)** after locator correction. The regression now checks the actual accessible duplicate-date confirmation and chooses **Cancel**, then asserts the original fictional QA Holiday remains the only matching record.
 - The warning explicitly offers **"Add it anyway"**, so accepted behavior is **warning + user choice**, not universal duplicate rejection. Continue to classify `SET_219` as **PARTIAL / expectation clarification needed** until product-owner confirmation of override policy. The original `SET-HOLIDAY-DUP` test was modified but not rerun in this message.
 - **Do not increment the 59-group completed count or full-suite test totals** based on this focused operator-reported pass.
+
+
+## 2026-10-21 — SET_169/182 focused duplicate checks passed
+
+- The operator reports **both focused tests passed**: `SET-LOANS-002 / SET_169` and `SET-DEPT-002 / SET_182`, checking that the same fictional loan-source/department name is not stored twice.
+- **Still PARTIAL:** The Excel duplicate scenarios additionally require visible user feedback. Neither existing test asserts an error/warning message, and no screenshot of such feedback was provided; do not infer its presence merely from green Playwright checks.
+- Next step should prioritize final handoff/readability review; if acceptance of the duplicate warning is required, capture visible UI and add a precise Playwright assertion rather than more broad inspection runs.
+- Do not modify the provisional 59-group tally or last full-suite pass count based on this focused rerun.
