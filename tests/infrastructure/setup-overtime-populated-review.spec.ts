@@ -95,14 +95,33 @@ test('INVENTORY-OVERTIME-POPULATED | Inspect Review after a QA-only batch', asyn
     await inspect('Review detail opened (no changes)');
   }
 
-  // Check visible nav only; never click controls with Approve/Reject/Submit.
-  const overtimeTab = page.getByRole('tab', { name: /^Overtime$/i });
+  // The first successful populated Review inventory found an "Approvals"
+  // navigation control, but no named Overtime tab. Navigate ONLY using that
+  // exact non-action label. Do not click Approve/Reject/Submit controls.
+  const approvalsTab = page.getByRole('tab', { name: 'Approvals', exact: true });
+  const approvalsButton = page.getByRole('button', { name: 'Approvals', exact: true });
+  const approvalsLink = page.getByRole('link', { name: 'Approvals', exact: true });
+  if (await approvalsTab.count() === 1) {
+    await approvalsTab.click();
+    await inspect('Approvals tab opened (no decisions)');
+  } else if (await approvalsButton.count() === 1) {
+    await approvalsButton.click();
+    await inspect('Approvals navigation opened (no decisions)');
+  } else if (await approvalsLink.count() === 1) {
+    await approvalsLink.click();
+    await inspect('Approvals link opened (no decisions)');
+  } else {
+    // Unknown UI: record the existing Review view instead of guessing.
+    await inspect('Approvals navigation not uniquely available');
+  }
+
+  // Only a semantic tab named exactly "Overtime" is safe to open here.
+  // Buttons labelled Overtime could be workflow actions and are not clicked.
+  const overtimeTab = page.getByRole('tab', { name: 'Overtime', exact: true });
   if (await overtimeTab.count() === 1) {
     await overtimeTab.click();
-    await inspect('Overtime tab (no changes)');
+    await inspect('Overtime tab opened (no changes)');
   }
-  // Do not click a generic "Overtime" button: its behavior has not been
-  // inspected, and it might submit an action rather than navigate.
 
   mkdirSync(resolve(process.cwd(), 'qa-artifacts'), { recursive: true });
   writeFileSync(
