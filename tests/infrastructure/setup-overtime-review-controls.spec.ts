@@ -3,100 +3,146 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 /**
- * READ ONLY — determine whether HR PRO's own overtime/approval UI can
- * support native Setup scenarios SET_097–124 without external LILO data.
+ * READ ONLY — inspect native HR PRO Approvals > Overtime navigation.
  *
- * Never submits approvals, files requests, edits employee data, or captures
- * displayed employee names, dates, amounts, record values or credentials.
- * Records only structure, generic control names and aggregate counts.
+ * Does not create batches, submit requests, approve/reject filings,
+ * edit records, or export employee data. All saved text is mapped to
+ * generic categories, not raw visible labels that may contain names.
+ *
+ * This is structural discovery, NOT a SET_097–124 acceptance test.
  */
-test('INVENTORY-OVERTIME | HR PRO Review overtime controls (read-only)', async ({ page, loginAs }) => {
+test('INVENTORY-OVERTIME | Read-only Approvals > Overtime survey', async ({ page, loginAs }) => {
   await loginAs('systemAdmin');
-
-  const results: Array<{
+  type Entry = {
     stage: string;
     route: string;
+    controls: string[];
     headings: string[];
-    actions: string[];
-    tabs: string[];
-    inputs: Array<{ type: string; label: string }>;
-    counts: { rows: number; buttons: number; selects: number };
+    counts: { rows: number; buttons: number; selects: number; textareas: number };
     note?: string;
-  }> = [];
+  };
+  const results: Entry[] = [];
 
   async function capture(stage: string, note?: string) {
-    const view = await page.evaluate(() => {
+    const info = await page.evaluate(() => {
       const visible = (element: Element) => {
         const style = getComputedStyle(element);
         return element.getClientRects().length > 0
           && style.visibility !== 'hidden' && style.display !== 'none';
       };
-      const clean = (s: string | null | undefined) =>
-        (s ?? '').replace(/\s+/g, ' ').trim().slice(0, 85);
-      const list = (selector: string) =>
+      const inMain = (selector: string) =>
         [...document.querySelectorAll(selector)].filter(visible);
-      const related = (element: HTMLInputElement) =>
-        element.labels?.[0]?.textContent || element.getAttribute('aria-label') || '';
-      const genericAction = /(?:overtime|approve|reject|pending|review|filing|requests?|status|filter|submit|timesheet|attendance)/i;
+      const clean = (value: string | null | undefined) =>
+        (value ?? '').replace(/\s+/g, ' ').trim();
+
+      const category = (name: string): string | null => {
+        if (/^Approvals?$/i.test(name)) return 'Approvals navigation';
+        if (/^Overtime$/i.test(name)) return 'Overtime navigation';
+        if (/^Time & Attendance$/i.test(name)) return 'Time & Attendance';
+        if (/^Review$/i.test(name)) return 'Review';
+        if (/^Filters?$/i.test(name) || /Filters$/i.test(name)) return 'Filters';
+        if (/^Approve\b/i.test(name)) return 'Approve action present (not clicked)';
+        if (/^Reject\b/i.test(name)) return 'Reject action present (not clicked)';
+        if (/^Submit\b/i.test(name)) return 'Submit action present (not clicked)';
+        if (/^(?:Pending|Filings?|Requests?|Attendance)$/i.test(name)) return name;
+        return null;
+      };
+      const controls = inMain('main button,main a,main [role="tab"]')
+        .map(element => category(clean(element.getAttribute('aria-label') || element.textContent)))
+        .filter((value): value is string => value !== null);
+      const headings = inMain('main h1,main h2,main h3')
+        .map(element => clean(element.textContent))
+        .map(name => /^(?:Review|Approvals?|Overtime|Time & Attendance)$/i.test(name)
+          ? name : /overtime|approval|review/i.test(name)
+            ? 'Other review-related heading' : null)
+        .filter((value): value is string => value !== null);
       return {
         route: location.pathname,
-        headings: list('main h1,main h2,main h3').map(e => clean(e.textContent))
-          .filter(text => /review|attendance|overtime|filing|approval|timesheet/i.test(text))
-          .slice(0, 16),
-        actions: [...new Set(list('main button,[role="main"] button')
-          .map(e => clean(e.getAttribute('aria-label') || e.textContent))
-          .filter(text => genericAction.test(text)))].slice(0, 40),
-        tabs: [...new Set(list('main [role="tab"],main [role="tablist"] button')
-          .map(e => clean(e.getAttribute('aria-label') || e.textContent))
-          .filter(text => /overtime|approval|filing|review|pending|attendance/i.test(text)))].slice(0, 20),
-        inputs: list('main input, main select, main textarea').slice(0, 40).map(el => {
-          const input = el as HTMLInputElement;
-          return {
-            type: clean(input.getAttribute('type') || input.tagName.toLowerCase()),
-            label: clean(related(input)),
-          };
-        }).filter(entry => /overtime|review|approval|status|filter|request/i.test(entry.label)),
+        controls: [...new Set(controls)],
+        headings: [...new Set(headings)],
         counts: {
-          rows: list('main tbody tr').length,
-          buttons: list('main button').length,
-          selects: list('main select').length,
+          rows: inMain('main tbody tr').length,
+          buttons: inMain('main button').length,
+          selects: inMain('main select').length,
+          textareas: inMain('main textarea').length,
         },
       };
     });
-    results.push({ stage, ...view, ...(note ? { note } : {}) });
+    results.push({ stage, ...info, ...(note ? { note } : {}) });
   }
 
+  // Only navigate in this read-only inspection. No attendance batch is
+  // created here. A blank pending list is not a product defect.
   await page.goto('/time-attendance', { waitUntil: 'domcontentloaded' });
   await expect(page.getByRole('main')).toBeVisible();
   await capture('Review home');
 
-  // Navigate to an Overtime view only if the current UI exposes a clearly
-  // named navigation/tab control. Never click action buttons named Approve,
-  // Submit, Reject, etc. because those may mutate records.
-  const overtimeTab = page.getByRole('tab', { name: /overtime/i });
-  const overtimeButton = page.getByRole('button', { name: /^overtime$/i });
-  const overtimeLink = page.getByRole('link', { name: /^overtime$/i });
-  if (await overtimeTab.count() === 1) {
-    await overtimeTab.click();
-    await capture('Overtime tab');
-  } else if (await overtimeButton.count() === 1) {
-    await overtimeButton.click();
-    await capture('Overtime button view');
-  } else if (await overtimeLink.count() === 1) {
-    await overtimeLink.click();
-    await capture('Overtime link view');
+  const approvalsTab = page.getByRole('tab', { name: 'Approvals', exact: true });
+  const approvalsButton = page.getByRole('button', { name: 'Approvals', exact: true });
+  const approvalsLink = page.getByRole('link', { name: 'Approvals', exact: true });
+  if (await approvalsTab.count() === 1) {
+    await approvalsTab.click();
+  } else if (await approvalsButton.count() === 1) {
+    await approvalsButton.click();
+  } else if (await approvalsLink.count() === 1) {
+    const href = await approvalsLink.getAttribute('href');
+    if (href && (href.startsWith('/') || href.startsWith('#'))) {
+      await approvalsLink.click();
+    } else {
+      await capture('Approvals link needs safety review');
+    }
   } else {
-    await capture('Overtime navigation unavailable',
-      'No unique Overtime tab/button/link on the Review page. Requires product UI review.');
+    await capture('Approvals not uniquely available');
+  }
+
+  const approvalsOpened = (await approvalsTab.count() === 1 && await approvalsTab.isVisible())
+    || (await approvalsButton.count() === 1 && await approvalsButton.isVisible())
+    || (await approvalsLink.count() === 1 && await approvalsLink.isVisible());
+  if (approvalsOpened) {
+    await capture('Approvals screen');
+
+    const overtimeTab = page.getByRole('tab', { name: 'Overtime', exact: true });
+    const overtimeLink = page.getByRole('link', { name: 'Overtime', exact: true });
+    const overtimeButton = page.getByRole('button', { name: 'Overtime', exact: true });
+    if (await overtimeTab.count() === 1) {
+      await overtimeTab.click();
+      await capture('Overtime tab');
+    } else if (await overtimeLink.count() === 1) {
+      const href = await overtimeLink.getAttribute('href');
+      if (href && (href.startsWith('/') || href.startsWith('#'))) {
+        await overtimeLink.click();
+        await capture('Overtime link');
+      } else {
+        await capture('Overtime link needs safety review');
+      }
+    } else if (await overtimeButton.count() === 1) {
+      const isNavigation = await overtimeButton.evaluate(button => {
+        const classes = typeof button.className === 'string' ? button.className : '';
+        const parentClasses = typeof button.parentElement?.className === 'string'
+          ? button.parentElement.className : '';
+        const navClass = /(?:^|[^a-z])(?:tab|subtab|nav|menu)(?:$|[^a-z])/i;
+        return !!button.closest('nav,[role="tablist"]')
+          || navClass.test(classes) || navClass.test(parentClasses)
+          || button.hasAttribute('aria-controls') || button.hasAttribute('aria-selected');
+      });
+      if (isNavigation) {
+        await overtimeButton.click();
+        await capture('Overtime navigation button');
+      } else {
+        await capture('Overtime button requires manual navigation review');
+      }
+    } else {
+      await capture('Overtime navigation not uniquely available');
+    }
   }
 
   const folder = resolve(process.cwd(), 'qa-artifacts');
   mkdirSync(folder, { recursive: true });
   writeFileSync(resolve(folder, 'setup-overtime-review-controls.json'), JSON.stringify({
-    description: 'Read-only HR PRO Review/Overtime structural inventory, no employee data',
+    purpose: 'Read-only Approvals/Overtime UI structure. No decision or batch submitted.',
     steps: results,
   }, null, 2));
 
-  expect(results.length, 'At least the Review screen must be inspected').toBeGreaterThanOrEqual(1);
+  expect(results.length).toBeGreaterThan(0);
   console.log('Saved qa-artifacts/setup-overtime-review-controls.json');
 });
