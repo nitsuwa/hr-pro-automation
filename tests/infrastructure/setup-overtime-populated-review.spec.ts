@@ -51,21 +51,41 @@ test('INVENTORY-OVERTIME-POPULATED | Inspect Review after a QA-only batch', asyn
       const inMain = (selector: string) =>
         [...document.querySelectorAll(selector)].filter(visible);
 
-      // Whitelist generic actions; never store employee-specific button text.
-      const workflow = /^(?:Time & Attendance|How to review attendance|.*Filters|Overtime|Review|Filings?|Approvals?|Pending|Approve|Reject|Back|Return|Save|Cancel|Submit|Next|Attendance|Details)(?:\b|$)/i;
-      const controlNames = inMain('main button,main a,[role="main"] button')
-        .map(el => clean(el.getAttribute('aria-label') || el.textContent))
-        .filter(value => workflow.test(value) && value.length < 70);
+      // Never return raw labels or headings: some workflow controls may
+      // include names/IDs. Classify to generic categories only.
+      const classify = (value: string): string | null => {
+        if (/^Time & Attendance$/i.test(value)) return 'Time & Attendance';
+        if (/^How to review attendance$/i.test(value)) return 'How to review attendance';
+        if (/^Approvals?$/i.test(value)) return 'Approvals navigation';
+        if (/^Overtime$/i.test(value)) return 'Overtime navigation';
+        if (/^Filters?$/i.test(value) || /Filters$/i.test(value)) return 'Filters';
+        if (/^(?:Review|Filings?|Pending|Attendance|Details)$/i.test(value)) return value;
+        if (/^Approve\b/i.test(value)) return 'Approve action present (not clicked)';
+        if (/^Reject\b/i.test(value)) return 'Reject action present (not clicked)';
+        if (/^Submit for payroll value check/i.test(value))
+          return 'Submit for payroll value check (not clicked)';
+        if (/^(?:Back|Return|Cancel|Save|Next)(?:$|\s)/i.test(value))
+          return 'Generic workflow control';
+        return null;
+      };
+      const controls = inMain('main button,main a,[role="main"] button')
+        .map(el => classify(clean(el.getAttribute('aria-label') || el.textContent)))
+        .filter((label): label is string => label !== null);
+      const headings = inMain('main h1,main h2,main h3')
+        .map(el => clean(el.textContent))
+        .map(value => /^(?:Review|Overtime|Approvals?|Time & Attendance)$/i.test(value)
+          ? value : /review|overtime|attendance|approval|filing/i.test(value)
+            ? 'Other review-related heading' : null)
+        .filter((label): label is string => label !== null);
+      const selects = inMain('main select');
       return {
         route: location.pathname,
-        controls: [...new Set(controlNames)].slice(0, 45),
-        headings: inMain('main h1,main h2,main h3')
-          .map(el => clean(el.textContent))
-          .filter(value => /review|overtime|attendance|approval|filing/i.test(value)).slice(0, 12),
+        controls: [...new Set(controls)].slice(0, 45),
+        headings: [...new Set(headings)].slice(0, 12),
         counts: {
           rows: inMain('main tbody tr').length,
           buttons: inMain('main button').length,
-          selects: inMain('main select').length,
+          selects: selects.length,
         },
       };
     });
