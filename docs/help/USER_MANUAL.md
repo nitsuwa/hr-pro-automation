@@ -1,124 +1,104 @@
-# HR PRO QA · User Manual
+# HR PRO QA — User Manual
 
-**What is this?** HR PRO is the system we test. Playwright runs browser checks. GitHub stores the tests so future QA employees can reuse and improve them.
+**Official guide:** https://hr-pro-automation.netlify.app
 
-**The learning path:** **Set up → Run → Verify → Add a test → Share it.** Start with one passing test rather than running everything.
+This document is a written reference. The website is the main step-by-step guide. HR PRO is the system being tested; **Playwright** runs browser checks; **GitHub** stores the code and its review history.
 
-| Resource | Why you would use it |
-| --- | --- |
-| [Official HTML Help Center](https://gleaming-muffin-23e8b0.netlify.app) | Public-facing beginner guide; open online, or open `docs/help/index.html` locally after cloning |
-| [GitHub repository](../../README.md) | Actual scripts, changes, reported problems and results |
+## 1. Install
 
-The Help Center is live at https://gleaming-muffin-23e8b0.netlify.app. The GitHub repository remains **private** and requires authorized access. The website describes how to use the QA system; the repository holds its source code.
+Install Git, Node.js, and Visual Studio Code. Get access to the repository and an approved HR PRO testing environment.
 
-## 1. First-time setup
-
-Install **VS Code, Git and Node.js**, then get access to the GitHub repository and approved HR PRO test environment.
-
-In VS Code choose **Terminal → New Terminal** and run:
+Open the VS Code terminal:
 
 ```powershell
 git clone https://github.com/nitsuwa/hr-pro-automation.git
 cd hr-pro-automation
-git switch main
-git pull --ff-only origin main
 npm ci
 npx playwright install chromium
 ```
 
-For an existing local clone, check `git status` first; if the working tree is clean, update with `git switch main`, `git fetch origin`, and `git merge --ff-only origin/main`.
+For an existing clone, first check your branch and working tree:
 
-**Check the test environment first:** `playwright.config.ts` defaults to the HR PRO prototype, while `E2E_BASE_URL` can change the target. Only run data-changing tests on an **approved non-production environment** with fictional records.
+```powershell
+git switch main
+git status
+git fetch origin
+git merge --ff-only origin/main
+```
 
-## 2. Run one test
+Only switch or merge with a clean working tree. Do not reset or discard someone else's changes.
 
-Run `npm run test:ui:setup` in the VS Code terminal. In Playwright UI Mode, expand one test file → click **▶ Run** beside one test → review the **Actions**, preview and **Errors** tabs.
+## 2. Run tests in UI Mode
 
-Green means the script's checks passed. Red means **investigate**—it could be incorrect test code, missing data, unclear requirements or an application defect.
+```powershell
+npm run test:ui:smoke
+```
 
-Other commands: `npm run test:ui:smoke` (basic navigation), `npm run test:report` (latest available report).
+Choose one test from the left panel, click **▶ Run**, and inspect **Actions**, **Before/After**, and **Errors**. For approved Setup checks: `npm run test:ui:setup`.
 
-## 3. Verify what really happened
+**Check the test URL first.** The default URL is configured in `playwright.config.ts`; `E2E_BASE_URL` may override it. Use an approved non-production environment and fictional data for tests that change records.
 
-A green check **does not prove every Excel requirement is complete**. Before marking PASS:
+## 3. Verify results
 
-1. **Read the expected result** in the approved Excel scenario.
-2. **Find `expect(...)`** in the test. Does it actually check that expected behavior?
-3. **Inspect HR PRO** in the Actions/preview. For saved data, reopen or reload to check it stayed saved.
-4. **Decide:** PASS (requirement checked), TEST ISSUE (wrong locator/data), APP DEFECT (approved rule violated), or PARTIAL/BLOCKED (not enough evidence).
-5. **Record the result** in [Execution Log](../QA_EXECUTION_LOG.md): test ID, environment/date, expected versus actual, trace/screenshot, and issue link.
+A green icon only says that the script's assertions passed. To verify the *requirement*:
 
-If duplicates are prohibited but two were saved, **keep the correct red assertion**. Do not change the expected count just to turn the test green. AI can suggest code, but a human must inspect and run it.
+1. Read the expected result.
+2. Read the corresponding `expect(...)` assertion.
+3. Inspect the test timeline and actual HR PRO screen.
+4. If data is saved, verify it again after reopening or reloading.
+5. Record the result and evidence in the [QA execution log](../QA_EXECUTION_LOG.md) or a GitHub issue.
 
-## 4. Add a new test
+For a red result, check whether the cause is test code, data/environment, or the actual HR PRO behavior. Never change a correct expected result merely to obtain a green test.
 
-1. Pick **one** clear workbook scenario and confirm its expected outcome.
-2. Try it manually in the approved HR PRO test environment.
-3. Find a similar script in [Setup tests](../../tests/regression/setup/).
-4. Reuse login helpers and page objects; create `tests/regression/setup/<feature>.spec.ts` or extend an existing file.
-5. Include actions **and** `expect(...)` assertions. Run the test alone, verify the result, and record evidence.
-
-Starter example (**navigation only, not full workbook coverage**):
+## 4. Understand the syntax
 
 ```ts
 import { test, expect } from '../../../playwright/fixtures/hrpro.fixture';
 
-test('QA-START | Settings available', async ({ page, loginAs }) => {
+test('QA-EXAMPLE | Settings opens', async ({ page, loginAs }) => {
   await loginAs('systemAdmin');
   await page.goto('/settings');
-  await expect(page.getByRole('button', {
-    name: 'Organization Setup', exact: true
-  })).toBeVisible();
+  const button = page.getByRole('button', { name: 'Organization Setup' });
+  await expect(button).toBeVisible();
 });
 ```
 
-A real test to study: `SET-LOANS-002` in `catalog-duplicates.spec.ts`. It checks that no duplicate Loan Source is saved, but the separate visible-message requirement is still not explicitly asserted.
+- `test(...)` names a test case.
+- `page` is the browser tab.
+- `await` waits for the action or check.
+- `getByRole(...)` finds a visible user-interface control by role and name.
+- `expect(...).toBeVisible()` checks the expected result.
 
-## 5. Test a feature that isn't in Excel
+That snippet checks navigation only. Tests of saved settings should also verify persistence using assertions such as `toHaveValue(...)` or `toHaveCount(...)`.
 
-**The old 59 workbook groups are not the limit.** For any brand-new HR PRO feature, start from a feature ticket, user story, or approved acceptance checklist.
+## 5. Add tests for existing or new features
 
-1. **Ask the owner:** What should happen, who may use it, what should be rejected, and what fictional test data is allowed?
-2. **Make a small plan:** Test a successful action, an invalid case, role permissions, and saved-result persistence where applicable. Give each case a clear ID such as `FEAT-SEARCH-001`.
-3. **Inspect the app:** Try it manually in the authorized QA environment. Confirm actual labels, dialogs, and outcomes. Do not make up selectors.
-4. **Write or ask AI for a draft:** Reuse the Playwright fixture and page objects. Require meaningful `expect(...)` assertions and clear notes about unknowns.
-5. **Verify yourself:** Run in UI Mode, inspect the recorded actions and outcomes, reopen saved records, and classify PASS / TEST ISSUE / APP DEFECT / BLOCKED.
-6. **Share it:** Record evidence and send a pull request for review. Group new tests by feature so the repository stays manageable.
+1. Confirm the requirement, expected outcome, roles, and allowed fictional data.
+2. Try the workflow manually in HR PRO and inspect actual labels.
+3. Find a similar test in [Setup tests](../../tests/regression/setup/); reuse the login fixture and page objects.
+4. Add a small test with meaningful `expect(...)` assertions.
+5. Run the test in UI Mode, verify its result, and record evidence.
+6. Propose the change with a GitHub pull request.
 
-**Good AI prompt to copy:**
+You can use AI to draft a test **from real UI evidence**, but a person must review, run, and verify it. Never share secrets or real employee records.
 
-> I need to test a new HR PRO feature, not listed in the old workbook. The approved requirement is [describe], with authorized role [role] and fictional test data [data]. First propose a short positive/negative/permission/persistence test plan. Then draft one small Playwright TypeScript test using our existing fixtures and page objects, based only on real UI evidence I provide. Mark assumptions and missing selectors clearly. Do not invent requirements or claim it passed; I will review and run it myself.
+## 6. Share changes in GitHub
 
-**Never send AI passwords, tokens, real employee records or confidential internal data.** If expected behavior is unclear, ask the feature owner before treating AI-generated checks as acceptance criteria.
-
-## 6. Share a test through GitHub
-
-**Branch** = your safe copy. **Commit** = save your changes. **Pull request (PR)** = ask the team to review before merging.
-
-Start from an up-to-date `main` with a clean `git status`. Ask the maintainer which branch should receive your work. Then:
+From a clean, updated `main`:
 
 ```powershell
-git switch main
-git fetch origin
-git merge --ff-only origin/main
-git switch -c qa/check-employee-search
-# Edit and verify your own test, then:
+git switch -c qa/employee-search
+# Write and verify your test, then:
 git add tests/regression/setup/employee-search.spec.ts
-git commit -m "test: cover employee search"
-git push -u origin qa/check-employee-search
+git commit -m "test: verify employee search"
+git push -u origin qa/employee-search
 ```
 
-Replace the example file and branch names with your actual work. On GitHub, click **Compare & pull request**, choose the agreed target branch, explain what you tested, and ask for review. Never commit passwords, real employee data, or unrelated changes.
+Replace the example filename with your actual file. Open GitHub → **Compare & pull request**, target `main`, and ask for review.
 
-## 7. When you need help
+## References
 
-| Problem | Next step |
-| --- | --- |
-| Button or field not found | Inspect the current page and actual label |
-| Click blocked / timeout | Check for dialog, overlay, permissions or missing data |
-| Test green but workbook still unclear | Mark partial and ask for expected outcome |
-| Git refuses update | Check branch and `git status`; don't reset a teammate's changes |
-
-**After the OJT:** run a known passing test, study one failing trace, pick an incomplete scenario from the [coverage tracker](../SETUP_CURRENT_COVERAGE_TRACKER.md), add a verified test, record evidence, and submit a PR.
-
-**Reported combined Setup run (19 Oct 2026): 50 checks, 47 passed, 3 failed** (two confirmed duplicate-validation defects; one Leave Type uniqueness question). This is not certification of all 59 workbook groups.
+- [Playwright UI Mode](https://playwright.dev/docs/test-ui-mode)
+- [Playwright locators](https://playwright.dev/docs/locators)
+- [Playwright assertions](https://playwright.dev/docs/test-assertions)
+- [HR PRO QA website](https://hr-pro-automation.netlify.app)
