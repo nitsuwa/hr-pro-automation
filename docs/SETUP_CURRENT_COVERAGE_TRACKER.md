@@ -203,3 +203,10 @@ See [Execution Log](QA_EXECUTION_LOG.md). Historical 59-group provisional classi
 - The operator-supplied `setup-overtime-populated-review.json` showed **1 Review row** after submitting a QA batch and **18 rows / 12 selection controls** after opening its details; an **Approvals** UI control is visible. This changes the investigation direction from an empty Review to the native approvals interface.
 - **No claim of verified overtime behavior:** `SET_097–124` still need actual overtime filing, approval/rejection, and business-state assertions. The JSON is structural inspection only.
 - The existing **gated** populated Review inspector was extended (NOT RUN since update) to open the exact Approvals tab/button/link and list generic controls, without approving or rejecting anything. This additional inspection creates a fresh QA batch and therefore requires a disposable authorized environment.
+
+
+## 2026-10-21 — Approvals Overtime control discovered
+
+- Latest opt-in populated Review survey (operator-uploaded JSON) successfully navigated to **Approvals**, where a generic **Overtime navigation** control exists. Counts: Review 1 row; Review details 18 rows/12 selects; Approvals 0 rows/7 buttons.
+- **This is structural evidence, not overtime functional acceptance.** `SET_097–124` remain unverified for submitted overtime requests, authorization and post-approval behavior.
+- Existing **read-only** `setup-overtime-review-controls.spec.ts` has been enhanced to navigate **Approvals → Overtime** without generating another QA batch. It records generic control categories and counts only. **Not yet rerun.**
