@@ -6,13 +6,12 @@
 
 | I want to… | Go here |
 | --- | --- |
-| **Learn with pictures and short steps** | [HTML Help Center](docs/help/index.html) |
+| **Learn with pictures and short steps** | [Official HTML Help Center](https://gleaming-muffin-23e8b0.netlify.app) |
 | **Read a simple guide on GitHub** | [User Manual](docs/help/USER_MANUAL.md) |
-| **Print or share instructions** | `HR_PRO_QA_Automation_Manual.docx` in the handoff ZIP |
 | **See test scripts** | [Setup tests](tests/regression/setup/) |
 | **See test results or known problems** | [Execution log](docs/QA_EXECUTION_LOG.md) · [Issues](https://github.com/nitsuwa/hr-pro-automation/issues) |
 
-**HTML access:** GitHub shows the HTML source instead of a normal website. After cloning the repo, open `docs/help/index.html` in Chrome or Edge. Keep the `assets` folder beside it. There is no confirmed live documentation website.
+**Documentation website:** https://gleaming-muffin-23e8b0.netlify.app. This is the official beginner guide. It can also be opened offline at `docs/help/index.html` after cloning (illustrations are embedded). The code repository remains private: team members need GitHub access to run and maintain tests.
 
 ## First time? Do these 3 things
 
@@ -30,4 +29,4 @@ For a feature not covered by Excel, see [How to test a new feature](docs/help/US
 
 **Last reported full Setup run (19 Oct 2026): 50 checks, 47 passed, 3 failed.** Two failures are confirmed duplicate-validation defects; one Leave Type duplicate-label issue needs a requirements decision. This is **not** full acceptance of all original workbook groups; new features are not limited to that workbook. Technical details remain in the [coverage tracker](docs/SETUP_CURRENT_COVERAGE_TRACKER.md).
 
-**Maintainers:** Update the HTML and GitHub manual when workflows change, then refresh the offline Word copy for the next handoff.
+**Maintainers:** Update `docs/help/index.html` for beginner instructions and `docs/help/USER_MANUAL.md` for detailed steps. Once changes are reviewed and merged to `main`, Netlify redeploys the documentation website automatically. Keep test assertions and results accurate.
