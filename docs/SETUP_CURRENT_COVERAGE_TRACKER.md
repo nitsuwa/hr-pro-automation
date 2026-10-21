@@ -189,3 +189,10 @@ See [Execution Log](QA_EXECUTION_LOG.md). Historical 59-group provisional classi
 - `SET_185–189` remains **PARTIAL** because actual filing/approval outcomes and payroll approver routing are not yet validated; do not add one workbook group to an artificial completed tally.
 - **Next possibility:** `SET_097–124` native HR PRO overtime approval, separate from external LILO integration. New **read-only, NOT RUN** inspection `tests/infrastructure/setup-overtime-review-controls.spec.ts` maps Review and Overtime UI without changing data. Must review its JSON before deciding if a business-outcome regression is feasible.
 - No change to provisional 59-group counts or the last complete operator-reported pass/fail total.
+
+
+## 2026-10-21 — Native overtime prerequisite identified
+
+- Read-only `setup-overtime-review-controls.json`: `/time-attendance` showed **zero rows**, no visible Overtime navigation, and only generic Review actions. It therefore provides **no actual evidence** of the overtime approval workflow; `SET_097–124` remain uncovered.
+- To distinguish “empty state” from “feature not supported,” an **optional, NOT RUN** `setup-overtime-populated-review.spec.ts` now exists. It uses a newly named QA batch based on the same seeded demonstration employee flow already exercised by `SET-FILING-002`, then inspects populated Review controls. This **mutates test state**, so it requires an approved disposable QA environment and an explicit safety flag. No workbook acceptance assertion yet.
+- If batch creation is not authorized, **defer overtime** and focus on other permitted Setup scenarios. Do not count inspection runs as verified workbook coverage.
