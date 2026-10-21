@@ -217,3 +217,10 @@ See [Execution Log](QA_EXECUTION_LOG.md). Historical 59-group provisional classi
 - Latest read-only `setup-overtime-review-controls.json` successfully navigated **Review → Approvals → Overtime**. No rows, selects, or textareas were visible in the new browser context. This confirms the navigation exists, **not** the actual overtime approval business flow.
 - **Decision:** defer `SET_097–124` until a valid overtime request and authorized roles/expected behavior are available; do not run additional inventories just to inflate test count.
 - **Quick-win candidate prepared, NOT RUN:** separate `SET-HOLIDAY-DUP-FEEDBACK | SET_219` assertion in `holiday-leave-duplicates.spec.ts` will test the workbook's **visible duplicate warning** requirement, using a unique QA Holiday. The old test that verifies a duplicate was not saved remains untouched. This is not yet full acceptance and requires direct UI Mode evidence.
+
+
+## 2026-10-21 — SET_219 Holiday duplicate confirmation screenshot
+
+- The failed `SET-HOLIDAY-DUP-FEEDBACK` run **did show** a real `role=dialog` warning ("There's already a declared holiday on this date"). It offered **Cancel** and **Add it anyway**. The old assertion ignored plain dialogs, so the red check was a **test locator issue**, not a missing warning.
+- GitHub scripts updated (NOT RUN): both `SET-HOLIDAY-DUP` and `SET-HOLIDAY-DUP-FEEDBACK` now explicitly use **Cancel** and assert exactly one original QA Holiday persists. The latter also verifies the actual confirmation text and override choice.
+- These checks will **not** prove that duplicates are universally forbidden: HR PRO currently allows an explicit override, and product-owner clarification of that behavior versus workbook `SET_219` is required. Keep the group **PARTIAL** until accepted criteria and rerun evidence are available. Do not artificially increase workbook or full-suite pass totals.
