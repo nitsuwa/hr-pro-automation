@@ -1,138 +1,327 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HR PRO QA | Help Center</title>
-<script>(function(){var t=null;try{t=localStorage.getItem('hrpro-qa-theme')}catch(e){};var dark=t==='dark'||(t!=='light'&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.dataset.theme=dark?'dark':'light'})();</script><style>
-:root{--navy:#292854;--blue:#3064b1;--teal:#16877f;--ink:#263353;--muted:#64728b;--line:#dde5ef;--bg:#f5f7fb}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font:15px/1.6 "Segoe UI",Arial,sans-serif;color:var(--ink);background:var(--bg)}a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}header{background:#fff;border-bottom:1px solid var(--line);padding:20px max(24px,calc((100% - 1180px)/2));display:flex;align-items:center;justify-content:space-between;gap:20px}header strong{font-size:19px;color:var(--blue);letter-spacing:.05em}header span{color:var(--muted);font-size:12px}.layout{display:grid;grid-template-columns:245px minmax(0,850px);max-width:1180px;margin:auto}aside{position:sticky;top:0;align-self:start;background:#fff;border-right:1px solid var(--line);min-height:100vh;padding:30px 20px}aside b{display:block;margin:18px 9px 9px;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#76849d}aside a{display:block;padding:10px 12px;border-radius:8px;color:#52617b;font-weight:600;font-size:13px}aside a:hover{background:#e6f4f1;color:#0a776d;text-decoration:none}main{padding:42px 54px 90px}section{scroll-margin-top:30px;margin-bottom:55px;padding-bottom:38px;border-bottom:1px solid var(--line)}h1{font-size:37px;line-height:1.16;letter-spacing:-.035em;color:var(--navy);margin:14px 0}h2{font-size:26px;color:var(--navy);margin:4px 0 15px;letter-spacing:-.025em}h3{font-size:15px;margin:0 0 4px;color:var(--navy)}p{margin:0 0 15px}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.12em;font-weight:800;color:var(--teal)}.lead{font-size:17px;color:var(--muted)}.intro,.card{background:#fff;border:1px solid var(--line);border-radius:13px;padding:23px;margin:16px 0}.row{display:grid;grid-template-columns:165px 1fr;gap:15px;padding:13px 16px;border-bottom:1px solid var(--line);font-size:13px;background:#fff}.row:nth-child(2n){background:#fafcff}.row:first-child{border-radius:9px 9px 0 0}.row:last-child{border:0;border-radius:0 0 9px 9px}.steps{display:grid;gap:8px;margin:18px 0}.step{background:#fff;border:1px solid var(--line);padding:14px 17px;border-radius:9px}.step b{color:var(--teal);margin-right:12px}.step p{margin:4px 0 0 38px;color:var(--muted);font-size:13px}.code{background:#212449;border-radius:10px;overflow:hidden;margin:15px 0}.code label{display:block;color:#95d4ca;padding:10px 15px;font-size:11px;font-weight:800;letter-spacing:.08em;border-bottom:1px solid #47496e}pre{white-space:pre-wrap;overflow-wrap:anywhere;padding:16px;color:#fff;font:13px/1.7 Consolas,monospace;margin:0}.notice{border-left:4px solid var(--teal);background:#e8f4f0;border-radius:7px;padding:15px 18px;margin:18px 0;font-size:13px}.notice.warn{border-color:#dea742;background:#fff3d8}.notice b{color:var(--navy)}.actions a{display:inline-block;margin:6px 7px 0 0;padding:9px 14px;background:var(--navy);color:#fff;border-radius:8px;font-weight:700;font-size:13px}.actions a.alt{background:#e8f4f0;color:#147268}.mini{font-size:12px;color:var(--muted)}code{font-family:Consolas,monospace}footer{color:var(--muted);font-size:12px;margin-top:45px}@media(max-width:760px){header{padding:15px 20px}.layout{display:block}aside{position:static;min-height:0;border-bottom:1px solid var(--line);padding:10px 16px;display:flex;flex-wrap:wrap;gap:5px}aside b{display:none}aside a{padding:6px 8px}main{padding:28px 20px}h1{font-size:31px}.row{grid-template-columns:1fr;gap:3px}h2{font-size:24px}}@media print{header,aside{display:none}.layout{display:block}main{padding:0}}
-
-:root{color-scheme:light}
-html[data-theme="dark"]{color-scheme:dark;--navy:#eef2ff;--blue:#9abfff;--teal:#74e4d2;--ink:#e0eaf7;--muted:#b5c3d9;--line:#374765;--bg:#111827}
-.theme-toggle{border:1px solid var(--line);border-radius:999px;padding:7px 12px;background:transparent;color:inherit;font:700 12px "Segoe UI",Arial,sans-serif;white-space:nowrap;cursor:pointer}
-.theme-toggle:hover{border-color:var(--teal);background:#e8f4f2}
-.theme-toggle:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
-.theme-toggle__icon{font-size:15px;margin-right:6px}
-.top-actions{display:flex;align-items:center;gap:20px}
-html[data-theme="dark"] header,html[data-theme="dark"] aside,html[data-theme="dark"] .intro,html[data-theme="dark"] .card,html[data-theme="dark"] .step,html[data-theme="dark"] details,html[data-theme="dark"] .route article,html[data-theme="dark"] .ui-illustration{background:#19243a;border-color:var(--line)}
-html[data-theme="dark"] .theme-toggle:hover{background:#254950}
-html[data-theme="dark"] aside a{color:#bfcee6}
-html[data-theme="dark"] aside a:hover{background:#255052;color:#a8ffef}
-html[data-theme="dark"] .lead,html[data-theme="dark"] .step p,html[data-theme="dark"] .route p,html[data-theme="dark"] .mini,html[data-theme="dark"] .row,html[data-theme="dark"] footer{color:#c0cde0}
-html[data-theme="dark"] .row,html[data-theme="dark"] .line{background:#19243a;border-color:var(--line)}
-html[data-theme="dark"] .row:nth-child(2n),html[data-theme="dark"] .line:nth-child(even){background:#202e48}
-html[data-theme="dark"] .notice{background:#1a403e}
-html[data-theme="dark"] .notice.warn{background:#48381f}
-html[data-theme="dark"] .code{background:#0e172a}
-html[data-theme="dark"] .actions a{background:#405a90}
-html[data-theme="dark"] .actions a.alt{background:#244849;color:#c0fff4}
-html[data-theme="dark"] .ui-tests,html[data-theme="dark"] .ui-work{background:#1d2b44;border-color:var(--line)}
-html[data-theme="dark"] .ui-tests div{color:#c5d6ec}
-html[data-theme="dark"] .ui-tests div.pass{background:#1b493a;color:#9af3cb}
-html[data-theme="dark"] .ui-tests div.fail{background:#4c2837;color:#ffb8c6}
-html[data-theme="dark"] .ui-timeline{border-color:#607492;color:#add2ff}
-html[data-theme="dark"] .ui-bottom div{background:#202e48;border-color:var(--line);color:#d5e1f4}
-html[data-theme="dark"] .ui-bottom .err{border-color:#9f5672;color:#ffb1be}
-@media(max-width:760px){.top-actions>a{display:none}.top-actions{gap:8px}header{padding:14px 16px}.theme-toggle{padding:6px 10px}.theme-toggle__label{display:none}}
-@media print{html[data-theme="dark"] body{background:#fff;color:#263353}}
-
-/* Accessibility contrast upgrade: explicit foreground/background pairs in both themes. */
-:root{--cta-bg:#28265a;--cta-fg:#ffffff}
-html[data-theme="dark"]{--cta-bg:#4565a0;--cta-fg:#ffffff}
-.actions a:not(.alt){background:var(--cta-bg)!important;color:var(--cta-fg)!important}
-html[data-theme="dark"] .actions a.alt{background:#244b46!important;color:#ccfff5!important}
-html[data-theme="dark"] .theme-toggle{background:#243954!important;color:#f4f8ff!important;border-color:#79b6aa!important}
-html[data-theme="dark"] .notice{color:#e5f4f1!important}
-html[data-theme="dark"] .notice b{color:#f0f8ff!important}
-html[data-theme="dark"] .notice.warn{color:#fff0d1!important}
-html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3{color:#f2f6ff!important}
-html[data-theme="dark"] .steps .step p,html[data-theme="dark"] details p,html[data-theme="dark"] .route p{color:#c2d0e6!important}
-html[data-theme="dark"] .line span{color:#c1cde0!important}
-html[data-theme="dark"] .code{background:#101d33!important}
-html[data-theme="dark"] .code pre{color:#f5f8ff!important}
-html[data-theme="dark"] .pill.orange{color:#ffe1a1!important;background:#493a1b!important}
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="HR PRO QA automation guide. Set up Playwright, run tests in UI Mode, verify results, and add new coverage.">
+<title>HR PRO | QA Automation Guide</title>
+<script>
+(function () {
+  // Light by default; only an explicit saved choice switches to dark.
+  try { document.documentElement.dataset.theme =
+    localStorage.getItem('hrpro-qa-theme') === 'dark' ? 'dark' : 'light'; }
+  catch (_) { document.documentElement.dataset.theme = 'light'; }
+})();
+</script>
+<style>
+:root {
+  color-scheme:light;
+  --page:#f3f4f9; --surface:#fff; --surface-soft:#f9faff;
+  --ink:#2b285e; --body:#34405d; --muted:#5f6d87;
+  --line:#dfe3ee; --brand:#2f60ad; --nav:#2e2b61; --nav-hover:#454077;
+  --teal:#21877e; --teal-wash:#e6f3f0; --teal-ink:#12645d;
+  --code:#20274a; --code-ink:#f6f9ff; --warning-bg:#fff6df; --warning-ink:#634a12;
+  --success:#13745f; --danger:#aa3046; --shadow:0 4px 18px rgba(37,44,83,.045);
+}
+html[data-theme="dark"] {
+  color-scheme:dark;
+  --page:#101827; --surface:#1a2538; --surface-soft:#202c41;
+  --ink:#f1f3ff; --body:#d9e2f0; --muted:#b8c9e2;
+  --line:#3c4e69; --brand:#a3c3ff; --nav:#22234d; --nav-hover:#363768;
+  --teal:#6ad4c8; --teal-wash:#193d41; --teal-ink:#b5fff0;
+  --code:#101b2d; --code-ink:#f6f9ff; --warning-bg:#43371e; --warning-ink:#ffecbb;
+  --success:#93e7c5; --danger:#ffb1c0; --shadow:none;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:138px}
+body{margin:0;background:var(--page);color:var(--body);font:15px/1.6 "Segoe UI",Arial,sans-serif}
+a{color:var(--brand);text-decoration:none}a:hover{text-decoration:underline}
+button{font:inherit}
 a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
-#verify .step{padding:13px 18px}
-.mini-flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:17px 0}
-.mini-flow div{padding:15px 12px;background:var(--surface);border:1px solid var(--line);border-radius:10px;font-weight:750;text-align:center;font-size:13px;color:var(--ink)}
-.mini-flow span{display:block;color:var(--teal);font-size:11px;font-weight:850;margin-bottom:5px}
-@media(max-width:860px){.mini-flow{grid-template-columns:repeat(2,1fr)}}
-.docshot{margin:16px 0;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:13px}
-.docshot img{display:block;width:100%;height:auto;border-radius:7px}
-.docshot figcaption{color:var(--muted);font-size:12px;margin-top:8px}
-html[data-theme="dark"] .docshot{background:#19243a}
-html[data-theme="dark"] .actions a:not(.alt){background:#4565a0!important;color:#fff!important}
-html[data-theme="dark"] .actions a.alt{background:#224b45!important;color:#d8fff6!important}
-section img{max-width:100%;height:auto}
-code,pre{overflow-wrap:anywhere}
-</style></head><body>
-<header><strong>▦ HR PRO <span> / QA AUTOMATION HELP CENTER</span></strong><div class="top-actions"><a href="https://github.com/nitsuwa/hr-pro-automation">GitHub repository ↗</a><button type="button" id="theme-toggle" class="theme-toggle" aria-label="Switch to dark mode" aria-pressed="false"><span class="theme-toggle__icon" aria-hidden="true">☾</span><span class="theme-toggle__label">Dark mode</span></button></div></header>
-<div class="layout"><aside><b>Get started</b><a href="#welcome">Overview</a><a href="#install">Install</a><a href="#run">Run a test</a><a href="#verify">Verify a result</a><b>Learn</b><a href="#results">Read results</a><a href="#write">Create a test</a><b>Reference</b><a href="#new-feature">Test a new feature</a><a href="#ai">AI assistance</a><a href="#files">Project structure</a><a href="#update">Share via GitHub</a></aside><main>
-<section id="welcome"><div class="eyebrow">HR PRO / QA TEAM</div><h1>Automated testing,<br>made straightforward.</h1><p class="lead">A practical help center for the team's Playwright automation system—not a project report.</p><div class="actions"><a href="#install">Start here →</a><a class="alt" href="#run">Run a test</a><a class="alt" href="https://github.com/nitsuwa/hr-pro-automation/blob/main/docs/help/USER_MANUAL.md">Read the GitHub user manual</a></div><div class="notice"><b>One QA system, one main guide.</b> This website explains how to use Playwright and the HR PRO QA repository. More detailed written steps are available in <a href="https://github.com/nitsuwa/hr-pro-automation/blob/main/docs/help/USER_MANUAL.md">GitHub Markdown</a>. <a href="https://github.com/nitsuwa/hr-pro-automation">GitHub</a> contains the actual test scripts, issues and current execution records.</div></section>
-<section id="install"><div class="eyebrow">01 · First-time setup</div><h2>Install the project</h2><p>Install VS Code, Git and Node.js. Ask for repository access and an approved non-production HR PRO testing environment.</p><div class="steps"><div class="step"><b>01</b><strong>Open VS Code → Terminal → New Terminal</strong></div><div class="step"><b>02</b><strong>Clone the repo and install dependencies</strong><p>Use a folder where you want the project saved.</p></div></div><div class="code"><label>POWERSHELL / TERMINAL</label><pre>git clone https://github.com/nitsuwa/hr-pro-automation.git
+.shell{width:min(1170px,calc(100% - 40px));margin:0 auto}
+.masthead{background:var(--surface);border-bottom:1px solid var(--line)}
+.masthead-inner{min-height:90px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:850;letter-spacing:.12em;font-size:23px;color:var(--brand)}
+.brand:hover{text-decoration:none}
+.mark{width:34px;height:34px;display:grid;grid-template-columns:repeat(2,1fr);gap:4px;flex:none}
+.mark span{background:#3066b4;border-radius:2px}
+.mark span:nth-child(2){background:#477dcb}.mark span:nth-child(3){background:#5289d2}.mark span:nth-child(4){background:#356bb9}
+.brand small{display:block;font-size:11px;letter-spacing:.07em;color:var(--muted);font-weight:650;line-height:1.2}
+.mast-actions{display:flex;align-items:center;gap:12px}
+.mast-actions a{font-size:13px;font-weight:700}
+.theme{border:1px solid var(--line);border-radius:8px;padding:8px 13px;background:var(--surface);color:var(--body);cursor:pointer;white-space:nowrap;font-weight:700;font-size:12px}
+.theme:hover{border-color:var(--teal)}
+.primary-nav{background:var(--nav)}
+.nav-inner{display:flex;align-items:center;overflow-x:auto;scrollbar-width:thin}
+.primary-nav a{color:#d9ddf1;font-weight:650;font-size:13px;padding:13px 17px;white-space:nowrap}
+.primary-nav a:hover,.primary-nav a:focus-visible{background:var(--nav-hover);color:#fff;text-decoration:none}
+.primary-nav a.current{background:#238b82;color:#fff}
+.layout{display:grid;grid-template-columns:210px minmax(0,1fr);gap:28px;padding-top:28px;padding-bottom:74px}
+.aside{position:sticky;top:18px;align-self:start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px 12px;box-shadow:var(--shadow)}
+.aside strong{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:block;margin:5px 12px 10px}
+.aside a{display:block;color:var(--body);font-size:13px;border-radius:7px;padding:9px 12px}
+.aside a:hover{background:var(--teal-wash);color:var(--teal-ink);text-decoration:none}
+.content{min-width:0}
+.hero{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:36px 40px;box-shadow:var(--shadow)}
+.kicker{font-weight:800;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--teal-ink)}
+h1,h2,h3{color:var(--ink);line-height:1.22;letter-spacing:-.025em}
+h1{font-size:clamp(29px,4vw,40px);margin:11px 0 10px}
+h2{font-size:25px;margin:5px 0 11px}
+h3{font-size:16px;margin:0 0 8px}
+p{margin:0 0 14px}
+.subtitle{color:var(--muted);font-size:16px;max-width:650px}
+.buttons{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}
+.btn{display:inline-block;padding:10px 15px;border-radius:8px;background:var(--nav);color:#fff;font-size:13px;font-weight:750}
+.btn:hover{background:var(--nav-hover);color:#fff;text-decoration:none}
+.btn.secondary{background:var(--teal-wash);color:var(--teal-ink)}
+.btn.secondary:hover{filter:brightness(.96)}
+.overview{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:16px 0 8px}
+.overview article{background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:17px;box-shadow:var(--shadow)}
+.overview b{display:block;color:var(--ink);margin:0 0 5px}
+.overview p{font-size:13px;color:var(--muted);margin:0}
+.number{font-weight:850;font-size:12px;color:var(--teal-ink);margin-bottom:7px}
+.section{margin-top:25px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:29px 34px;box-shadow:var(--shadow);scroll-margin-top:135px}
+.section>p{max-width:800px}
+.step-list{list-style:none;margin:18px 0 0;padding:0;counter-reset:steps;display:grid;gap:11px}
+.step-list li{counter-increment:steps;display:grid;grid-template-columns:30px 1fr;gap:11px;align-items:start}
+.step-list li:before{content:counter(steps,decimal-leading-zero);color:var(--teal-ink);font-size:12px;font-weight:850;padding-top:3px}
+.step-list b{color:var(--ink)}.step-list p{color:var(--muted);font-size:13px;margin:2px 0}
+.note{padding:13px 15px;border-left:4px solid var(--teal);background:var(--teal-wash);color:var(--teal-ink);border-radius:6px;margin:17px 0;font-size:13px}
+.note.warn{border-color:#d5a643;background:var(--warning-bg);color:var(--warning-ink)}
+.codebox{margin:17px 0;border-radius:9px;overflow:hidden;background:var(--code)}
+.codebar{display:flex;align-items:center;justify-content:space-between;padding:9px 13px;border-bottom:1px solid #495675;color:#b4d9e4;font-size:11px;font-weight:800;letter-spacing:.06em}
+.codebar button{border:1px solid #677590;background:transparent;border-radius:5px;color:#fff;cursor:pointer;padding:3px 10px;font-size:12px}
+.codebar button:hover{background:#425276}
+pre{margin:0;padding:15px 17px;overflow-x:auto;white-space:pre;color:var(--code-ink);font:13px/1.7 Consolas,"Courier New",monospace;tab-size:2}
+code{font:12.5px Consolas,"Courier New",monospace;overflow-wrap:anywhere}
+.inline-link{font-size:13px;font-weight:700}
+.figure{border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:19px 0;background:var(--surface-soft)}
+.figure img{display:block;width:100%;height:auto}
+.figure figcaption{padding:10px 15px;font-size:12px;color:var(--muted);border-top:1px solid var(--line)}
+.legend{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:15px 0}
+.legend div{background:var(--surface-soft);padding:14px;border:1px solid var(--line);border-radius:9px;font-size:13px}
+.legend b{display:block;margin-bottom:3px;color:var(--ink)}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;vertical-align:middle;margin-right:5px}
+.dot.green{background:#21a577}.dot.red{background:#cf536a}.dot.gray{background:#929cb0}
+.flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:19px 0}
+.flow>div{border-radius:8px;border:1px solid var(--line);background:var(--surface-soft);padding:11px 10px;text-align:center;font-size:12px;font-weight:750;color:var(--ink)}
+.flow small{display:block;color:var(--teal-ink);font-size:11px}
+.glossary{width:100%;border-collapse:collapse;font-size:13px;margin:16px 0}
+.glossary th,.glossary td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+.glossary th{color:var(--ink);background:var(--surface-soft)}
+.glossary td:first-child{width:38%;color:var(--ink);font-weight:700}
+.resource-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.resource-list a{display:block;border:1px solid var(--line);border-radius:9px;padding:14px;background:var(--surface-soft);font-weight:700;font-size:13px}
+.resource-list a span{display:block;color:var(--muted);font-weight:400;font-size:12px;margin-top:4px}
+.footer{font-size:12px;color:var(--muted);padding:25px 0}
+@media(max-width:850px){
+ .layout{grid-template-columns:1fr;gap:16px}
+ .aside{position:static;display:flex;flex-wrap:wrap;gap:5px;padding:10px}
+ .aside strong{display:none}.aside a{padding:7px 10px}
+ .section{padding:24px}
+ .hero{padding:26px}.flow{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:580px){
+ .shell{width:min(100% - 24px,1170px)}
+ .masthead-inner{min-height:74px}
+ .brand{font-size:19px}.brand small{font-size:9px}
+ .mast-actions>a{display:none}
+ .primary-nav a{padding:12px 13px}
+ .overview,.legend,.resource-list{grid-template-columns:1fr}
+ .flow{grid-template-columns:repeat(2,1fr)}
+ .section{padding:20px}
+ .hero{padding:22px}
+ h2{font-size:22px}
+}
+@media print{
+ .masthead,.primary-nav,.aside,.codebar button,.buttons{display:none!important}
+ .layout{display:block}.hero,.section{break-inside:avoid;box-shadow:none}
+ body{background:white}.shell{width:100%}
+}
+</style>
+</head>
+<body>
+<header class="masthead">
+ <div class="shell masthead-inner">
+  <a class="brand" href="#overview" aria-label="HR PRO QA Automation home">
+   <span class="mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+   <span>HR PRO<small>QA AUTOMATION GUIDE</small></span>
+  </a>
+  <div class="mast-actions"><a href="https://github.com/nitsuwa/hr-pro-automation" target="_blank" rel="noopener noreferrer">GitHub repository ↗</a>
+   <button class="theme" id="theme-toggle" type="button" aria-label="Switch to dark mode">☾ Dark mode</button>
+  </div>
+ </div>
+</header>
+<nav class="primary-nav" aria-label="Main guide">
+ <div class="shell nav-inner">
+  <a class="current" href="#overview">Overview</a><a href="#install">Install</a><a href="#run">Run Tests</a>
+  <a href="#verify">Verify Results</a><a href="#syntax">Test Code</a><a href="#create">New Tests</a><a href="#github">GitHub</a>
+ </div>
+</nav>
+<div class="shell layout">
+<aside class="aside" aria-label="Guide contents">
+ <strong>On this page</strong>
+ <a href="#install">1. Set up your computer</a><a href="#run">2. Run a test</a>
+ <a href="#verify">3. Check the result</a><a href="#syntax">4. Understand the code</a>
+ <a href="#create">5. Add a new test</a><a href="#github">6. Share changes</a><a href="#references">Official references</a>
+</aside>
+<main class="content" id="overview">
+<section class="hero" aria-labelledby="guide-title">
+ <div class="kicker">HR PRO / QUALITY ASSURANCE</div>
+ <h1 id="guide-title">HR PRO Test Automation</h1>
+ <p class="subtitle">How to run HR PRO browser tests, check the results, and maintain the Playwright repository.</p>
+ <div class="buttons"><a class="btn" href="#install">Get started →</a><a class="btn secondary" href="#run">Run a test</a><a class="btn secondary" href="https://github.com/nitsuwa/hr-pro-automation" target="_blank" rel="noopener noreferrer">Open repository ↗</a></div>
+</section>
+<div class="overview" aria-label="How the system works">
+ <article><div class="number">01 / TEST</div><b>Playwright runs the steps</b><p>It opens HR PRO, performs actions, and checks expected behavior.</p></article>
+ <article><div class="number">02 / REVIEW</div><b>QA verifies the result</b><p>Read the assertion and inspect what actually happened in UI Mode.</p></article>
+ <article><div class="number">03 / MAINTAIN</div><b>GitHub keeps the tests</b><p>Share reviewed changes so the whole team can reuse them.</p></article>
+</div>
+<section class="section" id="install">
+ <div class="kicker">01 / FIRST-TIME SETUP</div><h2>Install the project</h2>
+ <p>Install <b>VS Code</b>, <b>Git</b>, and <b>Node.js</b>. Ask your maintainer for repository access and an approved HR PRO test environment.</p>
+ <ol class="step-list">
+  <li><div><b>Open VS Code → Terminal → New Terminal.</b></div></li>
+  <li><div><b>Copy the commands below.</b> Use a folder where you want to keep the project.</div></li>
+  <li><div><b>Confirm your test environment.</b> Check the URL in <code>playwright.config.ts</code> or <code>E2E_BASE_URL</code> before running tests.</div></li>
+ </ol>
+ <div class="codebox"><div class="codebar"><span>POWERSHELL · FIRST INSTALL</span><button type="button" data-copy="clone-code">Copy</button></div><pre id="clone-code">git clone https://github.com/nitsuwa/hr-pro-automation.git
 cd hr-pro-automation
-git fetch origin
-git switch main
 npm ci
-npx playwright install chromium</pre></div><p class="mini">If the branch already exists locally: <code>git switch main</code>.</p><div class="notice warn"><b>Check before running:</b> Open <code>playwright.config.ts</code>. Verify that the actual test URL (<code>E2E_BASE_URL</code>, default HR PRO prototype) is approved. Some scripts create, edit and delete shared data. Never use real employee records or production.</div></section>
-<div class="notice warn"><b>Check the actual target URL before running</b> <code>playwright.config.ts</code> defaults to <code>https://hrproprototype.netlify.app</code>. The <code>E2E_BASE_URL</code> variable may override it; <code>E2E_ENV=staging</code> alone does not ensure test-data safety. Use approved fictional QA data and never run data-changing checks against production.</div><section id="run"><div class="eyebrow">02 · Daily use</div><h2>Run a test in UI Mode</h2><div class="code"><label>POWERSHELL / TERMINAL</label><pre>npm run test:ui:setup</pre></div><div class="steps"><div class="step"><b>01</b><strong>Choose a test</strong><p>Expand a file in the left panel (e.g., <code>general-settings.spec.ts</code>).</p></div><div class="step"><b>02</b><strong>Click ▶ Run</strong><p>Run just one scenario at first.</p></div><div class="step"><b>03</b><strong>Read its result</strong><p>Green = checks passed. Red = investigate; it may be a test or data issue, not necessarily an HR PRO defect.</p></div></div><div class="card"><h3>Recognize the Playwright window</h3><div class="row"><strong>① Test list</strong><span>Select your test and click ▶ beside it.</span></div><div class="row"><strong>② Actions</strong><span>Follow click, fill, navigation and assertions.</span></div><div class="row"><strong>③ Preview / timeline</strong><span>View recorded browser state.</span></div><div class="row"><strong>④ Errors</strong><span>See expected versus actual, plus the failing code line.</span></div><p class="mini">Panel layout is illustrative; UI Mode can vary slightly by version.</p></div><div class="notice"><b>Other commands:</b> <code>npm run test:ui:smoke</code> · <code>npm run test:setup</code> · <code>npm run test:report</code></div></section>
-<figure class="docshot"><img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20960%20286%22%20role%3D%22img%22%20aria-label%3D%22Illustration%20of%20Playwright%20UI%20Mode%20showing%20test%20list%2C%20action%20timeline%2C%20browser%20preview%20and%20error%20panel%22%3E%0A%3Crect%20width%3D%22960%22%20height%3D%22286%22%20rx%3D%2215%22%20fill%3D%22%23ecf2fa%22%2F%3E%3Crect%20x%3D%222%22%20y%3D%222%22%20width%3D%22956%22%20height%3D%22282%22%20rx%3D%2214%22%20fill%3D%22white%22%20stroke%3D%22%23d4dfed%22%20stroke-width%3D%223%22%2F%3E%0A%3Cpath%20d%3D%22M14%202%20H946%20Q958%202%20958%2016%20V44%20H2%20V16%20Q2%202%2014%202Z%22%20fill%3D%22%2329275b%22%2F%3E%3Ctext%20x%3D%2225%22%20y%3D%2230%22%20font-family%3D%22Arial%2Csans-serif%22%20font-size%3D%2219%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3EPLAYWRIGHT%20%20%20%2F%20%20%20UI%20MODE%20(ILLUSTRATION)%3C%2Ftext%3E%0A%3Crect%20x%3D%2218%22%20y%3D%2264%22%20width%3D%22314%22%20height%3D%22202%22%20rx%3D%2210%22%20fill%3D%22%23f6f9fd%22%20stroke%3D%22%23cad9eb%22%2F%3E%3Crect%20x%3D%22348%22%20y%3D%2264%22%20width%3D%22592%22%20height%3D%2280%22%20rx%3D%2210%22%20fill%3D%22%23f6f9fd%22%20stroke%3D%22%23cad9eb%22%2F%3E%3Crect%20x%3D%22348%22%20y%3D%22155%22%20width%3D%22382%22%20height%3D%22111%22%20rx%3D%2210%22%20fill%3D%22%23f6f9fd%22%20stroke%3D%22%23cad9eb%22%2F%3E%3Crect%20x%3D%22741%22%20y%3D%22155%22%20width%3D%22199%22%20height%3D%22111%22%20rx%3D%2210%22%20fill%3D%22%23fff2f0%22%20stroke%3D%22%23ebc1bd%22%2F%3E%0A%3Ctext%20x%3D%2235%22%20y%3D%2291%22%20font-size%3D%2218%22%20font-family%3D%22Arial%22%20font-weight%3D%22bold%22%20fill%3D%22%2320618b%22%3E1%20%20%20TEST%20LIST%20%2F%20%E2%96%B6%20RUN%3C%2Ftext%3E%3Crect%20x%3D%2235%22%20y%3D%22105%22%20width%3D%22278%22%20height%3D%2231%22%20rx%3D%225%22%20fill%3D%22%23e3f3ec%22%2F%3E%3Ctext%20x%3D%2246%22%20y%3D%22125%22%20font-family%3D%22Arial%22%20font-size%3D%2215%22%20fill%3D%22%23126a4b%22%3E%E2%9C%93%20general-settings.spec.ts%3C%2Ftext%3E%3Crect%20x%3D%2235%22%20y%3D%22143%22%20width%3D%22278%22%20height%3D%2231%22%20rx%3D%225%22%20fill%3D%22%23e3f3ec%22%2F%3E%3Ctext%20x%3D%2246%22%20y%3D%22163%22%20font-family%3D%22Arial%22%20font-size%3D%2215%22%20fill%3D%22%23126a4b%22%3E%E2%9C%93%20SET-CONFIG-001%3C%2Ftext%3E%3Crect%20x%3D%2235%22%20y%3D%22181%22%20width%3D%22278%22%20height%3D%2231%22%20rx%3D%225%22%20fill%3D%22%23fbe5e5%22%2F%3E%3Ctext%20x%3D%2246%22%20y%3D%22201%22%20font-family%3D%22Arial%22%20font-size%3D%2215%22%20fill%3D%22%23a94040%22%3E%E2%9C%95%20SET-JOBPOS-002%3C%2Ftext%3E%0A%3Ctext%20x%3D%22368%22%20y%3D%2291%22%20font-size%3D%2218%22%20font-family%3D%22Arial%22%20font-weight%3D%22bold%22%20fill%3D%22%2320618b%22%3E2%20%20%20ACTIONS%20%2F%20TIMELINE%3C%2Ftext%3E%3Cpath%20d%3D%22M374%20116%20H918%22%20stroke%3D%22%2394b0ce%22%20stroke-width%3D%224%22%2F%3E%3Cg%20fill%3D%22%2317948a%22%3E%3Ccircle%20cx%3D%22410%22%20cy%3D%22116%22%20r%3D%2210%22%2F%3E%3Ccircle%20cx%3D%22555%22%20cy%3D%22116%22%20r%3D%2210%22%2F%3E%3Ccircle%20cx%3D%22710%22%20cy%3D%22116%22%20r%3D%2210%22%2F%3E%3Ccircle%20cx%3D%22872%22%20cy%3D%22116%22%20r%3D%2210%22%2F%3E%3C%2Fg%3E%0A%3Ctext%20x%3D%22370%22%20y%3D%22190%22%20font-size%3D%2218%22%20font-family%3D%22Arial%22%20font-weight%3D%22bold%22%20fill%3D%22%2320618b%22%3E3%20%20%20BROWSER%20PREVIEW%3C%2Ftext%3E%3Ctext%20x%3D%22370%22%20y%3D%22220%22%20font-size%3D%2215%22%20font-family%3D%22Arial%22%20fill%3D%22%2353667f%22%3ESee%20the%20page%20as%20each%20step%20happened.%3C%2Ftext%3E%0A%3Ctext%20x%3D%22761%22%20y%3D%22190%22%20font-size%3D%2218%22%20font-family%3D%22Arial%22%20font-weight%3D%22bold%22%20fill%3D%22%23ab4141%22%3E4%20%20%20ERRORS%3C%2Ftext%3E%3Ctext%20x%3D%22761%22%20y%3D%22220%22%20font-size%3D%2214%22%20font-family%3D%22Arial%22%20fill%3D%22%23824a4a%22%3EExpected%20vs%20actual%3C%2Ftext%3E%3C%2Fsvg%3E" alt="Illustrated Playwright UI Mode interface, identifying tests, timeline, preview and errors"><figcaption>UI Mode panel guide (illustration): open a test, inspect the action timeline, then compare expected and actual results.</figcaption></figure><section id="results"><div class="eyebrow">03 · Troubleshooting</div><h2>If a test is red</h2><div class="steps"><div class="step"><b>01</b><strong>Read the assertion</strong><p>Look for Expected, Received and the source line.</p></div><div class="step"><b>02</b><strong>Check the preview</strong><p>Was a button renamed? Was prerequisite data missing? Was the saved result actually wrong?</p></div><div class="step"><b>03</b><strong>Classify the problem</strong><p>Fix incorrect locators or data; preserve correct business assertions and report application defects.</p></div><div class="step"><b>04</b><strong>Keep evidence</strong><p>Record the test ID and trace/screenshot in <a href="https://github.com/nitsuwa/hr-pro-automation/blob/main/docs/QA_EXECUTION_LOG.md">the execution log</a>.</p></div></div><div class="notice warn"><b>Don't force green:</b> If HR PRO persists two duplicates when only one is allowed, changing <code>toHaveCount(1)</code> to <code>toHaveCount(2)</code> would hide the defect.</div></section>
-<figure class="docshot"><img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20680%20366%22%20role%3D%22img%22%20aria-label%3D%22Illustration%20of%20HR%20PRO%20prototype%20login%20card%20showing%20role%2C%20email%2C%20password%20and%20sign%20in%22%3E%0A%3Crect%20width%3D%22680%22%20height%3D%22366%22%20rx%3D%2216%22%20fill%3D%22%23f3f5fa%22%2F%3E%3Crect%20x%3D%22192%22%20y%3D%2230%22%20width%3D%22296%22%20height%3D%22292%22%20rx%3D%2213%22%20fill%3D%22white%22%20stroke%3D%22%23dce4ef%22%20stroke-width%3D%222%22%2F%3E%3Cg%20fill%3D%22%233063b3%22%3E%3Crect%20x%3D%22214%22%20y%3D%2256%22%20width%3D%2211%22%20height%3D%2211%22%2F%3E%3Crect%20x%3D%22229%22%20y%3D%2256%22%20width%3D%2211%22%20height%3D%2211%22%20opacity%3D%22.75%22%2F%3E%3Crect%20x%3D%22214%22%20y%3D%2271%22%20width%3D%2211%22%20height%3D%2211%22%20opacity%3D%22.9%22%2F%3E%3Crect%20x%3D%22229%22%20y%3D%2271%22%20width%3D%2211%22%20height%3D%2211%22%20opacity%3D%22.65%22%2F%3E%3C%2Fg%3E%3Ctext%20x%3D%22253%22%20y%3D%2277%22%20font-family%3D%22Arial%22%20font-weight%3D%22bold%22%20letter-spacing%3D%222%22%20font-size%3D%2219%22%20fill%3D%22%233063b3%22%3EHR%20PRO%3C%2Ftext%3E%3Ctext%20x%3D%22214%22%20y%3D%22115%22%20font-family%3D%22Arial%22%20font-size%3D%2220%22%20font-weight%3D%22bold%22%20fill%3D%22%2329275b%22%3ESign%20in%3C%2Ftext%3E%0A%3Ctext%20x%3D%22214%22%20y%3D%22142%22%20font-family%3D%22Arial%22%20font-size%3D%2211%22%20fill%3D%22%2350607f%22%3ETry%20a%20demo%20account%3C%2Ftext%3E%3Crect%20x%3D%22214%22%20y%3D%22151%22%20width%3D%22252%22%20height%3D%2229%22%20rx%3D%226%22%20fill%3D%22white%22%20stroke%3D%22%23d9e1ec%22%2F%3E%3Ctext%20x%3D%22225%22%20y%3D%22170%22%20font-family%3D%22Arial%22%20font-size%3D%2211%22%20fill%3D%22%2356647e%22%3ESelect%20a%20role%20to%20prefill%3C%2Ftext%3E%0A%3Ctext%20x%3D%22214%22%20y%3D%22199%22%20font-family%3D%22Arial%22%20font-size%3D%2211%22%20fill%3D%22%2356647e%22%3EEmail%3C%2Ftext%3E%3Crect%20x%3D%22214%22%20y%3D%22206%22%20width%3D%22252%22%20height%3D%2229%22%20rx%3D%226%22%20fill%3D%22white%22%20stroke%3D%22%238eb8b0%22%2F%3E%0A%3Ctext%20x%3D%22214%22%20y%3D%22252%22%20font-family%3D%22Arial%22%20font-size%3D%2211%22%20fill%3D%22%2356647e%22%3EPassword%3C%2Ftext%3E%3Crect%20x%3D%22214%22%20y%3D%22259%22%20width%3D%22252%22%20height%3D%2229%22%20rx%3D%226%22%20fill%3D%22white%22%20stroke%3D%22%23d9e1ec%22%2F%3E%0A%3Crect%20x%3D%22214%22%20y%3D%22300%22%20width%3D%22252%22%20height%3D%2228%22%20rx%3D%226%22%20fill%3D%22%2329275b%22%2F%3E%3Ctext%20x%3D%22340%22%20y%3D%22318%22%20font-family%3D%22Arial%22%20font-size%3D%2212%22%20text-anchor%3D%22middle%22%20font-weight%3D%22bold%22%20fill%3D%22white%22%3ESign%20in%3C%2Ftext%3E%3C%2Fsvg%3E" alt="Illustrated HR PRO login card with role, email and password fields"><figcaption>HR PRO sign-in layout (illustration). Select only authorized test roles; do not publish passwords.</figcaption></figure><section id="write"><div class="eyebrow">04 · For QA maintainers</div><h2>Create or extend a test</h2><div class="steps"><div class="step"><b>01</b><strong>Read one Excel scenario</strong><p>Identify exact expected behavior and test prerequisites.</p></div><div class="step"><b>02</b><strong>Inspect the actual HR PRO UI</strong><p>Confirm the real buttons, labels and save/approval behavior.</p></div><div class="step"><b>03</b><strong>Reuse existing test actions</strong><p>Look in <code>playwright/pages/</code> and <code>playwright/fixtures/</code>.</p></div><div class="step"><b>04</b><strong>Save a script</strong><p>Create <code>tests/regression/setup/&lt;feature&gt;.spec.ts</code>, or extend a similar file. Add <code>expect(...)</code> and verify saved data after reopening.</p></div><div class="step"><b>05</b><strong>Run it alone and document the outcome</strong><p>Open Setup UI Mode and classify the result.</p></div></div><div class="code"><label>TYPESCRIPT / EXAMPLE</label><pre>import { test, expect } from '../../../playwright/fixtures/hrpro.fixture';
+npx playwright install chromium</pre></div>
+ <div class="note warn"><b>Use an approved testing environment.</b> Some tests create or edit records. Use fictional QA data; do not run data-changing checks on production.</div>
+</section>
+<section class="section" id="run">
+ <div class="kicker">02 / RUN TESTS</div><h2>Use Playwright UI Mode</h2>
+ <p>UI Mode lists the tests on the left and shows their actions, screenshots, and errors on the right.</p>
+ <div class="codebox"><div class="codebar"><span>POWERSHELL · PICK A TEST</span><button type="button" data-copy="run-code">Copy</button></div><pre id="run-code">npm run test:ui:smoke</pre></div>
+ <p class="subtitle" style="font-size:13px">Start with smoke tests (basic navigation). For approved Setup scenarios, use <code>npm run test:ui:setup</code>.</p>
+ <ol class="step-list">
+  <li><div><b>Select one test</b> from the left panel.</div></li>
+  <li><div><b>Click ▶ Run</b> beside the test.</div></li>
+  <li><div><b>Open Actions, Before/After, and Errors</b> to see what it actually did.</div></li>
+ </ol>
+ <figure class="figure">
+  <img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20960%20286%22%20role%3D%22img%22%20aria-label%3D%22Illustration%20of%20Playwright%20UI%20Mode%20showing%20test%20list%2C%20action%20timeline%2C%20browser%20preview%20and%20error%20panel%22%3E%0A%3Crect%20width%3D%22960%22%20height%3D%22286%22%20rx%3D%2215%22%20fill%3D%22%23ecf2fa%22%2F%3E%3Crect%20x%3D%222%22%20y%3D%222%22%20width%3D%22956%22%20height%3D%22282%22%20rx%3D%2214%22%20fill%3D%22white%22%20stroke%3D%22%23d4dfed%22%20stroke-width%3D%223%22%2F%3E%0A%3Cpath%20d%3D%22M14%202%20H946%20Q958%202%20958%2016%20V44%20H2%20V16%20Q2%202%2014%202Z%22%20fill%3D%22%2329275b%22%2F%3E%3Ctext%20x%3D%2225%22%20y%3D%2230%22%20font-family%3D%22Arial%2Csans-serif%22%20font-size%3D%2219%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3EPLAYWRIGHT%20%20%20%2F%20%20%20UI%20MODE%20(ILLUSTRATION)%3C%2Ftext%3E%0A%3Crect%20x%3D%2218%22%20y%3D%2264%22%20width%3D%22314%22%20height%3D%22202%22%20rx%3D%2210%22%20fill%3D%22%23f6f9fd%22%20stroke%3D%22%23cad9eb%22%2F%3E%3Crect%20x%3D%22348%22%20y%3D%2264%22%20width%3D%22592%22%20height%3D%2280%22%20rx%3D%2210%22%20fill%3D%22%23f6f9fd%22%20stroke%3D%22%23cad9eb%22%2F%3E%3Crect%20x%3D%22348%22%20y%3D%22155%22%20width%3D%22382%22%20height%3D%22111%22%20rx%3D%2210%22%20fill%3D%22%23f6f9fd%22%20stroke%3D%22%23cad9eb%22%2F%3E%3Crect%20x%3D%22741%22%20y%3D%22155%22%20width%3D%22199%22%20height%3D%22111%22%20rx%3D%2210%22%20fill%3D%22%23fff2f0%22%20stroke%3D%22%23ebc1bd%22%2F%3E%0A%3Ctext%20x%3D%2235%22%20y%3D%2291%22%20font-size%3D%2218%22%20font-family%3D%22Arial%22%20font-weight%3D%22bold%22%20fill%3D%22%2320618b%22%3E1%20%20%20TEST%20LIST%20%2F%20%E2%96%B6%20RUN%3C%2Ftext%3E%3Crect%20x%3D%2235%22%20y%3D%22105%22%20width%3D%22278%22%20height%3D%2231%22%20rx%3D%225%22%20fill%3D%22%23e3f3ec%22%2F%3E%3Ctext%20x%3D%2246%22%20y%3D%22125%22%20font-family%3D%22Arial%22%20font-size%3D%2215%22%20fill%3D%22%23126a4b%22%3E%E2%9C%93%20general-settings.spec.ts%3C%2Ftext%3E%3Crect%20x%3D%2235%22%20y%3D%22143%22%20width%3D%22278%22%20height%3D%2231%22%20rx%3D%225%22%20fill%3D%22%23e3f3ec%22%2F%3E%3Ctext%20x%3D%2246%22%20y%3D%22163%22%20font-family%3D%22Arial%22%20font-size%3D%2215%22%20fill%3D%22%23126a4b%22%3E%E2%9C%93%20SET-CONFIG-001%3C%2Ftext%3E%3Crect%20x%3D%2235%22%20y%3D%22181%22%20width%3D%22278%22%20height%3D%2231%22%20rx%3D%225%22%20fill%3D%22%23fbe5e5%22%2F%3E%3Ctext%20x%3D%2246%22%20y%3D%22201%22%20font-family%3D%22Arial%22%20font-size%3D%2215%22%20fill%3D%22%23a94040%22%3E%E2%9C%95%20SET-JOBPOS-002%3C%2Ftext%3E%0A%3Ctext%20x%3D%22368%22%20y%3D%2291%22%20font-size%3D%2218%22%20font-family%3D%22Arial%22%20font-weight%3D%22bold%22%20fill%3D%22%2320618b%22%3E2%20%20%20ACTIONS%20%2F%20TIMELINE%3C%2Ftext%3E%3Cpath%20d%3D%22M374%20116%20H918%22%20stroke%3D%22%2394b0ce%22%20stroke-width%3D%224%22%2F%3E%3Cg%20fill%3D%22%2317948a%22%3E%3Ccircle%20cx%3D%22410%22%20cy%3D%22116%22%20r%3D%2210%22%2F%3E%3Ccircle%20cx%3D%22555%22%20cy%3D%22116%22%20r%3D%2210%22%2F%3E%3Ccircle%20cx%3D%22710%22%20cy%3D%22116%22%20r%3D%2210%22%2F%3E%3Ccircle%20cx%3D%22872%22%20cy%3D%22116%22%20r%3D%2210%22%2F%3E%3C%2Fg%3E%0A%3Ctext%20x%3D%22370%22%20y%3D%22190%22%20font-size%3D%2218%22%20font-family%3D%22Arial%22%20font-weight%3D%22bold%22%20fill%3D%22%2320618b%22%3E3%20%20%20BROWSER%20PREVIEW%3C%2Ftext%3E%3Ctext%20x%3D%22370%22%20y%3D%22220%22%20font-size%3D%2215%22%20font-family%3D%22Arial%22%20fill%3D%22%2353667f%22%3ESee%20the%20page%20as%20each%20step%20happened.%3C%2Ftext%3E%0A%3Ctext%20x%3D%22761%22%20y%3D%22190%22%20font-size%3D%2218%22%20font-family%3D%22Arial%22%20font-weight%3D%22bold%22%20fill%3D%22%23ab4141%22%3E4%20%20%20ERRORS%3C%2Ftext%3E%3Ctext%20x%3D%22761%22%20y%3D%22220%22%20font-size%3D%2214%22%20font-family%3D%22Arial%22%20fill%3D%22%23824a4a%22%3EExpected%20vs%20actual%3C%2Ftext%3E%3C%2Fsvg%3E" alt="Illustration of Playwright UI Mode with a test list, action timeline, browser preview, and error panel" loading="lazy">
+  <figcaption>Playwright UI Mode layout (illustration, not a live test screenshot). For real screenshots, see the <a href="https://playwright.dev/docs/test-ui-mode" target="_blank" rel="noopener noreferrer">official UI Mode guide ↗</a>.</figcaption>
+ </figure>
+</section>
+<section class="section" id="verify">
+ <div class="kicker">03 / TEST RESULTS</div><h2>Check what passed or failed</h2>
+ <div class="legend">
+  <div><b><i class="dot green"></i>Passed</b>The script's assertions passed. Check that they cover the expected requirement.</div>
+  <div><b><i class="dot red"></i>Failed</b>Open the error and inspect what HR PRO did before deciding whether the test or application is wrong.</div>
+  <div><b><i class="dot gray"></i>Skipped</b>The test did not run. It is not a pass or a failure.</div>
+ </div>
+ <ol class="step-list">
+  <li><div><b>Compare expected and actual.</b> Read the requirement and the test's <code>expect(...)</code> check.</div></li>
+  <li><div><b>Inspect the Actions timeline.</b> Confirm the correct screen and data were used.</div></li>
+  <li><div><b>Verify saved changes.</b> Reopen or reload the record where appropriate.</div></li>
+  <li><div><b>Record evidence.</b> For real application defects, create a <a href="https://github.com/nitsuwa/hr-pro-automation/issues" target="_blank" rel="noopener noreferrer">GitHub issue ↗</a> with sanitized details.</div></li>
+ </ol>
+ <div class="note"><b>One rule:</b> Don't change a correct assertion just to make a failing test green. AI suggestions and green icons are not substitutes for checking HR PRO.</div>
+</section>
+<section class="section" id="syntax">
+ <div class="kicker">04 / READING A TEST</div><h2>Playwright syntax, explained</h2>
+ <p>This example checks that the Organization Setup control is visible. It is a navigation check, not a complete business-process test.</p>
+ <div class="codebox"><div class="codebar"><span>TYPESCRIPT · EXAMPLE</span><button type="button" data-copy="syntax-code">Copy</button></div><pre id="syntax-code">import { test, expect } from '../../../playwright/fixtures/hrpro.fixture';
 
-test('QA-START | Settings is visible', async ({ page, loginAs }) => {
+test('QA-EXAMPLE | Open settings', async ({ page, loginAs }) => {
   await loginAs('systemAdmin');
   await page.goto('/settings');
-  await expect(page.getByRole('button', {
-    name: 'Organization Setup'
-  })).toBeVisible();
-});</pre></div><p class="mini">This is a syntax tutorial, not a complete Excel acceptance scenario.</p></section>
-<section id="verify"><div class="eyebrow">04 · Quality assurance is evidence</div><h2>Verify a real pass or fail</h2><p>Do not call a scenario complete just because Playwright shows a green check or an AI assistant says the code looks correct. A passing test means <strong>only the assertions in that script passed</strong>.</p>
-<div class="mini-flow"><div><span>01 / REQUIREMENT</span>Read expected result</div><div><span>02 / ASSERTION</span>Check what expect() tests</div><div><span>03 / EVIDENCE</span>Inspect app &amp; persisted data</div><div><span>04 / DECISION</span>Pass, bug, automation issue or blocked</div></div>
-<div class="steps"><div class="step"><strong>1. Know the expected outcome</strong><p>Read the Excel scenario and preconditions. “Clicked Save” is an action—not an expected business outcome.</p></div><div class="step"><strong>2. Review the assertion</strong><p>Find <code>expect(...)</code>. Does it check saved data, correct error feedback and role access when required? If not, treat coverage as partial.</p></div><div class="step"><strong>3. Confirm real behavior</strong><p>Use UI Mode Actions, preview and Errors. For changed data, reopen/reload and confirm persistence. Use an authorized QA environment.</p></div><div class="step"><strong>4. Classify correctly</strong><p><b>PASS:</b> requirement verified. <b>TEST ISSUE:</b> wrong locator or data. <b>APP DEFECT:</b> accepted behavior violated. <b>BLOCKED/PARTIAL:</b> no valid end-to-end evidence.</p></div><div class="step"><strong>5. Record evidence</strong><p>Capture test ID, expected/actual, environment/date, trace or screenshot and a relevant GitHub issue in <code>docs/QA_EXECUTION_LOG.md</code>.</p></div></div>
-<div class="notice"><b>Example: duplicate prevention</b> If you expect exactly one Job Position after trying to add it twice and get two, keep <code>toHaveCount(1)</code> red. Changing it to two hides a real bug.</div></section>
-<section id="new-feature"><div class="eyebrow">06 · Not limited to the Excel workbook</div><h2>Test a completely new HR PRO feature</h2>
-<p>The original workbook is a starting point, not a limit. New screens, options and future modules can be tested with this framework, even when there is no Excel case yet. The first step is to <b>agree on the expected outcome</b> with the feature owner.</p>
-<div class="steps">
-<div class="step"><strong>1 · Understand the new feature</strong><p>Ask who uses it, what it should do, what it should block and what fictional QA records are safe to use. If expected behavior is unclear, ask the owner before writing a test.</p></div>
-<div class="step"><strong>2 · Create a small test plan</strong><p>Choose a success case, an invalid-input case, access/role rules and whether data should stay saved after reopening. Name them, for example, <code>FEAT-SEARCH-001</code>.</p></div>
-<div class="step"><strong>3 · Inspect HR PRO</strong><p>Try the workflow manually in an approved test environment. Note real labels, dialogs and results. Do not guess selectors or copy private employee information to AI.</p></div>
-<div class="step"><strong>4 · Draft or adapt a Playwright test</strong><p>Reuse the existing login fixture and page objects. AI may propose code, but it must separate verified UI details from guesses and include meaningful <code>expect(...)</code> assertions.</p></div>
-<div class="step"><strong>5 · Run and independently verify</strong><p>Use UI Mode, compare actual behavior against the agreed expected outcome, check persistence after reopening and classify PASS, TEST ISSUE, APP DEFECT or BLOCKED.</p></div>
-<div class="step"><strong>6 · Share with the team</strong><p>Record requirement, evidence and test ID, then commit on your own branch and open a pull request for review.</p></div></div>
-<div class="notice"><b>Example (not an already tested case)</b> If HR PRO adds a new Employee Search filter, the feature owner might require correct matching results and an empty result for unknown names. Confirm the requirement first; then test both outcomes in a QA environment.</div>
-<div class="notice"><b>How the framework grows</b> Put related tests into the appropriate feature folder, reuse shared page objects/fixtures, use unique QA records and keep each test mapped to an approved requirement. Future HR GO flows need their own approved test environment and test folders.</div></section><section id="ai"><div class="eyebrow">06 · Learning with AI</div><h2>AI can draft tests. The QA team must validate them.</h2><div class="table"><div class="row"><strong>AI can help</strong><span>Draft Playwright structure, explain errors, suggest page-object reuse, and summarize evidence.</span></div><div class="row"><strong>QA must verify</strong><span>Approved requirements, real selectors and dialogs, safe test data, assertions and actual saved behavior.</span></div><div class="row"><strong>Avoid false-green tests</strong><span>No guessed locators, arbitrary waits, unconditional skips, force clicks or changed expected counts just to pass.</span></div><div class="row"><strong>Human sign-off</strong><span>Run in UI Mode, inspect the trace, compare expected versus observed, then record PASS / FAIL / BLOCKED accurately.</span></div></div><div class="notice"><b>Example follow-up exercise</b> Open <code>tests/regression/setup/catalog-duplicates.spec.ts</code>, find <code>SET-LOANS-002</code>, and verify the existing no-duplicate count assertion. The workbook's visible error-message requirement still needs a separate grounded assertion. Never invent alert text.</div><div class="code"><label>AI PROMPT · PLAN AN UNLISTED FEATURE</label><pre>I need a test plan for a NEW HR PRO feature that is not in the original Excel workbook.
-Approved behavior: [paste or summarize requirement]
-Allowed test role and fictional data: [describe]
-List a success case, invalid input, access rules and persistence checks.
-Separate confirmed requirements from questions. Do not invent business rules or claim anything passed.</pre></div>
-<div class="code"><label>AI PROMPT · DRAFT A PLAYWRIGHT TEST</label><pre>Using the approved test plan, current accessible UI evidence and our project's playwright/fixtures/hrpro.fixture.ts and page objects, draft one small Playwright TypeScript test.
-Include assertions for the real expected outcome, plus reopen/reload checks if data is saved.
-Mark missing selectors as NEEDS INSPECTION. Do not invent selectors, bypass failures or say the test passed. I will review and run it myself.</pre></div>
-<div class="notice"><b>Privacy first</b> Only share approved, sanitized screenshots and synthetic data with AI. Never share passwords, tokens, real employee records or confidential company data.</div></section><section id="files"><div class="eyebrow">05 · File reference</div><h2>Know the project folders</h2><div class="row"><b>tests/regression/setup/</b><span>Permanent Setup regression scripts</span></div><div class="row"><b>tests/smoke/</b><span>Basic login/navigation tests</span></div><div class="row"><b>tests/infrastructure/</b><span>Exploration and inspection, not accepted regression evidence</span></div><div class="row"><b>playwright/pages/</b><span>Reusable UI page objects</span></div><div class="row"><b>playwright/fixtures/</b><span>Shared login fixture</span></div><div class="row"><b>playwright.config.ts</b><span>Browser, URL, traces and reports</span></div></section>
-<section id="update"><div class="eyebrow">06 · Working together</div><h2>Save and share a new test with GitHub</h2><p><b>GitHub</b> is where the QA team keeps test scripts. A <b>branch</b> is your safe working copy; a <b>commit</b> saves your changes; a <b>pull request</b> asks a teammate to review them.</p>
-<div class="steps"><div class="step"><strong>1. Ask which branch the team uses</strong><p>Start from the approved QA branch, not production. Check <code>git status</code> before switching; do not discard existing changes.</p></div><div class="step"><strong>2. Create your own branch</strong><p>Use a name such as <code>qa/check-employee-search</code> to keep your work separate.</p></div><div class="step"><strong>3. Write, run, and verify the test</strong><p>Review actual HR PRO behavior and the assertions. Record expected versus actual results in the execution log.</p></div><div class="step"><strong>4. Save and push</strong><p>Commit only intended scripts and safe data, then push your branch.</p></div><div class="step"><strong>5. Request review on GitHub</strong><p>Use <b>Compare &amp; pull request</b>, select the approved target branch, include the test ID, result, and limitations. A reviewer checks before merging.</p></div></div>
-<div class="code"><label>POWERSHELL · EXAMPLE CONTRIBUTOR COMMANDS</label><pre>git status
+  const setup = page.getByRole('button', {
+    name: 'Organization Setup', exact: true
+  });
+  await expect(setup).toBeVisible();
+});</pre></div>
+ <table class="glossary"><thead><tr><th>Code</th><th>Meaning</th></tr></thead><tbody>
+  <tr><td><code>test('name', ...)</code></td><td>Defines a test case. Give it a clear name.</td></tr>
+  <tr><td><code>async</code> and <code>await</code></td><td>Wait for a browser action or check to finish.</td></tr>
+  <tr><td><code>page</code></td><td>The browser tab controlled by Playwright.</td></tr>
+  <tr><td><code>loginAs('systemAdmin')</code></td><td>Uses this repository's reusable login helper.</td></tr>
+  <tr><td><code>getByRole(...)</code></td><td>Finds a control by its accessible role and name.</td></tr>
+  <tr><td><code>expect(...).toBeVisible()</code></td><td>Checks an expected result; it fails if the condition isn't met.</td></tr>
+ </tbody></table>
+ <p class="subtitle" style="font-size:13px">For a saved setting, a stronger test reopens the page and uses assertions such as <code>toHaveValue(...)</code> or <code>toHaveCount(...)</code>.</p>
+</section>
+<section class="section" id="create">
+ <div class="kicker">05 / EXTEND COVERAGE</div><h2>Create a test for any HR PRO feature</h2>
+ <p>You are not limited to an existing Excel workbook. Start with a clear requirement for the new feature.</p>
+ <div class="flow" aria-label="Testing workflow">
+  <div><small>01</small>Requirement</div><div><small>02</small>Inspect HR PRO</div><div><small>03</small>Write test</div><div><small>04</small>Run &amp; verify</div><div><small>05</small>Review &amp; merge</div>
+ </div>
+ <ol class="step-list">
+  <li><div><b>Define the expected result.</b> Ask what should work, what should be rejected, and which user role is allowed.</div></li>
+  <li><div><b>Try it in HR PRO.</b> Use approved fictional data; note the real fields, buttons and results.</div></li>
+  <li><div><b>Copy a similar test.</b> Add your scenario under <code>tests/regression/setup/</code> or the appropriate feature folder. Reuse fixtures and page objects.</div></li>
+  <li><div><b>Include assertions.</b> Check the expected outcome—not just whether a button was clicked. Run in UI Mode and review the evidence.</div></li>
+  <li><div><b>Share it with a pull request.</b> A teammate reviews the code and outcome before merging.</div></li>
+ </ol>
+ <div class="note"><b>Using AI?</b> Ask it to draft selectors and assertions from the UI evidence you provide, then review and run the test yourself. Never share passwords, tokens or real employee data.</div>
+</section>
+<section class="section" id="github">
+ <div class="kicker">06 / TEAM WORKFLOW</div><h2>Update and share through GitHub</h2>
+ <p><b>main</b> holds the team version. Make new work on a separate branch, then request review.</p>
+ <div class="codebox"><div class="codebar"><span>POWERSHELL · UPDATE LOCAL MAIN</span><button type="button" data-copy="update-code">Copy</button></div><pre id="update-code">git switch main
+git status
 git fetch origin
-git merge --ff-only origin/main
-git switch -c qa/check-employee-search
-# Make changes, verify the test, then:
+git merge --ff-only origin/main</pre></div>
+ <p class="subtitle" style="font-size:13px">Continue only if <code>git status</code> shows a clean working tree. If there are local changes, ask the maintainer before switching or merging.</p>
+ <div class="codebox"><div class="codebar"><span>POWERSHELL · NEW WORK BRANCH (EXAMPLE)</span><button type="button" data-copy="branch-code">Copy</button></div><pre id="branch-code">git switch -c qa/employee-search
+# Write and run your new test in VS Code.
 git add tests/regression/setup/employee-search.spec.ts
-git commit -m "test: cover employee search"
-git push -u origin qa/check-employee-search</pre></div>
-<div class="notice warn"><b>Before using these commands:</b> Make sure you are on the QA branch, your working tree is clean, and the example file path is replaced with the file you actually edited. Never commit credentials, real employee data or unrelated files.</div>
-<div class="notice"><b>Where to go next:</b> Read the short <a href="https://github.com/nitsuwa/hr-pro-automation/blob/main/docs/help/USER_MANUAL.md">GitHub-readable manual</a> for the complete steps. See <a href="https://github.com/nitsuwa/hr-pro-automation/blob/main/docs/QA_EXECUTION_LOG.md">execution evidence</a>, <a href="https://github.com/nitsuwa/hr-pro-automation/blob/main/docs/SETUP_CURRENT_COVERAGE_TRACKER.md">remaining workbook coverage</a>, or <a href="https://github.com/nitsuwa/hr-pro-automation/issues">GitHub issues</a>.</div>
-<p><b>Official documentation:</b> <a href="https://gleaming-muffin-23e8b0.netlify.app">https://gleaming-muffin-23e8b0.netlify.app</a>. This site also works locally after cloning; illustrations are embedded. <b>GitHub:</b> authorized team members run and maintain the tests in the private repository, then propose reviewed changes on a new branch.</p><footer>HR PRO QA · Beginner-friendly handoff · October 2026</footer></section>
-</main></div><script>
-const themeButton=document.getElementById('theme-toggle');
-function applyTheme(theme,save){
-  const dark=theme==='dark';
-  document.documentElement.dataset.theme=dark?'dark':'light';
-  themeButton.querySelector('.theme-toggle__icon').textContent=dark?'☀':'☾';
-  themeButton.querySelector('.theme-toggle__label').textContent=dark?'Light mode':'Dark mode';
-  themeButton.setAttribute('aria-label',dark?'Switch to light mode':'Switch to dark mode');
-  themeButton.setAttribute('aria-pressed',String(dark));
-  if(save)try{localStorage.setItem('hrpro-qa-theme',theme)}catch(e){}
-}
-applyTheme(document.documentElement.dataset.theme,false);
-themeButton.addEventListener('click',()=>applyTheme(document.documentElement.dataset.theme==='dark'?'light':'dark',true));
-if(window.matchMedia){
-  const systemTheme=matchMedia('(prefers-color-scheme: dark)');
-  const changed=e=>{let set=false;try{set=['dark','light'].includes(localStorage.getItem('hrpro-qa-theme'))}catch(e){}if(!set)applyTheme(e.matches?'dark':'light',false)};
-  if(systemTheme.addEventListener)systemTheme.addEventListener('change',changed);
-}
-</script></body></html>
+git commit -m "test: verify employee search"
+git push -u origin qa/employee-search</pre></div>
+ <p>On GitHub, open a <b>Pull Request</b> targeting <code>main</code>. Include what was tested, the result, and any evidence. A reviewer checks before merging.</p>
+</section>
+<section class="section" id="references">
+ <div class="kicker">REFERENCE</div><h2>Useful links</h2>
+ <div class="resource-list">
+  <a href="https://github.com/nitsuwa/hr-pro-automation" target="_blank" rel="noopener noreferrer">HR PRO automation repository ↗<span>Test code, README, and pull requests (requires access)</span></a>
+  <a href="https://github.com/nitsuwa/hr-pro-automation/tree/main/tests/regression/setup" target="_blank" rel="noopener noreferrer">Existing Setup tests ↗<span>Examples to reuse for new coverage</span></a>
+  <a href="https://playwright.dev/docs/intro" target="_blank" rel="noopener noreferrer">Playwright getting started ↗<span>Official installation and basic test guide</span></a>
+  <a href="https://playwright.dev/docs/test-ui-mode" target="_blank" rel="noopener noreferrer">Playwright UI Mode ↗<span>Official screenshots and debugging walkthrough</span></a>
+  <a href="https://playwright.dev/docs/locators" target="_blank" rel="noopener noreferrer">Locators ↗<span>How to find buttons and fields reliably</span></a>
+  <a href="https://playwright.dev/docs/test-assertions" target="_blank" rel="noopener noreferrer">Assertions ↗<span>How to check expected results</span></a>
+ </div>
+</section>
+<div class="footer">HR PRO · QA Automation Guide · <a href="https://hr-pro-automation.netlify.app">Documentation website</a></div>
+</main>
+</div>
+<script>
+(function() {
+  var button = document.getElementById('theme-toggle');
+  function setTheme(dark, persist) {
+    document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+    button.textContent = dark ? '☀ Light mode' : '☾ Dark mode';
+    button.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+    button.setAttribute('aria-pressed', String(dark));
+    if (persist) { try { localStorage.setItem('hrpro-qa-theme', dark ? 'dark' : 'light'); } catch (_) {} }
+  }
+  setTheme(document.documentElement.dataset.theme === 'dark', false);
+  button.addEventListener('click', function() {
+    setTheme(document.documentElement.dataset.theme !== 'dark', true);
+  });
+
+  document.querySelectorAll('[data-copy]').forEach(function(copyBtn) {
+    copyBtn.addEventListener('click', function() {
+      var source = document.getElementById(copyBtn.getAttribute('data-copy'));
+      var content = source ? source.textContent : '';
+      if (!content || !navigator.clipboard) { copyBtn.textContent = 'Select code'; return; }
+      navigator.clipboard.writeText(content).then(function() {
+        copyBtn.textContent = 'Copied';
+        setTimeout(function() { copyBtn.textContent = 'Copy'; }, 1500);
+      }).catch(function() { copyBtn.textContent = 'Select code'; });
+    });
+  });
+  var links = document.querySelectorAll('.primary-nav a[href^="#"]');
+  links.forEach(function(link) {
+    link.addEventListener('click', function() {
+      links.forEach(function(other) { other.classList.remove('current'); });
+      link.classList.add('current');
+    });
+  });
+})();
+</script>
+</body>
+</html>
