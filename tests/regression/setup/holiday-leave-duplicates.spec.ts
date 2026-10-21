@@ -10,8 +10,9 @@ import type { Page } from '@playwright/test';
  * entries must not be accepted"; QA/product-owner confirmation is required
  * before declaring these full workbook acceptance coverage.
  *
- * Each uses its own unique fictional QA value. These records are persistent
- * server-side; use the approved sandbox, and clean up by an authorized process.
+ * Each uses its own unique fictional QA value. Browser-local data was observed
+ * in the prototype, but backend sharing is not ruled out. Use an approved
+ * isolated QA environment and an authorized cleanup process.
  */
 test.describe('HR PRO Setup — Holiday and Leave duplicate prevention', () => {
   test.skip(
@@ -119,7 +120,8 @@ test.describe('HR PRO Setup — Holiday and Leave duplicate prevention', () => {
       await page.getByLabel('Holiday name*', { exact: true }).fill(name);
 
       const type = page.getByRole('combobox', { name: 'Type', exact: true });
-      await expect(type.locator('option')).not.toHaveCount(1);
+      expect(await type.locator('option').count(), 'Holiday types must be available')
+        .toBeGreaterThan(1);
       await type.selectOption({ index: 1 });
       const location = page.getByRole('combobox', { name: 'Work Location', exact: true });
       if (await location.locator('option').count() > 1) {
