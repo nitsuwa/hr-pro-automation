@@ -97,14 +97,12 @@ test('INVENTORY-OVERTIME-POPULATED | Inspect Review after a QA-only batch', asyn
 
   // Check visible nav only; never click controls with Approve/Reject/Submit.
   const overtimeTab = page.getByRole('tab', { name: /^Overtime$/i });
-  const overtimeButton = page.getByRole('button', { name: /^Overtime$/i });
   if (await overtimeTab.count() === 1) {
     await overtimeTab.click();
     await inspect('Overtime tab (no changes)');
-  } else if (await overtimeButton.count() === 1) {
-    await overtimeButton.click();
-    await inspect('Overtime view (no changes)');
   }
+  // Do not click a generic "Overtime" button: its behavior has not been
+  // inspected, and it might submit an action rather than navigate.
 
   mkdirSync(resolve(process.cwd(), 'qa-artifacts'), { recursive: true });
   writeFileSync(
