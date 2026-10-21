@@ -206,7 +206,7 @@ code{font:12.5px Consolas,"Courier New",monospace;overflow-wrap:anywhere}
 <nav class="primary-nav" aria-label="Main guide">
  <div class="shell nav-inner">
   <a class="current" href="#overview">Overview</a><a href="#install">Install</a><a href="#run">Run Tests</a>
-  <a href="#verify">Verify Results</a><a href="#syntax">Test Code</a><a href="#create">New Tests</a><a href="#github">GitHub</a>
+  <a href="#verify">Verify Results</a><a href="#syntax">Test Code</a><a href="#create">Create a Test</a><a href="#ai">AI Help</a><a href="#github">GitHub</a>
  </div>
 </nav>
 <div class="shell layout">
@@ -214,14 +214,14 @@ code{font:12.5px Consolas,"Courier New",monospace;overflow-wrap:anywhere}
  <strong>On this page</strong>
  <a href="#install">1. Set up your computer</a><a href="#run">2. Run a test</a>
  <a href="#verify">3. Check the result</a><a href="#syntax">4. Understand the code</a>
- <a href="#create">5. Add a new test</a><a href="#github">6. Share changes</a><a href="#references">Official references</a>
+ <a href="#create">5. Add a new test</a><a href="#ai">AI Help (copy prompt)</a><a href="#github">6. Share changes</a><a href="#references">Official references</a>
 </aside>
 <main class="content" id="overview">
 <section class="hero" aria-labelledby="guide-title">
  <div class="kicker">HR PRO / QUALITY ASSURANCE</div>
  <h1 id="guide-title">HR PRO Test Automation</h1>
  <p class="subtitle">How to run HR PRO browser tests, check the results, and maintain the Playwright repository.</p>
- <div class="buttons"><a class="btn" href="#install">Get started →</a><a class="btn secondary" href="#run">Run a test</a><a class="btn secondary" href="https://github.com/nitsuwa/hr-pro-automation" target="_blank" rel="noopener noreferrer">Open repository ↗</a></div>
+ <div class="buttons"><a class="btn" href="#install">Get started →</a><a class="btn secondary" href="#run">Run a test</a><a class="btn secondary" href="#ai">Create with AI</a><a class="btn secondary" href="https://github.com/nitsuwa/hr-pro-automation" target="_blank" rel="noopener noreferrer">Open repository ↗</a></div>
 </section>
 <div class="overview" aria-label="How the system works">
  <article><div class="number">01 / TEST</div><b>Playwright runs the steps</b><p>It opens HR PRO, performs actions, and checks expected behavior.</p></article>
@@ -362,8 +362,8 @@ test('QA-EXAMPLE | Settings opens', async ({ page, loginAs }) => {
 <div class="codebox mini-code"><div class="codebar"><span>RUN YOUR NEW EMPLOYEE SEARCH TEST · EXAMPLE</span><button type="button" data-copy="new-test-run">Copy</button></div><pre id="new-test-run">npx playwright test tests/regression/setup/employee-search.spec.ts --ui --project=chromium</pre></div><span class="do-this">Do this: separate a bad selector, missing test data, and an actual HR PRO defect.</span></div></article>
 <article><span class="step-bubble">7</span><div><h3>Share the tested change</h3><p>Commit the test on a feature branch and open a pull request for review. Keep the result and any limitations with the code.</p><span class="do-this">Do this: state what was tested, expected versus actual, and whether it passed.</span></div></article>
 </div>
-<h3 class="subhead">AI prompt you can reuse</h3>
-<p>Fill in the bracketed details from the real HR PRO screen. You can paste an Excel scenario description or a manually written requirement.</p>
+<h3 class="subhead" id="ai">AI Help — copy a test-writing prompt</h3>
+<p>Use this prompt after trying the feature manually. Replace the brackets with the expected result and the real HR PRO field labels. It works for an Excel scenario or a new feature.</p>
 <div class="codebox"><div class="codebar"><span>PROMPT FOR CHATGPT / CLAUDE · COPY &amp; CUSTOMIZE</span><button type="button" data-copy="ai-code">Copy</button></div><pre id="ai-code">Help me create ONE Playwright TypeScript test for our HR PRO project.
 
 Requirement / Excel ID (if any): [scenario and expected outcome]
