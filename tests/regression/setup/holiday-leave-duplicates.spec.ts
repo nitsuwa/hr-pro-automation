@@ -88,6 +88,10 @@ test.describe('HR PRO Setup — Holiday and Leave duplicate prevention', () => {
 
 
   test('SET-HOLIDAY-DUP-FEEDBACK | SET_219 | Duplicate Holiday gives a visible warning', async ({ page, loginAs }) => {
+    test.skip(
+      process.env.E2E_APPROVED_MUTATIONS !== '1',
+      'Use only an explicitly approved, disposable QA environment for Holiday writes.',
+    );
     await loginAs('systemAdmin');
     await openTab(page, 'Holidays');
 
