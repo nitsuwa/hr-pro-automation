@@ -196,3 +196,10 @@ See [Execution Log](QA_EXECUTION_LOG.md). Historical 59-group provisional classi
 - Read-only `setup-overtime-review-controls.json`: `/time-attendance` showed **zero rows**, no visible Overtime navigation, and only generic Review actions. It therefore provides **no actual evidence** of the overtime approval workflow; `SET_097–124` remain uncovered.
 - To distinguish “empty state” from “feature not supported,” an **optional, NOT RUN** `setup-overtime-populated-review.spec.ts` now exists. It uses a newly named QA batch based on the same seeded demonstration employee flow already exercised by `SET-FILING-002`, then inspects populated Review controls. This **mutates test state**, so it requires an approved disposable QA environment and an explicit safety flag. No workbook acceptance assertion yet.
 - If batch creation is not authorized, **defer overtime** and focus on other permitted Setup scenarios. Do not count inspection runs as verified workbook coverage.
+
+
+## 2026-10-21 — Populated Review inventory and next approval navigation
+
+- The operator-supplied `setup-overtime-populated-review.json` showed **1 Review row** after submitting a QA batch and **18 rows / 12 selection controls** after opening its details; an **Approvals** UI control is visible. This changes the investigation direction from an empty Review to the native approvals interface.
+- **No claim of verified overtime behavior:** `SET_097–124` still need actual overtime filing, approval/rejection, and business-state assertions. The JSON is structural inspection only.
+- The existing **gated** populated Review inspector was extended (NOT RUN since update) to open the exact Approvals tab/button/link and list generic controls, without approving or rejecting anything. This additional inspection creates a fresh QA batch and therefore requires a disposable authorized environment.
