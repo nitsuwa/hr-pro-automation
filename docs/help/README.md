@@ -1,28 +1,16 @@
-# HR PRO QA Help Center
+# HR PRO QA Guide
 
-**Use one guide, in the format that suits you.**
+**Website:** https://hr-pro-automation.netlify.app
 
-| Format | Purpose | How to open |
-| --- | --- | --- |
-| **[Official HTML Help Center](https://gleaming-muffin-23e8b0.netlify.app)** | Main beginner-facing documentation website | Open online; an offline copy lives at `docs/help/index.html` with embedded illustrations |
-| **[User Manual](USER_MANUAL.md)** | Short written steps with copyable commands | Open it directly on GitHub |
-| **[Repository](../../README.md)** | Actual code and maintenance history | Use GitHub or VS Code with repository access |
+This folder contains the documentation for the HR PRO Playwright testing repository.
 
-The Help Center is hosted on Netlify at https://gleaming-muffin-23e8b0.netlify.app. The **GitHub repository remains private**, so team members need repository access to run or maintain tests. A public help website does not grant access to private source code.
+| File | Used for |
+| --- | --- |
+| [index.html](index.html) | Official visual website, hosted on Netlify |
+| [USER_MANUAL.md](USER_MANUAL.md) | Written guide for GitHub readers |
 
-## What to learn
+**For new QA members:** start at the [website](https://hr-pro-automation.netlify.app), install the project, run one smoke test in UI Mode, and inspect the actual result.
 
-**Set up → Run a test → Verify its result → Create or test a new feature → Share it for review.**
+**For maintainers:** make changes on a branch, review them, and merge into `main`. Netlify redeploys the HTML from `docs/help`. The screenshots/illustrations in the page are embedded, so a separate assets folder is not required.
 
-- Just running tests? Start with [Setup](USER_MANUAL.md#1-first-time-setup) and [Run](USER_MANUAL.md#2-run-one-test).
-- Writing tests? Continue to [Verify](USER_MANUAL.md#3-verify-what-really-happened) and [Create](USER_MANUAL.md#4-add-a-new-test).
-- Testing something not in Excel? See [New features](USER_MANUAL.md#5-test-a-feature-that-isnt-in-excel).
-- Maintaining the project? Read [Share through GitHub](USER_MANUAL.md#6-share-a-test-through-github).
-
-### Where to find the details
-
-- [Test execution log](../QA_EXECUTION_LOG.md) — evidence and past runs
-- [Issue tracker](https://github.com/nitsuwa/hr-pro-automation/issues) — bugs and questions
-- [Workbook coverage](../SETUP_CURRENT_COVERAGE_TRACKER.md) — requirements still needing more checks
-
-The HTML Help Center is the **official user guide**. The GitHub manual supplements it with copyable text; the repository provides the actual Playwright scripts. Maintain them together, not as separate systems.
+Repository access is still required to run and maintain the Playwright tests. Do not put credentials, tokens, or real employee data into the public documentation.
