@@ -30,7 +30,8 @@
     "test:ui:remaining-fields": "playwright test tests/infrastructure/setup-remaining-fields-inventory.spec.ts --ui --project=chromium",
     "test:ui:company-ids": "playwright test tests/regression/setup/company-employer-ids.spec.ts --ui --project=chromium",
     "test:ui:storage-isolation": "playwright test tests/infrastructure/browser-storage-isolation.spec.ts --ui --project=chromium",
-    "test:ui:overtime-inspect": "playwright test tests/infrastructure/setup-overtime-review-controls.spec.ts --ui --project=chromium"
+    "test:ui:overtime-inspect": "playwright test tests/infrastructure/setup-overtime-review-controls.spec.ts --ui --project=chromium",
+    "test:ui:overtime-populated": "playwright test tests/infrastructure/setup-overtime-populated-review.spec.ts --ui --project=chromium"
   },
   "keywords": [],
   "author": "",
