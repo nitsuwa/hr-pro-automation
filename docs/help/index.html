@@ -138,6 +138,39 @@ code{font:12.5px Consolas,"Courier New",monospace;overflow-wrap:anywhere}
  .layout{display:block}.hero,.section{break-inside:avoid;box-shadow:none}
  body{background:white}.shell{width:100%}
 }
+
+/* Guided workflow additions */
+.visual-key{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:10px 0 20px}
+.visual-key>div,.walk-example,.example-switcher{border:1px solid var(--line);border-radius:9px;background:var(--surface-soft)}
+.visual-key>div{padding:13px}.visual-key b{font-size:13px;color:var(--ink)}
+.visual-key p{font-size:12px;margin:5px 0 0;color:var(--muted)}
+.key-num,.step-bubble{display:inline-grid;place-items:center;background:var(--teal);color:#fff;border-radius:50%;font-size:12px;font-weight:800}
+.key-num{width:24px;height:24px;margin-right:7px}
+.walk-example{padding:17px;margin:18px 0}.walk-top{display:flex;gap:9px;align-items:center;flex-wrap:wrap;color:var(--ink)}
+.mini-tag{font-size:10px;letter-spacing:.08em;font-weight:800;color:var(--teal-ink)}
+.two-up{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}
+.two-up>div{padding:14px;border:1px solid var(--line);border-radius:9px;background:var(--surface)}
+.two-up b{display:block;color:var(--ink);font-size:13px}
+.two-up p{color:var(--muted);margin:7px 0 0;font-size:12px}
+.snippet{padding:9px 10px;border-radius:6px;background:var(--code);color:var(--code-ink);font:12px/1.65 Consolas,"Courier New",monospace;overflow-wrap:anywhere;margin-top:8px}
+.note.compact{margin:12px 0 0}.subhead{margin:27px 0 8px;font-size:18px}
+.syntax-intro{margin:18px 0}
+.example-switcher{overflow:hidden;margin:17px 0}
+.example-switch-controls{display:flex;flex-wrap:wrap;gap:0;border-bottom:1px solid var(--line)}
+.example-choice{padding:11px 15px;border:0;border-bottom:3px solid transparent;background:transparent;color:var(--body);font-size:13px;font-weight:750;cursor:pointer}
+.example-choice.selected{background:var(--teal-wash);border-color:var(--teal);color:var(--teal-ink)}
+.example-choice:hover{background:var(--teal-wash)}
+.example-panel{padding:18px}.example-panel[hidden]{display:none}.example-panel>b{color:var(--ink)}
+.requirement-sheet{display:grid;grid-template-columns:125px 1fr;margin-top:11px;gap:9px 10px;font-size:13px}
+.requirement-sheet>span{font-weight:800;color:var(--teal-ink)}.requirement-sheet p{margin:0}
+.guided-steps{display:grid;gap:12px;margin:16px 0}
+.guided-steps article{display:grid;grid-template-columns:37px minmax(0,1fr);gap:12px;padding:16px;border:1px solid var(--line);border-radius:10px;background:var(--surface-soft)}
+.step-bubble{width:32px;height:32px}.guided-steps h3{font-size:15px;margin:0 0 4px}
+.guided-steps p{font-size:13px;margin:0 0 6px}
+.do-this{display:block;font-size:12px;font-weight:650;color:var(--teal-ink)}
+.mini-code{margin:10px 0}.mini-code pre{padding:9px 12px}
+@media(max-width:700px){.visual-key{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.visual-key,.two-up{grid-template-columns:1fr}.requirement-sheet{grid-template-columns:1fr}.requirement-sheet>span{margin-top:7px}}
 </style>
 </head>
 <body>
@@ -192,72 +225,128 @@ npx playwright install chromium</pre></div>
  <div class="note warn"><b>Use an approved testing environment.</b> Some tests create or edit records. Use fictional QA data; do not run data-changing checks on production.</div>
 </section>
 <section class="section" id="run">
- <div class="kicker">02 / RUN TESTS</div><h2>Use Playwright UI Mode</h2>
- <p>UI Mode lists the tests on the left and shows their actions, screenshots, and errors on the right.</p>
- <div class="codebox"><div class="codebar"><span>POWERSHELL · PICK A TEST</span><button type="button" data-copy="run-code">Copy</button></div><pre id="run-code">npm run test:ui:smoke</pre></div>
- <p class="subtitle" style="font-size:13px">Start with smoke tests (basic navigation). For approved Setup scenarios, use <code>npm run test:ui:setup</code>.</p>
- <ol class="step-list">
-  <li><div><b>Select one test</b> from the left panel.</div></li>
-  <li><div><b>Click ▶ Run</b> beside the test.</div></li>
-  <li><div><b>Open Actions, Before/After, and Errors</b> to see what it actually did.</div></li>
- </ol>
- <figure class="figure">
-  <img src="https://github.com/microsoft/playwright/assets/13063165/6b87712f-64a5-4d73-a91d-6562b864712c" data-fallback="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20960%20286%22%20role%3D%22img%22%20aria-label%3D%22Illustration%20of%20Playwright%20UI%20Mode%20showing%20test%20list%2C%20action%20timeline%2C%20browser%20preview%20and%20error%20panel%22%3E%0A%3Crect%20width%3D%22960%22%20height%3D%22286%22%20rx%3D%2215%22%20fill%3D%22%23ecf2fa%22%2F%3E%3Crect%20x%3D%222%22%20y%3D%222%22%20width%3D%22956%22%20height%3D%22282%22%20rx%3D%2214%22%20fill%3D%22white%22%20stroke%3D%22%23d4dfed%22%20stroke-width%3D%223%22%2F%3E%0A%3Cpath%20d%3D%22M14%202%20H946%20Q958%202%20958%2016%20V44%20H2%20V16%20Q2%202%2014%202Z%22%20fill%3D%22%2329275b%22%2F%3E%3Ctext%20x%3D%2225%22%20y%3D%2230%22%20font-family%3D%22Arial%2Csans-serif%22%20font-size%3D%2219%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3EPLAYWRIGHT%20%20%20%2F%20%20%20UI%20MODE%20(ILLUSTRATION)%3C%2Ftext%3E%0A%3Crect%20x%3D%2218%22%20y%3D%2264%22%20width%3D%22314%22%20height%3D%22202%22%20rx%3D%2210%22%20fill%3D%22%23f6f9fd%22%20stroke%3D%22%23cad9eb%22%2F%3E%3Crect%20x%3D%22348%22%20y%3D%2264%22%20width%3D%22592%22%20height%3D%2280%22%20rx%3D%2210%22%20fill%3D%22%23f6f9fd%22%20stroke%3D%22%23cad9eb%22%2F%3E%3Crect%20x%3D%22348%22%20y%3D%22155%22%20width%3D%22382%22%20height%3D%22111%22%20rx%3D%2210%22%20fill%3D%22%23f6f9fd%22%20stroke%3D%22%23cad9eb%22%2F%3E%3Crect%20x%3D%22741%22%20y%3D%22155%22%20width%3D%22199%22%20height%3D%22111%22%20rx%3D%2210%22%20fill%3D%22%23fff2f0%22%20stroke%3D%22%23ebc1bd%22%2F%3E%0A%3Ctext%20x%3D%2235%22%20y%3D%2291%22%20font-size%3D%2218%22%20font-family%3D%22Arial%22%20font-weight%3D%22bold%22%20fill%3D%22%2320618b%22%3E1%20%20%20TEST%20LIST%20%2F%20%E2%96%B6%20RUN%3C%2Ftext%3E%3Crect%20x%3D%2235%22%20y%3D%22105%22%20width%3D%22278%22%20height%3D%2231%22%20rx%3D%225%22%20fill%3D%22%23e3f3ec%22%2F%3E%3Ctext%20x%3D%2246%22%20y%3D%22125%22%20font-family%3D%22Arial%22%20font-size%3D%2215%22%20fill%3D%22%23126a4b%22%3E%E2%9C%93%20general-settings.spec.ts%3C%2Ftext%3E%3Crect%20x%3D%2235%22%20y%3D%22143%22%20width%3D%22278%22%20height%3D%2231%22%20rx%3D%225%22%20fill%3D%22%23e3f3ec%22%2F%3E%3Ctext%20x%3D%2246%22%20y%3D%22163%22%20font-family%3D%22Arial%22%20font-size%3D%2215%22%20fill%3D%22%23126a4b%22%3E%E2%9C%93%20SET-CONFIG-001%3C%2Ftext%3E%3Crect%20x%3D%2235%22%20y%3D%22181%22%20width%3D%22278%22%20height%3D%2231%22%20rx%3D%225%22%20fill%3D%22%23fbe5e5%22%2F%3E%3Ctext%20x%3D%2246%22%20y%3D%22201%22%20font-family%3D%22Arial%22%20font-size%3D%2215%22%20fill%3D%22%23a94040%22%3E%E2%9C%95%20SET-JOBPOS-002%3C%2Ftext%3E%0A%3Ctext%20x%3D%22368%22%20y%3D%2291%22%20font-size%3D%2218%22%20font-family%3D%22Arial%22%20font-weight%3D%22bold%22%20fill%3D%22%2320618b%22%3E2%20%20%20ACTIONS%20%2F%20TIMELINE%3C%2Ftext%3E%3Cpath%20d%3D%22M374%20116%20H918%22%20stroke%3D%22%2394b0ce%22%20stroke-width%3D%224%22%2F%3E%3Cg%20fill%3D%22%2317948a%22%3E%3Ccircle%20cx%3D%22410%22%20cy%3D%22116%22%20r%3D%2210%22%2F%3E%3Ccircle%20cx%3D%22555%22%20cy%3D%22116%22%20r%3D%2210%22%2F%3E%3Ccircle%20cx%3D%22710%22%20cy%3D%22116%22%20r%3D%2210%22%2F%3E%3Ccircle%20cx%3D%22872%22%20cy%3D%22116%22%20r%3D%2210%22%2F%3E%3C%2Fg%3E%0A%3Ctext%20x%3D%22370%22%20y%3D%22190%22%20font-size%3D%2218%22%20font-family%3D%22Arial%22%20font-weight%3D%22bold%22%20fill%3D%22%2320618b%22%3E3%20%20%20BROWSER%20PREVIEW%3C%2Ftext%3E%3Ctext%20x%3D%22370%22%20y%3D%22220%22%20font-size%3D%2215%22%20font-family%3D%22Arial%22%20fill%3D%22%2353667f%22%3ESee%20the%20page%20as%20each%20step%20happened.%3C%2Ftext%3E%0A%3Ctext%20x%3D%22761%22%20y%3D%22190%22%20font-size%3D%2218%22%20font-family%3D%22Arial%22%20font-weight%3D%22bold%22%20fill%3D%22%23ab4141%22%3E4%20%20%20ERRORS%3C%2Ftext%3E%3Ctext%20x%3D%22761%22%20y%3D%22220%22%20font-size%3D%2214%22%20font-family%3D%22Arial%22%20fill%3D%22%23824a4a%22%3EExpected%20vs%20actual%3C%2Ftext%3E%3C%2Fsvg%3E" id="playwright-screen" alt="Official Playwright UI Mode screenshot showing the test list, run buttons, action timeline and browser preview" loading="lazy" referrerpolicy="no-referrer">
-  <figcaption>Playwright UI Mode, official example screenshot (sample tests, not HR PRO). <a href="https://playwright.dev/docs/test-ui-mode" target="_blank" rel="noopener noreferrer">See the Playwright guide ↗</a>. An embedded illustration is used when offline.</figcaption>
- </figure>
+<div class="kicker">02 / FIRST TEST</div><h2>Run a test yourself</h2>
+<p><b>Your first practice:</b> Run the existing <code>SMOKE-018 | Settings opens successfully</code> test. It checks navigation and does not create records.</p>
+<div class="codebox"><div class="codebar"><span>VS CODE TERMINAL · SMOKE TESTS</span><button type="button" data-copy="run-code">Copy</button></div><pre id="run-code">npm run test:ui:smoke</pre></div>
+<ol class="step-list">
+<li><div><b>Find SMOKE-018</b> in the left test list. Expand <code>navigation.spec.ts</code> if necessary.</div></li>
+<li><div><b>Click ▶ beside that one test.</b> Wait for its run to finish.</div></li>
+<li><div><b>Click its result and read Actions.</b> Notice how it navigates to Settings.</div></li>
+<li><div><b>Open Before / After.</b> Compare the browser view before and after the click. The assertion checks the Settings URL.</div></li>
+</ol>
+<figure class="figure" id="playwright-figure">
+<img src="https://github.com/microsoft/playwright/assets/13063165/6b87712f-64a5-4d73-a91d-6562b864712c" data-fallback="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20960%20286%22%20role%3D%22img%22%20aria-label%3D%22Illustration%20of%20Playwright%20UI%20Mode%20showing%20test%20list%2C%20action%20timeline%2C%20browser%20preview%20and%20error%20panel%22%3E%0A%3Crect%20width%3D%22960%22%20height%3D%22286%22%20rx%3D%2215%22%20fill%3D%22%23ecf2fa%22%2F%3E%3Crect%20x%3D%222%22%20y%3D%222%22%20width%3D%22956%22%20height%3D%22282%22%20rx%3D%2214%22%20fill%3D%22white%22%20stroke%3D%22%23d4dfed%22%20stroke-width%3D%223%22%2F%3E%0A%3Cpath%20d%3D%22M14%202%20H946%20Q958%202%20958%2016%20V44%20H2%20V16%20Q2%202%2014%202Z%22%20fill%3D%22%2329275b%22%2F%3E%3Ctext%20x%3D%2225%22%20y%3D%2230%22%20font-family%3D%22Arial%2Csans-serif%22%20font-size%3D%2219%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3EPLAYWRIGHT%20%20%20%2F%20%20%20UI%20MODE%20(ILLUSTRATION)%3C%2Ftext%3E%0A%3Crect%20x%3D%2218%22%20y%3D%2264%22%20width%3D%22314%22%20height%3D%22202%22%20rx%3D%2210%22%20fill%3D%22%23f6f9fd%22%20stroke%3D%22%23cad9eb%22%2F%3E%3Crect%20x%3D%22348%22%20y%3D%2264%22%20width%3D%22592%22%20height%3D%2280%22%20rx%3D%2210%22%20fill%3D%22%23f6f9fd%22%20stroke%3D%22%23cad9eb%22%2F%3E%3Crect%20x%3D%22348%22%20y%3D%22155%22%20width%3D%22382%22%20height%3D%22111%22%20rx%3D%2210%22%20fill%3D%22%23f6f9fd%22%20stroke%3D%22%23cad9eb%22%2F%3E%3Crect%20x%3D%22741%22%20y%3D%22155%22%20width%3D%22199%22%20height%3D%22111%22%20rx%3D%2210%22%20fill%3D%22%23fff2f0%22%20stroke%3D%22%23ebc1bd%22%2F%3E%0A%3Ctext%20x%3D%2235%22%20y%3D%2291%22%20font-size%3D%2218%22%20font-family%3D%22Arial%22%20font-weight%3D%22bold%22%20fill%3D%22%2320618b%22%3E1%20%20%20TEST%20LIST%20%2F%20%E2%96%B6%20RUN%3C%2Ftext%3E%3Crect%20x%3D%2235%22%20y%3D%22105%22%20width%3D%22278%22%20height%3D%2231%22%20rx%3D%225%22%20fill%3D%22%23e3f3ec%22%2F%3E%3Ctext%20x%3D%2246%22%20y%3D%22125%22%20font-family%3D%22Arial%22%20font-size%3D%2215%22%20fill%3D%22%23126a4b%22%3E%E2%9C%93%20general-settings.spec.ts%3C%2Ftext%3E%3Crect%20x%3D%2235%22%20y%3D%22143%22%20width%3D%22278%22%20height%3D%2231%22%20rx%3D%225%22%20fill%3D%22%23e3f3ec%22%2F%3E%3Ctext%20x%3D%2246%22%20y%3D%22163%22%20font-family%3D%22Arial%22%20font-size%3D%2215%22%20fill%3D%22%23126a4b%22%3E%E2%9C%93%20SET-CONFIG-001%3C%2Ftext%3E%3Crect%20x%3D%2235%22%20y%3D%22181%22%20width%3D%22278%22%20height%3D%2231%22%20rx%3D%225%22%20fill%3D%22%23fbe5e5%22%2F%3E%3Ctext%20x%3D%2246%22%20y%3D%22201%22%20font-family%3D%22Arial%22%20font-size%3D%2215%22%20fill%3D%22%23a94040%22%3E%E2%9C%95%20SET-JOBPOS-002%3C%2Ftext%3E%0A%3Ctext%20x%3D%22368%22%20y%3D%2291%22%20font-size%3D%2218%22%20font-family%3D%22Arial%22%20font-weight%3D%22bold%22%20fill%3D%22%2320618b%22%3E2%20%20%20ACTIONS%20%2F%20TIMELINE%3C%2Ftext%3E%3Cpath%20d%3D%22M374%20116%20H918%22%20stroke%3D%22%2394b0ce%22%20stroke-width%3D%224%22%2F%3E%3Cg%20fill%3D%22%2317948a%22%3E%3Ccircle%20cx%3D%22410%22%20cy%3D%22116%22%20r%3D%2210%22%2F%3E%3Ccircle%20cx%3D%22555%22%20cy%3D%22116%22%20r%3D%2210%22%2F%3E%3Ccircle%20cx%3D%22710%22%20cy%3D%22116%22%20r%3D%2210%22%2F%3E%3Ccircle%20cx%3D%22872%22%20cy%3D%22116%22%20r%3D%2210%22%2F%3E%3C%2Fg%3E%0A%3Ctext%20x%3D%22370%22%20y%3D%22190%22%20font-size%3D%2218%22%20font-family%3D%22Arial%22%20font-weight%3D%22bold%22%20fill%3D%22%2320618b%22%3E3%20%20%20BROWSER%20PREVIEW%3C%2Ftext%3E%3Ctext%20x%3D%22370%22%20y%3D%22220%22%20font-size%3D%2215%22%20font-family%3D%22Arial%22%20fill%3D%22%2353667f%22%3ESee%20the%20page%20as%20each%20step%20happened.%3C%2Ftext%3E%0A%3Ctext%20x%3D%22761%22%20y%3D%22190%22%20font-size%3D%2218%22%20font-family%3D%22Arial%22%20font-weight%3D%22bold%22%20fill%3D%22%23ab4141%22%3E4%20%20%20ERRORS%3C%2Ftext%3E%3Ctext%20x%3D%22761%22%20y%3D%22220%22%20font-size%3D%2214%22%20font-family%3D%22Arial%22%20fill%3D%22%23824a4a%22%3EExpected%20vs%20actual%3C%2Ftext%3E%3C%2Fsvg%3E" id="playwright-screen" alt="Official Playwright UI Mode screenshot showing the test list on the left, run icons, action timeline, browser preview and bottom details" loading="lazy" referrerpolicy="no-referrer">
+<figcaption>Official Playwright UI Mode screenshot, using sample tests (not HR PRO). Use the guide below to identify the panels.</figcaption>
+</figure>
+<div class="visual-key" aria-label="Playwright UI Mode screenshot guide">
+<div><span class="key-num">1</span><b>Test list</b><p>Find the file and test name on the left.</p></div>
+<div><span class="key-num">2</span><b>Run ▶</b><p>Click the small play icon beside one test.</p></div>
+<div><span class="key-num">3</span><b>Timeline &amp; Actions</b><p>Review each action and select a step.</p></div>
+<div><span class="key-num">4</span><b>Browser preview &amp; Errors</b><p>See what happened and why a check failed.</p></div>
+</div>
+<div class="note"><b>Next practice (changes QA data):</b> Once you have an approved disposable test environment, run <a href="https://github.com/nitsuwa/hr-pro-automation/blob/main/tests/regression/setup/department-creation.spec.ts">SET-DEPT-001</a>. It creates a fictional department, reloads HR PRO, and checks that the department is still there. This demonstrates a real business-result assertion.</div>
+<div class="codebox"><div class="codebar"><span>ONLY IN APPROVED QA · DEPARTMENT EXAMPLE</span><button type="button" data-copy="real-code">Copy</button></div><pre id="real-code">npx playwright test tests/regression/setup/department-creation.spec.ts --ui --project=chromium</pre></div>
 </section>
 <section class="section" id="verify">
- <div class="kicker">03 / TEST RESULTS</div><h2>Check what passed or failed</h2>
- <div class="legend">
-  <div><b><i class="dot green"></i>Passed</b>The script's assertions passed. Check that they cover the expected requirement.</div>
-  <div><b><i class="dot red"></i>Failed</b>Open the error and inspect what HR PRO did before deciding whether the test or application is wrong.</div>
-  <div><b><i class="dot gray"></i>Skipped</b>The test did not run. It is not a pass or a failure.</div>
- </div>
- <ol class="step-list">
-  <li><div><b>Compare expected and actual.</b> Read the requirement and the test's <code>expect(...)</code> check.</div></li>
-  <li><div><b>Inspect the Actions timeline.</b> Confirm the correct screen and data were used.</div></li>
-  <li><div><b>Verify saved changes.</b> Reopen or reload the record where appropriate.</div></li>
-  <li><div><b>Record evidence.</b> For real application defects, create a <a href="https://github.com/nitsuwa/hr-pro-automation/issues" target="_blank" rel="noopener noreferrer">GitHub issue ↗</a> with sanitized details.</div></li>
- </ol>
- <div class="note"><b>One rule:</b> Don't change a correct assertion just to make a failing test green. AI suggestions and green icons are not substitutes for checking HR PRO.</div>
+<div class="kicker">03 / CHECK THE EVIDENCE</div><h2>Did HR PRO actually behave correctly?</h2>
+<p><b>Green is a starting point, not the whole answer.</b> A test passes when its coded checks pass. Confirm that those checks match what the user expected.</p>
+<div class="legend">
+<div><b><i class="dot green"></i> Passed</b>Every assertion passed. Review the actual outcome.</div>
+<div><b><i class="dot red"></i> Failed</b>An assertion or test step failed. Investigate the cause.</div>
+<div><b><i class="dot gray"></i> Skipped</b>Nothing was checked. Never report it as passed.</div>
+</div>
+<div class="walk-example">
+<div class="walk-top"><span class="mini-tag">EXAMPLE · DEPARTMENT</span><strong>What counts as a real check?</strong></div>
+<div class="two-up">
+<div><b>Action only</b><div class="snippet">await field.press('Enter');</div><p>Pressing Enter does not prove anything was saved.</p></div>
+<div><b>Assertion</b><div class="snippet">await expect(page.getByText(name, { exact: true })).toBeVisible();</div><p>Checks that the new department appears.</p></div>
+</div>
+<div class="note compact"><b>Persistence check:</b> The existing department test then reloads the page, opens Departments again, and checks the name one more time.</div>
+</div>
+<h3 class="subhead">If the test is red, investigate in this order</h3>
+<ol class="step-list">
+<li><div><b>Read Expected and Received.</b> Identify the failing <code>expect(...)</code> statement.</div></li>
+<li><div><b>Inspect the screenshot and Actions.</b> Was the correct page, user role and data used?</div></li>
+<li><div><b>Decide what is wrong.</b> A renamed field may mean a locator needs repair; the wrong saved value may be an HR PRO defect; missing setup data may mean the environment isn't ready.</div></li>
+<li><div><b>Fix only what evidence supports.</b> Rerun, check the result manually, then record a defect in GitHub when the application truly violates the expected behavior.</div></li>
+</ol>
+<div class="note warn"><b>Never “fix” a failing test by changing the expected result just to make it green.</b> If the requirement says one saved department, keep <code>toHaveCount(1)</code>—don't change it to 2 to hide a duplicate.</div>
 </section>
 <section class="section" id="syntax">
- <div class="kicker">04 / READING A TEST</div><h2>Playwright syntax, explained</h2>
- <p>This example checks that the Organization Setup control is visible. It is a navigation check, not a complete business-process test.</p>
- <div class="codebox"><div class="codebar"><span>TYPESCRIPT · EXAMPLE</span><button type="button" data-copy="syntax-code">Copy</button></div><pre id="syntax-code">import { test, expect } from '../../../playwright/fixtures/hrpro.fixture';
+<div class="kicker">04 / THE IMPORTANT CODE</div><h2>Understand actions and assertions</h2>
+<p>Playwright tests are written in <b>TypeScript</b>. You do not need to memorize every command. Start with the few lines you will read most often.</p>
+<div class="two-up syntax-intro">
+<div><span class="mini-tag">ACTION</span><h3>Do something in HR PRO</h3><div class="snippet">await button.click();<br>await field.fill(name);</div><p>Clicks a button or types in a field.</p></div>
+<div><span class="mini-tag">ASSERTION</span><h3>Check what should happen</h3><div class="snippet">await expect(button).toBeVisible();<br>await expect(row).toHaveCount(1);</div><p>If the result isn't correct, Playwright marks the test failed.</p></div>
+</div>
+<div class="codebox"><div class="codebar"><span>TYPESCRIPT · REALISTIC HR PRO NAVIGATION EXAMPLE</span><button type="button" data-copy="syntax-code">Copy</button></div><pre id="syntax-code">import { test, expect } from '../../../playwright/fixtures/hrpro.fixture';
 
-test('QA-EXAMPLE | Open settings', async ({ page, loginAs }) => {
-  await loginAs('systemAdmin');
-  await page.goto('/settings');
-  const setup = page.getByRole('button', {
+test('QA-EXAMPLE | Settings opens', async ({ page, loginAs }) => {
+  await loginAs('systemAdmin');           // use the shared test login
+  await page.goto('/settings');           // open HR PRO Settings
+  const tab = page.getByRole('button', {
     name: 'Organization Setup', exact: true
   });
-  await expect(setup).toBeVisible();
+  await expect(tab).toBeVisible();        // verify the button exists
 });</pre></div>
- <table class="glossary"><thead><tr><th>Code</th><th>Meaning</th></tr></thead><tbody>
-  <tr><td><code>test('name', ...)</code></td><td>Defines a test case. Give it a clear name.</td></tr>
-  <tr><td><code>async</code> and <code>await</code></td><td>Wait for a browser action or check to finish.</td></tr>
-  <tr><td><code>page</code></td><td>The browser tab controlled by Playwright.</td></tr>
-  <tr><td><code>loginAs('systemAdmin')</code></td><td>Uses this repository's reusable login helper.</td></tr>
-  <tr><td><code>getByRole(...)</code></td><td>Finds a control by its accessible role and name.</td></tr>
-  <tr><td><code>expect(...).toBeVisible()</code></td><td>Checks an expected result; it fails if the condition isn't met.</td></tr>
- </tbody></table>
- <p class="subtitle" style="font-size:13px">For a saved setting, a stronger test reopens the page and uses assertions such as <code>toHaveValue(...)</code> or <code>toHaveCount(...)</code>.</p>
+<table class="glossary"><thead><tr><th>Syntax</th><th>What it means</th></tr></thead><tbody>
+<tr><td><code>test('name', ...)</code></td><td>Starts a named test. Include its scenario ID when available.</td></tr>
+<tr><td><code>{ page, loginAs }</code></td><td>Uses the browser page and this repository's login helper.</td></tr>
+<tr><td><code>async</code> / <code>await</code></td><td>Waits for a browser action or assertion to finish.</td></tr>
+<tr><td><code>page.goto('/settings')</code></td><td>Navigates to the Settings page.</td></tr>
+<tr><td><code>getByRole('button', { name: '...' })</code></td><td>Finds a button by the label the user sees.</td></tr>
+<tr><td><code>.click()</code> / <code>.fill()</code></td><td>Performs an action.</td></tr>
+<tr><td><code>expect(...).toBeVisible()</code></td><td>Checks that something is shown.</td></tr>
+<tr><td><code>expect(...).toHaveCount(1)</code></td><td>Checks that exactly one matching record exists.</td></tr>
+<tr><td><code>expect(...).toHaveValue(value)</code></td><td>Checks a field's actual value.</td></tr>
+<tr><td><code>page.reload()</code></td><td>Refreshes the page; useful before checking persistence.</td></tr>
+</tbody></table>
+<div class="note"><b>Key idea:</b> <code>getByRole(...)</code> locates a user-interface element. <code>expect(...)</code> is the check that makes your test meaningful. Read <a href="https://playwright.dev/docs/locators" target="_blank" rel="noopener noreferrer">locators</a> and <a href="https://playwright.dev/docs/test-assertions" target="_blank" rel="noopener noreferrer">assertions</a> in the official Playwright documentation when you need more.</div>
 </section>
 <section class="section" id="create">
- <div class="kicker">05 / EXTEND COVERAGE</div><h2>Create a test for any HR PRO feature</h2>
- <p>You are not limited to an existing Excel workbook. Start with a clear requirement for the new feature.</p>
- <div class="flow" aria-label="Testing workflow">
-  <div><small>01</small>Requirement</div><div><small>02</small>Inspect HR PRO</div><div><small>03</small>Write test</div><div><small>04</small>Run &amp; verify</div><div><small>05</small>Review &amp; merge</div>
- </div>
- <ol class="step-list">
-  <li><div><b>Define the expected result.</b> Ask what should work, what should be rejected, and which user role is allowed.</div></li>
-  <li><div><b>Try it in HR PRO.</b> Use approved fictional data; note the real fields, buttons and results.</div></li>
-  <li><div><b>Copy a similar test.</b> Add your scenario under <code>tests/regression/setup/</code> or the appropriate feature folder. Reuse fixtures and page objects.</div></li>
-  <li><div><b>Include assertions.</b> Check the expected outcome—not just whether a button was clicked. Run in UI Mode and review the evidence.</div></li>
-  <li><div><b>Share it with a pull request.</b> A teammate reviews the code and outcome before merging.</div></li>
- </ol>
- <div class="note"><b>Using AI?</b> Ask it to draft selectors and assertions from the UI evidence you provide, then review and run the test yourself. Never share passwords, tokens or real employee data.</div>
+<div class="kicker">05 / CREATE YOUR OWN TEST</div><h2>From manual steps to automated checks</h2>
+<p>Use the same workflow whether your requirement comes from an <b>Excel test case</b> or a <b>new HR PRO feature</b>. You can use AI for the draft, but the QA tester decides what should pass.</p>
+<div class="example-switcher" aria-label="Choose an example">
+<div class="example-switch-controls" role="group" aria-label="Requirement source">
+<button type="button" class="example-choice selected" data-example="excel" aria-pressed="true">From Excel</button>
+<button type="button" class="example-choice" data-example="new" aria-pressed="false">New feature (no Excel)</button>
+</div>
+<div class="example-panel" data-panel="excel">
+<b>Example: SET_177–181 — Create a department</b>
+<div class="requirement-sheet"><span>Manual steps</span><p>Settings → Organization Setup → Departments → Add Department → enter a unique QA name → save.</p><span>Expected result</span><p>Department appears once and is still there after refreshing the page.</p><span>Existing reference</span><p><a href="https://github.com/nitsuwa/hr-pro-automation/blob/main/tests/regression/setup/department-creation.spec.ts" target="_blank" rel="noopener noreferrer"><code>department-creation.spec.ts</code> ↗</a></p></div>
+</div>
+<div class="example-panel" data-panel="new" hidden>
+<b>Example: Add employee search coverage</b>
+<div class="requirement-sheet"><span>Manual steps</span><p>With a fictional QA employee already present, open Employees, type its name in Search, and inspect the matching results.</p><span>Expected result</span><p>The matching QA employee appears in the filtered list and an unrelated name is not included.</p><span>Scenario ID</span><p>Choose a new ID under your team's naming convention; no Excel reference is needed.</p></div>
+</div>
+</div>
+<h3 class="subhead">Follow these steps every time</h3>
+<div class="guided-steps">
+<article><span class="step-bubble">1</span><div><h3>Write down the expected result</h3><p>Pick a scenario, a user role, and the result to check. Include edge cases, such as a duplicate or invalid value.</p><span class="do-this">Do this: write “Given / When / Then” in one or two lines.</span></div></article>
+<article><span class="step-bubble">2</span><div><h3>Try the steps manually in HR PRO</h3><p>Confirm the feature exists and note actual labels like “Departments” and “+ Add Department.” Use only permitted test data.</p><span class="do-this">Do this: list the clicks and what you saw on screen.</span></div></article>
+<article><span class="step-bubble">3</span><div><h3>Inspect the actual controls</h3><p>Use Playwright UI Mode's <b>Pick locator</b> on a test snapshot, or use the <a href="https://playwright.dev/docs/codegen" target="_blank" rel="noopener noreferrer">Playwright code generator</a> in a permitted test environment. It can record clicks and suggest locators; it does not decide your expected result.</p><div class="codebox mini-code"><div class="codebar"><span>OPTIONAL · LOCATOR DISCOVERY</span><button type="button" data-copy="codegen-code">Copy</button></div><pre id="codegen-code">npx playwright codegen</pre></div><span class="do-this">Do this: collect the control names and locators, then stop recording. Don't save credentials or generated logins.</span></div></article>
+<article><span class="step-bubble">4</span><div><h3>Ask AI to draft the code—or write it yourself</h3><p>Give AI the approved requirement, real UI labels, and an example from this repository. Ask for a small test that uses <code>loginAs</code>, reliable locators, and meaningful assertions.</p><span class="do-this">Do this: use the ready-to-copy prompt below. Review everything AI returns.</span></div></article>
+<article><span class="step-bubble">5</span><div><h3>Put the test in the right folder</h3><p>Start from an existing similar <code>.spec.ts</code> file. Reuse <code>playwright/fixtures/</code> and <code>playwright/pages/</code>. For Setup features, use <code>tests/regression/setup/</code>.</p><span class="do-this">Do this: give the test a clear ID and descriptive name.</span></div></article>
+<article><span class="step-bubble">6</span><div><h3>Run one test and verify the business result</h3><p>Run it in UI Mode, read each assertion, inspect the browser preview, and manually confirm the outcome. If data should persist, reopen or reload it.</p><span class="do-this">Do this: separate a bad selector, missing test data, and an actual HR PRO defect.</span></div></article>
+<article><span class="step-bubble">7</span><div><h3>Share the tested change</h3><p>Commit the test on a feature branch and open a pull request for review. Keep the result and any limitations with the code.</p><span class="do-this">Do this: state what was tested, expected versus actual, and whether it passed.</span></div></article>
+</div>
+<h3 class="subhead">AI prompt you can reuse</h3>
+<p>Fill in the bracketed details from the real HR PRO screen. You can paste an Excel scenario description or a manually written requirement.</p>
+<div class="codebox"><div class="codebar"><span>PROMPT FOR CHATGPT / CLAUDE · COPY &amp; CUSTOMIZE</span><button type="button" data-copy="ai-code">Copy</button></div><pre id="ai-code">Help me create ONE Playwright TypeScript test for our HR PRO project.
+
+Requirement / Excel ID (if any): [scenario and expected outcome]
+Manual steps observed in approved QA: [clicks and field labels]
+Actual UI locators or accessible names: [from Playwright Inspector]
+Test data and role: [fictional data, approved QA role]
+Similar existing test file: [path to .spec.ts]
+
+Use our hrpro.fixture and existing page objects.
+Include assertions for the expected business result, and a reload
+or reopen check if something is saved. Do not invent selectors,
+credentials or behavior. Mark anything unknown NEEDS INSPECTION.
+Return a small test plus instructions to run it in Playwright UI Mode.
+Do not claim it passed. I will review and verify it myself.</pre></div>
+<div class="note warn"><b>AI is a helper, not the test result.</b> Never send passwords, tokens, private employee information or unapproved screenshots. Never paste AI code into <code>main</code> without checking and running it first.</div>
 </section>
 <section class="section" id="github">
  <div class="kicker">06 / TEAM WORKFLOW</div><h2>Update and share through GitHub</h2>
