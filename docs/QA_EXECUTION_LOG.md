@@ -337,3 +337,12 @@ No changes to operator-reported full Setup baseline: **50 executed, 47 passed, 3
 - **Scope:** Does not establish that timekeeping or leave filing decisions actually route/approve correctly. Workbook group `SET_185–189` stays **PARTIAL**. This is a targeted additional check, not a new complete scenario group.
 - **New read-only probe, NOT RUN:** `tests/infrastructure/setup-overtime-review-controls.spec.ts` (`npm run test:ui:overtime-inspect`) records structural Review/Overtime controls only to assess native HR PRO overtime scenarios `SET_097–124`, with **no approvals, filing, edits or employee data captured**.
 - **Accounting:** Previous operator-reported full Setup suite had the same three known failures; exact new combined totals not established. Preserve reported full-run baseline separately.
+
+
+## 2026-10-21 — Native overtime empty Review inspection
+
+- Operator uploaded `qa-artifacts/setup-overtime-review-controls.json` from `INVENTORY-OVERTIME`. Two snapshots showed `/time-attendance`, heading **Review**, **0 table rows**, **6 buttons**, **0 selects**, and no recognized Overtime tab/button/link. This was a *structural inspection*, not a failed HR PRO requirement or a verified overtime workflow.
+- Likely missing prerequisite: an active/submitted Review batch in the fresh Playwright browser. This is a hypothesis, **not established** by the JSON.
+- New **NOT RUN** opt-in inspection: `tests/infrastructure/setup-overtime-populated-review.spec.ts` and `npm run test:ui:overtime-populated`. It reuses known Timesheet → Review attendance → Submit to Review navigation, then records only generic labels and counts; asserts Review has rows.
+- **Safety:** This new inspection **creates/submits a QA batch** (unlike the earlier read-only inspection) and is *skipped by default*. Needs disposable non-production environment and explicit `E2E_APPROVED_MUTATIONS=1`. Does **not** approve/reject overtime or release payroll. Do not run without permission.
+- `SET_097–124` remain unverified. The infrastructure inventory does not count toward 59 groups or change the full-suite baseline.
