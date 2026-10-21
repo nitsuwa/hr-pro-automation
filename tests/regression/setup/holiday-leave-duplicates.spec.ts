@@ -6,9 +6,10 @@ import type { Page } from '@playwright/test';
  * and SET_227 (duplicate Leave Type) requirements.
  *
  * Both rows contain copied/ambiguous wording in the source workbook. These
- * tests deliberately implement the business interpretation "duplicate
- * entries must not be accepted"; QA/product-owner confirmation is required
- * before declaring these full workbook acceptance coverage.
+ * Holiday duplicates currently trigger a visible, overridable confirmation:
+ * these tests verify the warning and the CANCEL path, not hard rejection.
+ * Whether an override violates SET_219 requires product-owner confirmation.
+ * Leave label uniqueness remains a separate candidate issue.
  *
  * Each uses its own unique fictional QA value. Browser-local data was observed
  * in the prototype, but backend sharing is not ruled out. Use an approved
@@ -59,7 +60,7 @@ test.describe('HR PRO Setup — Holiday and Leave duplicate prevention', () => {
     }
   }
 
-  test('SET-HOLIDAY-DUP | SET_219 | An identical Holiday should not be saved twice', async ({ page, loginAs }) => {
+  test('SET-HOLIDAY-DUP | SET_219 | Cancelling duplicate Holiday confirmation keeps one record', async ({ page, loginAs }) => {
     await loginAs('systemAdmin');
     await openTab(page, 'Holidays');
 
@@ -76,18 +77,24 @@ test.describe('HR PRO Setup — Holiday and Leave duplicate prevention', () => {
     await openTab(page, 'Holidays');
     await addHoliday(page, name, date, true);
 
-    // Reload dismisses any duplicate warning and proves persistence outcome.
-    await page.reload({ waitUntil: 'domcontentloaded' });
-    await openTab(page, 'Holidays');
+    // HR PRO intentionally displays a confirmation that offers "Add it anyway".
+    // Cancel explicitly: simply navigating away would not prove this path.
+    const duplicatePrompt = page.getByRole('dialog', {
+      name: /already a declared holiday on this date/i,
+    });
+    await expect(duplicatePrompt).toBeVisible();
+    await duplicatePrompt.getByRole('button', { name: 'Cancel', exact: true }).click();
+    await expect(duplicatePrompt).toBeHidden();
 
+    await openTab(page, 'Holidays');
     await expect(
       sameHolidayRow(page, name),
-      'HR PRO must not persist two Holidays with the same date/name/type/location',
+      'Cancelling the duplicate Holiday confirmation should keep only the original record',
     ).toHaveCount(1);
   });
 
 
-  test('SET-HOLIDAY-DUP-FEEDBACK | SET_219 | Duplicate Holiday gives a visible warning', async ({ page, loginAs }) => {
+  test('SET-HOLIDAY-DUP-FEEDBACK | SET_219 | Duplicate Holiday confirmation can be cancelled', async ({ page, loginAs }) => {
     test.skip(
       process.env.E2E_APPROVED_MUTATIONS !== '1',
       'Use only an explicitly approved, disposable QA environment for Holiday writes.',
@@ -105,71 +112,44 @@ test.describe('HR PRO Setup — Holiday and Leave duplicate prevention', () => {
     await expect(sameHolidayRow(page, name)).toHaveCount(1);
     await openTab(page, 'Holidays');
 
-    // Capture any native browser alert/confirm without recording sensitive
-    // message contents or accepting a duplicate write.
-    let nativeDuplicateWarning = false;
-    const onDialog = async (dialog: import('@playwright/test').Dialog) => {
-      if (/duplicate|already|exists|same|conflict/i.test(dialog.message())) {
-        nativeDuplicateWarning = true;
-      }
-      await dialog.dismiss();
-    };
-    page.on('dialog', onDialog);
+    // Reproduce the same date/name/type/location. The UI inventory and
+    // screenshot show an in-page dialog, NOT an alert or native browser popup.
+    await page.getByRole('button', { name: '+ Add Holiday', exact: true }).click();
+    await expect(page.getByRole('heading', { name: 'Add Holiday', exact: true })).toBeVisible();
+    await page.getByLabel('Date*', { exact: true }).fill(date);
+    await page.getByLabel('Holiday name*', { exact: true }).fill(name);
 
-    try {
-      // Replicate the first holiday exactly: date, name, type and location.
-      await page.getByRole('button', { name: '+ Add Holiday', exact: true }).click();
-      await expect(page.getByRole('heading', { name: 'Add Holiday', exact: true })).toBeVisible();
-      await page.getByLabel('Date*', { exact: true }).fill(date);
-      await page.getByLabel('Holiday name*', { exact: true }).fill(name);
-
-      const type = page.getByRole('combobox', { name: 'Type', exact: true });
-      expect(await type.locator('option').count(), 'Holiday types must be available')
-        .toBeGreaterThan(1);
-      await type.selectOption({ index: 1 });
-      const location = page.getByRole('combobox', { name: 'Work Location', exact: true });
-      if (await location.locator('option').count() > 1) {
-        await location.selectOption({ index: 1 });
-      }
-      const save = page.getByRole('button', { name: 'Add Holiday', exact: true });
-      if (await save.isEnabled()) {
-        await save.click();
-      }
-
-      // Test the workbook's second outcome: a *visible* duplication warning.
-      // A disabled button or a second row count of 1 is not an error message.
-      // Prefer semantic alerts and dialogs, with constrained live/error
-      // regions for custom UI. Never assume exact error copy.
-      await expect.poll(async () => {
-        if (nativeDuplicateWarning) return true;
-        return page.evaluate(() => {
-          const nodes = document.querySelectorAll(
-            '[role="alert"],[role="alertdialog"],[role="status"],[aria-live],'
-            + '[class*="error"],[class*="toast"],[class*="warning"]',
-          );
-          const visible = (element: Element) => {
-            const style = getComputedStyle(element);
-            return element.getClientRects().length > 0
-              && style.display !== 'none' && style.visibility !== 'hidden';
-          };
-          return [...nodes].filter(visible).some(element =>
-            /duplicate|already|exists|same|conflict/i.test(element.textContent ?? ''),
-          );
-        });
-      }, {
-        message: 'Duplicate Holiday attempt must show a user-visible duplicate warning',
-        timeout: 5_000,
-      }).toBe(true);
-
-      // Stronger than simply observing a warning: the duplicate must also
-      // remain absent after navigating back to the catalog.
-      await openTab(page, 'Holidays');
-      await expect(sameHolidayRow(page, name),
-        'User-visible duplicate warning must accompany rejection of the duplicate')
-        .toHaveCount(1);
-    } finally {
-      page.off('dialog', onDialog);
+    const type = page.getByRole('combobox', { name: 'Type', exact: true });
+    expect(await type.locator('option').count(), 'Holiday types must be available')
+      .toBeGreaterThan(1);
+    await type.selectOption({ index: 1 });
+    const location = page.getByRole('combobox', { name: 'Work Location', exact: true });
+    if (await location.locator('option').count() > 1) {
+      await location.selectOption({ index: 1 });
     }
+    const save = page.getByRole('button', { name: 'Add Holiday', exact: true });
+    await expect(save).toBeEnabled();
+    await save.click();
+
+    const warning = page.getByRole('dialog', {
+      name: /already a declared holiday on this date/i,
+    });
+    await expect(warning, 'A duplicate date must produce a visible confirmation').toBeVisible();
+    await expect(warning).toContainText(/already|both declarations/i);
+    await expect(warning.getByRole('button', { name: 'Add it anyway', exact: true }))
+      .toBeVisible();
+
+    // Never click "Add it anyway": the product permits a manual override.
+    // This checks that the user can cancel rather than creating a duplicate.
+    await warning.getByRole('button', { name: 'Cancel', exact: true }).click();
+    await expect(warning).toBeHidden();
+
+    // Persistence assertion independent from the warning assertion.
+    await openTab(page, 'Holidays');
+    await expect(
+      sameHolidayRow(page, name),
+      'Cancelling duplicate confirmation must leave exactly one QA Holiday',
+    ).toHaveCount(1);
   });
 
   test('SET-LEAVE-DUP | SET_227 | An identical Leave Type should not be saved twice', async ({ page, loginAs }) => {
