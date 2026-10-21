@@ -85,6 +85,87 @@ test.describe('HR PRO Setup — Holiday and Leave duplicate prevention', () => {
     ).toHaveCount(1);
   });
 
+
+  test('SET-HOLIDAY-DUP-FEEDBACK | SET_219 | Duplicate Holiday gives a visible warning', async ({ page, loginAs }) => {
+    await loginAs('systemAdmin');
+    await openTab(page, 'Holidays');
+
+    // Separate fictional test record: never touch a seeded company holiday.
+    const name = 'QA Warning Holiday ' + id();
+    const dateOffset = Math.floor(Date.now() / 1000) % 700;
+    const date = new Date(Date.UTC(2028, 0, 1) + dateOffset * 86_400_000)
+      .toISOString().slice(0, 10);
+
+    await addHoliday(page, name, date);
+    await expect(sameHolidayRow(page, name)).toHaveCount(1);
+    await openTab(page, 'Holidays');
+
+    // Capture any native browser alert/confirm without recording sensitive
+    // message contents or accepting a duplicate write.
+    let nativeDuplicateWarning = false;
+    const onDialog = async (dialog: import('@playwright/test').Dialog) => {
+      if (/duplicate|already|exists|same|conflict/i.test(dialog.message())) {
+        nativeDuplicateWarning = true;
+      }
+      await dialog.dismiss();
+    };
+    page.on('dialog', onDialog);
+
+    try {
+      // Replicate the first holiday exactly: date, name, type and location.
+      await page.getByRole('button', { name: '+ Add Holiday', exact: true }).click();
+      await expect(page.getByRole('heading', { name: 'Add Holiday', exact: true })).toBeVisible();
+      await page.getByLabel('Date*', { exact: true }).fill(date);
+      await page.getByLabel('Holiday name*', { exact: true }).fill(name);
+
+      const type = page.getByRole('combobox', { name: 'Type', exact: true });
+      await expect(type.locator('option')).not.toHaveCount(1);
+      await type.selectOption({ index: 1 });
+      const location = page.getByRole('combobox', { name: 'Work Location', exact: true });
+      if (await location.locator('option').count() > 1) {
+        await location.selectOption({ index: 1 });
+      }
+      const save = page.getByRole('button', { name: 'Add Holiday', exact: true });
+      if (await save.isEnabled()) {
+        await save.click();
+      }
+
+      // Test the workbook's second outcome: a *visible* duplication warning.
+      // A disabled button or a second row count of 1 is not an error message.
+      // Prefer semantic alerts and dialogs, with constrained live/error
+      // regions for custom UI. Never assume exact error copy.
+      await expect.poll(async () => {
+        if (nativeDuplicateWarning) return true;
+        return page.evaluate(() => {
+          const nodes = document.querySelectorAll(
+            '[role="alert"],[role="alertdialog"],[role="status"],[aria-live],'
+            + '[class*="error"],[class*="toast"],[class*="warning"]',
+          );
+          const visible = (element: Element) => {
+            const style = getComputedStyle(element);
+            return element.getClientRects().length > 0
+              && style.display !== 'none' && style.visibility !== 'hidden';
+          };
+          return [...nodes].filter(visible).some(element =>
+            /duplicate|already|exists|same|conflict/i.test(element.textContent ?? ''),
+          );
+        });
+      }, {
+        message: 'Duplicate Holiday attempt must show a user-visible duplicate warning',
+        timeout: 5_000,
+      }).toBe(true);
+
+      // Stronger than simply observing a warning: the duplicate must also
+      // remain absent after navigating back to the catalog.
+      await openTab(page, 'Holidays');
+      await expect(sameHolidayRow(page, name),
+        'User-visible duplicate warning must accompany rejection of the duplicate')
+        .toHaveCount(1);
+    } finally {
+      page.off('dialog', onDialog);
+    }
+  });
+
   test('SET-LEAVE-DUP | SET_227 | An identical Leave Type should not be saved twice', async ({ page, loginAs }) => {
     await loginAs('systemAdmin');
     await openTab(page, 'Leave');
