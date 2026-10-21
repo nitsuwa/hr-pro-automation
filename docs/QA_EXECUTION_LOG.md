@@ -363,3 +363,12 @@ No changes to operator-reported full Setup baseline: **50 executed, 47 passed, 3
 - **Interpretation:** HR PRO's native Approvals page has an Overtime entry point. There is **no evidence yet** that an overtime request can be filed, approved, rejected, or reflected in attendance/payroll. All `SET_097–124` acceptance outcomes remain pending.
 - **Next inspection prepared, NOT RUN:** Improved existing `tests/infrastructure/setup-overtime-review-controls.spec.ts` to open **Approvals → Overtime** without creating a new batch or submitting any decision. The selector only opens the Overtime button if it has navigation semantics. Output: `qa-artifacts/setup-overtime-review-controls.json`.
 - **Safety / accounting:** This inspection is read-only and separate from the opt-in batch-creating survey. Do not claim an additional workbook PASS or change the combined Setup totals.
+
+
+## 2026-10-21 — Read-only Overtime tab reached; no pending items
+
+- **Operator-uploaded file:** `setup-overtime-review-controls.json` with three steps: **Review home**, **Approvals screen**, and **Overtime navigation button**; route `/time-attendance` in all steps.
+- **Results:** the Overtime navigation button was clicked successfully, but all three views recorded **0 table rows, 0 select controls, and 0 textareas**. This confirms navigation but **does not establish** whether overtime requests can be created or approved with proper fixtures; no request was present in this fresh context.
+- **Disposition:** DEFER `SET_097–124` pending real approved overtime-request prerequisites and expected approval/rejection behavior. Do **not** count a passing inventory as workbook acceptance; do not classify empty state as an application defect.
+- **Next practical regression, NOT RUN:** a distinct `SET-HOLIDAY-DUP-FEEDBACK | SET_219` test was added alongside the existing duplicate-prevention check in `tests/regression/setup/holiday-leave-duplicates.spec.ts`. It verifies a **user-visible duplicate warning** through native or in-page alert/status UI and still asserts only one saved QA Holiday afterward. Current duplicate-prevention test is unchanged.
+- The updated Holiday warning test may expose a real UX mismatch or a feedback-locator gap and therefore requires Playwright UI evidence. No new pass is claimed; historical workbook and full-suite tallies remain unchanged.
