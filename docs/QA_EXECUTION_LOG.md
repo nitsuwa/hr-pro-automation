@@ -381,3 +381,11 @@ No changes to operator-reported full Setup baseline: **50 executed, 47 passed, 3
 - **Behavior nuance:** HR PRO **allows an explicit override** ("Add it anyway"). The observed warning is not strict duplicate prevention. Whether same-date holiday declarations may legitimately coexist requires product-owner clarification of `SET_219`.
 - **Changes prepared, NOT RUN:** `tests/regression/setup/holiday-leave-duplicates.spec.ts` now asserts the visible accessible dialog, its explanation and optional override button, chooses **Cancel**, and verifies exactly one original fictional QA holiday persists. Also corrected the earlier `SET-HOLIDAY-DUP` test to explicitly cancel rather than implicitly discard the dialog through a reload.
 - **Accounting:** Do not count either modified Holiday test as a passing rerun until the operator executes them. Keep `SET_219` classified as partial pending the workbook interpretation and confirmation of the new assertions.
+
+
+## 2026-10-21 — Corrected SET_219 feedback check passed (operator-reported)
+
+- **Operator feedback:** "success" after running the corrected `SET-HOLIDAY-DUP-FEEDBACK | SET_219` Playwright UI Mode check; no new screenshot or full-suite report supplied in this turn.
+- **Verified scope claimed by this focused result:** warning/confirmation dialog with **Cancel** and **Add it anyway**, and cancellation leaving exactly one newly created QA Holiday. The previous screenshot and trace conclusively identified `role=dialog` as the warning surface; the previous red status was a selector error.
+- **Boundary:** HR PRO offers an explicit override, so this does not certify strict duplicate prevention on confirmation. Product-owner requirement clarification remains necessary before `SET_219` can be marked fully accepted. The separate earlier `SET-HOLIDAY-DUP` test, also updated, was **not rerun in this reported result**.
+- **Accounting:** This is a focused rerun of an existing Excel group, not an additional 59th group, and does not revise the previously recorded full-suite baseline.
