@@ -162,8 +162,8 @@ test('INVENTORY-OVERTIME-POPULATED | Inspect Review after a QA-only batch', asyn
       const parentClasses = typeof button.parentElement?.className === 'string'
         ? button.parentElement.className : '';
       return !!button.closest('nav,[role="tablist"]')
-        || /(?:^|[-_\\s])(?:tab|subtab|nav|menu)(?:[-_\\s]|$)/i.test(classes)
-        || /(?:^|[-_\\s])(?:tab|subtab|nav|menu)(?:[-_\\s]|$)/i.test(parentClasses)
+        || /(?:^|[^a-z])(?:tab|subtab|nav|menu)(?:$|[^a-z])/i.test(classes)
+        || /(?:^|[^a-z])(?:tab|subtab|nav|menu)(?:$|[^a-z])/i.test(parentClasses)
         || button.hasAttribute('aria-controls')
         || button.hasAttribute('aria-selected');
     });
