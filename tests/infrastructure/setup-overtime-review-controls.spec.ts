@@ -80,14 +80,18 @@ test('INVENTORY-OVERTIME | Read-only Approvals > Overtime survey', async ({ page
   const approvalsTab = page.getByRole('tab', { name: 'Approvals', exact: true });
   const approvalsButton = page.getByRole('button', { name: 'Approvals', exact: true });
   const approvalsLink = page.getByRole('link', { name: 'Approvals', exact: true });
+  let approvalsOpened = false;
   if (await approvalsTab.count() === 1) {
     await approvalsTab.click();
+    approvalsOpened = true;
   } else if (await approvalsButton.count() === 1) {
     await approvalsButton.click();
+    approvalsOpened = true;
   } else if (await approvalsLink.count() === 1) {
     const href = await approvalsLink.getAttribute('href');
     if (href && (href.startsWith('/') || href.startsWith('#'))) {
       await approvalsLink.click();
+      approvalsOpened = true;
     } else {
       await capture('Approvals link needs safety review');
     }
@@ -95,9 +99,6 @@ test('INVENTORY-OVERTIME | Read-only Approvals > Overtime survey', async ({ page
     await capture('Approvals not uniquely available');
   }
 
-  const approvalsOpened = (await approvalsTab.count() === 1 && await approvalsTab.isVisible())
-    || (await approvalsButton.count() === 1 && await approvalsButton.isVisible())
-    || (await approvalsLink.count() === 1 && await approvalsLink.isVisible());
   if (approvalsOpened) {
     await capture('Approvals screen');
 
