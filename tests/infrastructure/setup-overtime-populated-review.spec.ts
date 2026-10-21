@@ -116,4 +116,7 @@ test('INVENTORY-OVERTIME-POPULATED | Inspect Review after a QA-only batch', asyn
   );
   console.log('Saved qa-artifacts/setup-overtime-populated-review.json');
   expect(snapshots.length, 'Populated Review was visited').toBeGreaterThanOrEqual(1);
+  expect(snapshots[0].counts.rows,
+    'A submitted QA batch should produce at least one Review row; inspect the JSON if not',
+  ).toBeGreaterThan(0);
 });
