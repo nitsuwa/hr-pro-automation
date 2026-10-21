@@ -135,12 +135,46 @@ test('INVENTORY-OVERTIME-POPULATED | Inspect Review after a QA-only batch', asyn
     await inspect('Approvals navigation not uniquely available');
   }
 
-  // Only a semantic tab named exactly "Overtime" is safe to open here.
-  // Buttons labelled Overtime could be workflow actions and are not clicked.
+  // An exact "Overtime" control appeared on the Approvals screen during
+  // the operator's previous read-only inspection. It may be a button rather
+  // than a role=tab. Open it ONLY when it has tab/nav semantics; never guess
+  // that an arbitrary action button is safe.
   const overtimeTab = page.getByRole('tab', { name: 'Overtime', exact: true });
+  const overtimeLink = page.getByRole('link', { name: 'Overtime', exact: true });
+  const overtimeButton = page.getByRole('button', { name: 'Overtime', exact: true });
   if (await overtimeTab.count() === 1) {
     await overtimeTab.click();
     await inspect('Overtime tab opened (no changes)');
+  } else if (await overtimeLink.count() === 1) {
+    // Links are navigation controls; do not follow external destinations.
+    const href = await overtimeLink.getAttribute('href');
+    if (href && (href.startsWith('/') || href.startsWith('#'))) {
+      await overtimeLink.click();
+      await inspect('Overtime link opened (no changes)');
+    } else {
+      await inspect('Overtime link needs safety review');
+    }
+  } else if (await overtimeButton.count() === 1) {
+    // Permit only recognisable tab/navigation UI. This gate deliberately
+    // avoids clicking unclassified buttons or approval actions.
+    const isNavigation = await overtimeButton.evaluate((button) => {
+      const classes = typeof button.className === 'string' ? button.className : '';
+      const parentClasses = typeof button.parentElement?.className === 'string'
+        ? button.parentElement.className : '';
+      return !!button.closest('nav,[role="tablist"]')
+        || /(?:^|[-_\\s])(?:tab|subtab|nav|menu)(?:[-_\\s]|$)/i.test(classes)
+        || /(?:^|[-_\\s])(?:tab|subtab|nav|menu)(?:[-_\\s]|$)/i.test(parentClasses)
+        || button.hasAttribute('aria-controls')
+        || button.hasAttribute('aria-selected');
+    });
+    if (isNavigation) {
+      await overtimeButton.click();
+      await inspect('Overtime navigation button opened (no changes)');
+    } else {
+      await inspect('Overtime button needs navigation safety review');
+    }
+  } else {
+    await inspect('Overtime view not uniquely available');
   }
 
   mkdirSync(resolve(process.cwd(), 'qa-artifacts'), { recursive: true });
