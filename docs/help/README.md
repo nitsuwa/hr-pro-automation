@@ -9,7 +9,7 @@ This folder contains the documentation for the HR PRO Playwright testing reposit
 | [index.html](index.html) | Official visual website, hosted on Netlify |
 | [USER_MANUAL.md](USER_MANUAL.md) | Written guide for GitHub readers |
 
-**For new QA members:** start at the [website](https://hr-pro-automation.netlify.app), install the project, run one smoke test in UI Mode, and inspect the actual result.
+**For new QA members:** follow [Project folders](https://hr-pro-automation.netlify.app/#structure) → [Install](https://hr-pro-automation.netlify.app/#install) → [Ways to run](https://hr-pro-automation.netlify.app/#run-options) → [Verify](https://hr-pro-automation.netlify.app/#verify) → [Create a test](https://hr-pro-automation.netlify.app/#create). Begin with the read-only `SMOKE-018` navigation check.
 
 **For maintainers:** make changes on a branch, review them, and merge into `main`. Netlify redeploys the HTML from `docs/help`. The screenshots/illustrations in the page are embedded, so a separate assets folder is not required.
 
