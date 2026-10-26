@@ -1,6 +1,6 @@
 # HR PRO QA — User Manual
 
-**Official guide:** https://hr-pro-automation.netlify.app
+**Official guide:** https://hr-pro-automation-help.vercel.app
 
 This document is a written reference. The website is the main step-by-step guide. HR PRO is the system being tested; **Playwright** runs browser checks; **GitHub** stores the code and its review history.
 
@@ -12,7 +12,7 @@ This document is a written reference. The website is the main step-by-step guide
 - `playwright/fixtures/` and `playwright/pages/` — shared login and reusable page actions.
 - `package.json` — terminal commands; `playwright.config.ts` — browser and target URL.
 
-[Visual folder map](https://hr-pro-automation.netlify.app/#structure)
+[Visual folder map](https://hr-pro-automation-help.vercel.app/#structure)
 
 ## 1. Install
 
@@ -45,13 +45,13 @@ Only switch or merge with a clean working tree. Do not reset or discard someone 
 npx playwright test tests/smoke --ui --project=chromium
 ```
 
-For a first read-only practice, run **SMOKE-018 (Settings)** from `navigation.spec.ts` in the test list. Click **▶ Run** and inspect **Actions**, **Before/After**, and **Errors**. See the [guided UI Mode exercise](https://hr-pro-automation.netlify.app/#run). For approved Setup checks: `npx playwright test tests/regression/setup --ui --project=chromium`.
+For a first read-only practice, run **SMOKE-018 (Settings)** from `navigation.spec.ts` in the test list. Click **▶ Run** and inspect **Actions**, **Before/After**, and **Errors**. See the [guided UI Mode exercise](https://hr-pro-automation-help.vercel.app/#run). For approved Setup checks: `npx playwright test tests/regression/setup --ui --project=chromium`.
 
 **Check the test URL first.** The default URL is configured in `playwright.config.ts`; `E2E_BASE_URL` may override it. Use an approved non-production environment and fictional data for tests that change records.
 
 ### Pick the right command
 
-Use `npx playwright` as the primary conventional Playwright CLI. The npm scripts in `package.json` remain optional shorthand. See the [copyable command reference](https://hr-pro-automation.netlify.app/#commands).
+Use `npx playwright` as the primary conventional Playwright CLI. The npm scripts in `package.json` remain optional shorthand. See the [copyable command reference](https://hr-pro-automation-help.vercel.app/#commands).
 
 In VS Code's Terminal, inside the project folder:
 
@@ -66,7 +66,7 @@ In VS Code's Terminal, inside the project folder:
 | Setup tests in terminal (run immediately) | `npx playwright test tests/regression/setup --project=chromium` |
 | Full standard suite in terminal (run immediately) | `npx playwright test tests/smoke tests/regression --project=chromium` |
 
-For **UI Mode**, select a test and click ▶. Use **Run all** only when you're ready to execute the whole displayed group. Full standard runs include Smoke + Regression, not Infrastructure scripts. For detailed screenshots, [see running tests](https://hr-pro-automation.netlify.app/#run-options).
+For **UI Mode**, select a test and click ▶. Use **Run all** only when you're ready to execute the whole displayed group. Full standard runs include Smoke + Regression, not Infrastructure scripts. For detailed screenshots, [see running tests](https://hr-pro-automation-help.vercel.app/#run-options).
 
 **Caution:** Some Setup tests mutate data. Check `E2E_BASE_URL` or `playwright.config.ts` and run them only in an approved disposable non-production QA environment with fictional records. Follow any required mutation authorization.
 
@@ -112,7 +112,7 @@ That snippet checks navigation only. Tests of saved settings should also verify 
 5. Run the test in UI Mode, verify its result, and record evidence.
 6. Propose the change with a GitHub pull request.
 
-Use the [step-by-step creation tutorial](https://hr-pro-automation.netlify.app/#create) for both Excel cases and new features. It explains how to inspect controls, write assertions, and give AI a prompt based on real UI evidence. A person must review, run, and verify every generated test. Never share secrets or real employee records.
+Use the [step-by-step creation tutorial](https://hr-pro-automation-help.vercel.app/#create) for both Excel cases and new features. It explains how to inspect controls, write assertions, and give AI a prompt based on real UI evidence. A person must review, run, and verify every generated test. Never share secrets or real employee records.
 
 ## 6. Share changes in GitHub
 
@@ -133,4 +133,4 @@ Replace the example filename with your actual file. Open GitHub → **Compare & 
 - [Playwright UI Mode](https://playwright.dev/docs/test-ui-mode)
 - [Playwright locators](https://playwright.dev/docs/locators)
 - [Playwright assertions](https://playwright.dev/docs/test-assertions)
-- [HR PRO QA website](https://hr-pro-automation.netlify.app)
+- [HR PRO QA website](https://hr-pro-automation-help.vercel.app)
