@@ -269,6 +269,72 @@ pre{font-size:13px;line-height:1.75;tab-size:2}
 
 /* 2026 handover: interactive learning and quick navigation */
 html{scroll-behavior:smooth}body{transition:background-color .22s ease,color .22s ease}.section,.hero,.aside{transition:background-color .22s ease,border-color .22s ease,box-shadow .22s ease}.section:target{scroll-margin-top:24px}.interactive-folder{margin:22px 0 28px}.interactive-folder .helper{font-size:13px;color:var(--muted)}.interactive-folder-grid{display:grid;grid-template-columns:minmax(225px,.9fr) minmax(0,1.1fr);gap:13px}.folder-picker{display:grid;gap:5px;padding:8px;border:1px solid var(--line);border-radius:12px;background:var(--surface-soft)}.folder-choice{text-align:left;border:1px solid transparent;background:transparent;color:var(--body);padding:11px 12px;cursor:pointer;border-radius:8px;transition:background .16s ease,border-color .16s ease,transform .16s ease}.folder-choice:hover{background:var(--teal-wash);transform:translateX(2px)}.folder-choice:focus-visible{outline:3px solid var(--teal);outline-offset:2px}.folder-choice.active{background:var(--teal-wash);border-color:var(--teal)}.folder-choice span{display:block;font-size:13px;font-weight:750;color:var(--ink)}.folder-choice small{display:block;font-size:11px;color:var(--muted)}.folder-detail{border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:23px;align-self:start;min-height:285px}.detail-eyebrow{color:var(--teal-ink);font-size:11px;font-weight:800;letter-spacing:.09em}.folder-detail h3{font-size:22px;margin:12px 0}.folder-detail p{font-size:13px}.folder-detail>a{font-size:13px;font-weight:700}.detail-tip{background:var(--teal-wash);color:var(--teal-ink);border-radius:8px;padding:12px;margin-top:18px;font-size:12px}.cheat-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.cheat-item{min-width:0;background:var(--surface-soft);border:1px solid var(--line);border-radius:10px;padding:13px}.cheat-item strong{color:var(--ink);font-size:13px}.cheat-item .codebox{margin:8px 0 0}.cheat-item pre{font-size:11.5px;padding:12px}.quick-cheatsheet{scroll-margin-top:32px}a,button{touch-action:manipulation} @media(max-width:740px){.interactive-folder-grid,.cheat-grid{grid-template-columns:1fr}.folder-picker{grid-template-columns:repeat(2,minmax(0,1fr))}.folder-choice{padding:9px}.folder-detail{min-height:0}}@media(max-width:420px){.folder-picker{grid-template-columns:1fr}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}body,.section,.hero,.aside,.folder-choice{transition:none!important;animation:none!important}}
+
+/* Handover refresh: compact explorer, one-column commands, reading position */
+:root{--focus-ring:var(--teal)}
+.aside a{position:relative;padding:8px 12px 8px 17px;transition:background-color .15s ease,color .15s ease}
+.aside a::before{content:"";position:absolute;left:4px;top:8px;bottom:8px;width:3px;border-radius:6px;background:transparent;transform:scaleY(.4);transition:transform .18s ease,background-color .18s ease}
+.aside a.active,.aside a[aria-current="location"]{background:var(--teal-wash);color:var(--teal-ink);font-weight:800}
+.aside a.active::before,.aside a[aria-current="location"]::before{background:var(--teal);transform:scaleY(1)}
+.primary-nav a.active{background:#238b82;color:#fff}
+.nav-progress{height:3px;background:var(--line);border-radius:99px;margin:15px 12px 0;overflow:hidden}
+.nav-progress span{display:block;height:100%;background:var(--teal);width:0%;transition:width .12s linear}
+.folder-lab{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(230px,.9fr);gap:14px;margin:16px 0 12px;align-items:start}
+.folder-lab-tree{background:var(--surface-soft);border:1px solid var(--line);border-radius:12px;overflow:hidden;padding:10px}
+.tree-root{font:800 13px/1.6 Consolas,monospace;padding:10px 12px;color:var(--ink);border-bottom:1px solid var(--line);margin-bottom:7px}
+.tree-root span{font:500 11px/1.3 "Segoe UI",sans-serif;color:var(--muted);margin-left:6px}
+.tree-branch{border-radius:7px;margin:2px 0}
+.tree-branch>summary{list-style:none;display:flex;align-items:center;gap:8px;cursor:pointer;color:var(--ink);padding:10px 11px;border-radius:7px;font-size:13px;font-weight:750;transition:background-color .15s ease}
+.tree-branch>summary::-webkit-details-marker{display:none}
+.tree-branch>summary:hover,.tree-branch>summary:focus-visible{background:var(--teal-wash)}
+.tree-branch>summary small{margin-left:auto;font-weight:500;color:var(--muted);font-size:11px;white-space:nowrap}
+.tree-branch[open]>summary{background:var(--teal-wash)}
+.tree-chevron{font-size:19px;line-height:1;transition:transform .16s ease;color:var(--teal-ink)}
+.tree-branch[open]>summary .tree-chevron{transform:rotate(90deg)}
+.tree-items{border-left:1px solid var(--line);margin:3px 0 9px 20px;padding-left:9px}
+.subbranch>summary{font-size:12.5px;font-weight:650;padding:8px 8px}
+.tree-file{display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:transparent;border:1px solid transparent;border-radius:7px;padding:7px 9px;color:var(--body);font:12px/1.45 Consolas,monospace;cursor:pointer;overflow-wrap:anywhere;transition:background-color .15s ease,border-color .15s ease}
+.tree-file-icon{color:var(--teal-ink);flex:none}
+.tree-file:hover,.tree-file.active{background:var(--teal-wash);border-color:var(--line);color:var(--ink)}
+.tree-more{display:block;font-size:11px;font-weight:700;padding:9px;margin-left:11px}
+.folder-lab-preview{position:sticky;top:18px;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:22px;min-width:0;box-shadow:var(--shadow)}
+.preview-eyebrow{font-size:10px;letter-spacing:.12em;font-weight:850;color:var(--teal-ink)}
+.folder-lab-preview h3{font-size:19px;overflow-wrap:anywhere;margin:11px 0}
+.folder-lab-preview p{font-size:13px;color:var(--body);line-height:1.6}
+.preview-rule{border-top:1px solid var(--line);padding-top:13px;margin:14px 0}
+.preview-rule b{font-size:12px;color:var(--ink)}
+.preview-rule p{margin:6px 0 0}
+.folder-lab-preview>a{font-weight:750;font-size:13px}
+.preview-foot{font-size:11px!important;color:var(--muted)!important;margin:20px 0 0}
+.folder-guidance{background:var(--teal-wash);border-radius:8px;padding:12px 14px;font-size:13px!important}
+.folder-guidance b{color:var(--teal-ink)}
+.run-explainer{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:15px 0}
+.run-explainer>div{background:var(--surface-soft);border:1px solid var(--line);border-radius:9px;padding:13px}
+.run-explainer strong,.run-explainer span{display:block;font-size:12px}
+.run-explainer strong{color:var(--ink);margin-bottom:5px}
+.run-explainer span{color:var(--muted)}
+.command-reference{background:transparent!important;border:0!important;padding:4px 0!important;margin:20px 0!important}
+.command-reference>h3{font-size:20px}
+.command-stack{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;margin:15px 0}
+.command-card{background:var(--surface-soft);border:1px solid var(--line);padding:16px 18px;border-radius:11px;min-width:0;transition:border-color .16s ease,transform .16s ease}
+.command-card:hover{border-color:var(--teal);transform:translateY(-1px)}
+.command-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px}
+.command-meta b{font-size:14px;color:var(--ink)}
+.command-pill{font-size:10px;font-weight:800;border-radius:99px;padding:3px 8px;background:var(--teal-wash);color:var(--teal-ink)}
+.command-card p{font-size:12px;color:var(--muted);margin:3px 0 9px}
+.command-card .codebox{margin:0}
+.command-card pre{font-size:12.5px;padding:13px 16px;white-space:pre;overflow-x:auto}
+.more-commands,.run-steps{border:1px solid var(--line);border-radius:10px;margin:16px 0;background:var(--surface-soft)}
+.more-commands>summary,.run-steps>summary{padding:14px 16px;font-weight:750;color:var(--ink);cursor:pointer}
+.more-commands>summary span{font-size:11px;color:var(--muted);font-weight:500;margin-left:6px}
+.more-commands .command-stack{margin:5px 11px 12px}
+.run-steps ol{padding:0 25px 15px 37px;font-size:13px}
+.run-steps li{margin:7px 0}
+.anchor-alias{display:block;position:relative;top:-110px;visibility:hidden;height:0}
+@media(max-width:850px){.folder-lab-preview{position:static}.aside a.active::before{left:1px}.aside{gap:0 3px}.nav-progress{display:none}}
+@media(max-width:650px){.folder-lab,.run-explainer{grid-template-columns:1fr}.folder-lab-preview{padding:18px}.command-card{padding:12px}.tree-branch>summary small{font-size:10px}.tree-root span{display:block;margin-left:0}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}.command-card,.tree-chevron,.aside a,.aside a::before,.tree-file{transition:none!important}.command-card:hover{transform:none}}
+
 </style>
 </head>
 <body id="top">
@@ -291,10 +357,19 @@ html{scroll-behavior:smooth}body{transition:background-color .22s ease,color .22
 </nav>
 <div class="shell layout">
 <aside class="aside" aria-label="Guide contents">
- <strong>Follow in order</strong>
- <a href="#structure">1. Find tests and folders</a><a href="#install">2. Install the project</a><a href="#run">3. Choose how to run</a>
- <a href="#verify">4. Check the result</a><a href="#syntax">5. Understand the code</a>
- <a href="#create">6. Add a new test</a><a href="#ai">AI Help (copy prompt)</a><a href="#github">7. Share changes</a><a href="#references">Official references</a>
+<strong>ON THIS PAGE</strong>
+<a href="#overview">Overview</a>
+<a href="#structure">01 · Folders</a>
+<a href="#install">02 · Install</a>
+<a href="#run">03 · Run tests</a>
+<a href="#commands">↳ Command cheat sheet</a>
+<a href="#verify">04 · Verify results</a>
+<a href="#syntax">05 · Understand code</a>
+<a href="#create">06 · Create a test</a>
+<a href="#ai">↳ AI assistance</a>
+<a href="#github">07 · Share changes</a>
+<a href="#references">Resources</a>
+<div class="nav-progress"><span id="reading-progress"></span></div>
 </aside>
 <main class="content" id="overview">
 <section class="hero" aria-labelledby="guide-title">
@@ -312,61 +387,26 @@ html{scroll-behavior:smooth}body{transition:background-color .22s ease,color .22
 
 <section class="section" id="structure">
  <div class="kicker">01 / PROJECT TOUR</div><h2>Find the tests and folders</h2>
- <p>Open <b>VS Code → Explorer</b> (the file icon on the left). Start with the test files, then use the shared helpers when writing new ones.</p>
- <div class="interactive-folder" id="folder-explorer" aria-label="Interactive repository folder explorer">
-<p class="helper">Select a folder or file to learn what belongs there, see an actual example, and jump to the relevant GitHub directory.</p>
-<div class="interactive-folder-grid">
-<div class="folder-picker" role="group" aria-label="Select repository folder">
-<button type="button" class="folder-choice active" data-folder="smoke" aria-pressed="true"><span>📂 tests/smoke</span><small>Quick, safe starting point</small></button><button type="button" class="folder-choice" data-folder="regression" aria-pressed="false"><span>📂 tests/regression/setup</span><small>Feature and business checks</small></button><button type="button" class="folder-choice" data-folder="infrastructure" aria-pressed="false"><span>📂 tests/infrastructure</span><small>Advanced inspection only</small></button><button type="button" class="folder-choice" data-folder="fixtures" aria-pressed="false"><span>📂 playwright/fixtures</span><small>Login and shared setup</small></button><button type="button" class="folder-choice" data-folder="pages" aria-pressed="false"><span>📂 playwright/pages</span><small>Reusable page objects</small></button><button type="button" class="folder-choice" data-folder="data" aria-pressed="false"><span>📂 playwright/data</span><small>Test account definitions</small></button><button type="button" class="folder-choice" data-folder="config" aria-pressed="false"><span>⚙ playwright.config.ts</span><small>Runner and environment</small></button><button type="button" class="folder-choice" data-folder="package" aria-pressed="false"><span>📄 package.json</span><small>Dependencies and shortcuts</small></button><button type="button" class="folder-choice" data-folder="docs" aria-pressed="false"><span>📂 docs/help</span><small>This HTML documentation</small></button>
+ <p>Click folders to expand them, then select a file to see what it does.</p>
+ <div class="folder-lab" id="folder-explorer">
+<div class="folder-lab-tree" aria-label="Expandable repository tree">
+<div class="tree-root">◈ hr-pro-automation <span>select a folder or file</span></div>
+<details class="tree-branch rootbranch" open><summary><span class="tree-chevron" aria-hidden="true">›</span>📁 tests/ <small>Test scripts</small></summary><div class="tree-items">
+<details class="tree-branch subbranch" open><summary data-explain="smoke"><span class="tree-chevron" aria-hidden="true">›</span>📁 smoke/ <small>3 files</small></summary><div class="tree-items"><button type="button" class="tree-file" data-explain="navfile"><span class="tree-file-icon" aria-hidden="true">↳</span>navigation.spec.ts</button><button type="button" class="tree-file" data-explain="loginfile"><span class="tree-file-icon" aria-hidden="true">↳</span>login.spec.ts</button><button type="button" class="tree-file" data-explain="rolesfile"><span class="tree-file-icon" aria-hidden="true">↳</span>demo-roles.spec.ts</button></div></details>
+<details class="tree-branch subbranch"><summary data-explain="regression"><span class="tree-chevron" aria-hidden="true">›</span>📁 regression/setup/ <small>Feature tests</small></summary><div class="tree-items"><button type="button" class="tree-file" data-explain="deptfile"><span class="tree-file-icon" aria-hidden="true">↳</span>department-creation.spec.ts</button><button type="button" class="tree-file" data-explain="employeefile"><span class="tree-file-icon" aria-hidden="true">↳</span>employee-setup.spec.ts</button><button type="button" class="tree-file" data-explain="catalogfile"><span class="tree-file-icon" aria-hidden="true">↳</span>catalog-duplicates.spec.ts</button><a class="tree-more" href="https://github.com/nitsuwa/hr-pro-automation/tree/main/tests/regression/setup" target="_blank" rel="noopener noreferrer">View all Setup tests ↗</a></div></details>
+<details class="tree-branch subbranch"><summary data-explain="infra"><span class="tree-chevron" aria-hidden="true">›</span>📁 infrastructure/ <small>Advanced</small></summary><div class="tree-items"><button type="button" class="tree-file" data-explain="isofile"><span class="tree-file-icon" aria-hidden="true">↳</span>browser-storage-isolation.spec.ts</button><button type="button" class="tree-file" data-explain="inspectfile"><span class="tree-file-icon" aria-hidden="true">↳</span>setup-ui-inventory.spec.ts</button><a class="tree-more" href="https://github.com/nitsuwa/hr-pro-automation/tree/main/tests/infrastructure" target="_blank" rel="noopener noreferrer">View more inspection files ↗</a></div></details>
+</div></details>
+<details class="tree-branch rootbranch"><summary><span class="tree-chevron" aria-hidden="true">›</span>📁 playwright/ <small>Shared helpers</small></summary><div class="tree-items">
+<details class="tree-branch subbranch"><summary data-explain="fixtures"><span class="tree-chevron" aria-hidden="true">›</span>📁 fixtures/ <small>Test setup</small></summary><div class="tree-items"><button type="button" class="tree-file" data-explain="fixturefile"><span class="tree-file-icon" aria-hidden="true">↳</span>hrpro.fixture.ts</button></div></details>
+<details class="tree-branch subbranch"><summary data-explain="pages"><span class="tree-chevron" aria-hidden="true">›</span>📁 pages/ <small>Page objects</small></summary><div class="tree-items"><button type="button" class="tree-file" data-explain="loginpage"><span class="tree-file-icon" aria-hidden="true">↳</span>login.page.ts</button><button type="button" class="tree-file" data-explain="settingpage"><span class="tree-file-icon" aria-hidden="true">↳</span>settings.page.ts</button></div></details>
+<details class="tree-branch subbranch"><summary data-explain="data"><span class="tree-chevron" aria-hidden="true">›</span>📁 data/ <small>Demo accounts</small></summary><div class="tree-items"><button type="button" class="tree-file" data-explain="demofile"><span class="tree-file-icon" aria-hidden="true">↳</span>demo-accounts.ts</button></div></details>
+</div></details>
+<details class="tree-branch rootbranch"><summary data-explain="docs"><span class="tree-chevron" aria-hidden="true">›</span>📁 docs/help/ <small>Documentation</small></summary><div class="tree-items"><button type="button" class="tree-file" data-explain="htmlfile"><span class="tree-file-icon" aria-hidden="true">↳</span>index.html</button><button type="button" class="tree-file" data-explain="assetfolder"><span class="tree-file-icon" aria-hidden="true">↳</span>assets/</button></div></details>
+<details class="tree-branch rootbranch"><summary><span class="tree-chevron" aria-hidden="true">›</span>📄 Root files <small>Configuration</small></summary><div class="tree-items"><button type="button" class="tree-file" data-explain="config"><span class="tree-file-icon" aria-hidden="true">↳</span>playwright.config.ts</button><button type="button" class="tree-file" data-explain="package"><span class="tree-file-icon" aria-hidden="true">↳</span>package.json</button><button type="button" class="tree-file" data-explain="readme"><span class="tree-file-icon" aria-hidden="true">↳</span>README.md</button></div></details>
 </div>
-<div class="folder-detail" id="folder-detail" aria-live="polite">
-<span class="detail-eyebrow">SELECTED · TEST FOLDER</span>
-<h3 id="folder-title">tests/smoke/</h3>
-<p id="folder-description">Fast smoke tests covering login and main navigation. This is the safest place to start understanding the test framework.</p>
-<p><strong>What belongs here?</strong> <span id="folder-usage">Small, focused tests that quickly check critical flows.</span></p>
-<p><strong>Example:</strong> <code id="folder-example">tests/smoke/navigation.spec.ts</code></p>
-<a id="folder-github" href="https://github.com/nitsuwa/hr-pro-automation/tree/main/tests/smoke" target="_blank" rel="noopener noreferrer">Explore this folder on GitHub ↗</a>
-<div class="detail-tip" id="folder-tip">Start with SMOKE-018 before trying data-changing scenarios.</div>
-</div></div></div>
-<div class="folder-layout">
-  <div class="folder-tree">
-   <div class="folder-head">EXPLORER <strong>hr-pro-automation</strong></div>
-   <div class="folder-line root">▾ HR PRO AUTOMATION</div>
-   <div class="folder-line level1">▾ <b>tests</b></div>
-   <div class="folder-line level2">▾ <b>smoke</b> <span class="tree-tag">Start here</span></div>
-   <div class="folder-line level3">navigation.spec.ts</div>
-   <div class="folder-line level2">▾ <b>regression</b></div>
-   <div class="folder-line level3">▾ <b>setup</b> <span class="tree-tag">Feature tests</span></div>
-   <div class="folder-line level4">department-creation.spec.ts</div>
-   <div class="folder-line level2">▸ infrastructure <span class="tree-tag subdued">Advanced</span></div>
-   <div class="folder-line level1">▾ <b>playwright</b></div>
-   <div class="folder-line level2">▸ fixtures · reusable login</div>
-   <div class="folder-line level2">▸ pages · page actions</div>
-   <div class="folder-line level2">▸ data · test accounts</div>
-   <div class="folder-line level1 file">playwright.config.ts</div>
-   <div class="folder-line level1 file">package.json</div>
-   <div class="folder-line level1">▸ docs · documentation</div>
-   <div class="folder-line level1 file">README.md</div>
-  </div>
-  <div class="folder-meanings">
-   <div><strong>01 · <code>tests/smoke/</code></strong><p>Quick checks that HR PRO pages open. <b>Run these first.</b></p></div>
-   <div><strong>02 · <code>tests/regression/setup/</code></strong><p>Checks for Departments, Employees, allowances, and other Setup features. Add a new Setup test here.</p></div>
-   <div><strong>03 · <code>tests/infrastructure/</code></strong><p>Advanced scripts for inspecting the application. Not part of the normal regression run.</p></div>
-   <div><strong>04 · <code>playwright/</code></strong><p>Shared login (<code>fixtures</code>), page helpers (<code>pages</code>), and demo account definitions (<code>data</code>).</p></div>
-   <div><strong>05 · Root files</strong><p><code>package.json</code> stores commands; <code>playwright.config.ts</code> sets the browser and target URL; <code>README.md</code> links here.</p></div>
-  </div>
- </div>
- <div class="note"><b>Where do I put a new script?</b> New Setup feature → <code>tests/regression/setup/feature-name.spec.ts</code>. New navigation check → <code>tests/smoke/</code>. Reusable page actions → <code>playwright/pages/</code>. Every Playwright test file ends in <code>.spec.ts</code>.</div>
- <div class="folder-shortcuts"><a href="https://github.com/nitsuwa/hr-pro-automation/tree/main/tests/smoke" target="_blank" rel="noopener noreferrer">Smoke tests ↗</a><a href="https://github.com/nitsuwa/hr-pro-automation/tree/main/tests/regression/setup" target="_blank" rel="noopener noreferrer">Setup tests ↗</a><a href="#run">How to run them →</a></div>
-<div class="test-examples">
-<h3>Important files to open first</h3>
-<div class="test-example-list">
- <a href="https://github.com/nitsuwa/hr-pro-automation/blob/main/tests/smoke/navigation.spec.ts" target="_blank" rel="noopener noreferrer"><strong>navigation.spec.ts</strong><span>Read-only example · opens Settings and checks its URL</span></a>
- <a href="https://github.com/nitsuwa/hr-pro-automation/blob/main/tests/smoke/login.spec.ts" target="_blank" rel="noopener noreferrer"><strong>login.spec.ts</strong><span>Login checks and basic access</span></a>
- <a href="https://github.com/nitsuwa/hr-pro-automation/blob/main/tests/regression/setup/department-creation.spec.ts" target="_blank" rel="noopener noreferrer"><strong>department-creation.spec.ts</strong><span>Setup example · creates fictional data and checks persistence</span></a>
- <a href="https://github.com/nitsuwa/hr-pro-automation/blob/main/tests/regression/setup/catalog-duplicates.spec.ts" target="_blank" rel="noopener noreferrer"><strong>catalog-duplicates.spec.ts</strong><span>Shows how a test checks for duplicate records</span></a>
+<div class="folder-lab-preview" aria-live="polite"><span class="preview-eyebrow">FOLDER EXPLAINER</span><h3 id="explorer-name">tests/smoke/</h3><p id="explorer-desc">Quick login and navigation checks. Start here.</p><div class="preview-rule"><b>Where to put code</b><p id="explorer-rule">Add new critical-path smoke tests here.</p></div><a id="explorer-link" href="https://github.com/nitsuwa/hr-pro-automation/tree/main/tests/smoke" target="_blank" rel="noopener noreferrer">View on GitHub ↗</a><p class="preview-foot">Expand folders to see actual files. Select any entry for a short explanation.</p></div>
 </div>
-</div>
+<p class="folder-guidance"><b>Where should a new test go?</b> Setup feature → <code>tests/regression/setup/</code>. Login/navigation → <code>tests/smoke/</code>. Reusable actions → <code>playwright/pages/</code>.</p>
 </section>
 <section class="section" id="install">
  <div class="kicker">02 / FIRST-TIME SETUP</div><h2>Install the project</h2>
@@ -384,56 +424,21 @@ npx playwright install chromium</pre></div>
 <figure class="figure visual-figure small-visual"><img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20680%20366%22%20role%3D%22img%22%20aria-label%3D%22Illustration%20of%20HR%20PRO%20prototype%20login%20card%20showing%20role%2C%20email%2C%20password%20and%20sign%20in%22%3E%0A%3Crect%20width%3D%22680%22%20height%3D%22366%22%20rx%3D%2216%22%20fill%3D%22%23f3f5fa%22%2F%3E%3Crect%20x%3D%22192%22%20y%3D%2230%22%20width%3D%22296%22%20height%3D%22292%22%20rx%3D%2213%22%20fill%3D%22white%22%20stroke%3D%22%23dce4ef%22%20stroke-width%3D%222%22%2F%3E%3Cg%20fill%3D%22%233063b3%22%3E%3Crect%20x%3D%22214%22%20y%3D%2256%22%20width%3D%2211%22%20height%3D%2211%22%2F%3E%3Crect%20x%3D%22229%22%20y%3D%2256%22%20width%3D%2211%22%20height%3D%2211%22%20opacity%3D%22.75%22%2F%3E%3Crect%20x%3D%22214%22%20y%3D%2271%22%20width%3D%2211%22%20height%3D%2211%22%20opacity%3D%22.9%22%2F%3E%3Crect%20x%3D%22229%22%20y%3D%2271%22%20width%3D%2211%22%20height%3D%2211%22%20opacity%3D%22.65%22%2F%3E%3C%2Fg%3E%3Ctext%20x%3D%22253%22%20y%3D%2277%22%20font-family%3D%22Arial%22%20font-weight%3D%22bold%22%20letter-spacing%3D%222%22%20font-size%3D%2219%22%20fill%3D%22%233063b3%22%3EHR%20PRO%3C%2Ftext%3E%3Ctext%20x%3D%22214%22%20y%3D%22115%22%20font-family%3D%22Arial%22%20font-size%3D%2220%22%20font-weight%3D%22bold%22%20fill%3D%22%2329275b%22%3ESign%20in%3C%2Ftext%3E%0A%3Ctext%20x%3D%22214%22%20y%3D%22142%22%20font-family%3D%22Arial%22%20font-size%3D%2211%22%20fill%3D%22%2350607f%22%3ETry%20a%20demo%20account%3C%2Ftext%3E%3Crect%20x%3D%22214%22%20y%3D%22151%22%20width%3D%22252%22%20height%3D%2229%22%20rx%3D%226%22%20fill%3D%22white%22%20stroke%3D%22%23d9e1ec%22%2F%3E%3Ctext%20x%3D%22225%22%20y%3D%22170%22%20font-family%3D%22Arial%22%20font-size%3D%2211%22%20fill%3D%22%2356647e%22%3ESelect%20a%20role%20to%20prefill%3C%2Ftext%3E%0A%3Ctext%20x%3D%22214%22%20y%3D%22199%22%20font-family%3D%22Arial%22%20font-size%3D%2211%22%20fill%3D%22%2356647e%22%3EEmail%3C%2Ftext%3E%3Crect%20x%3D%22214%22%20y%3D%22206%22%20width%3D%22252%22%20height%3D%2229%22%20rx%3D%226%22%20fill%3D%22white%22%20stroke%3D%22%238eb8b0%22%2F%3E%0A%3Ctext%20x%3D%22214%22%20y%3D%22252%22%20font-family%3D%22Arial%22%20font-size%3D%2211%22%20fill%3D%22%2356647e%22%3EPassword%3C%2Ftext%3E%3Crect%20x%3D%22214%22%20y%3D%22259%22%20width%3D%22252%22%20height%3D%2229%22%20rx%3D%226%22%20fill%3D%22white%22%20stroke%3D%22%23d9e1ec%22%2F%3E%0A%3Crect%20x%3D%22214%22%20y%3D%22300%22%20width%3D%22252%22%20height%3D%2228%22%20rx%3D%226%22%20fill%3D%22%2329275b%22%2F%3E%3Ctext%20x%3D%22340%22%20y%3D%22318%22%20font-family%3D%22Arial%22%20font-size%3D%2212%22%20text-anchor%3D%22middle%22%20font-weight%3D%22bold%22%20fill%3D%22white%22%3ESign%20in%3C%2Ftext%3E%3C%2Fsvg%3E" alt="Illustration of the HR PRO sign-in page with role, email and password fields" loading="lazy"><figcaption>HR PRO sign-in screen (illustration). Tests use the project's login helper; don't copy or expose passwords.</figcaption></figure>
 </section>
 <section class="section" id="run">
-<div class="kicker">03 / RUN TESTS</div><h2>Run a test yourself</h2><p><a class="inline-link" href="#commands">Jump to frequently used copy-and-paste commands ↓</a></p>
-<p><b>Your first practice:</b> Run the existing <code>SMOKE-018 | Settings opens successfully</code> test. It checks navigation and does not create records.</p>
-<div class="codebox"><div class="codebar"><span>VS CODE TERMINAL · SMOKE TESTS</span><button type="button" title="Copy exact code to clipboard" data-copy="run-code">Copy</button></div><pre id="run-code" data-language="powershell" aria-label="PowerShell commands">npx playwright test tests/smoke --ui --project=chromium</pre></div>
-<ol class="step-list">
-<li><div><b>Find SMOKE-018</b> in the left test list. Expand <code>navigation.spec.ts</code> if necessary.</div></li>
-<li><div><b>Click ▶ beside that one test.</b> Wait for its run to finish.</div></li>
-<li><div><b>Click its result and read Actions.</b> Notice how it navigates to Settings.</div></li>
-<li><div><b>Open Before / After.</b> Compare the browser view before and after the click. The assertion checks the Settings URL.</div></li>
-</ol>
-
-<div class="command-reference" id="commands"><div class="kicker">QUICK REFERENCE · PLAYWRIGHT CLI</div><h3>Commands you will actually use</h3><p>Run these from the repository root in the VS Code terminal. <strong>npx playwright</strong> is the primary documented syntax. The project's <code>npm run</code> scripts are optional aliases.</p><div class="command-reference-grid"><div class="command-reference-item"><strong>Open UI Mode — smoke</strong><div class="codebox"><div class="codebar"><span>TERMINAL · COPY &amp; PASTE</span><button type="button" data-copy="cmd-ref-0">Copy</button></div><pre id="cmd-ref-0" data-language="powershell">npx playwright test tests/smoke --ui --project=chromium</pre></div></div>
-<div class="command-reference-item"><strong>Open UI Mode — Setup regression</strong><div class="codebox"><div class="codebar"><span>TERMINAL · COPY &amp; PASTE</span><button type="button" data-copy="cmd-ref-1">Copy</button></div><pre id="cmd-ref-1" data-language="powershell">npx playwright test tests/regression/setup --ui --project=chromium</pre></div></div>
-<div class="command-reference-item"><strong>Run one test ID</strong><div class="codebox"><div class="codebar"><span>TERMINAL · COPY &amp; PASTE</span><button type="button" data-copy="cmd-ref-2">Copy</button></div><pre id="cmd-ref-2" data-language="powershell">npx playwright test tests/smoke/navigation.spec.ts --grep "SMOKE-018" --project=chromium</pre></div></div>
-<div class="command-reference-item"><strong>Run a specific file</strong><div class="codebox"><div class="codebar"><span>TERMINAL · COPY &amp; PASTE</span><button type="button" data-copy="cmd-ref-3">Copy</button></div><pre id="cmd-ref-3" data-language="powershell">npx playwright test tests/smoke/navigation.spec.ts --project=chromium</pre></div></div>
-<div class="command-reference-item"><strong>Run smoke tests now</strong><div class="codebox"><div class="codebar"><span>TERMINAL · COPY &amp; PASTE</span><button type="button" data-copy="cmd-ref-4">Copy</button></div><pre id="cmd-ref-4" data-language="powershell">npx playwright test tests/smoke --project=chromium</pre></div></div>
-<div class="command-reference-item"><strong>Run all standard tests now</strong><div class="codebox"><div class="codebar"><span>TERMINAL · COPY &amp; PASTE</span><button type="button" data-copy="cmd-ref-5">Copy</button></div><pre id="cmd-ref-5" data-language="powershell">npx playwright test tests/smoke tests/regression --project=chromium</pre></div></div>
-<div class="command-reference-item"><strong>Open test report</strong><div class="codebox"><div class="codebar"><span>TERMINAL · COPY &amp; PASTE</span><button type="button" data-copy="cmd-ref-6">Copy</button></div><pre id="cmd-ref-6" data-language="powershell">npx playwright show-report</pre></div></div>
-<div class="command-reference-item"><strong>List discovered tests</strong><div class="codebox"><div class="codebar"><span>TERMINAL · COPY &amp; PASTE</span><button type="button" data-copy="cmd-ref-7">Copy</button></div><pre id="cmd-ref-7" data-language="powershell">npx playwright test --list</pre></div></div></div><div class="note warn"><b>Important:</b> Commands without <code>--ui</code> execute immediately. “All standard tests” includes <code>tests/smoke</code> and <code>tests/regression</code>, not <code>tests/infrastructure</code>. Check the approved non-production environment before running data-changing tests.</div><p><b>How to target tests:</b> Supply a folder for a suite, a <code>.spec.ts</code> path for one file, or <code>--grep "TEST-ID"</code> to filter by test name. Add <code>--ui</code> to choose tests interactively, or <code>--headed</code> to watch a browser run.</p></div>
-<div class="run-options" id="run-options">
-<h3>Choose how to run tests</h3>
-<p>Open <b>VS Code → Terminal</b> in the project folder. UI Mode <b>lists tests first</b>; click ▶ beside one test, or click the Run all control only when you intend to execute the entire displayed set.</p>
-<div class="run-options-grid">
- <div class="run-recipe"><span class="recipe-tag">Best first try</span><h4>One specific test by ID</h4><p>Run only <b>SMOKE-018</b> from the navigation file.</p>
-  <div class="codebox"><div class="codebar"><span>UI MODE · ONE TEST</span><button type="button" data-copy="cmd-one">Copy</button></div><pre id="cmd-one" data-language="powershell">npx playwright test tests/smoke/navigation.spec.ts --grep "SMOKE-018" --ui --project=chromium</pre></div></div>
- <div class="run-recipe"><span class="recipe-tag">Start here</span><h4>All smoke tests</h4><p>Shows login, demo roles, and basic navigation tests in UI Mode.</p>
-  <div class="codebox"><div class="codebar"><span>UI MODE · SMOKE</span><button type="button" data-copy="cmd-smoke">Copy</button></div><pre id="cmd-smoke" data-language="powershell">npx playwright test tests/smoke --ui --project=chromium</pre></div></div>
- <div class="run-recipe"><span class="recipe-tag">One file · QA only</span><h4>Run one Setup test file</h4><p>Opens the Department creation test. <b>This creates a fictional QA record.</b></p>
-  <div class="codebox"><div class="codebar"><span>UI MODE · ONE FILE</span><button type="button" data-copy="cmd-file">Copy</button></div><pre id="cmd-file" data-language="powershell">npx playwright test tests/regression/setup/department-creation.spec.ts --ui --project=chromium</pre></div></div>
- <div class="run-recipe"><span class="recipe-tag">Group · QA only</span><h4>All Setup regression tests</h4><p>Tests HR PRO Setup features such as Departments, Employees, and allowances. Some change records.</p>
-  <div class="codebox"><div class="codebar"><span>UI MODE · SETUP</span><button type="button" data-copy="cmd-setup">Copy</button></div><pre id="cmd-setup" data-language="powershell">npx playwright test tests/regression/setup --ui --project=chromium</pre></div></div>
-</div>
-<details class="run-more">
- <summary>Run the standard full suite in UI Mode <span>Advanced · approved QA only</span></summary>
- <p>This selects <b>Smoke + Regression</b>, but not <code>tests/infrastructure/</code>. In UI Mode, click Run all to execute the selected tests. Some tests can modify QA data.</p>
- <div class="codebox"><div class="codebar"><span>UI MODE · ALL STANDARD TESTS</span><button type="button" data-copy="cmd-all-ui">Copy</button></div><pre id="cmd-all-ui" data-language="powershell">npx playwright test tests/smoke tests/regression --ui --project=chromium</pre></div>
-</details>
-<details class="run-more">
- <summary>Run without UI Mode (terminal commands) <span>Runs immediately</span></summary>
- <p>These commands execute tests as soon as you press Enter. View results in the terminal and saved Playwright report.</p>
- <table class="command-table"><thead><tr><th>What you want</th><th>Command</th></tr></thead><tbody>
-  <tr><td>Run all smoke tests</td><td><code>npx playwright test tests/smoke --project=chromium</code></td></tr>
-  <tr><td>Run all Setup regression tests</td><td><code>npx playwright test tests/regression/setup --project=chromium</code></td></tr>
-  <tr><td>Run all standard Smoke + Regression tests</td><td><code>npx playwright test tests/smoke tests/regression --project=chromium</code></td></tr>
-  <tr><td>List available smoke tests without executing</td><td><code>npx playwright test tests/smoke --list</code></td></tr>
-  <tr><td>Open the HTML test report</td><td><code>npx playwright show-report</code></td></tr>
- </tbody></table>
- <div class="codebox"><div class="codebar"><span>TERMINAL · FULL STANDARD SUITE</span><button type="button" data-copy="cmd-all-cli">Copy</button></div><pre id="cmd-all-cli" data-language="powershell">npx playwright test tests/smoke tests/regression --project=chromium</pre></div>
-</details>
-<div class="note warn"><b>Safety check:</b> Confirm the target URL in <code>playwright.config.ts</code> or <code>E2E_BASE_URL</code> before data-changing tests. Use an approved disposable QA environment and fictional records; follow any required mutation authorization. <b>Never run Setup or full regression on production.</b> The generic <code>npx playwright test --ui --project=chromium</code> may also show advanced infrastructure scripts, so use the targeted commands above instead.</div>
-</div>
+<div class="kicker">03 / RUN TESTS</div><h2>Run tests</h2>
+<p>Open <b>VS Code → Terminal</b> inside <code>hr-pro-automation</code>. Choose a command below and use <b>Copy</b>.</p>
+<div class="run-explainer"><div><strong>UI Mode <code>--ui</code></strong><span>Opens a test list. You choose when to run.</span></div><div><strong>Terminal (no <code>--ui</code>)</strong><span>Runs matching tests immediately.</span></div></div>
+<div class="command-reference" id="commands"><span id="cheatsheet" class="anchor-alias" aria-hidden="true"></span><div class="kicker">SAVE THIS · COMMAND CHEAT SHEET</div><h3>Frequently used commands</h3><div class="command-stack"><article class="command-card"><div class="command-meta"><b>Explore Smoke tests in UI Mode</b><span class="command-pill">Start here</span></div><p>Opens the test list. Select one test and click ▶.</p><div class="codebox"><div class="codebar"><span>PLAYWRIGHT · TERMINAL</span><button type="button" data-copy="core-ui" aria-label="Copy Explore Smoke tests in UI Mode command">Copy</button></div><pre id="core-ui" data-language="powershell">npx playwright test tests/smoke --ui --project=chromium</pre></div></article>
+<article class="command-card"><div class="command-meta"><b>Run one test by ID</b></div><p>Runs only SMOKE-018, without opening UI Mode</p><div class="codebox"><div class="codebar"><span>PLAYWRIGHT · TERMINAL</span><button type="button" data-copy="core-one" aria-label="Copy Run one test by ID command">Copy</button></div><pre id="core-one" data-language="powershell">npx playwright test tests/smoke/navigation.spec.ts --grep "SMOKE-018" --project=chromium</pre></div></article>
+<article class="command-card"><div class="command-meta"><b>Browse Setup regression tests</b></div><p>Opens Setup tests in UI Mode; run only in approved QA.</p><div class="codebox"><div class="codebar"><span>PLAYWRIGHT · TERMINAL</span><button type="button" data-copy="core-setup" aria-label="Copy Browse Setup regression tests command">Copy</button></div><pre id="core-setup" data-language="powershell">npx playwright test tests/regression/setup --ui --project=chromium</pre></div></article>
+<article class="command-card"><div class="command-meta"><b>Run the standard suite</b></div><p>Immediately runs Smoke + Regression. May change QA records.</p><div class="codebox"><div class="codebar"><span>PLAYWRIGHT · TERMINAL</span><button type="button" data-copy="core-full" aria-label="Copy Run the standard suite command">Copy</button></div><pre id="core-full" data-language="powershell">npx playwright test tests/smoke tests/regression --project=chromium</pre></div></article>
+<article class="command-card"><div class="command-meta"><b>Open your test report</b></div><p>Review the last HTML test report.</p><div class="codebox"><div class="codebar"><span>PLAYWRIGHT · TERMINAL</span><button type="button" data-copy="core-report" aria-label="Copy Open your test report command">Copy</button></div><pre id="core-report" data-language="powershell">npx playwright show-report</pre></div></article></div>
+<details class="more-commands"><summary>More commands <span>one file · debug · headed · list</span></summary><div class="command-stack"><article class="command-card"><div class="command-meta"><b>Run a single test file</b></div><p>Run the full navigation file.</p><div class="codebox"><div class="codebar"><span>PLAYWRIGHT · TERMINAL</span><button type="button" data-copy="extra-file" aria-label="Copy Run a single test file command">Copy</button></div><pre id="extra-file" data-language="powershell">npx playwright test tests/smoke/navigation.spec.ts --project=chromium</pre></div></article>
+<article class="command-card"><div class="command-meta"><b>Run only Smoke tests</b></div><p>Runs Smoke tests immediately in the terminal.</p><div class="codebox"><div class="codebar"><span>PLAYWRIGHT · TERMINAL</span><button type="button" data-copy="extra-smoke" aria-label="Copy Run only Smoke tests command">Copy</button></div><pre id="extra-smoke" data-language="powershell">npx playwright test tests/smoke --project=chromium</pre></div></article>
+<article class="command-card"><div class="command-meta"><b>Step through a test</b></div><p>Opens Playwright's debugger for the navigation test.</p><div class="codebox"><div class="codebar"><span>PLAYWRIGHT · TERMINAL</span><button type="button" data-copy="extra-debug" aria-label="Copy Step through a test command">Copy</button></div><pre id="extra-debug" data-language="powershell">npx playwright test tests/smoke/navigation.spec.ts --debug --project=chromium</pre></div></article>
+<article class="command-card"><div class="command-meta"><b>Watch the browser</b></div><p>Runs Smoke tests with a visible Chromium browser.</p><div class="codebox"><div class="codebar"><span>PLAYWRIGHT · TERMINAL</span><button type="button" data-copy="extra-headed" aria-label="Copy Watch the browser command">Copy</button></div><pre id="extra-headed" data-language="powershell">npx playwright test tests/smoke --headed --project=chromium</pre></div></article>
+<article class="command-card"><div class="command-meta"><b>List tests without running</b></div><p>Displays the discovered test names.</p><div class="codebox"><div class="codebar"><span>PLAYWRIGHT · TERMINAL</span><button type="button" data-copy="extra-list" aria-label="Copy List tests without running command">Copy</button></div><pre id="extra-list" data-language="powershell">npx playwright test --list --project=chromium</pre></div></article></div></details>
+<p class="note warn"><b>Use approved QA only for data-changing tests.</b> The standard suite excludes <code>tests/infrastructure/</code>. Always confirm the target environment in <code>playwright.config.ts</code> / <code>E2E_BASE_URL</code>.</p></div>
+<details class="run-steps"><summary>First-time walkthrough: SMOKE-018</summary><ol><li>Copy the <b>UI Mode</b> command above.</li><li>Expand <code>navigation.spec.ts</code> and find <b>SMOKE-018</b>.</li><li>Click ▶ beside that test, then inspect <b>Actions</b> and <b>Before/After</b>.</li></ol></details>
 <figure class="figure" id="playwright-figure">
 <img src="https://github.com/microsoft/playwright/assets/13063165/6b87712f-64a5-4d73-a91d-6562b864712c" data-fallback="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20960%20286%22%20role%3D%22img%22%20aria-label%3D%22Illustration%20of%20Playwright%20UI%20Mode%20showing%20test%20list%2C%20action%20timeline%2C%20browser%20preview%20and%20error%20panel%22%3E%0A%3Crect%20width%3D%22960%22%20height%3D%22286%22%20rx%3D%2215%22%20fill%3D%22%23ecf2fa%22%2F%3E%3Crect%20x%3D%222%22%20y%3D%222%22%20width%3D%22956%22%20height%3D%22282%22%20rx%3D%2214%22%20fill%3D%22white%22%20stroke%3D%22%23d4dfed%22%20stroke-width%3D%223%22%2F%3E%0A%3Cpath%20d%3D%22M14%202%20H946%20Q958%202%20958%2016%20V44%20H2%20V16%20Q2%202%2014%202Z%22%20fill%3D%22%2329275b%22%2F%3E%3Ctext%20x%3D%2225%22%20y%3D%2230%22%20font-family%3D%22Arial%2Csans-serif%22%20font-size%3D%2219%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3EPLAYWRIGHT%20%20%20%2F%20%20%20UI%20MODE%20(ILLUSTRATION)%3C%2Ftext%3E%0A%3Crect%20x%3D%2218%22%20y%3D%2264%22%20width%3D%22314%22%20height%3D%22202%22%20rx%3D%2210%22%20fill%3D%22%23f6f9fd%22%20stroke%3D%22%23cad9eb%22%2F%3E%3Crect%20x%3D%22348%22%20y%3D%2264%22%20width%3D%22592%22%20height%3D%2280%22%20rx%3D%2210%22%20fill%3D%22%23f6f9fd%22%20stroke%3D%22%23cad9eb%22%2F%3E%3Crect%20x%3D%22348%22%20y%3D%22155%22%20width%3D%22382%22%20height%3D%22111%22%20rx%3D%2210%22%20fill%3D%22%23f6f9fd%22%20stroke%3D%22%23cad9eb%22%2F%3E%3Crect%20x%3D%22741%22%20y%3D%22155%22%20width%3D%22199%22%20height%3D%22111%22%20rx%3D%2210%22%20fill%3D%22%23fff2f0%22%20stroke%3D%22%23ebc1bd%22%2F%3E%0A%3Ctext%20x%3D%2235%22%20y%3D%2291%22%20font-size%3D%2218%22%20font-family%3D%22Arial%22%20font-weight%3D%22bold%22%20fill%3D%22%2320618b%22%3E1%20%20%20TEST%20LIST%20%2F%20%E2%96%B6%20RUN%3C%2Ftext%3E%3Crect%20x%3D%2235%22%20y%3D%22105%22%20width%3D%22278%22%20height%3D%2231%22%20rx%3D%225%22%20fill%3D%22%23e3f3ec%22%2F%3E%3Ctext%20x%3D%2246%22%20y%3D%22125%22%20font-family%3D%22Arial%22%20font-size%3D%2215%22%20fill%3D%22%23126a4b%22%3E%E2%9C%93%20general-settings.spec.ts%3C%2Ftext%3E%3Crect%20x%3D%2235%22%20y%3D%22143%22%20width%3D%22278%22%20height%3D%2231%22%20rx%3D%225%22%20fill%3D%22%23e3f3ec%22%2F%3E%3Ctext%20x%3D%2246%22%20y%3D%22163%22%20font-family%3D%22Arial%22%20font-size%3D%2215%22%20fill%3D%22%23126a4b%22%3E%E2%9C%93%20SET-CONFIG-001%3C%2Ftext%3E%3Crect%20x%3D%2235%22%20y%3D%22181%22%20width%3D%22278%22%20height%3D%2231%22%20rx%3D%225%22%20fill%3D%22%23fbe5e5%22%2F%3E%3Ctext%20x%3D%2246%22%20y%3D%22201%22%20font-family%3D%22Arial%22%20font-size%3D%2215%22%20fill%3D%22%23a94040%22%3E%E2%9C%95%20SET-JOBPOS-002%3C%2Ftext%3E%0A%3Ctext%20x%3D%22368%22%20y%3D%2291%22%20font-size%3D%2218%22%20font-family%3D%22Arial%22%20font-weight%3D%22bold%22%20fill%3D%22%2320618b%22%3E2%20%20%20ACTIONS%20%2F%20TIMELINE%3C%2Ftext%3E%3Cpath%20d%3D%22M374%20116%20H918%22%20stroke%3D%22%2394b0ce%22%20stroke-width%3D%224%22%2F%3E%3Cg%20fill%3D%22%2317948a%22%3E%3Ccircle%20cx%3D%22410%22%20cy%3D%22116%22%20r%3D%2210%22%2F%3E%3Ccircle%20cx%3D%22555%22%20cy%3D%22116%22%20r%3D%2210%22%2F%3E%3Ccircle%20cx%3D%22710%22%20cy%3D%22116%22%20r%3D%2210%22%2F%3E%3Ccircle%20cx%3D%22872%22%20cy%3D%22116%22%20r%3D%2210%22%2F%3E%3C%2Fg%3E%0A%3Ctext%20x%3D%22370%22%20y%3D%22190%22%20font-size%3D%2218%22%20font-family%3D%22Arial%22%20font-weight%3D%22bold%22%20fill%3D%22%2320618b%22%3E3%20%20%20BROWSER%20PREVIEW%3C%2Ftext%3E%3Ctext%20x%3D%22370%22%20y%3D%22220%22%20font-size%3D%2215%22%20font-family%3D%22Arial%22%20fill%3D%22%2353667f%22%3ESee%20the%20page%20as%20each%20step%20happened.%3C%2Ftext%3E%0A%3Ctext%20x%3D%22761%22%20y%3D%22190%22%20font-size%3D%2218%22%20font-family%3D%22Arial%22%20font-weight%3D%22bold%22%20fill%3D%22%23ab4141%22%3E4%20%20%20ERRORS%3C%2Ftext%3E%3Ctext%20x%3D%22761%22%20y%3D%22220%22%20font-size%3D%2214%22%20font-family%3D%22Arial%22%20fill%3D%22%23824a4a%22%3EExpected%20vs%20actual%3C%2Ftext%3E%3C%2Fsvg%3E" id="playwright-screen" alt="Official Playwright UI Mode screenshot showing the test list on the left, run icons, action timeline, browser preview and bottom details" loading="lazy" referrerpolicy="no-referrer">
 <figcaption>Official Playwright UI Mode screenshot, using sample tests (not HR PRO). Use the guide below to identify the panels.</figcaption>
@@ -631,8 +636,6 @@ git commit -m "test: verify employee search"
 git push -u origin qa/employee-search</pre></div>
  <p>On GitHub, open a <b>Pull Request</b> targeting <code>main</code>. Include what was tested, the result, and any evidence. A reviewer checks before merging.</p>
 </section>
-<section class="section quick-cheatsheet" id="cheatsheet"><div class="kicker">FAST ACCESS / SAVE THIS</div><h2>Playwright command cheat sheet</h2><p>All commands assume your terminal is open in the <code>hr-pro-automation</code> directory. <b>UI Mode</b> shows tests for you to select; without <code>--ui</code>, the test starts immediately.</p><p><a href="#commands" class="inline-link">Jump to the full copy-ready command gallery ↑</a> · <a href="#structure" class="inline-link">Explore repository folders ↑</a> · <a href="#create" class="inline-link">Create a test ↑</a></p>
-<div class="cheat-grid"><article class="cheat-item"><strong>Explore tests visually</strong><div class="codebox"><div class="codebar"><span>PLAYWRIGHT CLI</span><button type="button" data-copy="cheat-0">Copy</button></div><pre id="cheat-0" data-language="powershell">npx playwright test tests/smoke --ui --project=chromium</pre></div></article><article class="cheat-item"><strong>Run one test by ID</strong><div class="codebox"><div class="codebar"><span>PLAYWRIGHT CLI</span><button type="button" data-copy="cheat-1">Copy</button></div><pre id="cheat-1" data-language="powershell">npx playwright test tests/smoke/navigation.spec.ts --grep "SMOKE-018" --project=chromium</pre></div></article><article class="cheat-item"><strong>Run standard suite</strong><div class="codebox"><div class="codebar"><span>PLAYWRIGHT CLI</span><button type="button" data-copy="cheat-2">Copy</button></div><pre id="cheat-2" data-language="powershell">npx playwright test tests/smoke tests/regression --project=chromium</pre></div></article><article class="cheat-item"><strong>Debug a selected test</strong><div class="codebox"><div class="codebar"><span>PLAYWRIGHT CLI</span><button type="button" data-copy="cheat-3">Copy</button></div><pre id="cheat-3" data-language="powershell">npx playwright test tests/smoke/navigation.spec.ts --debug --project=chromium</pre></div></article><article class="cheat-item"><strong>Show the browser</strong><div class="codebox"><div class="codebar"><span>PLAYWRIGHT CLI</span><button type="button" data-copy="cheat-4">Copy</button></div><pre id="cheat-4" data-language="powershell">npx playwright test tests/smoke --headed --project=chromium</pre></div></article><article class="cheat-item"><strong>Open results</strong><div class="codebox"><div class="codebar"><span>PLAYWRIGHT CLI</span><button type="button" data-copy="cheat-5">Copy</button></div><pre id="cheat-5" data-language="powershell">npx playwright show-report</pre></div></article></div><p class="note warn"><b>Safety:</b> Before running Setup or full regression tests, verify your target is an approved non-production environment. These suites may create or modify records.</p><a href="#top" class="inline-link">↑ Back to top</a></section>
 <section class="section" id="references">
  <div class="kicker">REFERENCE</div><h2>Useful links</h2>
  <div class="resource-list">
@@ -737,18 +740,53 @@ git push -u origin qa/employee-search</pre></div>
       });
     });
   });
-  var links = document.querySelectorAll('.primary-nav a[href^="#"]');
-  links.forEach(function(link) {
-    link.addEventListener('click', function() {
-      links.forEach(function(other) { other.classList.remove('current'); });
-      link.classList.add('current');
-    });
-  });
+
 })();
 </script>
 <script>
-// Interactive folder browser: all descriptions map to actual repository paths.
-(function(){var folders={"smoke":["tests/smoke/","Fast checks for essential login and navigation paths.","Short independent critical-path tests; new basic navigation checks.","tests/smoke/navigation.spec.ts","tests/smoke","Start with the existing SMOKE-018 Settings navigation check."],"regression":["tests/regression/setup/","HR PRO Setup regression tests covering real feature behavior.","New Setup feature tests, validations, persistence and negative scenarios.","tests/regression/setup/department-creation.spec.ts","tests/regression/setup","Tests may create or change QA data; inspect their setup and cleanup first."],"infrastructure":["tests/infrastructure/","Exploratory inspection scripts and technical probes, separate from routine regression.","Investigation utilities and one-off inspections, not core business assertions.","tests/infrastructure/browser-storage-isolation.spec.ts","tests/infrastructure","Do not include the infrastructure folder when running the routine standard suite."],"fixtures":["playwright/fixtures/","Shared Playwright fixtures for authentication and consistent test setup.","Reusable test fixtures and login helpers.","playwright/fixtures/hrpro.fixture.ts","playwright/fixtures","Import the shared fixture rather than duplicating login logic."],"pages":["playwright/pages/","Page objects that centralize locators and reusable UI actions.","Repeated interactions and selectors used across multiple test files.","playwright/pages/login.page.ts","playwright/pages","Put assertions in the test; page objects should describe reusable interactions."],"data":["playwright/data/","Definitions for demo users and other approved testing inputs.","Test-account definitions; never real employee details or secrets.","playwright/data/demo-accounts.ts","playwright/data","Use fictional records and keep credentials out of committed files."],"config":["playwright.config.ts","Playwright runner configuration, the selected Chromium project and target base URL.","Project-wide timeouts, screenshot/trace/report settings and environment URL.","playwright.config.ts","playwright.config.ts","Verify E2E_BASE_URL before running tests that might change records."],"package":["package.json","Node dependencies and npm convenience aliases.","Dependency declarations and optional npm scripts.","package.json","package.json","Use npx playwright test in the guide; npm scripts are optional aliases."],"docs":["docs/help/","Public-facing HTML guide, images, and written handover documentation.","User documentation and explanatory assets.","docs/help/index.html","docs/help","This directory needs to be correctly published by the Netlify configuration."]};var choices=document.querySelectorAll('[data-folder]');choices.forEach(function(btn){btn.addEventListener('click',function(){var d=folders[btn.dataset.folder];if(!d)return;choices.forEach(function(x){x.classList.toggle('active',x===btn);x.setAttribute('aria-pressed',String(x===btn));});document.getElementById('folder-title').textContent=d[0];document.getElementById('folder-description').textContent=d[1];document.getElementById('folder-usage').textContent=d[2];document.getElementById('folder-example').textContent=d[3];var a=document.getElementById('folder-github');a.href='https://github.com/nitsuwa/hr-pro-automation/'+(d[4].includes('.ts')||d[4].includes('.json')?'blob':'tree')+'/main/'+d[4];document.getElementById('folder-tip').textContent=d[5];});});})();
+// Collapsible folder browser with checked paths from the current GitHub tree.
+(function(){
+  var records={"smoke":{"name":"tests/smoke/","desc":"Quick login and navigation checks. Start here.","where":"Add new critical-path smoke tests here.","path":"tests/smoke","type":"tree"},"regression":{"name":"tests/regression/setup/","desc":"Feature-level Setup tests, including record creation and validation.","where":"New Setup feature tests belong here.","path":"tests/regression/setup","type":"tree"},"infra":{"name":"tests/infrastructure/","desc":"Exploratory probes and inspection scripts; excluded from routine tests.","where":"Only put technical investigation scripts here.","path":"tests/infrastructure","type":"tree"},"fixtures":{"name":"playwright/fixtures/","desc":"Shared test setup and login helpers.","where":"Put reusable fixtures here, not standalone tests.","path":"playwright/fixtures","type":"tree"},"pages":{"name":"playwright/pages/","desc":"Reusable browser actions and element locators.","where":"Put reusable page objects here.","path":"playwright/pages","type":"tree"},"data":{"name":"playwright/data/","desc":"Demo account definitions and safe test inputs.","where":"Never commit real personal data or secrets.","path":"playwright/data","type":"tree"},"docs":{"name":"docs/help/","desc":"The HTML handover website and its images.","where":"Edit index.html for the guide; assets/ contains illustrations.","path":"docs/help","type":"tree"},"navfile":{"name":"navigation.spec.ts","desc":"Navigation smoke tests, including SMOKE-018 (Settings).","where":"Run this to learn a small, mostly read-only test.","path":"tests/smoke/navigation.spec.ts"},"loginfile":{"name":"login.spec.ts","desc":"Tests login and access behavior.","where":"A useful example for login assertions.","path":"tests/smoke/login.spec.ts"},"rolesfile":{"name":"demo-roles.spec.ts","desc":"Basic checks for the application’s demo roles.","where":"Look here for role-related smoke coverage.","path":"tests/smoke/demo-roles.spec.ts"},"deptfile":{"name":"department-creation.spec.ts","desc":"Creates a fictional department and checks the resulting state.","where":"Run only against an approved QA environment.","path":"tests/regression/setup/department-creation.spec.ts"},"employeefile":{"name":"employee-setup.spec.ts","desc":"Employee setup regression checks.","where":"Use as a reference for employee feature coverage.","path":"tests/regression/setup/employee-setup.spec.ts"},"catalogfile":{"name":"catalog-duplicates.spec.ts","desc":"Checks duplicate-record handling in Setup catalogs.","where":"Shows a negative/validation test pattern.","path":"tests/regression/setup/catalog-duplicates.spec.ts"},"isofile":{"name":"browser-storage-isolation.spec.ts","desc":"Technical check for browser storage isolation.","where":"Advanced inspection only; not part of the standard suite.","path":"tests/infrastructure/browser-storage-isolation.spec.ts"},"inspectfile":{"name":"setup-ui-inventory.spec.ts","desc":"Inventories visible Setup interface elements.","where":"Exploratory inspection rather than an everyday regression check.","path":"tests/infrastructure/setup-ui-inventory.spec.ts"},"fixturefile":{"name":"hrpro.fixture.ts","desc":"Shared authentication and test setup fixture.","where":"Import the fixture from your new test file.","path":"playwright/fixtures/hrpro.fixture.ts"},"loginpage":{"name":"login.page.ts","desc":"Encapsulates login page locators and actions.","where":"Reuse page methods instead of copying selectors.","path":"playwright/pages/login.page.ts"},"settingpage":{"name":"settings.page.ts","desc":"Encapsulates Settings page interactions.","where":"Use when several tests share the same UI actions.","path":"playwright/pages/settings.page.ts"},"demofile":{"name":"demo-accounts.ts","desc":"Defines demonstration account roles.","where":"Use approved fictional testing identities.","path":"playwright/data/demo-accounts.ts"},"htmlfile":{"name":"index.html","desc":"The public documentation website.","where":"This is the HTML file Vercel publishes.","path":"docs/help/index.html"},"assetfolder":{"name":"assets/","desc":"SVG illustrations used by the guide.","where":"Keep descriptive, accessible illustrations here.","path":"docs/help/assets","type":"tree"},"config":{"name":"playwright.config.ts","desc":"Browser configuration, target environment and reporting options.","where":"Check E2E_BASE_URL before running data-changing tests.","path":"playwright.config.ts"},"package":{"name":"package.json","desc":"Development dependencies and npm shortcuts.","where":"The guide uses npx playwright commands directly.","path":"package.json"},"readme":{"name":"README.md","desc":"Repository overview and quick links.","where":"Use it to orient new contributors.","path":"README.md"}};
+  var chooser=document.getElementById("folder-explorer");
+  if(!chooser)return;
+  chooser.addEventListener("click",function(event){
+    var target=event.target.closest("[data-explain]");
+    if(!target||!chooser.contains(target))return;
+    var record=records[target.getAttribute("data-explain")];if(!record)return;
+    chooser.querySelectorAll("[data-explain].active").forEach(function(node){node.classList.remove("active")});
+    target.classList.add("active");
+    document.getElementById("explorer-name").textContent=record.name;
+    document.getElementById("explorer-desc").textContent=record.desc;
+    document.getElementById("explorer-rule").textContent=record.where;
+    document.getElementById("explorer-link").href="https://github.com/nitsuwa/hr-pro-automation/"+(record.type==="tree"?"tree":"blob")+"/main/"+record.path;
+  });
+})();
+// Update reading position from the current section (and highlight top + side navigation).
+(function(){
+  var ids=["overview","structure","install","run","commands","verify","syntax","create","ai","github","references"];
+  var anchors=ids.map(function(id){return document.getElementById(id)}).filter(Boolean);
+  var links=document.querySelectorAll(".aside a[href^='#'],.primary-nav a[href^='#']");
+  var indicator=document.getElementById("reading-progress");
+  var pending=false;
+  function refresh(){
+    pending=false;
+    var current="overview", threshold=window.innerHeight*.28;
+    anchors.forEach(function(node){if(node.getBoundingClientRect().top<=threshold)current=node.id});
+    links.forEach(function(link){
+      var isActive=link.getAttribute("href")==="#"+current;
+      link.classList.toggle("active",isActive);
+      if(isActive)link.setAttribute("aria-current","location");
+      else link.removeAttribute("aria-current");
+    });
+    var max=document.documentElement.scrollHeight-window.innerHeight;
+    if(indicator)indicator.style.width=(max>0?Math.max(0,Math.min(100,window.scrollY/max*100)):0)+"%";
+  }
+  function schedule(){if(!pending){pending=true;requestAnimationFrame(refresh)}}
+  window.addEventListener("scroll",schedule,{passive:true});
+  window.addEventListener("resize",schedule,{passive:true});
+  window.addEventListener("hashchange",schedule);
+  schedule();
+})();
 </script>
 </body>
 </html>
