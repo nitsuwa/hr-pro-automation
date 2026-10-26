@@ -4,12 +4,13 @@
 
 The guide shows you exactly how to:
 
-1. [Install the repository](https://hr-pro-automation.netlify.app/#install).
-2. [Run one Playwright test](https://hr-pro-automation.netlify.app/#run) in UI Mode.
-3. [Check what passed or failed](https://hr-pro-automation.netlify.app/#verify).
-4. [Understand assertions](https://hr-pro-automation.netlify.app/#syntax).
-5. [Create a new test with or without Excel—with AI assistance](https://hr-pro-automation.netlify.app/#create).
-6. [Share the test with GitHub](https://hr-pro-automation.netlify.app/#github).
+1. [Understand the project folders](https://hr-pro-automation.netlify.app/#structure) and where new tests go.
+2. [Install the repository](https://hr-pro-automation.netlify.app/#install).
+3. [Run one test, one file, or a whole group](https://hr-pro-automation.netlify.app/#run-options) in UI Mode.
+4. [Check what passed or failed](https://hr-pro-automation.netlify.app/#verify).
+5. [Understand assertions](https://hr-pro-automation.netlify.app/#syntax).
+6. [Create a new test with or without Excel—with AI assistance](https://hr-pro-automation.netlify.app/#create).
+7. [Share the test with GitHub](https://hr-pro-automation.netlify.app/#github).
 
 **Want the actual code?** Visit the [repository README](../README.md).
 
