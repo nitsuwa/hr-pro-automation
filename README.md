@@ -10,13 +10,26 @@ This project uses **Playwright** to automatically check HR PRO in a browser. It 
 
 | Get started | Learn the tools | Create &amp; share |
 | :--- | :--- | :--- |
-| [**Install**](https://hr-pro-automation.netlify.app/#install) | [**Verify a result**](https://hr-pro-automation.netlify.app/#verify) | [**New test walkthrough**](https://hr-pro-automation.netlify.app/#create) |
-| [**Run a test**](https://hr-pro-automation.netlify.app/#run) | [**Playwright syntax**](https://hr-pro-automation.netlify.app/#syntax) | [**AI Help + copyable prompt**](https://hr-pro-automation.netlify.app/#ai) |
+| [**Project folders**](https://hr-pro-automation.netlify.app/#structure) · [Install](https://hr-pro-automation.netlify.app/#install) | [**Verify a result**](https://hr-pro-automation.netlify.app/#verify) | [**New test walkthrough**](https://hr-pro-automation.netlify.app/#create) |
+| [**Ways to run tests**](https://hr-pro-automation.netlify.app/#run-options) | [**Playwright syntax**](https://hr-pro-automation.netlify.app/#syntax) | [**AI Help + copyable prompt**](https://hr-pro-automation.netlify.app/#ai) |
 | [**UI Mode guide**](https://playwright.dev/docs/test-ui-mode) | [**Locators**](https://playwright.dev/docs/locators) | [**GitHub workflow**](https://hr-pro-automation.netlify.app/#github) |
 
 <img src="docs/help/assets/qa-workflow.svg" alt="The five stages from manual testing to Playwright automation: plan, inspect HR PRO, write a test, verify, and share." width="960">
 
 *Illustrated workflow: start with a requirement, inspect the real UI, write assertions, verify results, and request review.*
+
+## Where are the tests?
+
+| Folder or file | What it's for |
+| --- | --- |
+| [`tests/smoke/`](tests/smoke/) | **Start here.** Login and navigation checks, such as `SMOKE-018` in [navigation.spec.ts](tests/smoke/navigation.spec.ts). |
+| [`tests/regression/setup/`](tests/regression/setup/) | HR PRO Setup feature checks—Departments, Employees, allowances and more. Put **new Setup tests** here. |
+| [`tests/infrastructure/`](tests/infrastructure/) | Advanced inspection scripts, **not routine regression tests**. |
+| [`playwright/fixtures/`](playwright/fixtures/) | Reusable login/test setup. |
+| [`playwright/pages/`](playwright/pages/) | Reusable actions and element locators. |
+| [`package.json`](package.json) / [`playwright.config.ts`](playwright.config.ts) | Available commands, target URL and Playwright settings. |
+
+**New test?** Create `tests/regression/setup/my-feature.spec.ts` for a Setup feature. [See the visual folder guide](https://hr-pro-automation.netlify.app/#structure).
 
 ## Start here — run your first test
 
@@ -39,6 +52,26 @@ In Playwright UI Mode, open `navigation.spec.ts`, find **SMOKE-018 (Settings)**,
 *Illustration: choose a test on the left; review actions and the browser preview on the right. [See the visual walkthrough](https://hr-pro-automation.netlify.app/#run).*
 
 **Important:** Before running tests that create or change data, confirm `playwright.config.ts` or `E2E_BASE_URL` targets an **approved, non-production** HR PRO environment. Use fictional QA records only.
+
+## Run tests — choose an option
+
+**UI Mode** opens a window where you choose which tests to execute.
+
+| Task | Command |
+| --- | --- |
+| Beginner smoke test list | `npm run test:ui:smoke` |
+| **One specific test** (`SMOKE-018`) | `npx playwright test tests/smoke/navigation.spec.ts --grep "SMOKE-018" --ui --project=chromium` |
+| One Setup test file | `npx playwright test tests/regression/setup/department-creation.spec.ts --ui --project=chromium` |
+| Setup regression group | `npm run test:ui:setup` |
+| All standard Smoke + Regression tests in UI Mode | `npx playwright test tests/smoke tests/regression --ui --project=chromium` |
+
+In UI Mode, click **▶** next to one test or **Run all** if you want to run the entire displayed group.
+
+**Without UI Mode:** `npm run test:smoke` (smoke), `npm run test:setup` (Setup regression), or `npm run test:full` (standard Smoke + Regression). These execute immediately.
+
+**Safety:** Setup and full regression may change records; run them only in an approved disposable QA environment with fictional data. **Never run on production.** The standard full suite excludes `tests/infrastructure/`.
+
+[**See the illustrated run instructions and copy buttons →**](https://hr-pro-automation.netlify.app/#run-options)
 
 ## What does a test actually check?
 
@@ -64,16 +97,7 @@ The guide includes a **copyable AI prompt**, a real Department test example, a n
 
 AI suggests code; **the QA tester checks the real behavior**. Never send credentials or real employee data to AI.
 
-## Where to find things
-
-| Location | Purpose |
-| --- | --- |
-| [Documentation website](https://hr-pro-automation.netlify.app) | Step-by-step training for manual testers |
-| [Playwright test scripts](tests/regression/setup/) | Examples and feature checks |
-| [Smoke tests](tests/smoke/) | Basic navigation checks |
-| [Shared helpers](playwright/) | Reusable logins and page actions |
-| [Written reference](docs/help/USER_MANUAL.md) | Short companion guide |
-| [Execution records](docs/QA_EXECUTION_LOG.md) | Detailed technical QA evidence |
+**More reference:** [Written manual](docs/help/USER_MANUAL.md) · [QA execution records](docs/QA_EXECUTION_LOG.md)
 
 ## Sharing changes
 
