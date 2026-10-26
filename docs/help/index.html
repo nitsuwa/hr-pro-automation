@@ -351,7 +351,7 @@ html{scroll-behavior:smooth}body{transition:background-color .22s ease,color .22
 </header>
 <nav class="primary-nav" aria-label="Main guide">
  <div class="shell nav-inner">
-  <a class="current" href="#overview">Overview</a><a href="#structure">Project Folders</a><a href="#install">Install</a><a href="#run">Run Tests</a>
+  <a href="#overview">Overview</a><a href="#structure">Project Folders</a><a href="#install">Install</a><a href="#run">Run Tests</a>
   <a href="#verify">Verify Results</a><a href="#syntax">Test Code</a><a href="#create">Create a Test</a><a href="#ai">AI Help</a><a href="#github">GitHub</a>
  </div>
 </nav>
@@ -427,7 +427,7 @@ npx playwright install chromium</pre></div>
 <div class="kicker">03 / RUN TESTS</div><h2>Run tests</h2>
 <p>Open <b>VS Code → Terminal</b> inside <code>hr-pro-automation</code>. Choose a command below and use <b>Copy</b>.</p>
 <div class="run-explainer"><div><strong>UI Mode <code>--ui</code></strong><span>Opens a test list. You choose when to run.</span></div><div><strong>Terminal (no <code>--ui</code>)</strong><span>Runs matching tests immediately.</span></div></div>
-<div class="command-reference" id="commands"><span id="cheatsheet" class="anchor-alias" aria-hidden="true"></span><div class="kicker">SAVE THIS · COMMAND CHEAT SHEET</div><h3>Frequently used commands</h3><div class="command-stack"><article class="command-card"><div class="command-meta"><b>Explore Smoke tests in UI Mode</b><span class="command-pill">Start here</span></div><p>Opens the test list. Select one test and click ▶.</p><div class="codebox"><div class="codebar"><span>PLAYWRIGHT · TERMINAL</span><button type="button" data-copy="core-ui" aria-label="Copy Explore Smoke tests in UI Mode command">Copy</button></div><pre id="core-ui" data-language="powershell">npx playwright test tests/smoke --ui --project=chromium</pre></div></article>
+<div class="command-reference" id="commands"><span id="cheatsheet" class="anchor-alias" aria-hidden="true"></span><span id="run-options" class="anchor-alias" aria-hidden="true"></span><div class="kicker">SAVE THIS · COMMAND CHEAT SHEET</div><h3>Frequently used commands</h3><div class="command-stack"><article class="command-card"><div class="command-meta"><b>Explore Smoke tests in UI Mode</b><span class="command-pill">Start here</span></div><p>Opens the test list. Select one test and click ▶.</p><div class="codebox"><div class="codebar"><span>PLAYWRIGHT · TERMINAL</span><button type="button" data-copy="core-ui" aria-label="Copy Explore Smoke tests in UI Mode command">Copy</button></div><pre id="core-ui" data-language="powershell">npx playwright test tests/smoke --ui --project=chromium</pre></div></article>
 <article class="command-card"><div class="command-meta"><b>Run one test by ID</b></div><p>Runs only SMOKE-018, without opening UI Mode</p><div class="codebox"><div class="codebar"><span>PLAYWRIGHT · TERMINAL</span><button type="button" data-copy="core-one" aria-label="Copy Run one test by ID command">Copy</button></div><pre id="core-one" data-language="powershell">npx playwright test tests/smoke/navigation.spec.ts --grep "SMOKE-018" --project=chromium</pre></div></article>
 <article class="command-card"><div class="command-meta"><b>Browse Setup regression tests</b></div><p>Opens Setup tests in UI Mode; run only in approved QA.</p><div class="codebox"><div class="codebar"><span>PLAYWRIGHT · TERMINAL</span><button type="button" data-copy="core-setup" aria-label="Copy Browse Setup regression tests command">Copy</button></div><pre id="core-setup" data-language="powershell">npx playwright test tests/regression/setup --ui --project=chromium</pre></div></article>
 <article class="command-card"><div class="command-meta"><b>Run the standard suite</b></div><p>Immediately runs Smoke + Regression. May change QA records.</p><div class="codebox"><div class="codebar"><span>PLAYWRIGHT · TERMINAL</span><button type="button" data-copy="core-full" aria-label="Copy Run the standard suite command">Copy</button></div><pre id="core-full" data-language="powershell">npx playwright test tests/smoke tests/regression --project=chromium</pre></div></article>
@@ -647,7 +647,7 @@ git push -u origin qa/employee-search</pre></div>
   <a href="https://playwright.dev/docs/test-assertions" target="_blank" rel="noopener noreferrer">Assertions ↗<span>How to check expected results</span></a>
  </div>
 </section>
-<div class="footer">HR PRO · QA Automation Guide · <a href="https://hr-pro-automation.netlify.app">Documentation website</a></div>
+<div class="footer">HR PRO · QA Automation Guide · <a href="https://hr-pro-automation-help.vercel.app">Documentation website</a></div>
 </main>
 </div>
 <script>
