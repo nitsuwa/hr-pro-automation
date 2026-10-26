@@ -257,6 +257,14 @@ pre{font-size:13px;line-height:1.75;tab-size:2}
 .command-table td,.command-table th{padding:8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
 .command-table th{color:var(--ink)}.command-table code{overflow-wrap:anywhere}
 @media(max-width:900px){.run-options-grid{grid-template-columns:1fr}}
+
+.test-examples{margin-top:22px}.test-examples h3{font-size:16px;margin:0 0 10px}
+.test-example-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.test-example-list a{display:block;padding:12px 14px;background:var(--surface-soft);border:1px solid var(--line);border-radius:8px;font-size:12px;overflow-wrap:anywhere}
+.test-example-list a:hover{border-color:var(--teal);text-decoration:none}
+.test-example-list strong{display:block;color:var(--brand);margin-bottom:4px}
+.test-example-list span{display:block;color:var(--muted);font-size:12px}
+@media(max-width:590px){.test-example-list{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -331,6 +339,15 @@ pre{font-size:13px;line-height:1.75;tab-size:2}
  </div>
  <div class="note"><b>Where do I put a new script?</b> New Setup feature → <code>tests/regression/setup/feature-name.spec.ts</code>. New navigation check → <code>tests/smoke/</code>. Reusable page actions → <code>playwright/pages/</code>. Every Playwright test file ends in <code>.spec.ts</code>.</div>
  <div class="folder-shortcuts"><a href="https://github.com/nitsuwa/hr-pro-automation/tree/main/tests/smoke" target="_blank" rel="noopener noreferrer">Smoke tests ↗</a><a href="https://github.com/nitsuwa/hr-pro-automation/tree/main/tests/regression/setup" target="_blank" rel="noopener noreferrer">Setup tests ↗</a><a href="#run">How to run them →</a></div>
+<div class="test-examples">
+<h3>Important files to open first</h3>
+<div class="test-example-list">
+ <a href="https://github.com/nitsuwa/hr-pro-automation/blob/main/tests/smoke/navigation.spec.ts" target="_blank" rel="noopener noreferrer"><strong>navigation.spec.ts</strong><span>Read-only example · opens Settings and checks its URL</span></a>
+ <a href="https://github.com/nitsuwa/hr-pro-automation/blob/main/tests/smoke/login.spec.ts" target="_blank" rel="noopener noreferrer"><strong>login.spec.ts</strong><span>Login checks and basic access</span></a>
+ <a href="https://github.com/nitsuwa/hr-pro-automation/blob/main/tests/regression/setup/department-creation.spec.ts" target="_blank" rel="noopener noreferrer"><strong>department-creation.spec.ts</strong><span>Setup example · creates fictional data and checks persistence</span></a>
+ <a href="https://github.com/nitsuwa/hr-pro-automation/blob/main/tests/regression/setup/catalog-duplicates.spec.ts" target="_blank" rel="noopener noreferrer"><strong>catalog-duplicates.spec.ts</strong><span>Shows how a test checks for duplicate records</span></a>
+</div>
+</div>
 </section>
 <section class="section" id="install">
  <div class="kicker">02 / FIRST-TIME SETUP</div><h2>Install the project</h2>
