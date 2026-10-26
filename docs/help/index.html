@@ -226,6 +226,19 @@ pre{font-size:13px;line-height:1.75;tab-size:2}
 .pw-shot figcaption span{font-size:12px;line-height:1.55;color:var(--body)}
 .pw-shot figcaption a{font-size:12px;font-weight:700;margin-top:2px}
 @media(max-width:680px){.pw-gallery{grid-template-columns:1fr}.pw-shot img{max-height:360px}}
+
+.folder-layout{display:grid;grid-template-columns:minmax(250px,.9fr) minmax(0,1.1fr);gap:14px;margin:18px 0}
+.folder-tree{border:1px solid var(--line);border-radius:10px;background:var(--surface-soft);overflow:hidden;font:12px/1.65 Consolas,"Courier New",monospace}
+.folder-head{padding:11px 14px;background:var(--nav);color:#fff;display:flex;gap:12px;font:700 11px/1.5 "Segoe UI",sans-serif}
+.folder-line{min-height:27px;padding:4px 10px;color:var(--body)}
+.folder-line b{color:var(--ink)}.folder-line.root{padding-top:11px;font-weight:750}
+.folder-line.level1{padding-left:23px}.folder-line.level2{padding-left:43px}.folder-line.level3{padding-left:65px}.folder-line.level4{padding-left:86px}
+.folder-line.file{color:var(--muted)}.tree-tag{display:inline-block;padding:2px 5px;border-radius:4px;background:var(--teal-wash);color:var(--teal-ink);font:700 10px "Segoe UI",sans-serif}
+.tree-tag.subdued{background:var(--surface);color:var(--muted)}
+.folder-meanings{display:grid;gap:9px}.folder-meanings>div{background:var(--surface-soft);border:1px solid var(--line);border-radius:9px;padding:11px 13px}
+.folder-meanings strong{font-size:12px;color:var(--ink)}.folder-meanings p{font-size:12px;color:var(--muted);margin:4px 0 0}
+.folder-shortcuts{display:flex;gap:12px;flex-wrap:wrap;font-size:13px;font-weight:700}
+@media(max-width:900px){.folder-layout{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -242,23 +255,23 @@ pre{font-size:13px;line-height:1.75;tab-size:2}
 </header>
 <nav class="primary-nav" aria-label="Main guide">
  <div class="shell nav-inner">
-  <a class="current" href="#overview">Overview</a><a href="#install">Install</a><a href="#run">Run Tests</a>
+  <a class="current" href="#overview">Overview</a><a href="#structure">Project Folders</a><a href="#install">Install</a><a href="#run">Run Tests</a>
   <a href="#verify">Verify Results</a><a href="#syntax">Test Code</a><a href="#create">Create a Test</a><a href="#ai">AI Help</a><a href="#github">GitHub</a>
  </div>
 </nav>
 <div class="shell layout">
 <aside class="aside" aria-label="Guide contents">
- <strong>On this page</strong>
- <a href="#install">1. Set up your computer</a><a href="#run">2. Run a test</a>
- <a href="#verify">3. Check the result</a><a href="#syntax">4. Understand the code</a>
- <a href="#create">5. Add a new test</a><a href="#ai">AI Help (copy prompt)</a><a href="#github">6. Share changes</a><a href="#references">Official references</a>
+ <strong>Follow in order</strong>
+ <a href="#structure">1. Find tests and folders</a><a href="#install">2. Install the project</a><a href="#run">3. Choose how to run</a>
+ <a href="#verify">4. Check the result</a><a href="#syntax">5. Understand the code</a>
+ <a href="#create">6. Add a new test</a><a href="#ai">AI Help (copy prompt)</a><a href="#github">7. Share changes</a><a href="#references">Official references</a>
 </aside>
 <main class="content" id="overview">
 <section class="hero" aria-labelledby="guide-title">
  <div class="kicker">HR PRO / QUALITY ASSURANCE</div>
  <h1 id="guide-title">HR PRO Test Automation</h1>
  <p class="subtitle">How to run HR PRO browser tests, check the results, and maintain the Playwright repository.</p>
- <div class="buttons"><a class="btn" href="#install">Get started →</a><a class="btn secondary" href="#run">Run a test</a><a class="btn secondary" href="#ai">Create with AI</a><a class="btn secondary" href="https://github.com/nitsuwa/hr-pro-automation" target="_blank" rel="noopener noreferrer">Open repository ↗</a></div>
+ <div class="buttons"><a class="btn" href="#structure">Start with folders →</a><a class="btn secondary" href="#run">Run a test</a><a class="btn secondary" href="#ai">Create with AI</a><a class="btn secondary" href="https://github.com/nitsuwa/hr-pro-automation" target="_blank" rel="noopener noreferrer">Open repository ↗</a></div>
 </section>
 <div class="overview" aria-label="How the system works">
  <article><div class="number">01 / TEST</div><b>Playwright runs the steps</b><p>It opens HR PRO, performs actions, and checks expected behavior.</p></article>
@@ -266,8 +279,43 @@ pre{font-size:13px;line-height:1.75;tab-size:2}
  <article><div class="number">03 / MAINTAIN</div><b>GitHub keeps the tests</b><p>Share reviewed changes so the whole team can reuse them.</p></article>
 </div>
 <figure class="figure visual-figure"><img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%201040%20288%22%20role%3D%22img%22%20aria-labelledby%3D%22title%20desc%22%3E%3Ctitle%20id%3D%22title%22%3EManual%20testing%20to%20Playwright%20automation%20workflow%3C%2Ftitle%3E%3Cdesc%20id%3D%22desc%22%3EFive%20connected%20steps%3A%20choose%20a%20requirement%2C%20inspect%20HR%20PRO%2C%20write%20a%20Playwright%20test%20with%20optional%20AI%2C%20run%20and%20verify%20the%20result%2C%20and%20share%20through%20a%20GitHub%20pull%20request.%3C%2Fdesc%3E%0A%3Crect%20width%3D%221040%22%20height%3D%22288%22%20rx%3D%2218%22%20fill%3D%22%23f3f5fa%22%2F%3E%3Crect%20x%3D%2219%22%20y%3D%2219%22%20width%3D%221002%22%20height%3D%22250%22%20rx%3D%2213%22%20fill%3D%22%23fff%22%20stroke%3D%22%23dbe3f0%22%2F%3E%0A%3Crect%20x%3D%2219%22%20y%3D%2219%22%20width%3D%221002%22%20height%3D%2247%22%20rx%3D%2213%22%20fill%3D%22%232e2b61%22%2F%3E%3Crect%20x%3D%2219%22%20y%3D%2247%22%20width%3D%221002%22%20height%3D%2219%22%20fill%3D%22%232e2b61%22%2F%3E%3Cg%20font-family%3D%22Arial%2Csans-serif%22%3E%3Ctext%20x%3D%2243%22%20y%3D%2249%22%20font-size%3D%2219%22%20font-weight%3D%22700%22%20fill%3D%22%23fff%22%3EFROM%20MANUAL%20CHECK%20TO%20AUTOMATED%20TEST%3C%2Ftext%3E%3Ctext%20x%3D%2243%22%20y%3D%2293%22%20font-size%3D%2214%22%20fill%3D%22%2367728e%22%3EFollow%20the%20same%20workflow%20for%20Excel%20scenarios%20and%20new%20HR%20PRO%20features.%3C%2Ftext%3E%0A%3Cg%20fill%3D%22%23f6f9fe%22%20stroke%3D%22%23d5dfed%22%3E%0A%3Crect%20x%3D%2239%22%20y%3D%22113%22%20width%3D%22176%22%20height%3D%22113%22%20rx%3D%2212%22%2F%3E%3Crect%20x%3D%22235%22%20y%3D%22113%22%20width%3D%22176%22%20height%3D%22113%22%20rx%3D%2212%22%2F%3E%3Crect%20x%3D%22431%22%20y%3D%22113%22%20width%3D%22176%22%20height%3D%22113%22%20rx%3D%2212%22%2F%3E%3Crect%20x%3D%22627%22%20y%3D%22113%22%20width%3D%22176%22%20height%3D%22113%22%20rx%3D%2212%22%2F%3E%3Crect%20x%3D%22823%22%20y%3D%22113%22%20width%3D%22176%22%20height%3D%22113%22%20rx%3D%2212%22%2F%3E%3C%2Fg%3E%0A%3Cg%20font-family%3D%22Arial%2Csans-serif%22%20font-size%3D%2212%22%20font-weight%3D%22700%22%20fill%3D%22%2313877e%22%3E%0A%3Ctext%20x%3D%2255%22%20y%3D%22137%22%3E01%20%2F%20PLAN%3C%2Ftext%3E%3Ctext%20x%3D%22251%22%20y%3D%22137%22%3E02%20%2F%20INSPECT%3C%2Ftext%3E%3Ctext%20x%3D%22447%22%20y%3D%22137%22%3E03%20%2F%20WRITE%3C%2Ftext%3E%3Ctext%20x%3D%22643%22%20y%3D%22137%22%3E04%20%2F%20VERIFY%3C%2Ftext%3E%3Ctext%20x%3D%22839%22%20y%3D%22137%22%3E05%20%2F%20SHARE%3C%2Ftext%3E%3C%2Fg%3E%0A%3Cg%20font-family%3D%22Arial%2Csans-serif%22%20font-weight%3D%22700%22%20font-size%3D%2217%22%20fill%3D%22%232b285e%22%3E%3Ctext%20x%3D%2255%22%20y%3D%22170%22%3ERequirement%3C%2Ftext%3E%3Ctext%20x%3D%22251%22%20y%3D%22170%22%3EHR%20PRO%20UI%3C%2Ftext%3E%3Ctext%20x%3D%22447%22%20y%3D%22170%22%3EPlaywright%3C%2Ftext%3E%3Ctext%20x%3D%22643%22%20y%3D%22170%22%3ERun%20%26amp%3B%20check%3C%2Ftext%3E%3Ctext%20x%3D%22839%22%20y%3D%22170%22%3EPull%20request%3C%2Ftext%3E%3C%2Fg%3E%0A%3Cg%20font-family%3D%22Arial%2Csans-serif%22%20font-size%3D%2212%22%20fill%3D%22%235d6880%22%3E%3Ctext%20x%3D%2255%22%20y%3D%22192%22%3EExpected%20outcome%3C%2Ftext%3E%3Ctext%20x%3D%22251%22%20y%3D%22192%22%3EReal%20controls%3C%2Ftext%3E%3Ctext%20x%3D%22447%22%20y%3D%22192%22%3EAI%20can%20draft%3C%2Ftext%3E%3Ctext%20x%3D%22643%22%20y%3D%22192%22%3EActions%20%2B%20assert%3C%2Ftext%3E%3Ctext%20x%3D%22839%22%20y%3D%22192%22%3ETeam%20reviews%3C%2Ftext%3E%3C%2Fg%3E%0A%3Cg%20stroke%3D%22%23189086%22%20stroke-width%3D%223%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M216%20169h16m-6%20-6%206%206-6%206%22%2F%3E%3Cpath%20d%3D%22M412%20169h16m-6%20-6%206%206-6%206%22%2F%3E%3Cpath%20d%3D%22M608%20169h16m-6%20-6%206%206-6%206%22%2F%3E%3Cpath%20d%3D%22M804%20169h16m-6%20-6%206%206-6%206%22%2F%3E%3C%2Fg%3E%0A%3Ctext%20x%3D%2242%22%20y%3D%22251%22%20font-family%3D%22Arial%2Csans-serif%22%20font-size%3D%2212%22%20fill%3D%22%235d6880%22%3ETRAINING%20ILLUSTRATION%20%C2%B7%20AI%20suggests%20code%3B%20QA%20checks%20the%20real%20HR%20PRO%20result.%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Five stages of automation: define requirement, inspect HR PRO, write Playwright test (AI optional), run and verify, share via pull request" loading="lazy"><figcaption><b>Workflow at a glance.</b> Every test starts with an expected result. AI can help write the code, but QA must verify the outcome.</figcaption></figure>
+
+<section class="section" id="structure">
+ <div class="kicker">01 / PROJECT TOUR</div><h2>Find the tests and folders</h2>
+ <p>Open <b>VS Code → Explorer</b> (the file icon on the left). Start with the test files, then use the shared helpers when writing new ones.</p>
+ <div class="folder-layout">
+  <div class="folder-tree">
+   <div class="folder-head">EXPLORER <strong>hr-pro-automation</strong></div>
+   <div class="folder-line root">▾ HR PRO AUTOMATION</div>
+   <div class="folder-line level1">▾ <b>tests</b></div>
+   <div class="folder-line level2">▾ <b>smoke</b> <span class="tree-tag">Start here</span></div>
+   <div class="folder-line level3">navigation.spec.ts</div>
+   <div class="folder-line level2">▾ <b>regression</b></div>
+   <div class="folder-line level3">▾ <b>setup</b> <span class="tree-tag">Feature tests</span></div>
+   <div class="folder-line level4">department-creation.spec.ts</div>
+   <div class="folder-line level2">▸ infrastructure <span class="tree-tag subdued">Advanced</span></div>
+   <div class="folder-line level1">▾ <b>playwright</b></div>
+   <div class="folder-line level2">▸ fixtures · reusable login</div>
+   <div class="folder-line level2">▸ pages · page actions</div>
+   <div class="folder-line level2">▸ data · test accounts</div>
+   <div class="folder-line level1 file">playwright.config.ts</div>
+   <div class="folder-line level1 file">package.json</div>
+   <div class="folder-line level1">▸ docs · documentation</div>
+   <div class="folder-line level1 file">README.md</div>
+  </div>
+  <div class="folder-meanings">
+   <div><strong>01 · <code>tests/smoke/</code></strong><p>Quick checks that HR PRO pages open. <b>Run these first.</b></p></div>
+   <div><strong>02 · <code>tests/regression/setup/</code></strong><p>Checks for Departments, Employees, allowances, and other Setup features. Add a new Setup test here.</p></div>
+   <div><strong>03 · <code>tests/infrastructure/</code></strong><p>Advanced scripts for inspecting the application. Not part of the normal regression run.</p></div>
+   <div><strong>04 · <code>playwright/</code></strong><p>Shared login (<code>fixtures</code>), page helpers (<code>pages</code>), and demo account definitions (<code>data</code>).</p></div>
+   <div><strong>05 · Root files</strong><p><code>package.json</code> stores commands; <code>playwright.config.ts</code> sets the browser and target URL; <code>README.md</code> links here.</p></div>
+  </div>
+ </div>
+ <div class="note"><b>Where do I put a new script?</b> New Setup feature → <code>tests/regression/setup/feature-name.spec.ts</code>. New navigation check → <code>tests/smoke/</code>. Reusable page actions → <code>playwright/pages/</code>. Every Playwright test file ends in <code>.spec.ts</code>.</div>
+ <div class="folder-shortcuts"><a href="https://github.com/nitsuwa/hr-pro-automation/tree/main/tests/smoke" target="_blank" rel="noopener noreferrer">Smoke tests ↗</a><a href="https://github.com/nitsuwa/hr-pro-automation/tree/main/tests/regression/setup" target="_blank" rel="noopener noreferrer">Setup tests ↗</a><a href="#run">How to run them →</a></div>
+</section>
 <section class="section" id="install">
- <div class="kicker">01 / FIRST-TIME SETUP</div><h2>Install the project</h2>
+ <div class="kicker">02 / FIRST-TIME SETUP</div><h2>Install the project</h2>
  <p>Install <b>VS Code</b>, <b>Git</b>, and <b>Node.js</b>. Ask your maintainer for repository access and an approved HR PRO test environment.</p>
  <ol class="step-list">
   <li><div><b>Open VS Code → Terminal → New Terminal.</b></div></li>
@@ -282,7 +330,7 @@ npx playwright install chromium</pre></div>
 <figure class="figure visual-figure small-visual"><img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20680%20366%22%20role%3D%22img%22%20aria-label%3D%22Illustration%20of%20HR%20PRO%20prototype%20login%20card%20showing%20role%2C%20email%2C%20password%20and%20sign%20in%22%3E%0A%3Crect%20width%3D%22680%22%20height%3D%22366%22%20rx%3D%2216%22%20fill%3D%22%23f3f5fa%22%2F%3E%3Crect%20x%3D%22192%22%20y%3D%2230%22%20width%3D%22296%22%20height%3D%22292%22%20rx%3D%2213%22%20fill%3D%22white%22%20stroke%3D%22%23dce4ef%22%20stroke-width%3D%222%22%2F%3E%3Cg%20fill%3D%22%233063b3%22%3E%3Crect%20x%3D%22214%22%20y%3D%2256%22%20width%3D%2211%22%20height%3D%2211%22%2F%3E%3Crect%20x%3D%22229%22%20y%3D%2256%22%20width%3D%2211%22%20height%3D%2211%22%20opacity%3D%22.75%22%2F%3E%3Crect%20x%3D%22214%22%20y%3D%2271%22%20width%3D%2211%22%20height%3D%2211%22%20opacity%3D%22.9%22%2F%3E%3Crect%20x%3D%22229%22%20y%3D%2271%22%20width%3D%2211%22%20height%3D%2211%22%20opacity%3D%22.65%22%2F%3E%3C%2Fg%3E%3Ctext%20x%3D%22253%22%20y%3D%2277%22%20font-family%3D%22Arial%22%20font-weight%3D%22bold%22%20letter-spacing%3D%222%22%20font-size%3D%2219%22%20fill%3D%22%233063b3%22%3EHR%20PRO%3C%2Ftext%3E%3Ctext%20x%3D%22214%22%20y%3D%22115%22%20font-family%3D%22Arial%22%20font-size%3D%2220%22%20font-weight%3D%22bold%22%20fill%3D%22%2329275b%22%3ESign%20in%3C%2Ftext%3E%0A%3Ctext%20x%3D%22214%22%20y%3D%22142%22%20font-family%3D%22Arial%22%20font-size%3D%2211%22%20fill%3D%22%2350607f%22%3ETry%20a%20demo%20account%3C%2Ftext%3E%3Crect%20x%3D%22214%22%20y%3D%22151%22%20width%3D%22252%22%20height%3D%2229%22%20rx%3D%226%22%20fill%3D%22white%22%20stroke%3D%22%23d9e1ec%22%2F%3E%3Ctext%20x%3D%22225%22%20y%3D%22170%22%20font-family%3D%22Arial%22%20font-size%3D%2211%22%20fill%3D%22%2356647e%22%3ESelect%20a%20role%20to%20prefill%3C%2Ftext%3E%0A%3Ctext%20x%3D%22214%22%20y%3D%22199%22%20font-family%3D%22Arial%22%20font-size%3D%2211%22%20fill%3D%22%2356647e%22%3EEmail%3C%2Ftext%3E%3Crect%20x%3D%22214%22%20y%3D%22206%22%20width%3D%22252%22%20height%3D%2229%22%20rx%3D%226%22%20fill%3D%22white%22%20stroke%3D%22%238eb8b0%22%2F%3E%0A%3Ctext%20x%3D%22214%22%20y%3D%22252%22%20font-family%3D%22Arial%22%20font-size%3D%2211%22%20fill%3D%22%2356647e%22%3EPassword%3C%2Ftext%3E%3Crect%20x%3D%22214%22%20y%3D%22259%22%20width%3D%22252%22%20height%3D%2229%22%20rx%3D%226%22%20fill%3D%22white%22%20stroke%3D%22%23d9e1ec%22%2F%3E%0A%3Crect%20x%3D%22214%22%20y%3D%22300%22%20width%3D%22252%22%20height%3D%2228%22%20rx%3D%226%22%20fill%3D%22%2329275b%22%2F%3E%3Ctext%20x%3D%22340%22%20y%3D%22318%22%20font-family%3D%22Arial%22%20font-size%3D%2212%22%20text-anchor%3D%22middle%22%20font-weight%3D%22bold%22%20fill%3D%22white%22%3ESign%20in%3C%2Ftext%3E%3C%2Fsvg%3E" alt="Illustration of the HR PRO sign-in page with role, email and password fields" loading="lazy"><figcaption>HR PRO sign-in screen (illustration). Tests use the project's login helper; don't copy or expose passwords.</figcaption></figure>
 </section>
 <section class="section" id="run">
-<div class="kicker">02 / FIRST TEST</div><h2>Run a test yourself</h2>
+<div class="kicker">03 / RUN TESTS</div><h2>Run a test yourself</h2>
 <p><b>Your first practice:</b> Run the existing <code>SMOKE-018 | Settings opens successfully</code> test. It checks navigation and does not create records.</p>
 <div class="codebox"><div class="codebar"><span>VS CODE TERMINAL · SMOKE TESTS</span><button type="button" title="Copy exact code to clipboard" data-copy="run-code">Copy</button></div><pre id="run-code" data-language="powershell" aria-label="PowerShell commands">npm run test:ui:smoke</pre></div>
 <ol class="step-list">
@@ -321,7 +369,7 @@ npx playwright install chromium</pre></div>
 <div class="codebox"><div class="codebar"><span>ONLY IN APPROVED QA · DEPARTMENT EXAMPLE</span><button type="button" title="Copy exact code to clipboard" data-copy="real-code">Copy</button></div><pre id="real-code" data-language="powershell" aria-label="PowerShell commands">npx playwright test tests/regression/setup/department-creation.spec.ts --ui --project=chromium</pre></div>
 </section>
 <section class="section" id="verify">
-<div class="kicker">03 / CHECK THE EVIDENCE</div><h2>Did HR PRO actually behave correctly?</h2>
+<div class="kicker">04 / CHECK THE EVIDENCE</div><h2>Did HR PRO actually behave correctly?</h2>
 <p><b>Green is a starting point, not the whole answer.</b> A test passes when its coded checks pass. Confirm that those checks match what the user expected.</p>
 <figure class="figure visual-figure"><img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%201040%20320%22%20role%3D%22img%22%20aria-labelledby%3D%22title%20desc%22%3E%3Ctitle%20id%3D%22title%22%3EHow%20to%20interpret%20Playwright%20test%20results%3C%2Ftitle%3E%3Cdesc%20id%3D%22desc%22%3EThree%20results%3A%20passed%20means%20assertion%20succeeded%3B%20failed%20means%20investigate%20expected%20and%20received%3B%20skipped%20means%20not%20run.%20Below%20is%20a%20checklist%3A%20confirm%20assertion%2C%20inspect%20actions%2C%20reopen%20if%20saved%2C%20report%20evidence.%3C%2Fdesc%3E%0A%3Crect%20width%3D%221040%22%20height%3D%22320%22%20rx%3D%2218%22%20fill%3D%22%23f3f5fa%22%2F%3E%3Crect%20x%3D%2220%22%20y%3D%2219%22%20width%3D%221000%22%20height%3D%22282%22%20rx%3D%2213%22%20fill%3D%22%23fff%22%20stroke%3D%22%23dce4ee%22%2F%3E%0A%3Ctext%20x%3D%2240%22%20y%3D%2258%22%20font-family%3D%22Arial%2Csans-serif%22%20font-size%3D%2221%22%20font-weight%3D%22700%22%20fill%3D%22%232b285e%22%3EA%20result%20is%20only%20useful%20when%20you%20check%20the%20assertion.%3C%2Ftext%3E%0A%3Cg%20font-family%3D%22Arial%2Csans-serif%22%3E%0A%3Crect%20x%3D%2240%22%20y%3D%2286%22%20width%3D%22305%22%20height%3D%22118%22%20rx%3D%2210%22%20fill%3D%22%23ecf8f3%22%20stroke%3D%22%23b7e3ce%22%2F%3E%3Ccircle%20cx%3D%2268%22%20cy%3D%22112%22%20r%3D%2213%22%20fill%3D%22%23198a6b%22%2F%3E%3Cpath%20d%3D%22m62%20111%205%206%209-11%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222.5%22%2F%3E%3Ctext%20x%3D%2291%22%20y%3D%22119%22%20font-size%3D%2217%22%20font-weight%3D%22700%22%20fill%3D%22%23156a51%22%3EPASSED%3C%2Ftext%3E%3Ctext%20x%3D%2256%22%20y%3D%22153%22%20font-size%3D%2213%22%20fill%3D%22%2336556a%22%3EThe%20coded%20checks%20passed.%3C%2Ftext%3E%3Ctext%20x%3D%2256%22%20y%3D%22177%22%20font-size%3D%2212%22%20fill%3D%22%2336556a%22%3ECheck%20if%20they%20cover%20the%20requirement.%3C%2Ftext%3E%0A%3Crect%20x%3D%22367%22%20y%3D%2286%22%20width%3D%22305%22%20height%3D%22118%22%20rx%3D%2210%22%20fill%3D%22%23fff0f1%22%20stroke%3D%22%23f1bfc8%22%2F%3E%3Ccircle%20cx%3D%22395%22%20cy%3D%22112%22%20r%3D%2213%22%20fill%3D%22%23b3394e%22%2F%3E%3Cpath%20d%3D%22M390%20107%20400%20117%20M400%20107%20390%20117%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222.5%22%2F%3E%3Ctext%20x%3D%22417%22%20y%3D%22119%22%20font-size%3D%2217%22%20font-weight%3D%22700%22%20fill%3D%22%23a13247%22%3EFAILED%3C%2Ftext%3E%3Ctext%20x%3D%22383%22%20y%3D%22153%22%20font-size%3D%2213%22%20fill%3D%22%2336556a%22%3ERead%20Expected%20and%20Received.%3C%2Ftext%3E%3Ctext%20x%3D%22383%22%20y%3D%22177%22%20font-size%3D%2212%22%20fill%3D%22%2336556a%22%3ECheck%20if%20the%20UI%20or%20selector%20is%20wrong.%3C%2Ftext%3E%0A%3Crect%20x%3D%22694%22%20y%3D%2286%22%20width%3D%22305%22%20height%3D%22118%22%20rx%3D%2210%22%20fill%3D%22%23f0f2f6%22%20stroke%3D%22%23d5dbe6%22%2F%3E%3Ccircle%20cx%3D%22722%22%20cy%3D%22112%22%20r%3D%2213%22%20fill%3D%22%23778399%22%2F%3E%3Cpath%20d%3D%22M717%20112h10%22%20stroke%3D%22%23fff%22%20stroke-width%3D%223%22%2F%3E%3Ctext%20x%3D%22744%22%20y%3D%22119%22%20font-size%3D%2217%22%20font-weight%3D%22700%22%20fill%3D%22%23586579%22%3ESKIPPED%3C%2Ftext%3E%3Ctext%20x%3D%22710%22%20y%3D%22153%22%20font-size%3D%2213%22%20fill%3D%22%2336556a%22%3EThe%20test%20did%20not%20execute.%3C%2Ftext%3E%3Ctext%20x%3D%22710%22%20y%3D%22177%22%20font-size%3D%2212%22%20fill%3D%22%2336556a%22%3ENever%20report%20it%20as%20a%20pass.%3C%2Ftext%3E%0A%3Cpath%20d%3D%22M40%20231h960%22%20stroke%3D%22%23dce4ee%22%2F%3E%0A%3Cg%20font-size%3D%2214%22%20fill%3D%22%232e2b61%22%20font-weight%3D%22700%22%3E%3Ctext%20x%3D%2241%22%20y%3D%22267%22%3E01%20%C2%B7%20Read%20expect(...)%3C%2Ftext%3E%3Ctext%20x%3D%22288%22%20y%3D%22267%22%3E02%20%C2%B7%20Inspect%20Actions%3C%2Ftext%3E%3Ctext%20x%3D%22542%22%20y%3D%22267%22%3E03%20%C2%B7%20Reopen%20%2F%20reload%3C%2Ftext%3E%3Ctext%20x%3D%22804%22%20y%3D%22267%22%3E04%20%C2%B7%20Record%20evidence%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Passed means assertions succeeded, failed means investigate, skipped means not executed; then read expected result, inspect actions, reload and record evidence" loading="lazy"><figcaption><b>How to read a result:</b> the status is only the first check. Inspect what the test actually verified.</figcaption></figure>
 <div class="legend">
@@ -357,7 +405,7 @@ npx playwright install chromium</pre></div>
 <div class="note warn"><b>Never “fix” a failing test by changing the expected result just to make it green.</b> If the requirement says one saved department, keep <code>toHaveCount(1)</code>—don't change it to 2 to hide a duplicate.</div>
 </section>
 <section class="section" id="syntax">
-<div class="kicker">04 / THE IMPORTANT CODE</div><h2>Understand actions and assertions</h2>
+<div class="kicker">05 / THE IMPORTANT CODE</div><h2>Understand actions and assertions</h2>
 <p>Playwright tests are written in <b>TypeScript</b>. You do not need to memorize every command. Start with the few lines you will read most often.</p>
 <div class="two-up syntax-intro">
 <div><span class="mini-tag">ACTION</span><h3>Do something in HR PRO</h3><div class="snippet">await button.click();<br>await field.fill(name);</div><p>Clicks a button or types in a field.</p></div>
@@ -398,7 +446,7 @@ test('QA-EXAMPLE | Settings opens', async ({ page, loginAs }) => {
 <div class="note"><b>Key idea:</b> <code>getByRole(...)</code> locates a user-interface element. <code>expect(...)</code> is the check that makes your test meaningful. Read <a href="https://playwright.dev/docs/locators" target="_blank" rel="noopener noreferrer">locators</a> and <a href="https://playwright.dev/docs/test-assertions" target="_blank" rel="noopener noreferrer">assertions</a> in the official Playwright documentation when you need more.</div>
 </section>
 <section class="section" id="create">
-<div class="kicker">05 / CREATE YOUR OWN TEST</div><h2>From manual steps to automated checks</h2>
+<div class="kicker">06 / CREATE YOUR OWN TEST</div><h2>From manual steps to automated checks</h2>
 <p>Use the same workflow whether your requirement comes from an <b>Excel test case</b> or a <b>new HR PRO feature</b>. You can use AI for the draft, but the QA tester decides what should pass.</p>
 <div class="example-switcher" aria-label="Choose an example">
 <div class="example-switch-controls" role="group" aria-label="Requirement source">
@@ -474,7 +522,7 @@ Do not claim it passed. I will review and verify it myself.</pre></div>
 <div class="note warn"><b>AI is a helper, not the test result.</b> Never send passwords, tokens, private employee information or unapproved screenshots. Never paste AI code into <code>main</code> without checking and running it first.</div>
 </section>
 <section class="section" id="github">
- <div class="kicker">06 / TEAM WORKFLOW</div><h2>Update and share through GitHub</h2>
+ <div class="kicker">07 / TEAM WORKFLOW</div><h2>Update and share through GitHub</h2>
  <p><b>main</b> holds the team version. Make new work on a separate branch, then request review.</p>
  <div class="codebox"><div class="codebar"><span>POWERSHELL · UPDATE LOCAL MAIN</span><button type="button" title="Copy exact code to clipboard" data-copy="update-code">Copy</button></div><pre id="update-code" data-language="powershell" aria-label="PowerShell commands">git switch main
 git status
