@@ -4,15 +4,15 @@
 
 This project uses **Playwright** to automatically check HR PRO in a browser. It can do the same steps a manual tester does—open pages, enter test data, click buttons—and then **check whether the result is correct**.
 
-**[Open the HR PRO QA Guide](https://hr-pro-automation.netlify.app)** · **[Create a test with AI](https://hr-pro-automation.netlify.app/#ai)**
+**[Open the HR PRO QA Guide](https://hr-pro-automation-help.vercel.app)** · **[Create a test with AI](https://hr-pro-automation-help.vercel.app/#ai)**
 
 ### Quick links
 
 | Get started | Learn the tools | Create &amp; share |
 | :--- | :--- | :--- |
-| [**Project folders**](https://hr-pro-automation.netlify.app/#structure) · [Install](https://hr-pro-automation.netlify.app/#install) | [**Verify a result**](https://hr-pro-automation.netlify.app/#verify) | [**New test walkthrough**](https://hr-pro-automation.netlify.app/#create) |
-| [**Ways to run tests**](https://hr-pro-automation.netlify.app/#run-options) | [**Playwright syntax**](https://hr-pro-automation.netlify.app/#syntax) | [**AI Help + copyable prompt**](https://hr-pro-automation.netlify.app/#ai) |
-| [**UI Mode guide**](https://playwright.dev/docs/test-ui-mode) | [**Locators**](https://playwright.dev/docs/locators) | [**GitHub workflow**](https://hr-pro-automation.netlify.app/#github) |
+| [**Project folders**](https://hr-pro-automation-help.vercel.app/#structure) · [Install](https://hr-pro-automation-help.vercel.app/#install) | [**Verify a result**](https://hr-pro-automation-help.vercel.app/#verify) | [**New test walkthrough**](https://hr-pro-automation-help.vercel.app/#create) |
+| [**Ways to run tests**](https://hr-pro-automation-help.vercel.app/#run-options) | [**Playwright syntax**](https://hr-pro-automation-help.vercel.app/#syntax) | [**AI Help + copyable prompt**](https://hr-pro-automation-help.vercel.app/#ai) |
+| [**UI Mode guide**](https://playwright.dev/docs/test-ui-mode) | [**Locators**](https://playwright.dev/docs/locators) | [**GitHub workflow**](https://hr-pro-automation-help.vercel.app/#github) |
 
 <img src="docs/help/assets/qa-workflow.svg" alt="The five stages from manual testing to Playwright automation: plan, inspect HR PRO, write a test, verify, and share." width="960">
 
@@ -29,9 +29,9 @@ This project uses **Playwright** to automatically check HR PRO in a browser. It 
 | [`playwright/pages/`](playwright/pages/) | Reusable actions and element locators. |
 | [`package.json`](package.json) / [`playwright.config.ts`](playwright.config.ts) | Available commands, target URL and Playwright settings. |
 
-**Need a quick command?** [Open the copy-and-paste command reference](https://hr-pro-automation.netlify.app/#commands).
+**Need a quick command?** [Open the copy-and-paste command reference](https://hr-pro-automation-help.vercel.app/#commands).
 
-**New test?** Create `tests/regression/setup/my-feature.spec.ts` for a Setup feature. [See the visual folder guide](https://hr-pro-automation.netlify.app/#structure).
+**New test?** Create `tests/regression/setup/my-feature.spec.ts` for a Setup feature. [See the visual folder guide](https://hr-pro-automation-help.vercel.app/#structure).
 
 ## Start here — run your first test
 
@@ -51,13 +51,13 @@ In Playwright UI Mode, open `navigation.spec.ts`, find **SMOKE-018 (Settings)**,
 
 <img src="docs/help/assets/playwright-ui-mode.svg" alt="Illustration showing Playwright UI Mode test list, actions, browser preview and errors" width="760">
 
-*Illustration: choose a test on the left; review actions and the browser preview on the right. [See the visual walkthrough](https://hr-pro-automation.netlify.app/#run).*
+*Illustration: choose a test on the left; review actions and the browser preview on the right. [See the visual walkthrough](https://hr-pro-automation-help.vercel.app/#run).*
 
 **Important:** Before running tests that create or change data, confirm `playwright.config.ts` or `E2E_BASE_URL` targets an **approved, non-production** HR PRO environment. Use fictional QA records only.
 
 ## Run tests — choose an option
 
-**Convention:** Use the official `npx playwright test` CLI form in examples. The `npm run` scripts in `package.json` are optional project aliases. [Copy frequently used commands](https://hr-pro-automation.netlify.app/#commands).
+**Convention:** Use the official `npx playwright test` CLI form in examples. The `npm run` scripts in `package.json` are optional project aliases. [Copy frequently used commands](https://hr-pro-automation-help.vercel.app/#commands).
 
 **UI Mode** opens a window where you choose which tests to execute.
 
@@ -75,7 +75,7 @@ In UI Mode, click **▶** next to one test or **Run all** if you want to run the
 
 **Safety:** Setup and full regression may change records; run them only in an approved disposable QA environment with fictional data. **Never run on production.** The standard full suite excludes `tests/infrastructure/`.
 
-[**See the illustrated run instructions and copy buttons →**](https://hr-pro-automation.netlify.app/#run-options)
+[**See the illustrated run instructions and copy buttons →**](https://hr-pro-automation-help.vercel.app/#run-options)
 
 ## What does a test actually check?
 
@@ -83,7 +83,7 @@ An **action** does something: `await button.click()`.
 
 An **assertion** verifies the expected outcome: `await expect(row).toHaveCount(1)`.
 
-**Passing** means the assertions succeeded—not necessarily that every part of the requirement was tested. Review the Playwright action timeline and expected result. [See how to verify results](https://hr-pro-automation.netlify.app/#verify).
+**Passing** means the assertions succeeded—not necessarily that every part of the requirement was tested. Review the Playwright action timeline and expected result. [See how to verify results](https://hr-pro-automation-help.vercel.app/#verify).
 
 ## Want to create a test? AI can help.
 
@@ -91,11 +91,11 @@ Use the same process for an **Excel test case** or a **new feature not covered b
 
 **Requirement → Try HR PRO manually → Inspect buttons and fields → Ask AI for a draft → Add assertions → Run and verify → Pull request.**
 
-[**Follow the guided AI-assisted test tutorial →**](https://hr-pro-automation.netlify.app/#create)
+[**Follow the guided AI-assisted test tutorial →**](https://hr-pro-automation-help.vercel.app/#create)
 
 <img src="docs/help/assets/locator-inspector.svg" alt="Illustrated HR PRO Departments screen beside a Playwright getByRole locator and an assertion" width="760">
 
-*Illustration: inspect the actual HR PRO control label, then use a Playwright locator and assertion. The [AI Help prompt](https://hr-pro-automation.netlify.app/#ai) shows what details to give ChatGPT or Claude.*
+*Illustration: inspect the actual HR PRO control label, then use a Playwright locator and assertion. The [AI Help prompt](https://hr-pro-automation-help.vercel.app/#ai) shows what details to give ChatGPT or Claude.*
 
 The guide includes a **copyable AI prompt**, a real Department test example, a new Employee Search example, and instructions for finding locators. You do not need to know TypeScript before starting.
 
@@ -105,6 +105,6 @@ AI suggests code; **the QA tester checks the real behavior**. Never send credent
 
 ## Sharing changes
 
-Work on a new branch, run and review your test, then submit a **GitHub pull request** targeting `main`. The [documentation website](https://hr-pro-automation.netlify.app) updates when guide changes are merged to `main`.
+Work on a new branch, run and review your test, then submit a **GitHub pull request** targeting `main`. The [documentation website](https://hr-pro-automation-help.vercel.app) updates when guide changes are merged to `main`.
 
 **Official Playwright resources:** [UI Mode](https://playwright.dev/docs/test-ui-mode) · [Locators](https://playwright.dev/docs/locators) · [Assertions](https://playwright.dev/docs/test-assertions)
