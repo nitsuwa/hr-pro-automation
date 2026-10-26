@@ -42,27 +42,29 @@ Only switch or merge with a clean working tree. Do not reset or discard someone 
 ## 2. Run tests in UI Mode
 
 ```powershell
-npm run test:ui:smoke
+npx playwright test tests/smoke --ui --project=chromium
 ```
 
-For a first read-only practice, run **SMOKE-018 (Settings)** from `navigation.spec.ts` in the test list. Click **▶ Run** and inspect **Actions**, **Before/After**, and **Errors**. See the [guided UI Mode exercise](https://hr-pro-automation.netlify.app/#run). For approved Setup checks: `npm run test:ui:setup`.
+For a first read-only practice, run **SMOKE-018 (Settings)** from `navigation.spec.ts` in the test list. Click **▶ Run** and inspect **Actions**, **Before/After**, and **Errors**. See the [guided UI Mode exercise](https://hr-pro-automation.netlify.app/#run). For approved Setup checks: `npx playwright test tests/regression/setup --ui --project=chromium`.
 
 **Check the test URL first.** The default URL is configured in `playwright.config.ts`; `E2E_BASE_URL` may override it. Use an approved non-production environment and fictional data for tests that change records.
 
 ### Pick the right command
 
+Use `npx playwright` as the primary conventional Playwright CLI. The npm scripts in `package.json` remain optional shorthand. See the [copyable command reference](https://hr-pro-automation.netlify.app/#commands).
+
 In VS Code's Terminal, inside the project folder:
 
 | What you need | Command |
 | --- | --- |
-| All smoke tests in UI Mode | `npm run test:ui:smoke` |
+| All smoke tests in UI Mode | `npx playwright test tests/smoke --ui --project=chromium` |
 | One test (`SMOKE-018`) | `npx playwright test tests/smoke/navigation.spec.ts --grep "SMOKE-018" --ui --project=chromium` |
 | One Setup test file | `npx playwright test tests/regression/setup/department-creation.spec.ts --ui --project=chromium` |
-| Setup regression group | `npm run test:ui:setup` |
+| Setup regression group | `npx playwright test tests/regression/setup --ui --project=chromium` |
 | Full standard suite in UI Mode | `npx playwright test tests/smoke tests/regression --ui --project=chromium` |
-| Smoke tests in terminal (run immediately) | `npm run test:smoke` |
-| Setup tests in terminal (run immediately) | `npm run test:setup` |
-| Full standard suite in terminal (run immediately) | `npm run test:full` |
+| Smoke tests in terminal (run immediately) | `npx playwright test tests/smoke --project=chromium` |
+| Setup tests in terminal (run immediately) | `npx playwright test tests/regression/setup --project=chromium` |
+| Full standard suite in terminal (run immediately) | `npx playwright test tests/smoke tests/regression --project=chromium` |
 
 For **UI Mode**, select a test and click ▶. Use **Run all** only when you're ready to execute the whole displayed group. Full standard runs include Smoke + Regression, not Infrastructure scripts. For detailed screenshots, [see running tests](https://hr-pro-automation.netlify.app/#run-options).
 
