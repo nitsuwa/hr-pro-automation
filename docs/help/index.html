@@ -239,6 +239,24 @@ pre{font-size:13px;line-height:1.75;tab-size:2}
 .folder-meanings strong{font-size:12px;color:var(--ink)}.folder-meanings p{font-size:12px;color:var(--muted);margin:4px 0 0}
 .folder-shortcuts{display:flex;gap:12px;flex-wrap:wrap;font-size:13px;font-weight:700}
 @media(max-width:900px){.folder-layout{grid-template-columns:1fr}}
+
+.run-options{margin:25px 0 16px}.run-options>h3{font-size:19px}.run-options>p{font-size:13px;color:var(--muted)}
+.run-options-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}
+.run-recipe{border:1px solid var(--line);border-radius:10px;padding:15px;background:var(--surface-soft);min-width:0}
+.run-recipe h4{font-size:15px;margin:4px 0 5px;color:var(--ink)}
+.run-recipe p{font-size:12px;line-height:1.6;margin:0 0 11px;color:var(--body)}
+.run-recipe .codebox{margin:7px 0 0}.run-recipe pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:11.5px}
+.recipe-tag{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--teal-ink)}
+.run-more{border:1px solid var(--line);border-radius:9px;background:var(--surface-soft);margin:10px 0;padding:0 15px}
+.run-more summary{color:var(--ink);font-weight:750;cursor:pointer;padding:13px 0}
+.run-more summary span{font-weight:600;font-size:11px;color:var(--muted);margin-left:6px}
+.run-more[open] summary{border-bottom:1px solid var(--line)}
+.run-more p{font-size:13px;margin:13px 0}
+.run-more .codebox{margin:12px 0 17px}
+.command-table{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0}
+.command-table td,.command-table th{padding:8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.command-table th{color:var(--ink)}.command-table code{overflow-wrap:anywhere}
+@media(max-width:900px){.run-options-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -339,6 +357,39 @@ npx playwright install chromium</pre></div>
 <li><div><b>Click its result and read Actions.</b> Notice how it navigates to Settings.</div></li>
 <li><div><b>Open Before / After.</b> Compare the browser view before and after the click. The assertion checks the Settings URL.</div></li>
 </ol>
+
+<div class="run-options" id="run-options">
+<h3>Choose how to run tests</h3>
+<p>Open <b>VS Code → Terminal</b> in the project folder. UI Mode <b>lists tests first</b>; click ▶ beside one test, or click the Run all control only when you intend to execute the entire displayed set.</p>
+<div class="run-options-grid">
+ <div class="run-recipe"><span class="recipe-tag">Best first try</span><h4>One specific test by ID</h4><p>Run only <b>SMOKE-018</b> from the navigation file.</p>
+  <div class="codebox"><div class="codebar"><span>UI MODE · ONE TEST</span><button type="button" data-copy="cmd-one">Copy</button></div><pre id="cmd-one" data-language="powershell">npx playwright test tests/smoke/navigation.spec.ts --grep "SMOKE-018" --ui --project=chromium</pre></div></div>
+ <div class="run-recipe"><span class="recipe-tag">Start here</span><h4>All smoke tests</h4><p>Shows login, demo roles, and basic navigation tests in UI Mode.</p>
+  <div class="codebox"><div class="codebar"><span>UI MODE · SMOKE</span><button type="button" data-copy="cmd-smoke">Copy</button></div><pre id="cmd-smoke" data-language="powershell">npm run test:ui:smoke</pre></div></div>
+ <div class="run-recipe"><span class="recipe-tag">One file · QA only</span><h4>Run one Setup test file</h4><p>Opens the Department creation test. <b>This creates a fictional QA record.</b></p>
+  <div class="codebox"><div class="codebar"><span>UI MODE · ONE FILE</span><button type="button" data-copy="cmd-file">Copy</button></div><pre id="cmd-file" data-language="powershell">npx playwright test tests/regression/setup/department-creation.spec.ts --ui --project=chromium</pre></div></div>
+ <div class="run-recipe"><span class="recipe-tag">Group · QA only</span><h4>All Setup regression tests</h4><p>Tests HR PRO Setup features such as Departments, Employees, and allowances. Some change records.</p>
+  <div class="codebox"><div class="codebar"><span>UI MODE · SETUP</span><button type="button" data-copy="cmd-setup">Copy</button></div><pre id="cmd-setup" data-language="powershell">npm run test:ui:setup</pre></div></div>
+</div>
+<details class="run-more">
+ <summary>Run the standard full suite in UI Mode <span>Advanced · approved QA only</span></summary>
+ <p>This selects <b>Smoke + Regression</b>, but not <code>tests/infrastructure/</code>. In UI Mode, click Run all to execute the selected tests. Some tests can modify QA data.</p>
+ <div class="codebox"><div class="codebar"><span>UI MODE · ALL STANDARD TESTS</span><button type="button" data-copy="cmd-all-ui">Copy</button></div><pre id="cmd-all-ui" data-language="powershell">npx playwright test tests/smoke tests/regression --ui --project=chromium</pre></div>
+</details>
+<details class="run-more">
+ <summary>Run without UI Mode (terminal commands) <span>Runs immediately</span></summary>
+ <p>These commands execute tests as soon as you press Enter. View results in the terminal and saved Playwright report.</p>
+ <table class="command-table"><thead><tr><th>What you want</th><th>Command</th></tr></thead><tbody>
+  <tr><td>Run all smoke tests</td><td><code>npm run test:smoke</code></td></tr>
+  <tr><td>Run all Setup regression tests</td><td><code>npm run test:setup</code></td></tr>
+  <tr><td>Run all standard Smoke + Regression tests</td><td><code>npm run test:full</code></td></tr>
+  <tr><td>List available smoke tests without executing</td><td><code>npx playwright test tests/smoke --list</code></td></tr>
+  <tr><td>Open the HTML test report</td><td><code>npm run test:report</code></td></tr>
+ </tbody></table>
+ <div class="codebox"><div class="codebar"><span>TERMINAL · FULL STANDARD SUITE</span><button type="button" data-copy="cmd-all-cli">Copy</button></div><pre id="cmd-all-cli" data-language="powershell">npm run test:full</pre></div>
+</details>
+<div class="note warn"><b>Safety check:</b> Confirm the target URL in <code>playwright.config.ts</code> or <code>E2E_BASE_URL</code> before data-changing tests. Use an approved disposable QA environment and fictional records; follow any required mutation authorization. <b>Never run Setup or full regression on production.</b> The generic <code>npm run test:ui</code> may also show advanced infrastructure scripts, so use the targeted commands above instead.</div>
+</div>
 <figure class="figure" id="playwright-figure">
 <img src="https://github.com/microsoft/playwright/assets/13063165/6b87712f-64a5-4d73-a91d-6562b864712c" data-fallback="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20960%20286%22%20role%3D%22img%22%20aria-label%3D%22Illustration%20of%20Playwright%20UI%20Mode%20showing%20test%20list%2C%20action%20timeline%2C%20browser%20preview%20and%20error%20panel%22%3E%0A%3Crect%20width%3D%22960%22%20height%3D%22286%22%20rx%3D%2215%22%20fill%3D%22%23ecf2fa%22%2F%3E%3Crect%20x%3D%222%22%20y%3D%222%22%20width%3D%22956%22%20height%3D%22282%22%20rx%3D%2214%22%20fill%3D%22white%22%20stroke%3D%22%23d4dfed%22%20stroke-width%3D%223%22%2F%3E%0A%3Cpath%20d%3D%22M14%202%20H946%20Q958%202%20958%2016%20V44%20H2%20V16%20Q2%202%2014%202Z%22%20fill%3D%22%2329275b%22%2F%3E%3Ctext%20x%3D%2225%22%20y%3D%2230%22%20font-family%3D%22Arial%2Csans-serif%22%20font-size%3D%2219%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3EPLAYWRIGHT%20%20%20%2F%20%20%20UI%20MODE%20(ILLUSTRATION)%3C%2Ftext%3E%0A%3Crect%20x%3D%2218%22%20y%3D%2264%22%20width%3D%22314%22%20height%3D%22202%22%20rx%3D%2210%22%20fill%3D%22%23f6f9fd%22%20stroke%3D%22%23cad9eb%22%2F%3E%3Crect%20x%3D%22348%22%20y%3D%2264%22%20width%3D%22592%22%20height%3D%2280%22%20rx%3D%2210%22%20fill%3D%22%23f6f9fd%22%20stroke%3D%22%23cad9eb%22%2F%3E%3Crect%20x%3D%22348%22%20y%3D%22155%22%20width%3D%22382%22%20height%3D%22111%22%20rx%3D%2210%22%20fill%3D%22%23f6f9fd%22%20stroke%3D%22%23cad9eb%22%2F%3E%3Crect%20x%3D%22741%22%20y%3D%22155%22%20width%3D%22199%22%20height%3D%22111%22%20rx%3D%2210%22%20fill%3D%22%23fff2f0%22%20stroke%3D%22%23ebc1bd%22%2F%3E%0A%3Ctext%20x%3D%2235%22%20y%3D%2291%22%20font-size%3D%2218%22%20font-family%3D%22Arial%22%20font-weight%3D%22bold%22%20fill%3D%22%2320618b%22%3E1%20%20%20TEST%20LIST%20%2F%20%E2%96%B6%20RUN%3C%2Ftext%3E%3Crect%20x%3D%2235%22%20y%3D%22105%22%20width%3D%22278%22%20height%3D%2231%22%20rx%3D%225%22%20fill%3D%22%23e3f3ec%22%2F%3E%3Ctext%20x%3D%2246%22%20y%3D%22125%22%20font-family%3D%22Arial%22%20font-size%3D%2215%22%20fill%3D%22%23126a4b%22%3E%E2%9C%93%20general-settings.spec.ts%3C%2Ftext%3E%3Crect%20x%3D%2235%22%20y%3D%22143%22%20width%3D%22278%22%20height%3D%2231%22%20rx%3D%225%22%20fill%3D%22%23e3f3ec%22%2F%3E%3Ctext%20x%3D%2246%22%20y%3D%22163%22%20font-family%3D%22Arial%22%20font-size%3D%2215%22%20fill%3D%22%23126a4b%22%3E%E2%9C%93%20SET-CONFIG-001%3C%2Ftext%3E%3Crect%20x%3D%2235%22%20y%3D%22181%22%20width%3D%22278%22%20height%3D%2231%22%20rx%3D%225%22%20fill%3D%22%23fbe5e5%22%2F%3E%3Ctext%20x%3D%2246%22%20y%3D%22201%22%20font-family%3D%22Arial%22%20font-size%3D%2215%22%20fill%3D%22%23a94040%22%3E%E2%9C%95%20SET-JOBPOS-002%3C%2Ftext%3E%0A%3Ctext%20x%3D%22368%22%20y%3D%2291%22%20font-size%3D%2218%22%20font-family%3D%22Arial%22%20font-weight%3D%22bold%22%20fill%3D%22%2320618b%22%3E2%20%20%20ACTIONS%20%2F%20TIMELINE%3C%2Ftext%3E%3Cpath%20d%3D%22M374%20116%20H918%22%20stroke%3D%22%2394b0ce%22%20stroke-width%3D%224%22%2F%3E%3Cg%20fill%3D%22%2317948a%22%3E%3Ccircle%20cx%3D%22410%22%20cy%3D%22116%22%20r%3D%2210%22%2F%3E%3Ccircle%20cx%3D%22555%22%20cy%3D%22116%22%20r%3D%2210%22%2F%3E%3Ccircle%20cx%3D%22710%22%20cy%3D%22116%22%20r%3D%2210%22%2F%3E%3Ccircle%20cx%3D%22872%22%20cy%3D%22116%22%20r%3D%2210%22%2F%3E%3C%2Fg%3E%0A%3Ctext%20x%3D%22370%22%20y%3D%22190%22%20font-size%3D%2218%22%20font-family%3D%22Arial%22%20font-weight%3D%22bold%22%20fill%3D%22%2320618b%22%3E3%20%20%20BROWSER%20PREVIEW%3C%2Ftext%3E%3Ctext%20x%3D%22370%22%20y%3D%22220%22%20font-size%3D%2215%22%20font-family%3D%22Arial%22%20fill%3D%22%2353667f%22%3ESee%20the%20page%20as%20each%20step%20happened.%3C%2Ftext%3E%0A%3Ctext%20x%3D%22761%22%20y%3D%22190%22%20font-size%3D%2218%22%20font-family%3D%22Arial%22%20font-weight%3D%22bold%22%20fill%3D%22%23ab4141%22%3E4%20%20%20ERRORS%3C%2Ftext%3E%3Ctext%20x%3D%22761%22%20y%3D%22220%22%20font-size%3D%2214%22%20font-family%3D%22Arial%22%20fill%3D%22%23824a4a%22%3EExpected%20vs%20actual%3C%2Ftext%3E%3C%2Fsvg%3E" id="playwright-screen" alt="Official Playwright UI Mode screenshot showing the test list on the left, run icons, action timeline, browser preview and bottom details" loading="lazy" referrerpolicy="no-referrer">
 <figcaption>Official Playwright UI Mode screenshot, using sample tests (not HR PRO). Use the guide below to identify the panels.</figcaption>
