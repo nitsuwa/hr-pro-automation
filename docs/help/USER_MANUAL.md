@@ -4,19 +4,19 @@
 
 This document is a written reference. The website is the main step-by-step guide. HR PRO is the system being tested; **Playwright** runs browser checks; **GitHub** stores the code and its review history.
 
-## Quick start (recommended)
+## Start with the easiest test
 
-The [visual beginner guide](https://hr-pro-automation-help.vercel.app/#beginner-start) starts with your first test, then explains what is in the repository, the workflow, Playwright syntax, and common errors. **Begin there.** This manual is the longer reference for later.
+The project already opens the [HR PRO prototype](https://hrproprototype.netlify.app/) by default. Its demo login uses selectable roles. For your first test, you won't need to sign in at all.
 
-Before running tests, confirm the target is an authorized **non-production** HR PRO environment and obtain approved test accounts. Use fictional data. The guide does not grant access.
-
-**Run one test:** After installing Git, Node.js LTS, VS Code, and the dependencies below, open VS Code's terminal and enter:
+Install Git, Node.js LTS, and VS Code following the [illustrated guide](https://hr-pro-automation-help.vercel.app/#install). After downloading and setting up the project, paste this in VS Code's terminal:
 
 ```powershell
-npx playwright test tests/smoke/navigation.spec.ts --grep "SMOKE-018" --ui --project=chromium
+npx playwright test tests/smoke/login.spec.ts --grep "SMOKE-001" --ui --project=chromium
 ```
 
-Click ▶ next to **SMOKE-018 | Settings opens successfully**. Review Actions and the actual browser result. The HTML guide works locally; linked external resources and the HR PRO environment require network access.
+In the Playwright window, click ▶ on **SMOKE-001 | HR PRO login page loads**. A green result means the sign-in page checks passed. Open **Actions** to see the steps.
+
+You do not need to change `playwright.config.ts` or `E2E_BASE_URL`; these are advanced options for changing the website address. Tests that add, edit, or delete information must run only on a designated practice system with fictional records.
 
 ## Before you begin: what the folders mean
 
@@ -30,7 +30,7 @@ Click ▶ next to **SMOKE-018 | Settings opens successfully**. Review Actions an
 
 ## 1. Install
 
-Install Git, Node.js, and Visual Studio Code. Get access to the repository and an approved HR PRO testing environment.
+Install Git, Node.js LTS, and VS Code. The GitHub project is public, so you can download and read it without requesting repository access. Permission is only needed to upload changes.
 
 Open the VS Code terminal:
 
@@ -59,9 +59,9 @@ Only switch or merge with a clean working tree. Do not reset or discard someone 
 npx playwright test tests/smoke --ui --project=chromium
 ```
 
-For a first read-only practice, run **SMOKE-018 (Settings)** from `navigation.spec.ts` in the test list. Click **▶ Run** and inspect **Actions**, **Before/After**, and **Errors**. See the [guided UI Mode exercise](https://hr-pro-automation-help.vercel.app/#run). For approved Setup checks: `npx playwright test tests/regression/setup --ui --project=chromium`.
+For a first practice, run **SMOKE-001 (login page loads)** from `login.spec.ts`. When comfortable, try **SMOKE-018 (Settings)** from `navigation.spec.ts`. Click **▶ Run** and inspect **Actions**, **Before/After**, and **Errors**. See the [guided UI Mode exercise](https://hr-pro-automation-help.vercel.app/#run). For approved Setup checks: `npx playwright test tests/regression/setup --ui --project=chromium`.
 
-**Check the test URL first.** The default URL is configured in `playwright.config.ts`; `E2E_BASE_URL` may override it. Use an approved non-production environment and fictional data for tests that change records.
+**What site opens?** The default is `https://hrproprototype.netlify.app/`. The terminal prints the site address. Leave it unchanged for the first test. Only run tests that change information on a designated practice environment with fictional records.
 
 ### Pick the right command
 
@@ -80,9 +80,9 @@ In VS Code's Terminal, inside the project folder:
 | Setup tests in terminal (run immediately) | `npx playwright test tests/regression/setup --project=chromium` |
 | Full standard suite in terminal (run immediately) | `npx playwright test tests/smoke tests/regression --project=chromium` |
 
-For **UI Mode**, select a test and click ▶. Use **Run all** only when you're ready to execute the whole displayed group. Full standard runs include Smoke + Regression, not Infrastructure scripts. For detailed screenshots, [see running tests](https://hr-pro-automation-help.vercel.app/#run-options).
+For **UI Mode**, click ▶ on just the test you want. For your first session, avoid **Run all**. Full standard runs include Smoke + Regression, not Infrastructure scripts. For detailed screenshots, [see running tests](https://hr-pro-automation-help.vercel.app/#run-options).
 
-**Caution:** Some Setup tests mutate data. Check `E2E_BASE_URL` or `playwright.config.ts` and run them only in an approved disposable non-production QA environment with fictional records. Follow any required mutation authorization.
+**Caution:** Some Setup tests add or edit records. Run them only on a designated practice system with fictional data, never on a live HR system.
 
 ## 3. Verify results
 
