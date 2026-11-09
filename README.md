@@ -43,11 +43,23 @@ npx playwright test tests/smoke/login.spec.ts --grep "SMOKE-001" --ui --project=
 
 Advanced inspection scripts are in `tests/infrastructure/`; beginners can ignore them.
 
-## How do I make a new test?
+## Learn to edit a test—not just run commands
 
-Follow the [illustrated Create a Test walkthrough](https://hr-pro-automation-help.vercel.app/#create). It shows how to pick a scenario, try it manually, locate real controls, learn from [an existing Department test](tests/regression/setup/department-creation.spec.ts), create a new file, run it, and share it.
+Follow the [hands-on editing exercise in the visual guide](https://hr-pro-automation-help.vercel.app/#edit-test-practice). This starts with a real existing check in [`tests/smoke/login.spec.ts`](tests/smoke/login.spec.ts) and shows how to make a **separate practice test** that selects the HR Officer demo role.
 
-**Workflow:** Choose a scenario → try it → write browser steps and checks → run and verify → share through a GitHub pull request.
+**What you edit:** the test's descriptive name, the action (which option is selected), and the expected result. The guide provides a full working example, then asks you to change it to Payroll Manager yourself. Keep the original test untouched.
+
+After editing the new file, run it in Playwright UI Mode:
+
+```powershell
+npx playwright test tests/smoke/demo-selection-practice.spec.ts --ui --project=chromium
+```
+
+The file above **does not exist until you create it in VS Code**. The guide explains where to create it, how to edit it, and how to verify its result.
+
+For a different HR PRO feature, don't simply rename the test. Observe the actual buttons and fields, change the browser steps, and update the expected result. Learn from the [existing Department creation test](tests/regression/setup/department-creation.spec.ts) for tests that save information.
+
+**Workflow:** Choose a scenario → try it → edit steps **and** checks → run your test → verify the result → share through a GitHub pull request.
 
 Tests that add, edit, or delete information must run only on designated practice environments with fictional records. Do not run them on live HR systems.
 

@@ -1,16 +1,19 @@
 # HR PRO QA Guide
 
-**Website:** https://hr-pro-automation-help.vercel.app
+**Visual guide:** https://hr-pro-automation-help.vercel.app/
 
-This folder contains the documentation for the HR PRO Playwright testing repository.
+This folder contains the visual HTML guide and a more detailed written manual for the HR PRO Playwright test repository.
 
-| File | Used for |
+| File | What it is |
 | --- | --- |
-| [index.html](index.html) | Official visual website, hosted on Netlify |
-| [USER_MANUAL.md](USER_MANUAL.md) | Written guide for GitHub readers |
+| [index.html](index.html) | Interactive visual guide, published on Vercel and available as a local HTML file |
+| [USER_MANUAL.md](USER_MANUAL.md) | Longer reference for GitHub readers |
+| [assets/](assets/) | Standalone illustrations used by the repository README |
 
-**For new QA members:** follow [Project folders](https://hr-pro-automation-help.vercel.app/#structure) → [Install](https://hr-pro-automation-help.vercel.app/#install) → [Ways to run](https://hr-pro-automation-help.vercel.app/#run-options) → [Verify](https://hr-pro-automation-help.vercel.app/#verify) → [Create a test](https://hr-pro-automation-help.vercel.app/#create). Begin with the read-only `SMOKE-018` navigation check.
+**For someone new:** Open the [first-run walkthrough](https://hr-pro-automation-help.vercel.app/#beginner-start) → [run one test](https://hr-pro-automation-help.vercel.app/#run) → [learn how to edit a test](https://hr-pro-automation-help.vercel.app/#edit-test-practice). The first test, `SMOKE-001`, checks the HR PRO sign-in screen and needs no credentials.
 
-**For maintainers:** make changes on a branch, review them, and merge into `main`. Netlify redeploys the HTML from `docs/help`. The screenshots/illustrations in the page are embedded, so a separate assets folder is not required.
+**For someone creating tests:** The guide shows how to find an existing test, create a new `.spec.ts` file, edit the test name, browser steps, and expected results, then run and inspect the new test. Use a designated practice website with fictional data for tests that change records.
 
-Repository access is still required to run and maintain the Playwright tests. Do not put credentials, tokens, or real employee data into the public documentation.
+**Offline access:** Save `index.html` and open it in a browser. Its main layout, illustrations drawn inside the HTML, code samples, and interaction controls are local. Some reference screenshots are loaded from external Playwright/GitHub websites, so they may not appear offline. Links to other websites and running Playwright tests still require network access.
+
+**Contributing:** Make changes in a branch and request a review before merging into `main`. The documentation website updates when the repository's deployment publishes the changed HTML. Do not commit credentials or real employee data.
