@@ -1,129 +1,852 @@
 <!doctype html>
 <html lang="en" data-theme="light">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="HR PRO QA testing: run your first Playwright test, understand the project, and create new checks.">
-<title>HR PRO · Simple QA Guide</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="HR PRO QA automation guide. Set up Playwright, run tests in UI Mode, verify results, and add new coverage.">
+<title>HR PRO | QA Automation Guide</title>
+<script>
+(function () {
+  // Light by default; only an explicit saved choice switches to dark.
+  try { document.documentElement.dataset.theme =
+    localStorage.getItem('hrpro-qa-theme') === 'dark' ? 'dark' : 'light'; }
+  catch (_) { document.documentElement.dataset.theme = 'light'; }
+})();
+</script>
 <style>
-:root{--bg:#f3f6fc;--panel:#fff;--ink:#202c49;--muted:#546481;--line:#dfe6f1;--nav:#1c2d54;--blue:#265ac2;--teal:#117b70;--soft:#e9f5f2;--code:#17243f;--warn:#fff4dd;--shadow:0 6px 30px rgba(25,43,78,.06);color-scheme:light}
-[data-theme=dark]{--bg:#101827;--panel:#1b2940;--ink:#f0f5ff;--muted:#c6d2e4;--line:#3c4e68;--nav:#0b1527;--blue:#adcaff;--teal:#92dfd0;--soft:#203c3f;--code:#10192b;--warn:#3f3626;color-scheme:dark}
-*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:72px}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.65 system-ui,"Segoe UI",Arial,sans-serif}a{color:var(--blue)}button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var(--teal);outline-offset:3px}.wrap{max-width:1020px;margin:auto;padding:0 22px}
-header{background:var(--nav);color:#fff;position:sticky;top:0;z-index:5;box-shadow:0 2px 12px #0001}header .wrap{display:flex;gap:18px;align-items:center;justify-content:space-between;min-height:62px}header .brand{font-size:17px;font-weight:850;letter-spacing:.02em;white-space:nowrap;color:#fff;text-decoration:none}nav{display:flex;gap:14px;overflow:auto}nav a{color:#edf4ff;white-space:nowrap;font-weight:650;font-size:12px;text-decoration:none}nav a:hover{text-decoration:underline}.theme{border:1px solid #7888a3;background:transparent;color:#fff;padding:7px 10px;border-radius:7px;font-size:12px;white-space:nowrap}
-main{padding:26px 0 60px}.hero{background:linear-gradient(130deg,#263a74,#145f70);color:white;border-radius:17px;padding:32px 36px;margin-bottom:17px}.hero h1{color:white;font-size:clamp(27px,4.3vw,38px);line-height:1.2;margin:5px 0 8px}.hero p{color:#eaf6ff;max-width:640px;margin:0 0 15px}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.15em;font-weight:800;opacity:.85}.pills{display:flex;flex-wrap:wrap;gap:8px}.pill{display:inline-block;padding:8px 12px;background:#fff;color:#1d386e;border-radius:8px;font-weight:750;text-decoration:none;font-size:13px}.pill.outline{background:transparent;color:#fff;border:1px solid #c4d5ed}
-section{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:26px 30px;margin:14px 0;box-shadow:var(--shadow)}h2{font-size:22px;margin:0 0 5px;letter-spacing:-.025em;line-height:1.3}h3{font-size:15px;margin:17px 0 6px}p{margin:0 0 12px}.sub{color:var(--muted);margin-bottom:17px}.label{font-size:11px;letter-spacing:.1em;font-weight:850;color:var(--teal);text-transform:uppercase;margin-bottom:6px}
-#run{counter-reset:step}.steps{list-style:none;padding:0;margin:16px 0;display:grid;gap:11px}.steps li{display:grid;grid-template-columns:28px 1fr;gap:10px}.steps li:before{counter-increment:step;content:counter(step);background:var(--teal);color:white;font-weight:800;font-size:12px;width:26px;height:26px;display:grid;place-items:center;border-radius:50%}.steps b{display:block}.steps p{margin:1px 0;color:var(--muted);font-size:13px}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.tile{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:16px}.tile b{display:block;margin-bottom:5px}.tile p{font-size:13px;color:var(--muted);margin:0}
-.code{background:var(--code);border-radius:10px;overflow:hidden;margin:12px 0 15px}.code-top{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;color:#d4e1f9;font-size:11px;font-weight:750;border-bottom:1px solid #53627b}.copy{color:white;background:#375174;border:1px solid #7f9dc1;border-radius:6px;padding:5px 10px;font-size:12px;font-weight:700}.copy:hover{background:#41648e}pre{color:#eff6ff;padding:13px 16px;margin:0;overflow:auto;font:13px/1.75 Consolas,"Courier New",monospace}code{font-family:Consolas,"Courier New",monospace;font-size:.92em;overflow-wrap:anywhere}.note{background:var(--soft);border-left:4px solid var(--teal);padding:11px 13px;border-radius:6px;margin:13px 0;font-size:13px}.warn{background:var(--warn);border-color:#d5a039}.flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin:15px 0}.flow div{border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:12px 8px;text-align:center;font-weight:750;font-size:12px}.flow small{display:block;font-weight:450;color:var(--muted);font-size:11px}
-table{border-collapse:collapse;width:100%;font-size:13px;margin:12px 0}th,td{padding:10px 11px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{color:var(--ink);background:var(--bg)}td:first-child{font-weight:650}
-details{border:1px solid var(--line);border-radius:9px;margin:9px 0;padding:0 15px}summary{cursor:pointer;font-weight:750;padding:12px 0}details>div{padding-bottom:14px;color:var(--muted);font-size:13px}details[open] summary{border-bottom:1px solid var(--line);margin-bottom:12px}.foot{color:var(--muted);font-size:12px;padding:14px 0 25px}.minor{font-size:12px;color:var(--muted)}.back{display:inline-block;margin-top:6px;font-weight:650;font-size:12px}ul{padding-left:22px}li{margin:5px 0}.anchor{position:relative;top:-80px}
-@media(max-width:760px){header .wrap{flex-wrap:wrap;padding-top:11px;padding-bottom:10px;gap:8px}nav{order:3;width:100%;padding-bottom:3px}section{padding:21px 18px}.hero{padding:25px 22px}.grid{grid-template-columns:1fr}.flow{grid-template-columns:repeat(2,1fr)}pre{font-size:12px}table{display:block;overflow-x:auto}}
-@media print{header,.copy,.pills,.back{display:none!important}.hero{background:#fff;color:#111;border:1px solid #aaa}.hero h1,.hero p{color:#111}section{box-shadow:none;break-inside:avoid}body{background:#fff}}
+:root {
+  color-scheme:light;
+  --page:#f3f4f9; --surface:#fff; --surface-soft:#f9faff;
+  --ink:#2b285e; --body:#34405d; --muted:#5f6d87;
+  --line:#dfe3ee; --brand:#2f60ad; --nav:#2e2b61; --nav-hover:#454077;
+  --teal:#21877e; --teal-wash:#e6f3f0; --teal-ink:#12645d;
+  --code:#20274a; --code-ink:#f6f9ff; --warning-bg:#fff6df; --warning-ink:#634a12;
+  --success:#13745f; --danger:#aa3046; --shadow:0 4px 18px rgba(37,44,83,.045);
+}
+html[data-theme="dark"] {
+  color-scheme:dark;
+  /* Soft charcoal-blue surfaces: strong contrast without stark black/white glare. */
+  --page:#111a29; --surface:#1c293b; --surface-soft:#27364b;
+  --ink:#ecf2fa; --body:#d1deec; --muted:#b6c8d9;
+  --line:#485d77; --brand:#b6d1ff; --nav:#1a2941; --nav-hover:#304663;
+  --teal:#75d7c5; --teal-wash:#234246; --teal-ink:#b7eee3;
+  --code:#111c30; --code-ink:#e9f0fb; --warning-bg:#3c3022; --warning-ink:#f3d79f;
+  --success:#9ce3c9; --danger:#ffadbc; --shadow:0 5px 18px rgba(0,0,0,.12);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:138px}
+body{margin:0;background:var(--page);color:var(--body);font:15px/1.6 "Segoe UI",Arial,sans-serif}
+a{color:var(--brand);text-decoration:none}a:hover{text-decoration:underline}
+button{font:inherit}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+.shell{width:min(1170px,calc(100% - 40px));margin:0 auto}
+.masthead{background:var(--surface);border-bottom:1px solid var(--line)}
+.masthead-inner{min-height:90px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:850;letter-spacing:.12em;font-size:23px;color:var(--brand)}
+.brand:hover{text-decoration:none}
+.mark{width:34px;height:34px;display:grid;grid-template-columns:repeat(2,1fr);gap:4px;flex:none}
+.mark span{background:#3066b4;border-radius:2px}
+.mark span:nth-child(2){background:#477dcb}.mark span:nth-child(3){background:#5289d2}.mark span:nth-child(4){background:#356bb9}
+.brand small{display:block;font-size:11px;letter-spacing:.07em;color:var(--muted);font-weight:650;line-height:1.2}
+.mast-actions{display:flex;align-items:center;gap:12px}
+.mast-actions a{font-size:13px;font-weight:700}
+.theme{border:1px solid var(--line);border-radius:8px;padding:8px 13px;background:var(--surface);color:var(--body);cursor:pointer;white-space:nowrap;font-weight:700;font-size:12px}
+.theme:hover{border-color:var(--teal)}
+.primary-nav{background:var(--nav)}
+.nav-inner{display:flex;align-items:center;overflow-x:auto;scrollbar-width:thin}
+.primary-nav a{color:#d9ddf1;font-weight:650;font-size:13px;padding:13px 17px;white-space:nowrap}
+.primary-nav a:hover,.primary-nav a:focus-visible{background:var(--nav-hover);color:#fff;text-decoration:none}
+.primary-nav a.current{background:#238b82;color:#fff}
+.layout{display:grid;grid-template-columns:210px minmax(0,1fr);gap:28px;padding-top:28px;padding-bottom:74px}
+.aside{position:sticky;top:18px;align-self:start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px 12px;box-shadow:var(--shadow)}
+.aside strong{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:block;margin:5px 12px 10px}
+.aside a{display:block;color:var(--body);font-size:13px;border-radius:7px;padding:9px 12px}
+.aside a:hover{background:var(--teal-wash);color:var(--teal-ink);text-decoration:none}
+.content{min-width:0}
+.hero{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:36px 40px;box-shadow:var(--shadow)}
+.kicker{font-weight:800;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--teal-ink)}
+h1,h2,h3{color:var(--ink);line-height:1.22;letter-spacing:-.025em}
+h1{font-size:clamp(29px,4vw,40px);margin:11px 0 10px}
+h2{font-size:25px;margin:5px 0 11px}
+h3{font-size:16px;margin:0 0 8px}
+p{margin:0 0 14px}
+.subtitle{color:var(--muted);font-size:16px;max-width:650px}
+.buttons{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}
+.btn{display:inline-block;padding:10px 15px;border-radius:8px;background:var(--nav);color:#fff;font-size:13px;font-weight:750}
+.btn:hover{background:var(--nav-hover);color:#fff;text-decoration:none}
+.btn.secondary{background:var(--teal-wash);color:var(--teal-ink)}
+.btn.secondary:hover{filter:brightness(.96)}
+.overview{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:16px 0 8px}
+.overview article{background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:17px;box-shadow:var(--shadow)}
+.overview b{display:block;color:var(--ink);margin:0 0 5px}
+.overview p{font-size:13px;color:var(--muted);margin:0}
+.number{font-weight:850;font-size:12px;color:var(--teal-ink);margin-bottom:7px}
+.section{margin-top:25px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:29px 34px;box-shadow:var(--shadow);scroll-margin-top:135px}
+.section>p{max-width:800px}
+.step-list{list-style:none;margin:18px 0 0;padding:0;counter-reset:steps;display:grid;gap:11px}
+.step-list li{counter-increment:steps;display:grid;grid-template-columns:30px 1fr;gap:11px;align-items:start}
+.step-list li:before{content:counter(steps,decimal-leading-zero);color:var(--teal-ink);font-size:12px;font-weight:850;padding-top:3px}
+.step-list b{color:var(--ink)}.step-list p{color:var(--muted);font-size:13px;margin:2px 0}
+.note{padding:13px 15px;border-left:4px solid var(--teal);background:var(--teal-wash);color:var(--teal-ink);border-radius:6px;margin:17px 0;font-size:13px}
+.note.warn{border-color:#d5a643;background:var(--warning-bg);color:var(--warning-ink)}
+.codebox{margin:17px 0;border-radius:9px;overflow:hidden;background:var(--code)}
+.codebar{display:flex;align-items:center;justify-content:space-between;padding:9px 13px;border-bottom:1px solid #495675;color:#b4d9e4;font-size:11px;font-weight:800;letter-spacing:.06em}
+.codebar button{border:1px solid #677590;background:transparent;border-radius:5px;color:#fff;cursor:pointer;padding:3px 10px;font-size:12px}
+.codebar button:hover{background:#425276}
+pre{margin:0;padding:15px 17px;overflow-x:auto;white-space:pre;color:var(--code-ink);font:13px/1.7 Consolas,"Courier New",monospace;tab-size:2}
+code{font:12.5px Consolas,"Courier New",monospace;overflow-wrap:anywhere}
+.inline-link{font-size:13px;font-weight:700}
+.figure{border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:19px 0;background:var(--surface-soft)}
+.figure img{display:block;width:100%;height:auto}
+.figure figcaption{padding:10px 15px;font-size:12px;color:var(--muted);border-top:1px solid var(--line)}
+.legend{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:15px 0}
+.legend div{background:var(--surface-soft);padding:14px;border:1px solid var(--line);border-radius:9px;font-size:13px}
+.legend b{display:block;margin-bottom:3px;color:var(--ink)}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;vertical-align:middle;margin-right:5px}
+.dot.green{background:#21a577}.dot.red{background:#cf536a}.dot.gray{background:#929cb0}
+.flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:19px 0}
+.flow>div{border-radius:8px;border:1px solid var(--line);background:var(--surface-soft);padding:11px 10px;text-align:center;font-size:12px;font-weight:750;color:var(--ink)}
+.flow small{display:block;color:var(--teal-ink);font-size:11px}
+.glossary{width:100%;border-collapse:collapse;font-size:13px;margin:16px 0}
+.glossary th,.glossary td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+.glossary th{color:var(--ink);background:var(--surface-soft)}
+.glossary td:first-child{width:38%;color:var(--ink);font-weight:700}
+.resource-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.resource-list a{display:block;border:1px solid var(--line);border-radius:9px;padding:14px;background:var(--surface-soft);font-weight:700;font-size:13px}
+.resource-list a span{display:block;color:var(--muted);font-weight:400;font-size:12px;margin-top:4px}
+.footer{font-size:12px;color:var(--muted);padding:25px 0}
+@media(max-width:850px){
+ .layout{grid-template-columns:1fr;gap:16px}
+ .aside{position:static;display:flex;flex-wrap:wrap;gap:5px;padding:10px}
+ .aside strong{display:none}.aside a{padding:7px 10px}
+ .section{padding:24px}
+ .hero{padding:26px}.flow{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:580px){
+ .shell{width:min(100% - 24px,1170px)}
+ .masthead-inner{min-height:74px}
+ .brand{font-size:19px}.brand small{font-size:9px}
+ .mast-actions>a{display:none}
+ .primary-nav a{padding:12px 13px}
+ .overview,.legend,.resource-list{grid-template-columns:1fr}
+ .flow{grid-template-columns:repeat(2,1fr)}
+ .section{padding:20px}
+ .hero{padding:22px}
+ h2{font-size:22px}
+}
+@media print{
+ .masthead,.primary-nav,.aside,.codebar button,.buttons{display:none!important}
+ .layout{display:block}.hero,.section{break-inside:avoid;box-shadow:none}
+ body{background:white}.shell{width:100%}
+}
+
+/* Guided workflow additions */
+.visual-key{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:10px 0 20px}
+.visual-key>div,.walk-example,.example-switcher{border:1px solid var(--line);border-radius:9px;background:var(--surface-soft)}
+.visual-key>div{padding:13px}.visual-key b{font-size:13px;color:var(--ink)}
+.visual-key p{font-size:12px;margin:5px 0 0;color:var(--muted)}
+.key-num,.step-bubble{display:inline-grid;place-items:center;background:var(--teal);color:#fff;border-radius:50%;font-size:12px;font-weight:800}
+.key-num{width:24px;height:24px;margin-right:7px}
+.walk-example{padding:17px;margin:18px 0}.walk-top{display:flex;gap:9px;align-items:center;flex-wrap:wrap;color:var(--ink)}
+.mini-tag{font-size:10px;letter-spacing:.08em;font-weight:800;color:var(--teal-ink)}
+.two-up{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}
+.two-up>div{padding:14px;border:1px solid var(--line);border-radius:9px;background:var(--surface)}
+.two-up b{display:block;color:var(--ink);font-size:13px}
+.two-up p{color:var(--muted);margin:7px 0 0;font-size:12px}
+.snippet{padding:9px 10px;border-radius:6px;background:var(--code);color:var(--code-ink);font:12px/1.65 Consolas,"Courier New",monospace;overflow-wrap:anywhere;margin-top:8px}
+.note.compact{margin:12px 0 0}.subhead{margin:27px 0 8px;font-size:18px}
+.syntax-intro{margin:18px 0}
+.example-switcher{overflow:hidden;margin:17px 0}
+.example-switch-controls{display:flex;flex-wrap:wrap;gap:0;border-bottom:1px solid var(--line)}
+.example-choice{padding:11px 15px;border:0;border-bottom:3px solid transparent;background:transparent;color:var(--body);font-size:13px;font-weight:750;cursor:pointer}
+.example-choice.selected{background:var(--teal-wash);border-color:var(--teal);color:var(--teal-ink)}
+.example-choice:hover{background:var(--teal-wash)}
+.example-panel{padding:18px}.example-panel[hidden]{display:none}.example-panel>b{color:var(--ink)}
+.requirement-sheet{display:grid;grid-template-columns:125px 1fr;margin-top:11px;gap:9px 10px;font-size:13px}
+.requirement-sheet>span{font-weight:800;color:var(--teal-ink)}.requirement-sheet p{margin:0}
+.guided-steps{display:grid;gap:12px;margin:16px 0}
+.guided-steps article{display:grid;grid-template-columns:37px minmax(0,1fr);gap:12px;padding:16px;border:1px solid var(--line);border-radius:10px;background:var(--surface-soft)}
+.step-bubble{width:32px;height:32px}.guided-steps h3{font-size:15px;margin:0 0 4px}
+.guided-steps p{font-size:13px;margin:0 0 6px}
+.do-this{display:block;font-size:12px;font-weight:650;color:var(--teal-ink)}
+.mini-code{margin:10px 0}.mini-code pre{padding:9px 12px}
+@media(max-width:700px){.visual-key{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.visual-key,.two-up{grid-template-columns:1fr}.requirement-sheet{grid-template-columns:1fr}.requirement-sheet>span{margin-top:7px}}
+
+.hrpro-walkthrough{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-top:16px;font-size:12px}
+.hrpro-walk-top{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--surface);padding:12px 16px;color:var(--muted);font-size:10px;letter-spacing:.08em;font-weight:750}
+.mini-brand{color:var(--brand);font-size:16px;letter-spacing:.1em;font-weight:850}
+.tiny-squares{font-size:22px;letter-spacing:0}
+.hrpro-menu{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 13px;background:var(--nav);color:#e2e6f4}
+.hrpro-menu>span,.hrpro-menu>strong{padding:7px 10px}
+.hrpro-menu>strong{background:#238b82;color:#fff;border-radius:5px}
+.hrpro-inner{padding:15px;background:var(--surface-soft)}
+.fake-tabs{display:flex;gap:10px;align-items:center;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px;color:var(--muted)}
+.fake-tabs>b{border-bottom:2px solid var(--teal);color:var(--ink);padding-bottom:6px}
+.fake-tabs.small{margin-top:11px;font-size:11px}
+.fake-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) auto;gap:8px;align-items:center;margin-top:13px}
+.fake-list>div{border:1px solid var(--line);border-radius:5px;padding:9px;font-weight:650;color:var(--ink)}
+.fake-list small{display:block;color:var(--muted);font-weight:400}
+.fake-list>strong{background:var(--nav);color:#fff;border-radius:6px;padding:11px;font-size:11px;white-space:nowrap}
+@media(max-width:660px){.fake-list{grid-template-columns:repeat(2,minmax(0,1fr))}.fake-list>strong{white-space:normal}}
+.micro-steps{margin:10px 0;padding-left:20px;font-size:12.5px}.micro-steps li{margin:7px 0;color:var(--body)}
+
+/* Practical image spacing, accessible code editor, and contrast */
+.visual-figure{background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);margin:18px 0 22px}
+.visual-figure img{max-width:100%;height:auto;display:block}
+.visual-figure figcaption{font-size:13px;line-height:1.55;padding:11px 15px;background:var(--surface-soft);color:var(--body)}
+.visual-figure figcaption b{color:var(--ink)}
+.small-visual{max-width:550px}
+.visual-figure.small-visual img{max-height:320px;object-fit:contain}
+pre{font-size:13px;line-height:1.75;tab-size:2}
+.codebox{border:1px solid #384764;box-shadow:0 3px 14px rgba(10,19,38,.09)}
+.codebar{gap:8px;flex-wrap:wrap;background:#182038;border-bottom:1px solid #3a4b68;color:#b9d5f9}
+.codebar span{font:700 11px/1.5 "Segoe UI",Arial,sans-serif;letter-spacing:.06em}
+.codebar button{padding:6px 11px;background:#273754;border:1px solid #6d88ac;min-width:89px;font-weight:700}
+.codebar button.copied{border-color:#4ad7b2;background:#174b45;color:#e3fff5}
+.codebar button.failed{border-color:#ffaabd;color:#fff}
+.tok-comment{color:#b7c8a7}.tok-string{color:#a3e5c8}.tok-keyword{color:#a4baff;font-weight:700}
+.tok-command{color:#83d6fa;font-weight:700}.tok-flag{color:#ffda9f}
+.codebox code,.codebox pre{font-family:Consolas,"Cascadia Code","SFMono-Regular",monospace}
+.section code:not(pre code){background:var(--surface-soft);border:1px solid var(--line);padding:1px 5px;border-radius:4px;color:var(--ink);font-weight:650}
+.code-note{margin:0;background:#23304a;color:#b8cee8;padding:8px 16px;font-size:12px;border-top:1px solid #3a4b68}
+@media(max-width:580px){.visual-figure figcaption{font-size:12px}pre{font-size:12px}.codebar{padding:8px 11px}}
+
+/* Official Playwright screenshots: distinct from HR PRO schematic examples */
+.pw-gallery-intro{margin:26px 0 10px}
+.pw-gallery-intro h3{font-size:17px;margin:0 0 5px}
+.pw-gallery-intro p{font-size:13px;color:var(--muted);margin:0 0 13px}
+.pw-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:8px 0 23px}
+.pw-gallery.pw-single{grid-template-columns:1fr;max-width:790px}
+.pw-shot{margin:0;overflow:hidden;background:var(--surface-soft);border:1px solid var(--line);border-radius:11px;display:flex;flex-direction:column}
+.pw-shot>a{display:flex;align-items:center;justify-content:center;background:#eceff5;min-height:150px;border-bottom:1px solid var(--line)}
+.pw-shot>a:hover{opacity:.94}
+.pw-shot img{display:block;max-width:100%;width:100%;height:auto;max-height:330px;object-fit:contain}
+.pw-shot figcaption{display:flex;flex-direction:column;gap:5px;padding:13px 15px}
+.pw-shot figcaption strong{font-size:13.5px;color:var(--ink)}
+.pw-shot figcaption span{font-size:12px;line-height:1.55;color:var(--body)}
+.pw-shot figcaption a{font-size:12px;font-weight:700;margin-top:2px}
+@media(max-width:680px){.pw-gallery{grid-template-columns:1fr}.pw-shot img{max-height:360px}}
+
+.folder-layout{display:grid;grid-template-columns:minmax(250px,.9fr) minmax(0,1.1fr);gap:14px;margin:18px 0}
+.folder-tree{border:1px solid var(--line);border-radius:10px;background:var(--surface-soft);overflow:hidden;font:12px/1.65 Consolas,"Courier New",monospace}
+.folder-head{padding:11px 14px;background:var(--nav);color:#fff;display:flex;gap:12px;font:700 11px/1.5 "Segoe UI",sans-serif}
+.folder-line{min-height:27px;padding:4px 10px;color:var(--body)}
+.folder-line b{color:var(--ink)}.folder-line.root{padding-top:11px;font-weight:750}
+.folder-line.level1{padding-left:23px}.folder-line.level2{padding-left:43px}.folder-line.level3{padding-left:65px}.folder-line.level4{padding-left:86px}
+.folder-line.file{color:var(--muted)}.tree-tag{display:inline-block;padding:2px 5px;border-radius:4px;background:var(--teal-wash);color:var(--teal-ink);font:700 10px "Segoe UI",sans-serif}
+.tree-tag.subdued{background:var(--surface);color:var(--muted)}
+.folder-meanings{display:grid;gap:9px}.folder-meanings>div{background:var(--surface-soft);border:1px solid var(--line);border-radius:9px;padding:11px 13px}
+.folder-meanings strong{font-size:12px;color:var(--ink)}.folder-meanings p{font-size:12px;color:var(--muted);margin:4px 0 0}
+.folder-shortcuts{display:flex;gap:12px;flex-wrap:wrap;font-size:13px;font-weight:700}
+@media(max-width:900px){.folder-layout{grid-template-columns:1fr}}
+
+.run-options{margin:25px 0 16px}.run-options>h3{font-size:19px}.run-options>p{font-size:13px;color:var(--muted)}
+.run-options-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}
+.run-recipe{border:1px solid var(--line);border-radius:10px;padding:15px;background:var(--surface-soft);min-width:0}
+.run-recipe h4{font-size:15px;margin:4px 0 5px;color:var(--ink)}
+.run-recipe p{font-size:12px;line-height:1.6;margin:0 0 11px;color:var(--body)}
+.run-recipe .codebox{margin:7px 0 0}.run-recipe pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:11.5px}
+.recipe-tag{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--teal-ink)}
+.run-more{border:1px solid var(--line);border-radius:9px;background:var(--surface-soft);margin:10px 0;padding:0 15px}
+.run-more summary{color:var(--ink);font-weight:750;cursor:pointer;padding:13px 0}
+.run-more summary span{font-weight:600;font-size:11px;color:var(--muted);margin-left:6px}
+.run-more[open] summary{border-bottom:1px solid var(--line)}
+.run-more p{font-size:13px;margin:13px 0}
+.run-more .codebox{margin:12px 0 17px}
+.command-table{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0}
+.command-table td,.command-table th{padding:8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.command-table th{color:var(--ink)}.command-table code{overflow-wrap:anywhere}
+@media(max-width:900px){.run-options-grid{grid-template-columns:1fr}}
+
+.test-examples{margin-top:22px}.test-examples h3{font-size:16px;margin:0 0 10px}
+.test-example-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.test-example-list a{display:block;padding:12px 14px;background:var(--surface-soft);border:1px solid var(--line);border-radius:8px;font-size:12px;overflow-wrap:anywhere}
+.test-example-list a:hover{border-color:var(--teal);text-decoration:none}
+.test-example-list strong{display:block;color:var(--brand);margin-bottom:4px}
+.test-example-list span{display:block;color:var(--muted);font-size:12px}
+@media(max-width:590px){.test-example-list{grid-template-columns:1fr}}
+.command-reference{border:1px solid var(--line);border-radius:12px;background:var(--surface-soft);padding:20px;margin:24px 0;scroll-margin-top:140px}.command-reference-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.command-reference-item{min-width:0}.command-reference-item>strong{font-size:13px;color:var(--ink)}.command-reference-item .codebox{margin:7px 0 0}.command-reference-item pre{font-size:11.5px;padding:12px}.command-reference-item .codebar{font-size:10px}@media(max-width:720px){.command-reference-grid{grid-template-columns:1fr}.command-reference{padding:13px}}
+
+/* 2026 handover: interactive learning and quick navigation */
+html{scroll-behavior:smooth}body{transition:background-color .22s ease,color .22s ease}.section,.hero,.aside{transition:background-color .22s ease,border-color .22s ease,box-shadow .22s ease}.section:target{scroll-margin-top:24px}.interactive-folder{margin:22px 0 28px}.interactive-folder .helper{font-size:13px;color:var(--muted)}.interactive-folder-grid{display:grid;grid-template-columns:minmax(225px,.9fr) minmax(0,1.1fr);gap:13px}.folder-picker{display:grid;gap:5px;padding:8px;border:1px solid var(--line);border-radius:12px;background:var(--surface-soft)}.folder-choice{text-align:left;border:1px solid transparent;background:transparent;color:var(--body);padding:11px 12px;cursor:pointer;border-radius:8px;transition:background .16s ease,border-color .16s ease,transform .16s ease}.folder-choice:hover{background:var(--teal-wash);transform:translateX(2px)}.folder-choice:focus-visible{outline:3px solid var(--teal);outline-offset:2px}.folder-choice.active{background:var(--teal-wash);border-color:var(--teal)}.folder-choice span{display:block;font-size:13px;font-weight:750;color:var(--ink)}.folder-choice small{display:block;font-size:11px;color:var(--muted)}.folder-detail{border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:23px;align-self:start;min-height:285px}.detail-eyebrow{color:var(--teal-ink);font-size:11px;font-weight:800;letter-spacing:.09em}.folder-detail h3{font-size:22px;margin:12px 0}.folder-detail p{font-size:13px}.folder-detail>a{font-size:13px;font-weight:700}.detail-tip{background:var(--teal-wash);color:var(--teal-ink);border-radius:8px;padding:12px;margin-top:18px;font-size:12px}.cheat-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.cheat-item{min-width:0;background:var(--surface-soft);border:1px solid var(--line);border-radius:10px;padding:13px}.cheat-item strong{color:var(--ink);font-size:13px}.cheat-item .codebox{margin:8px 0 0}.cheat-item pre{font-size:11.5px;padding:12px}.quick-cheatsheet{scroll-margin-top:32px}a,button{touch-action:manipulation} @media(max-width:740px){.interactive-folder-grid,.cheat-grid{grid-template-columns:1fr}.folder-picker{grid-template-columns:repeat(2,minmax(0,1fr))}.folder-choice{padding:9px}.folder-detail{min-height:0}}@media(max-width:420px){.folder-picker{grid-template-columns:1fr}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}body,.section,.hero,.aside,.folder-choice{transition:none!important;animation:none!important}}
+
+/* Handover refresh: compact explorer, one-column commands, reading position */
+:root{--focus-ring:var(--teal)}
+.aside a{position:relative;padding:8px 12px 8px 17px;transition:background-color .15s ease,color .15s ease}
+.aside a::before{content:"";position:absolute;left:4px;top:8px;bottom:8px;width:3px;border-radius:6px;background:transparent;transform:scaleY(.4);transition:transform .18s ease,background-color .18s ease}
+.aside a.active,.aside a[aria-current="location"]{background:var(--teal-wash);color:var(--teal-ink);font-weight:800}
+.aside a.active::before,.aside a[aria-current="location"]::before{background:var(--teal);transform:scaleY(1)}
+.primary-nav a.active{background:#238b82;color:#fff}
+.nav-progress{height:3px;background:var(--line);border-radius:99px;margin:15px 12px 0;overflow:hidden}
+.nav-progress span{display:block;height:100%;background:var(--teal);width:0%;transition:width .12s linear}
+.folder-lab{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(230px,.9fr);gap:14px;margin:16px 0 12px;align-items:start}
+.folder-lab-tree{background:var(--surface-soft);border:1px solid var(--line);border-radius:12px;overflow:hidden;padding:10px}
+.tree-root{font:800 13px/1.6 Consolas,monospace;padding:10px 12px;color:var(--ink);border-bottom:1px solid var(--line);margin-bottom:7px}
+.tree-root span{font:500 11px/1.3 "Segoe UI",sans-serif;color:var(--muted);margin-left:6px}
+.tree-branch{border-radius:7px;margin:2px 0}
+.tree-branch>summary{list-style:none;display:flex;align-items:center;gap:8px;cursor:pointer;color:var(--ink);padding:10px 11px;border-radius:7px;font-size:13px;font-weight:750;transition:background-color .15s ease}
+.tree-branch>summary::-webkit-details-marker{display:none}
+.tree-branch>summary:hover,.tree-branch>summary:focus-visible{background:var(--teal-wash)}
+.tree-branch>summary small{margin-left:auto;font-weight:500;color:var(--muted);font-size:11px;white-space:nowrap}
+.tree-branch[open]>summary{background:var(--teal-wash)}
+.tree-chevron{font-size:19px;line-height:1;transition:transform .16s ease;color:var(--teal-ink)}
+.tree-branch[open]>summary .tree-chevron{transform:rotate(90deg)}
+.tree-items{border-left:1px solid var(--line);margin:3px 0 9px 20px;padding-left:9px}
+.subbranch>summary{font-size:12.5px;font-weight:650;padding:8px 8px}
+.tree-file{display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:transparent;border:1px solid transparent;border-radius:7px;padding:7px 9px;color:var(--body);font:12px/1.45 Consolas,monospace;cursor:pointer;overflow-wrap:anywhere;transition:background-color .15s ease,border-color .15s ease}
+.tree-file-icon{color:var(--teal-ink);flex:none}
+.tree-file:hover,.tree-file.active{background:var(--teal-wash);border-color:var(--line);color:var(--ink)}
+.tree-more{display:block;font-size:11px;font-weight:700;padding:9px;margin-left:11px}
+.folder-lab-preview{position:sticky;top:18px;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:22px;min-width:0;box-shadow:var(--shadow)}
+.preview-eyebrow{font-size:10px;letter-spacing:.12em;font-weight:850;color:var(--teal-ink)}
+.folder-lab-preview h3{font-size:19px;overflow-wrap:anywhere;margin:11px 0}
+.folder-lab-preview p{font-size:13px;color:var(--body);line-height:1.6}
+.preview-rule{border-top:1px solid var(--line);padding-top:13px;margin:14px 0}
+.preview-rule b{font-size:12px;color:var(--ink)}
+.preview-rule p{margin:6px 0 0}
+.folder-lab-preview>a{font-weight:750;font-size:13px}
+.preview-foot{font-size:11px!important;color:var(--muted)!important;margin:20px 0 0}
+.folder-guidance{background:var(--teal-wash);border-radius:8px;padding:12px 14px;font-size:13px!important}
+.folder-guidance b{color:var(--teal-ink)}
+.run-explainer{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:15px 0}
+.run-explainer>div{background:var(--surface-soft);border:1px solid var(--line);border-radius:9px;padding:13px}
+.run-explainer strong,.run-explainer span{display:block;font-size:12px}
+.run-explainer strong{color:var(--ink);margin-bottom:5px}
+.run-explainer span{color:var(--muted)}
+.command-reference{background:transparent!important;border:0!important;padding:4px 0!important;margin:20px 0!important}
+.command-reference>h3{font-size:20px}
+.command-stack{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;margin:15px 0}
+.command-card{background:var(--surface-soft);border:1px solid var(--line);padding:16px 18px;border-radius:11px;min-width:0;transition:border-color .16s ease,transform .16s ease}
+.command-card:hover{border-color:var(--teal);transform:translateY(-1px)}
+.command-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px}
+.command-meta b{font-size:14px;color:var(--ink)}
+.command-pill{font-size:10px;font-weight:800;border-radius:99px;padding:3px 8px;background:var(--teal-wash);color:var(--teal-ink)}
+.command-card p{font-size:12px;color:var(--muted);margin:3px 0 9px}
+.command-card .codebox{margin:0}
+.command-card pre{font-size:12.5px;padding:13px 16px;white-space:pre;overflow-x:auto}
+.more-commands,.run-steps{border:1px solid var(--line);border-radius:10px;margin:16px 0;background:var(--surface-soft)}
+.more-commands>summary,.run-steps>summary{padding:14px 16px;font-weight:750;color:var(--ink);cursor:pointer}
+.more-commands>summary span{font-size:11px;color:var(--muted);font-weight:500;margin-left:6px}
+.more-commands .command-stack{margin:5px 11px 12px}
+.run-steps ol{padding:0 25px 15px 37px;font-size:13px}
+.run-steps li{margin:7px 0}
+.anchor-alias{display:block;position:relative;top:-110px;visibility:hidden;height:0}
+@media(max-width:850px){.folder-lab-preview{position:static}.aside a.active::before{left:1px}.aside{gap:0 3px}.nav-progress{display:none}}
+@media(max-width:650px){.folder-lab,.run-explainer{grid-template-columns:1fr}.folder-lab-preview{padding:18px}.command-card{padding:12px}.tree-branch>summary small{font-size:10px}.tree-root span{display:block;margin-left:0}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}.command-card,.tree-chevron,.aside a,.aside a::before,.tree-file{transition:none!important}.command-card:hover{transform:none}}
+
+
+/* Comfortable dark-mode contrast, low-glare screenshots, and legible reading width. */
+.section>p,.hero .subtitle,.folder-lab-preview p,.command-card p{max-width:72ch}
+.section p{line-height:1.72}
+html[data-theme="dark"] .section,html[data-theme="dark"] .hero,html[data-theme="dark"] .aside{
+  border-color:var(--line);
+}
+html[data-theme="dark"] .visual-figure{background:#25344b;border-color:var(--line)}
+html[data-theme="dark"] .pw-shot>a{background:#26354a}
+html[data-theme="dark"] .pw-shot img,html[data-theme="dark"] .visual-figure img{filter:brightness(.94)}
+html[data-theme="dark"] .codebox{border-color:#60758e;box-shadow:none}
+html[data-theme="dark"] .codebar{background:#23324a;border-bottom-color:#52667f;color:#c9dced}
+html[data-theme="dark"] .codebar button{background:#334760;border-color:#859ab5;color:#f2f6fb}
+html[data-theme="dark"] .codebar button:hover{background:#425a77;border-color:#b3c6dd}
+html[data-theme="dark"] .snippet{border:1px solid #4c607b}
+html[data-theme="dark"] .tok-comment{color:#c1d2b3}
+html[data-theme="dark"] .tok-string{color:#afead3}
+html[data-theme="dark"] .tok-flag{color:#f5d59b}
+html[data-theme="dark"] .tree-branch>summary small,html[data-theme="dark"] .folder-lab-preview .preview-foot{color:var(--muted)}
+html[data-theme="dark"] .command-pill{border:1px solid #407672}
+html[data-theme="dark"] .theme:hover{background:var(--surface-soft)}
+html[data-theme="dark"] .primary-nav a{color:#e2ecfb}
+html[data-theme="dark"] .primary-nav a.active,html[data-theme="dark"] .primary-nav a.current{background:#256b68;color:#fff}
+html[data-theme="dark"] .run-explainer>div,html[data-theme="dark"] .command-card{border-color:var(--line)}
+html[data-theme="dark"] a:focus-visible,html[data-theme="dark"] button:focus-visible,html[data-theme="dark"] summary:focus-visible{outline:3px solid #9ae6d7;outline-offset:3px}
+html[data-theme="dark"] ::selection{background:#356a75;color:#fff}
+.guide-details{border:1px solid var(--line);border-radius:10px;background:var(--surface-soft);margin:17px 0;overflow:hidden}
+.guide-details>summary{padding:13px 16px;cursor:pointer;color:var(--ink);font-size:13px;font-weight:750}
+.guide-details>summary:hover{background:var(--teal-wash)}
+.guide-details[open]>summary{border-bottom:1px solid var(--line)}
+.guide-details>.details-inner{padding:15px 17px}
+.guide-details .glossary{margin:0}
+.guide-details .pw-gallery{margin:8px 0}
+.guide-details .pw-gallery-intro{margin:5px 0}
+.guide-details .pw-gallery-intro h3{font-size:14px}
+.guide-details .pw-gallery-intro p{margin-bottom:8px}
+.guide-details .step-list{margin-top:4px}
+.guide-details .figure{margin:8px 0}
+@media(max-width:650px){.guide-details>.details-inner{padding:12px}.guide-details>summary{padding:12px}}
+
+/* First-day onboarding */
+#beginner-start .step-list li{padding:8px 0;border-bottom:1px solid var(--line)}
+#beginner-start .step-list li:last-child{border-bottom:0}
+#beginner-start .glossary{display:block;overflow-x:auto}
+#beginner-start .glossary th:first-child{min-width:175px}
 </style>
 </head>
-<body>
-<header><div class="wrap"><a class="brand" href="#top">◈ HR PRO · QA Guide</a><nav aria-label="Main navigation"><a href="#run">Run first</a><a href="#inside">What's inside</a><a href="#workflow">Workflow</a><a href="#syntax">Test syntax</a><a href="#help">Help</a></nav><button type="button" class="theme" id="theme">Dark mode</button></div></header>
-<main class="wrap" id="top">
-<div class="hero">
- <div class="eyebrow">For first-time testers · No prior coding required</div>
- <h1>Run a test first. Learn the rest as you go.</h1>
- <p>This project uses Playwright to check HR PRO automatically. Start with one test, see the result, then explore how to create and share your own.</p>
- <div class="pills"><a class="pill" href="#run">▶ Run your first test</a><a class="pill outline" href="#inside">Explore the project</a><a class="pill outline" href="#workflow">See the workflow</a></div>
+<body id="top">
+<header class="masthead">
+ <div class="shell masthead-inner">
+  <a class="brand" href="#overview" aria-label="HR PRO QA Automation home">
+   <span class="mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+   <span>HR PRO<small>QA AUTOMATION GUIDE</small></span>
+  </a>
+  <div class="mast-actions"><a href="https://github.com/nitsuwa/hr-pro-automation" target="_blank" rel="noopener noreferrer">GitHub repository ↗</a>
+   <button class="theme" id="theme-toggle" type="button" aria-label="Switch to dark mode">☾ Dark mode</button>
+  </div>
+ </div>
+</header>
+<nav class="primary-nav" aria-label="Main guide">
+ <div class="shell nav-inner">
+  <a href="#overview">Overview</a><a href="#beginner-start">Start Here</a><a href="#install">Install</a><a href="#run">Run Tests</a><a href="#structure">Project Folders</a>
+  <a href="#verify">Verify Results</a><a href="#syntax">Test Code</a><a href="#create">Create a Test</a><a href="#ai">AI Help</a><a href="#github">GitHub</a>
+ </div>
+</nav>
+<div class="shell layout">
+<aside class="aside" aria-label="Guide contents">
+<strong>ON THIS PAGE</strong>
+<a href="#overview">Overview</a>
+<a href="#beginner-start">Start here</a>
+<a href="#install">01 · Install</a>
+<a href="#run">02 · Run tests</a>
+<a href="#commands">↳ Command cheat sheet</a>
+<a href="#structure">03 · Project folders</a>
+<a href="#verify">04 · Verify results</a>
+<a href="#syntax">05 · Understand code</a>
+<a href="#create">06 · Create a test</a>
+<a href="#ai">↳ AI assistance</a>
+<a href="#github">07 · Share changes</a>
+<a href="#references">Resources</a>
+<div class="nav-progress"><span id="reading-progress"></span></div>
+</aside>
+<main class="content" id="overview">
+<section class="hero" aria-labelledby="guide-title">
+ <div class="kicker">HR PRO / QUALITY ASSURANCE</div>
+ <h1 id="guide-title">HR PRO Test Automation</h1>
+ <p class="subtitle">Run your first test, understand the results, and explore the project when you are ready.</p>
+ <div class="buttons"><a class="btn" href="#beginner-start">New? Start here →</a><a class="btn secondary" href="#run">Run a test</a><a class="btn secondary" href="#structure">Explore folders</a><a class="btn secondary" href="#ai">Create with AI</a><a class="btn secondary" href="https://github.com/nitsuwa/hr-pro-automation" target="_blank" rel="noopener noreferrer">Open repository ↗</a></div>
+</section>
+<div class="overview" aria-label="How the system works">
+ <article><div class="number">01 / TEST</div><b>Playwright runs the steps</b><p>It opens HR PRO, performs actions, and checks expected behavior.</p></article>
+ <article><div class="number">02 / REVIEW</div><b>QA verifies the result</b><p>Read the assertion and inspect what actually happened in UI Mode.</p></article>
+ <article><div class="number">03 / MAINTAIN</div><b>GitHub keeps the tests</b><p>Share reviewed changes so the whole team can reuse them.</p></article>
 </div>
-<section id="run"><span class="anchor" id="beginner-start"></span><span class="anchor" id="install"></span><span class="anchor" id="run-options"></span><span class="anchor" id="commands"></span>
- <div class="label">01 · Start here</div><h2>Run your first test</h2><p class="sub">Follow these once. No code writing needed.</p>
- <div class="note warn"><b>Before running:</b> You need permission to access an approved <b>non-production</b> HR PRO test site and approved test accounts. The configured URL appears in the terminal when tests start. Don't run data-changing tests against a live system.</div>
- <ol class="steps">
-  <li><div><b>Install the tools</b><p>Install <a href="https://code.visualstudio.com/" target="_blank" rel="noopener noreferrer">VS Code</a>, <a href="https://git-scm.com/" target="_blank" rel="noopener noreferrer">Git</a>, and <a href="https://nodejs.org/" target="_blank" rel="noopener noreferrer">Node.js LTS</a>. Restart VS Code after installing.</p></div></li>
-  <li><div><b>Open VS Code → Terminal → New Terminal</b><p>Paste the setup commands below, one line at a time. Press Enter after each line and let it finish.</p></div></li>
+<figure class="figure visual-figure"><img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%201040%20288%22%20role%3D%22img%22%20aria-labelledby%3D%22title%20desc%22%3E%3Ctitle%20id%3D%22title%22%3EManual%20testing%20to%20Playwright%20automation%20workflow%3C%2Ftitle%3E%3Cdesc%20id%3D%22desc%22%3EFive%20connected%20steps%3A%20choose%20a%20requirement%2C%20inspect%20HR%20PRO%2C%20write%20a%20Playwright%20test%20with%20optional%20AI%2C%20run%20and%20verify%20the%20result%2C%20and%20share%20through%20a%20GitHub%20pull%20request.%3C%2Fdesc%3E%0A%3Crect%20width%3D%221040%22%20height%3D%22288%22%20rx%3D%2218%22%20fill%3D%22%23f3f5fa%22%2F%3E%3Crect%20x%3D%2219%22%20y%3D%2219%22%20width%3D%221002%22%20height%3D%22250%22%20rx%3D%2213%22%20fill%3D%22%23fff%22%20stroke%3D%22%23dbe3f0%22%2F%3E%0A%3Crect%20x%3D%2219%22%20y%3D%2219%22%20width%3D%221002%22%20height%3D%2247%22%20rx%3D%2213%22%20fill%3D%22%232e2b61%22%2F%3E%3Crect%20x%3D%2219%22%20y%3D%2247%22%20width%3D%221002%22%20height%3D%2219%22%20fill%3D%22%232e2b61%22%2F%3E%3Cg%20font-family%3D%22Arial%2Csans-serif%22%3E%3Ctext%20x%3D%2243%22%20y%3D%2249%22%20font-size%3D%2219%22%20font-weight%3D%22700%22%20fill%3D%22%23fff%22%3EFROM%20MANUAL%20CHECK%20TO%20AUTOMATED%20TEST%3C%2Ftext%3E%3Ctext%20x%3D%2243%22%20y%3D%2293%22%20font-size%3D%2214%22%20fill%3D%22%2367728e%22%3EFollow%20the%20same%20workflow%20for%20Excel%20scenarios%20and%20new%20HR%20PRO%20features.%3C%2Ftext%3E%0A%3Cg%20fill%3D%22%23f6f9fe%22%20stroke%3D%22%23d5dfed%22%3E%0A%3Crect%20x%3D%2239%22%20y%3D%22113%22%20width%3D%22176%22%20height%3D%22113%22%20rx%3D%2212%22%2F%3E%3Crect%20x%3D%22235%22%20y%3D%22113%22%20width%3D%22176%22%20height%3D%22113%22%20rx%3D%2212%22%2F%3E%3Crect%20x%3D%22431%22%20y%3D%22113%22%20width%3D%22176%22%20height%3D%22113%22%20rx%3D%2212%22%2F%3E%3Crect%20x%3D%22627%22%20y%3D%22113%22%20width%3D%22176%22%20height%3D%22113%22%20rx%3D%2212%22%2F%3E%3Crect%20x%3D%22823%22%20y%3D%22113%22%20width%3D%22176%22%20height%3D%22113%22%20rx%3D%2212%22%2F%3E%3C%2Fg%3E%0A%3Cg%20font-family%3D%22Arial%2Csans-serif%22%20font-size%3D%2212%22%20font-weight%3D%22700%22%20fill%3D%22%2313877e%22%3E%0A%3Ctext%20x%3D%2255%22%20y%3D%22137%22%3E01%20%2F%20PLAN%3C%2Ftext%3E%3Ctext%20x%3D%22251%22%20y%3D%22137%22%3E02%20%2F%20INSPECT%3C%2Ftext%3E%3Ctext%20x%3D%22447%22%20y%3D%22137%22%3E03%20%2F%20WRITE%3C%2Ftext%3E%3Ctext%20x%3D%22643%22%20y%3D%22137%22%3E04%20%2F%20VERIFY%3C%2Ftext%3E%3Ctext%20x%3D%22839%22%20y%3D%22137%22%3E05%20%2F%20SHARE%3C%2Ftext%3E%3C%2Fg%3E%0A%3Cg%20font-family%3D%22Arial%2Csans-serif%22%20font-weight%3D%22700%22%20font-size%3D%2217%22%20fill%3D%22%232b285e%22%3E%3Ctext%20x%3D%2255%22%20y%3D%22170%22%3ERequirement%3C%2Ftext%3E%3Ctext%20x%3D%22251%22%20y%3D%22170%22%3EHR%20PRO%20UI%3C%2Ftext%3E%3Ctext%20x%3D%22447%22%20y%3D%22170%22%3EPlaywright%3C%2Ftext%3E%3Ctext%20x%3D%22643%22%20y%3D%22170%22%3ERun%20%26amp%3B%20check%3C%2Ftext%3E%3Ctext%20x%3D%22839%22%20y%3D%22170%22%3EPull%20request%3C%2Ftext%3E%3C%2Fg%3E%0A%3Cg%20font-family%3D%22Arial%2Csans-serif%22%20font-size%3D%2212%22%20fill%3D%22%235d6880%22%3E%3Ctext%20x%3D%2255%22%20y%3D%22192%22%3EExpected%20outcome%3C%2Ftext%3E%3Ctext%20x%3D%22251%22%20y%3D%22192%22%3EReal%20controls%3C%2Ftext%3E%3Ctext%20x%3D%22447%22%20y%3D%22192%22%3EAI%20can%20draft%3C%2Ftext%3E%3Ctext%20x%3D%22643%22%20y%3D%22192%22%3EActions%20%2B%20assert%3C%2Ftext%3E%3Ctext%20x%3D%22839%22%20y%3D%22192%22%3ETeam%20reviews%3C%2Ftext%3E%3C%2Fg%3E%0A%3Cg%20stroke%3D%22%23189086%22%20stroke-width%3D%223%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M216%20169h16m-6%20-6%206%206-6%206%22%2F%3E%3Cpath%20d%3D%22M412%20169h16m-6%20-6%206%206-6%206%22%2F%3E%3Cpath%20d%3D%22M608%20169h16m-6%20-6%206%206-6%206%22%2F%3E%3Cpath%20d%3D%22M804%20169h16m-6%20-6%206%206-6%206%22%2F%3E%3C%2Fg%3E%0A%3Ctext%20x%3D%2242%22%20y%3D%22251%22%20font-family%3D%22Arial%2Csans-serif%22%20font-size%3D%2212%22%20fill%3D%22%235d6880%22%3ETRAINING%20ILLUSTRATION%20%C2%B7%20AI%20suggests%20code%3B%20QA%20checks%20the%20real%20HR%20PRO%20result.%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Five stages of automation: define requirement, inspect HR PRO, write Playwright test (AI optional), run and verify, share via pull request" loading="lazy"><figcaption><b>Workflow at a glance.</b> Every test starts with an expected result. AI can help write the code, but QA must verify the outcome.</figcaption></figure>
+
+<section class="section" id="beginner-start" aria-labelledby="beginner-title">
+ <div class="kicker">START HERE / QUICK GUIDE</div>
+ <h2 id="beginner-title">Your first HR PRO test: 3 simple steps</h2>
+ <p>You don't need to write code to run an existing test. <strong>Playwright</strong> opens HR PRO and checks what happens. <strong>You</strong> confirm that the result makes sense.</p>
+ <div class="visual-key">
+  <div><span class="key-num">1</span><b>Set up</b><p>Install the tools and download the project.</p></div>
+  <div><span class="key-num">2</span><b>Run</b><p>Choose the Settings smoke test in UI Mode.</p></div>
+  <div><span class="key-num">3</span><b>Check</b><p>See what passed and what the test actually checked.</p></div>
+  <div><span class="key-num">✓</span><b>Next</b><p>Explore folders and create tests when ready.</p></div>
+ </div>
+ <div class="buttons"><a class="btn" href="#install">1. Install &amp; set up →</a><a class="btn secondary" href="#run">2. Run a test</a><a class="btn secondary" href="#verify">3. Check the result</a></div>
+ <div class="note warn"><b>Before you run:</b> Use an approved <b>non-production</b> HR PRO test environment and approved test accounts. Some advanced tests change records. If access or the test URL is missing, the environment administrator must provide it.</div>
+ <details class="run-more"><summary>New to these terms? Quick explanations</summary><p><b>Repository:</b> the project folder on GitHub. <b>Terminal:</b> where you paste commands in VS Code. <b>Clone:</b> download the project. <b>Test:</b> steps the browser follows. <b>Assertion:</b> the result it checks. <b>Locator:</b> how a test finds a button or field. <b>Pull request:</b> submit your changes for review.</p></details>
+</section>
+<section class="section" id="install">
+ <div class="kicker">01 / FIRST-TIME SETUP</div><h2>Install the project (one time only)</h2>
+ <p>Install <b>VS Code</b>, <b>Git</b>, and <b>Node.js</b>. Ask your maintainer for repository access and an approved HR PRO test environment.</p>
+ <ol class="step-list">
+  <li><div><b>Open VS Code → Terminal → New Terminal.</b></div></li>
+  <li><div><b>Copy the commands below.</b> Use a folder where you want to keep the project.</div></li>
+  <li><div><b>Confirm your test environment.</b> Check the URL in <code>playwright.config.ts</code> or <code>E2E_BASE_URL</code> before running tests.</div></li>
  </ol>
- <div class="code"><div class="code-top">FIRST-TIME SETUP <button type="button" class="copy" data-copy="setup">Copy</button></div><pre id="setup">git clone https://github.com/nitsuwa/hr-pro-automation.git
+ <div class="codebox"><div class="codebar"><span>POWERSHELL · FIRST INSTALL</span><button type="button" title="Copy exact code to clipboard" data-copy="clone-code">Copy</button></div><pre id="clone-code" data-language="powershell" aria-label="PowerShell commands">git clone https://github.com/nitsuwa/hr-pro-automation.git
 cd hr-pro-automation
 npm ci
 npx playwright install chromium</pre></div>
- <ol class="steps" start="3">
-  <li><div><b>Check the test site</b><p>Open <code>playwright.config.ts</code> and confirm the URL (or <code>E2E_BASE_URL</code> override) is an approved test environment. Stop if unsure.</p></div></li>
-  <li><div><b>Open one test in Playwright UI Mode</b><p>Run this command. In the window, click ▶ next to <b>SMOKE-018 | Settings opens successfully</b>.</p></div></li>
- </ol>
- <div class="code"><div class="code-top">ONE BEGINNER TEST <button type="button" class="copy" data-copy="firsttest">Copy</button></div><pre id="firsttest">npx playwright test tests/smoke/navigation.spec.ts --grep "SMOKE-018" --ui --project=chromium</pre></div>
- <ol class="steps" start="5">
-  <li><div><b>Check the result</b><p>Green = its assertions passed. Red = something failed. Open <b>Actions</b> and inspect the browser preview. This test verifies navigation to Settings—not the whole Settings feature.</p></div></li>
- </ol>
- <div class="note"><b>Done!</b> You have run and checked an existing test. Next: <a href="#inside">see what's inside</a>, or <a href="#workflow">learn how to make a new one</a>.</div>
- <details><summary>Already installed? Run other tests (approved environments only)</summary><div>
- <p><b>Smoke checks, visual picker:</b></p><div class="code"><div class="code-top">SMOKE TESTS <button type="button" class="copy" data-copy="smoke">Copy</button></div><pre id="smoke">npx playwright test tests/smoke --ui --project=chromium</pre></div>
- <p><b>Setup regression, visual picker:</b> May create or change records. Only use an approved disposable QA environment with fictional data.</p><div class="code"><div class="code-top">SETUP TESTS <button type="button" class="copy" data-copy="regression">Copy</button></div><pre id="regression">npx playwright test tests/regression/setup --ui --project=chromium</pre></div>
- <p>To view the HTML report after a run: <code>npx playwright show-report</code>.</p></div></details>
+ <div class="note warn"><b>Use an approved testing environment.</b> Some tests create or edit records. Use fictional QA data; do not run data-changing checks on production.</div>
+<figure class="figure visual-figure small-visual"><img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20680%20366%22%20role%3D%22img%22%20aria-label%3D%22Illustration%20of%20HR%20PRO%20prototype%20login%20card%20showing%20role%2C%20email%2C%20password%20and%20sign%20in%22%3E%0A%3Crect%20width%3D%22680%22%20height%3D%22366%22%20rx%3D%2216%22%20fill%3D%22%23f3f5fa%22%2F%3E%3Crect%20x%3D%22192%22%20y%3D%2230%22%20width%3D%22296%22%20height%3D%22292%22%20rx%3D%2213%22%20fill%3D%22white%22%20stroke%3D%22%23dce4ef%22%20stroke-width%3D%222%22%2F%3E%3Cg%20fill%3D%22%233063b3%22%3E%3Crect%20x%3D%22214%22%20y%3D%2256%22%20width%3D%2211%22%20height%3D%2211%22%2F%3E%3Crect%20x%3D%22229%22%20y%3D%2256%22%20width%3D%2211%22%20height%3D%2211%22%20opacity%3D%22.75%22%2F%3E%3Crect%20x%3D%22214%22%20y%3D%2271%22%20width%3D%2211%22%20height%3D%2211%22%20opacity%3D%22.9%22%2F%3E%3Crect%20x%3D%22229%22%20y%3D%2271%22%20width%3D%2211%22%20height%3D%2211%22%20opacity%3D%22.65%22%2F%3E%3C%2Fg%3E%3Ctext%20x%3D%22253%22%20y%3D%2277%22%20font-family%3D%22Arial%22%20font-weight%3D%22bold%22%20letter-spacing%3D%222%22%20font-size%3D%2219%22%20fill%3D%22%233063b3%22%3EHR%20PRO%3C%2Ftext%3E%3Ctext%20x%3D%22214%22%20y%3D%22115%22%20font-family%3D%22Arial%22%20font-size%3D%2220%22%20font-weight%3D%22bold%22%20fill%3D%22%2329275b%22%3ESign%20in%3C%2Ftext%3E%0A%3Ctext%20x%3D%22214%22%20y%3D%22142%22%20font-family%3D%22Arial%22%20font-size%3D%2211%22%20fill%3D%22%2350607f%22%3ETry%20a%20demo%20account%3C%2Ftext%3E%3Crect%20x%3D%22214%22%20y%3D%22151%22%20width%3D%22252%22%20height%3D%2229%22%20rx%3D%226%22%20fill%3D%22white%22%20stroke%3D%22%23d9e1ec%22%2F%3E%3Ctext%20x%3D%22225%22%20y%3D%22170%22%20font-family%3D%22Arial%22%20font-size%3D%2211%22%20fill%3D%22%2356647e%22%3ESelect%20a%20role%20to%20prefill%3C%2Ftext%3E%0A%3Ctext%20x%3D%22214%22%20y%3D%22199%22%20font-family%3D%22Arial%22%20font-size%3D%2211%22%20fill%3D%22%2356647e%22%3EEmail%3C%2Ftext%3E%3Crect%20x%3D%22214%22%20y%3D%22206%22%20width%3D%22252%22%20height%3D%2229%22%20rx%3D%226%22%20fill%3D%22white%22%20stroke%3D%22%238eb8b0%22%2F%3E%0A%3Ctext%20x%3D%22214%22%20y%3D%22252%22%20font-family%3D%22Arial%22%20font-size%3D%2211%22%20fill%3D%22%2356647e%22%3EPassword%3C%2Ftext%3E%3Crect%20x%3D%22214%22%20y%3D%22259%22%20width%3D%22252%22%20height%3D%2229%22%20rx%3D%226%22%20fill%3D%22white%22%20stroke%3D%22%23d9e1ec%22%2F%3E%0A%3Crect%20x%3D%22214%22%20y%3D%22300%22%20width%3D%22252%22%20height%3D%2228%22%20rx%3D%226%22%20fill%3D%22%2329275b%22%2F%3E%3Ctext%20x%3D%22340%22%20y%3D%22318%22%20font-family%3D%22Arial%22%20font-size%3D%2212%22%20text-anchor%3D%22middle%22%20font-weight%3D%22bold%22%20fill%3D%22white%22%3ESign%20in%3C%2Ftext%3E%3C%2Fsvg%3E" alt="Illustration of the HR PRO sign-in page with role, email and password fields" loading="lazy"><figcaption>HR PRO sign-in screen (illustration). Tests use the project's login helper; don't copy or expose passwords.</figcaption></figure>
 </section>
-<section id="inside"><span class="anchor" id="structure"></span><div class="label">02 · Quick tour</div><h2>What's inside the repository?</h2><p class="sub">Only three places matter at first.</p>
-<div class="grid">
- <div class="tile"><b>📁 <a href="https://github.com/nitsuwa/hr-pro-automation/tree/main/tests/smoke" target="_blank" rel="noopener noreferrer">tests/smoke/</a></b><p>Fast checks for login and navigation. <b>Start here.</b></p></div>
- <div class="tile"><b>📁 <a href="https://github.com/nitsuwa/hr-pro-automation/tree/main/tests/regression/setup" target="_blank" rel="noopener noreferrer">tests/regression/setup/</a></b><p>More detailed HR PRO Setup tests (Employees, Departments, etc.).</p></div>
- <div class="tile"><b>📄 <a href="https://github.com/nitsuwa/hr-pro-automation/blob/main/playwright.config.ts" target="_blank" rel="noopener noreferrer">playwright.config.ts</a></b><p>Browser and test website settings. Check before running tests.</p></div>
+<section class="section" id="run">
+<div class="kicker">02 / RUN TESTS</div><h2>Run an existing test</h2>
+<p><b>First time?</b> Open UI Mode, choose <b>SMOKE-018 (Settings)</b> and click ▶. Use the other commands only when you need them.</p>
+<div class="run-explainer"><div><strong>UI Mode <code>--ui</code></strong><span>Opens a test list. You choose when to run.</span></div><div><strong>Terminal (no <code>--ui</code>)</strong><span>Runs matching tests immediately.</span></div></div>
+<div class="command-reference" id="commands"><span id="cheatsheet" class="anchor-alias" aria-hidden="true"></span><span id="run-options" class="anchor-alias" aria-hidden="true"></span><div class="kicker">SAVE THIS · COMMAND CHEAT SHEET</div><h3>Frequently used commands</h3><div class="command-stack"><article class="command-card"><div class="command-meta"><b>Explore Smoke tests in UI Mode</b><span class="command-pill">Start here</span></div><p>Opens the test list. Select one test and click ▶.</p><div class="codebox"><div class="codebar"><span>PLAYWRIGHT · TERMINAL</span><button type="button" data-copy="core-ui" aria-label="Copy Explore Smoke tests in UI Mode command">Copy</button></div><pre id="core-ui" data-language="powershell">npx playwright test tests/smoke --ui --project=chromium</pre></div></article>
+<article class="command-card"><div class="command-meta"><b>Run one test by ID</b></div><p>Runs only SMOKE-018, without opening UI Mode</p><div class="codebox"><div class="codebar"><span>PLAYWRIGHT · TERMINAL</span><button type="button" data-copy="core-one" aria-label="Copy Run one test by ID command">Copy</button></div><pre id="core-one" data-language="powershell">npx playwright test tests/smoke/navigation.spec.ts --grep "SMOKE-018" --project=chromium</pre></div></article>
+<article class="command-card"><div class="command-meta"><b>Browse Setup regression tests</b></div><p>Opens Setup tests in UI Mode; run only in approved QA.</p><div class="codebox"><div class="codebar"><span>PLAYWRIGHT · TERMINAL</span><button type="button" data-copy="core-setup" aria-label="Copy Browse Setup regression tests command">Copy</button></div><pre id="core-setup" data-language="powershell">npx playwright test tests/regression/setup --ui --project=chromium</pre></div></article>
+<article class="command-card"><div class="command-meta"><b>Run the standard suite</b></div><p>Immediately runs Smoke + Regression. May change QA records.</p><div class="codebox"><div class="codebar"><span>PLAYWRIGHT · TERMINAL</span><button type="button" data-copy="core-full" aria-label="Copy Run the standard suite command">Copy</button></div><pre id="core-full" data-language="powershell">npx playwright test tests/smoke tests/regression --project=chromium</pre></div></article>
+<article class="command-card"><div class="command-meta"><b>Open your test report</b></div><p>Review the last HTML test report.</p><div class="codebox"><div class="codebar"><span>PLAYWRIGHT · TERMINAL</span><button type="button" data-copy="core-report" aria-label="Copy Open your test report command">Copy</button></div><pre id="core-report" data-language="powershell">npx playwright show-report</pre></div></article></div>
+<details class="more-commands"><summary>More commands <span>one file · debug · headed · list</span></summary><div class="command-stack"><article class="command-card"><div class="command-meta"><b>Run a single test file</b></div><p>Run the full navigation file.</p><div class="codebox"><div class="codebar"><span>PLAYWRIGHT · TERMINAL</span><button type="button" data-copy="extra-file" aria-label="Copy Run a single test file command">Copy</button></div><pre id="extra-file" data-language="powershell">npx playwright test tests/smoke/navigation.spec.ts --project=chromium</pre></div></article>
+<article class="command-card"><div class="command-meta"><b>Run only Smoke tests</b></div><p>Runs Smoke tests immediately in the terminal.</p><div class="codebox"><div class="codebar"><span>PLAYWRIGHT · TERMINAL</span><button type="button" data-copy="extra-smoke" aria-label="Copy Run only Smoke tests command">Copy</button></div><pre id="extra-smoke" data-language="powershell">npx playwright test tests/smoke --project=chromium</pre></div></article>
+<article class="command-card"><div class="command-meta"><b>Step through a test</b></div><p>Opens Playwright's debugger for the navigation test.</p><div class="codebox"><div class="codebar"><span>PLAYWRIGHT · TERMINAL</span><button type="button" data-copy="extra-debug" aria-label="Copy Step through a test command">Copy</button></div><pre id="extra-debug" data-language="powershell">npx playwright test tests/smoke/navigation.spec.ts --debug --project=chromium</pre></div></article>
+<article class="command-card"><div class="command-meta"><b>Watch the browser</b></div><p>Runs Smoke tests with a visible Chromium browser.</p><div class="codebox"><div class="codebar"><span>PLAYWRIGHT · TERMINAL</span><button type="button" data-copy="extra-headed" aria-label="Copy Watch the browser command">Copy</button></div><pre id="extra-headed" data-language="powershell">npx playwright test tests/smoke --headed --project=chromium</pre></div></article>
+<article class="command-card"><div class="command-meta"><b>List tests without running</b></div><p>Displays the discovered test names.</p><div class="codebox"><div class="codebar"><span>PLAYWRIGHT · TERMINAL</span><button type="button" data-copy="extra-list" aria-label="Copy List tests without running command">Copy</button></div><pre id="extra-list" data-language="powershell">npx playwright test --list --project=chromium</pre></div></article></div></details>
+<p class="note warn"><b>Use approved QA only for data-changing tests.</b> The standard suite excludes <code>tests/infrastructure/</code>. Always confirm the target environment in <code>playwright.config.ts</code> / <code>E2E_BASE_URL</code>.</p></div>
+<details class="run-steps"><summary>First-time walkthrough: SMOKE-018</summary><ol><li>Copy the <b>UI Mode</b> command above.</li><li>Expand <code>navigation.spec.ts</code> and find <b>SMOKE-018</b>.</li><li>Click ▶ beside that test, then inspect <b>Actions</b> and <b>Before/After</b>.</li></ol></details>
+<figure class="figure" id="playwright-figure">
+<img src="https://github.com/microsoft/playwright/assets/13063165/6b87712f-64a5-4d73-a91d-6562b864712c" data-fallback="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20960%20286%22%20role%3D%22img%22%20aria-label%3D%22Illustration%20of%20Playwright%20UI%20Mode%20showing%20test%20list%2C%20action%20timeline%2C%20browser%20preview%20and%20error%20panel%22%3E%0A%3Crect%20width%3D%22960%22%20height%3D%22286%22%20rx%3D%2215%22%20fill%3D%22%23ecf2fa%22%2F%3E%3Crect%20x%3D%222%22%20y%3D%222%22%20width%3D%22956%22%20height%3D%22282%22%20rx%3D%2214%22%20fill%3D%22white%22%20stroke%3D%22%23d4dfed%22%20stroke-width%3D%223%22%2F%3E%0A%3Cpath%20d%3D%22M14%202%20H946%20Q958%202%20958%2016%20V44%20H2%20V16%20Q2%202%2014%202Z%22%20fill%3D%22%2329275b%22%2F%3E%3Ctext%20x%3D%2225%22%20y%3D%2230%22%20font-family%3D%22Arial%2Csans-serif%22%20font-size%3D%2219%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3EPLAYWRIGHT%20%20%20%2F%20%20%20UI%20MODE%20(ILLUSTRATION)%3C%2Ftext%3E%0A%3Crect%20x%3D%2218%22%20y%3D%2264%22%20width%3D%22314%22%20height%3D%22202%22%20rx%3D%2210%22%20fill%3D%22%23f6f9fd%22%20stroke%3D%22%23cad9eb%22%2F%3E%3Crect%20x%3D%22348%22%20y%3D%2264%22%20width%3D%22592%22%20height%3D%2280%22%20rx%3D%2210%22%20fill%3D%22%23f6f9fd%22%20stroke%3D%22%23cad9eb%22%2F%3E%3Crect%20x%3D%22348%22%20y%3D%22155%22%20width%3D%22382%22%20height%3D%22111%22%20rx%3D%2210%22%20fill%3D%22%23f6f9fd%22%20stroke%3D%22%23cad9eb%22%2F%3E%3Crect%20x%3D%22741%22%20y%3D%22155%22%20width%3D%22199%22%20height%3D%22111%22%20rx%3D%2210%22%20fill%3D%22%23fff2f0%22%20stroke%3D%22%23ebc1bd%22%2F%3E%0A%3Ctext%20x%3D%2235%22%20y%3D%2291%22%20font-size%3D%2218%22%20font-family%3D%22Arial%22%20font-weight%3D%22bold%22%20fill%3D%22%2320618b%22%3E1%20%20%20TEST%20LIST%20%2F%20%E2%96%B6%20RUN%3C%2Ftext%3E%3Crect%20x%3D%2235%22%20y%3D%22105%22%20width%3D%22278%22%20height%3D%2231%22%20rx%3D%225%22%20fill%3D%22%23e3f3ec%22%2F%3E%3Ctext%20x%3D%2246%22%20y%3D%22125%22%20font-family%3D%22Arial%22%20font-size%3D%2215%22%20fill%3D%22%23126a4b%22%3E%E2%9C%93%20general-settings.spec.ts%3C%2Ftext%3E%3Crect%20x%3D%2235%22%20y%3D%22143%22%20width%3D%22278%22%20height%3D%2231%22%20rx%3D%225%22%20fill%3D%22%23e3f3ec%22%2F%3E%3Ctext%20x%3D%2246%22%20y%3D%22163%22%20font-family%3D%22Arial%22%20font-size%3D%2215%22%20fill%3D%22%23126a4b%22%3E%E2%9C%93%20SET-CONFIG-001%3C%2Ftext%3E%3Crect%20x%3D%2235%22%20y%3D%22181%22%20width%3D%22278%22%20height%3D%2231%22%20rx%3D%225%22%20fill%3D%22%23fbe5e5%22%2F%3E%3Ctext%20x%3D%2246%22%20y%3D%22201%22%20font-family%3D%22Arial%22%20font-size%3D%2215%22%20fill%3D%22%23a94040%22%3E%E2%9C%95%20SET-JOBPOS-002%3C%2Ftext%3E%0A%3Ctext%20x%3D%22368%22%20y%3D%2291%22%20font-size%3D%2218%22%20font-family%3D%22Arial%22%20font-weight%3D%22bold%22%20fill%3D%22%2320618b%22%3E2%20%20%20ACTIONS%20%2F%20TIMELINE%3C%2Ftext%3E%3Cpath%20d%3D%22M374%20116%20H918%22%20stroke%3D%22%2394b0ce%22%20stroke-width%3D%224%22%2F%3E%3Cg%20fill%3D%22%2317948a%22%3E%3Ccircle%20cx%3D%22410%22%20cy%3D%22116%22%20r%3D%2210%22%2F%3E%3Ccircle%20cx%3D%22555%22%20cy%3D%22116%22%20r%3D%2210%22%2F%3E%3Ccircle%20cx%3D%22710%22%20cy%3D%22116%22%20r%3D%2210%22%2F%3E%3Ccircle%20cx%3D%22872%22%20cy%3D%22116%22%20r%3D%2210%22%2F%3E%3C%2Fg%3E%0A%3Ctext%20x%3D%22370%22%20y%3D%22190%22%20font-size%3D%2218%22%20font-family%3D%22Arial%22%20font-weight%3D%22bold%22%20fill%3D%22%2320618b%22%3E3%20%20%20BROWSER%20PREVIEW%3C%2Ftext%3E%3Ctext%20x%3D%22370%22%20y%3D%22220%22%20font-size%3D%2215%22%20font-family%3D%22Arial%22%20fill%3D%22%2353667f%22%3ESee%20the%20page%20as%20each%20step%20happened.%3C%2Ftext%3E%0A%3Ctext%20x%3D%22761%22%20y%3D%22190%22%20font-size%3D%2218%22%20font-family%3D%22Arial%22%20font-weight%3D%22bold%22%20fill%3D%22%23ab4141%22%3E4%20%20%20ERRORS%3C%2Ftext%3E%3Ctext%20x%3D%22761%22%20y%3D%22220%22%20font-size%3D%2214%22%20font-family%3D%22Arial%22%20fill%3D%22%23824a4a%22%3EExpected%20vs%20actual%3C%2Ftext%3E%3C%2Fsvg%3E" id="playwright-screen" alt="Official Playwright UI Mode screenshot showing the test list on the left, run icons, action timeline, browser preview and bottom details" loading="lazy" referrerpolicy="no-referrer">
+<figcaption>Official Playwright UI Mode screenshot, using sample tests (not HR PRO). Use the guide below to identify the panels.</figcaption>
+</figure>
+<div class="visual-key" aria-label="Playwright UI Mode screenshot guide">
+<div><span class="key-num">1</span><b>Test list</b><p>Find the file and test name on the left.</p></div>
+<div><span class="key-num">2</span><b>Run ▶</b><p>Click the small play icon beside one test.</p></div>
+<div><span class="key-num">3</span><b>Timeline &amp; Actions</b><p>Review each action and select a step.</p></div>
+<div><span class="key-num">4</span><b>Browser preview &amp; Errors</b><p>See what happened and why a check failed.</p></div>
 </div>
-<details><summary>Other folders and files (when you need them)</summary><div><table><tbody>
-<tr><td><code>playwright/pages/</code></td><td>Reusable clicks and page controls.</td></tr><tr><td><code>playwright/fixtures/</code></td><td>Shared setup and login helpers.</td></tr><tr><td><code>tests/infrastructure/</code></td><td>Advanced inspection scripts, not routine tests.</td></tr><tr><td><code>package.json</code></td><td>Tool dependencies and command shortcuts.</td></tr><tr><td><code>docs/help/index.html</code></td><td>This guide. Save the HTML to read it locally.</td></tr>
-</tbody></table></div></details>
-</section>
-<section id="workflow"><div class="label">03 · Why it helps</div><h2>How the testing workflow works</h2><p class="sub">The computer repeats steps; the tester decides whether the result is actually correct.</p>
-<div class="flow"><div>1. Choose<small>What should HR PRO do?</small></div><div>2. Try<small>Check it manually</small></div><div>3. Write<small>Turn steps into a test</small></div><div>4. Run<small>Check results</small></div><div>5. Share<small>Review on GitHub</small></div></div>
-<div class="grid"><div class="tile"><b>Save time</b><p>Repeat common checks without clicking every step manually.</p></div><div class="tile"><b>Spot changes</b><p>Notice when something that worked before starts failing.</p></div><div class="tile"><b>Share knowledge</b><p>Keep checks in GitHub for others to run and improve.</p></div></div>
-<div class="note"><b>Important:</b> A passing test means its specific checks passed. It does not prove that every part of HR PRO is bug-free.</div>
-</section>
-<section id="syntax"><div class="label">04 · Learn the basics</div><h2>Understand test syntax in one example</h2><p class="sub">You don't need to memorize this. Learn what each line does.</p>
-<div class="code"><div class="code-top">ILLUSTRATIVE PLAYWRIGHT TEST <button type="button" class="copy" data-copy="example">Copy</button></div><pre id="example">import { test, expect } from '@playwright/test';
 
-test('Settings page opens', async ({ page }) => {
-  await page.goto('/settings');
-  await expect(page).toHaveURL(/\/settings$/);
-});</pre></div>
-<table><thead><tr><th>Code</th><th>Plain English</th></tr></thead><tbody>
-<tr><td><code>test(...)</code></td><td>Name the check.</td></tr>
-<tr><td><code>page.goto(...)</code></td><td>Open a page.</td></tr>
-<tr><td><code>await</code></td><td>Wait for the action or check.</td></tr>
-<tr><td><code>expect(...)</code></td><td>Verify the expected outcome (called an assertion).</td></tr>
-<tr><td><code>getByRole(...)</code></td><td>Find a button or field by its visible role/name (a locator).</td></tr>
-</tbody></table>
-<p class="minor">This is a teaching example, not a ready-to-run HR PRO authenticated test. For working patterns with login, copy an existing test and reuse the project's fixture.</p>
-<details><summary>How to create a new test (when you're ready)</summary><div>
-<ol><li>Write the expected result in one sentence.</li><li>Try the steps in approved test HR PRO manually.</li><li>Copy a similar file from <code>tests/regression/setup/</code> and use the existing login fixture.</li><li>Replace the steps with the actual controls, add <code>expect(...)</code> checks.</li><li>Run only that test in UI Mode, inspect the screen and result.</li><li>Commit on a separate branch and open a GitHub pull request for review.</li></ol>
-<p>For example, a test of saving a Department should check that the saved record still exists after reloading—not just that the Save button was clicked.</p>
+<div class="pw-gallery-intro"><h3>What to look for in UI Mode</h3><p>These are real screenshots from Playwright's official UI Mode guide. Select each image to see it larger.</p></div>
+<div class="pw-gallery">
+<figure class="pw-shot">
+  <a href="https://github.com/microsoft/playwright/assets/13063165/6f05e589-036d-45d5-9078-38134e1261e4" target="_blank" rel="noopener noreferrer" title="Open a larger Playwright screenshot">
+    <img src="https://github.com/microsoft/playwright/assets/13063165/6f05e589-036d-45d5-9078-38134e1261e4" alt="Playwright UI Mode screenshot with test name filters, project checkboxes and a list of matching tests" loading="lazy" decoding="async">
+  </a>
+  <figcaption><strong>A. Find a test</strong><span>Use the filter and the green ▶ beside a test name—not the button that runs every test.</span><a href="https://playwright.dev/docs/test-ui-mode" target="_blank" rel="noopener noreferrer">Playwright documentation ↗</a></figcaption>
+</figure>
+<figure class="pw-shot">
+  <a href="https://github.com/microsoft/playwright/assets/13063165/811a9985-32aa-4a3e-9869-de32053cf468" target="_blank" rel="noopener noreferrer" title="Open a larger Playwright screenshot">
+    <img src="https://github.com/microsoft/playwright/assets/13063165/811a9985-32aa-4a3e-9869-de32053cf468" alt="Playwright UI Mode screenshot showing test execution timeline, Actions list and browser snapshot" loading="lazy" decoding="async">
+  </a>
+  <figcaption><strong>B. Follow every action</strong><span>Select an action on the left, then review the browser preview and Before / After tabs.</span><a href="https://playwright.dev/docs/test-ui-mode" target="_blank" rel="noopener noreferrer">Playwright documentation ↗</a></figcaption>
+</figure>
+</div>
+<div class="note"><b>Next practice (changes QA data):</b> Once you have an approved disposable test environment, run <a href="https://github.com/nitsuwa/hr-pro-automation/blob/main/tests/regression/setup/department-creation.spec.ts">SET-DEPT-001</a>. It creates a fictional department, reloads HR PRO, and checks that the department is still there. This demonstrates a real business-result assertion.</div>
+<div class="codebox"><div class="codebar"><span>ONLY IN APPROVED QA · DEPARTMENT EXAMPLE</span><button type="button" title="Copy exact code to clipboard" data-copy="real-code">Copy</button></div><pre id="real-code" data-language="powershell" aria-label="PowerShell commands">npx playwright test tests/regression/setup/department-creation.spec.ts --ui --project=chromium</pre></div>
+</section>
+<section class="section" id="structure">
+ <div class="kicker">03 / PROJECT TOUR</div><h2>Find the tests and folders</h2>
+ <p>Expand a folder and select a file to see its purpose.</p>
+ <div class="folder-lab" id="folder-explorer">
+<div class="folder-lab-tree" aria-label="Expandable repository tree">
+<div class="tree-root">◈ hr-pro-automation <span>select a folder or file</span></div>
+<details class="tree-branch rootbranch" open><summary><span class="tree-chevron" aria-hidden="true">›</span>📁 tests/ <small>Test scripts</small></summary><div class="tree-items">
+<details class="tree-branch subbranch" open><summary data-explain="smoke"><span class="tree-chevron" aria-hidden="true">›</span>📁 smoke/ <small>3 files</small></summary><div class="tree-items"><button type="button" class="tree-file" data-explain="navfile"><span class="tree-file-icon" aria-hidden="true">↳</span>navigation.spec.ts</button><button type="button" class="tree-file" data-explain="loginfile"><span class="tree-file-icon" aria-hidden="true">↳</span>login.spec.ts</button><button type="button" class="tree-file" data-explain="rolesfile"><span class="tree-file-icon" aria-hidden="true">↳</span>demo-roles.spec.ts</button></div></details>
+<details class="tree-branch subbranch"><summary data-explain="regression"><span class="tree-chevron" aria-hidden="true">›</span>📁 regression/setup/ <small>Feature tests</small></summary><div class="tree-items"><button type="button" class="tree-file" data-explain="deptfile"><span class="tree-file-icon" aria-hidden="true">↳</span>department-creation.spec.ts</button><button type="button" class="tree-file" data-explain="employeefile"><span class="tree-file-icon" aria-hidden="true">↳</span>employee-setup.spec.ts</button><button type="button" class="tree-file" data-explain="catalogfile"><span class="tree-file-icon" aria-hidden="true">↳</span>catalog-duplicates.spec.ts</button><a class="tree-more" href="https://github.com/nitsuwa/hr-pro-automation/tree/main/tests/regression/setup" target="_blank" rel="noopener noreferrer">View all Setup tests ↗</a></div></details>
+<details class="tree-branch subbranch"><summary data-explain="infra"><span class="tree-chevron" aria-hidden="true">›</span>📁 infrastructure/ <small>Advanced</small></summary><div class="tree-items"><button type="button" class="tree-file" data-explain="isofile"><span class="tree-file-icon" aria-hidden="true">↳</span>browser-storage-isolation.spec.ts</button><button type="button" class="tree-file" data-explain="inspectfile"><span class="tree-file-icon" aria-hidden="true">↳</span>setup-ui-inventory.spec.ts</button><a class="tree-more" href="https://github.com/nitsuwa/hr-pro-automation/tree/main/tests/infrastructure" target="_blank" rel="noopener noreferrer">View more inspection files ↗</a></div></details>
 </div></details>
-<details id="ai"><summary>Want AI to help draft test code?</summary><div>
-<p>AI can suggest a starting point. You must verify actual buttons, data, and results yourself. Never share real employee information, credentials, or secrets.</p>
-<div class="code"><div class="code-top">COPYABLE PROMPT <button type="button" class="copy" data-copy="prompt">Copy</button></div><pre id="prompt">Help draft a Playwright test for HR PRO.
-Feature: [name]
-Manual steps: [steps I verified]
-Expected result: [what must happen]
-Real button/field labels: [labels I observed]
-Use the existing project fixture and a meaningful expect assertion.
-Explain what I need to verify in UI Mode.
-Do not invent selectors or test accounts.</pre></div></div></details>
+<details class="tree-branch rootbranch"><summary><span class="tree-chevron" aria-hidden="true">›</span>📁 playwright/ <small>Shared helpers</small></summary><div class="tree-items">
+<details class="tree-branch subbranch"><summary data-explain="fixtures"><span class="tree-chevron" aria-hidden="true">›</span>📁 fixtures/ <small>Test setup</small></summary><div class="tree-items"><button type="button" class="tree-file" data-explain="fixturefile"><span class="tree-file-icon" aria-hidden="true">↳</span>hrpro.fixture.ts</button></div></details>
+<details class="tree-branch subbranch"><summary data-explain="pages"><span class="tree-chevron" aria-hidden="true">›</span>📁 pages/ <small>Page objects</small></summary><div class="tree-items"><button type="button" class="tree-file" data-explain="loginpage"><span class="tree-file-icon" aria-hidden="true">↳</span>login.page.ts</button><button type="button" class="tree-file" data-explain="settingpage"><span class="tree-file-icon" aria-hidden="true">↳</span>settings.page.ts</button></div></details>
+<details class="tree-branch subbranch"><summary data-explain="data"><span class="tree-chevron" aria-hidden="true">›</span>📁 data/ <small>Demo accounts</small></summary><div class="tree-items"><button type="button" class="tree-file" data-explain="demofile"><span class="tree-file-icon" aria-hidden="true">↳</span>demo-accounts.ts</button></div></details>
+</div></details>
+<details class="tree-branch rootbranch"><summary data-explain="docs"><span class="tree-chevron" aria-hidden="true">›</span>📁 docs/help/ <small>Documentation</small></summary><div class="tree-items"><button type="button" class="tree-file" data-explain="htmlfile"><span class="tree-file-icon" aria-hidden="true">↳</span>index.html</button><button type="button" class="tree-file" data-explain="assetfolder"><span class="tree-file-icon" aria-hidden="true">↳</span>assets/</button></div></details>
+<details class="tree-branch rootbranch"><summary><span class="tree-chevron" aria-hidden="true">›</span>📄 Root files <small>Configuration</small></summary><div class="tree-items"><button type="button" class="tree-file" data-explain="config"><span class="tree-file-icon" aria-hidden="true">↳</span>playwright.config.ts</button><button type="button" class="tree-file" data-explain="package"><span class="tree-file-icon" aria-hidden="true">↳</span>package.json</button><button type="button" class="tree-file" data-explain="readme"><span class="tree-file-icon" aria-hidden="true">↳</span>README.md</button></div></details>
+</div>
+<div class="folder-lab-preview" aria-live="polite"><span class="preview-eyebrow">FOLDER EXPLAINER</span><h3 id="explorer-name">tests/smoke/</h3><p id="explorer-desc">Quick login and navigation checks. Start here.</p><div class="preview-rule"><b>Where to put code</b><p id="explorer-rule">Add new critical-path smoke tests here.</p></div><a id="explorer-link" href="https://github.com/nitsuwa/hr-pro-automation/tree/main/tests/smoke" target="_blank" rel="noopener noreferrer">View on GitHub ↗</a><p class="preview-foot">Expand folders to see actual files. Select any entry for a short explanation.</p></div>
+</div>
+<p class="folder-guidance"><b>Where should a new test go?</b> Setup feature → <code>tests/regression/setup/</code>. Login/navigation → <code>tests/smoke/</code>. Reusable actions → <code>playwright/pages/</code>.</p>
 </section>
-<section id="help"><span class="anchor" id="verify"></span><span class="anchor" id="create"></span><span class="anchor" id="github"></span><div class="label">05 · If you get stuck</div><h2>Common questions, quick answers</h2><p class="sub">Open only the problem you have.</p>
-<details><summary>“git” or “npm” is not recognized</summary><div>Install Git or Node.js LTS, then restart VS Code and open a new terminal. Check with <code>git --version</code> or <code>node --version</code>.</div></details>
-<details><summary>Playwright does not open</summary><div>Make sure the terminal is in <code>hr-pro-automation</code>. Run <code>npm ci</code>, then <code>npx playwright install chromium</code>, and retry.</div></details>
-<details><summary>The test is red or login fails</summary><div>Read the error in Playwright UI Mode and check Actions / screenshots. Confirm the configured non-production URL and approved test-account access. Do not edit the expected result simply to force a green status.</div></details>
-<details><summary>What do I do with a passing test?</summary><div>Look at the assertion and the browser view. Check that they match the actual requirement. Record the result or evidence in your team's QA log.</div></details>
-<details><summary>How do I share a new test?</summary><div>Create a branch, run and verify your test, commit your changes, push the branch, then open a pull request on GitHub so a teammate can review it. See <a href="https://github.com/nitsuwa/hr-pro-automation/blob/main/docs/help/USER_MANUAL.md" target="_blank" rel="noopener noreferrer">the written manual</a> for the commands.</div></details>
-<details><summary>Can I use this guide offline?</summary><div>Yes: save this <code>index.html</code> file and open it in a browser. The guide's layout, code examples, and help panels work locally. External links and the software/test environment still require internet or network access.</div></details>
-<details><summary>Where can I find more advanced explanations?</summary><div>See the <a href="https://github.com/nitsuwa/hr-pro-automation/blob/main/docs/help/USER_MANUAL.md" target="_blank" rel="noopener noreferrer">full written manual</a> and <a href="https://playwright.dev/docs/intro" target="_blank" rel="noopener noreferrer">Playwright documentation</a>.</div></details>
+<section class="section" id="verify">
+<div class="kicker">04 / CHECK THE EVIDENCE</div><h2>Did HR PRO actually behave correctly?</h2>
+<p><b>Green means the assertions passed.</b> Check that they actually prove the requirement.</p>
+<figure class="figure visual-figure"><img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%201040%20320%22%20role%3D%22img%22%20aria-labelledby%3D%22title%20desc%22%3E%3Ctitle%20id%3D%22title%22%3EHow%20to%20interpret%20Playwright%20test%20results%3C%2Ftitle%3E%3Cdesc%20id%3D%22desc%22%3EThree%20results%3A%20passed%20means%20assertion%20succeeded%3B%20failed%20means%20investigate%20expected%20and%20received%3B%20skipped%20means%20not%20run.%20Below%20is%20a%20checklist%3A%20confirm%20assertion%2C%20inspect%20actions%2C%20reopen%20if%20saved%2C%20report%20evidence.%3C%2Fdesc%3E%0A%3Crect%20width%3D%221040%22%20height%3D%22320%22%20rx%3D%2218%22%20fill%3D%22%23f3f5fa%22%2F%3E%3Crect%20x%3D%2220%22%20y%3D%2219%22%20width%3D%221000%22%20height%3D%22282%22%20rx%3D%2213%22%20fill%3D%22%23fff%22%20stroke%3D%22%23dce4ee%22%2F%3E%0A%3Ctext%20x%3D%2240%22%20y%3D%2258%22%20font-family%3D%22Arial%2Csans-serif%22%20font-size%3D%2221%22%20font-weight%3D%22700%22%20fill%3D%22%232b285e%22%3EA%20result%20is%20only%20useful%20when%20you%20check%20the%20assertion.%3C%2Ftext%3E%0A%3Cg%20font-family%3D%22Arial%2Csans-serif%22%3E%0A%3Crect%20x%3D%2240%22%20y%3D%2286%22%20width%3D%22305%22%20height%3D%22118%22%20rx%3D%2210%22%20fill%3D%22%23ecf8f3%22%20stroke%3D%22%23b7e3ce%22%2F%3E%3Ccircle%20cx%3D%2268%22%20cy%3D%22112%22%20r%3D%2213%22%20fill%3D%22%23198a6b%22%2F%3E%3Cpath%20d%3D%22m62%20111%205%206%209-11%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222.5%22%2F%3E%3Ctext%20x%3D%2291%22%20y%3D%22119%22%20font-size%3D%2217%22%20font-weight%3D%22700%22%20fill%3D%22%23156a51%22%3EPASSED%3C%2Ftext%3E%3Ctext%20x%3D%2256%22%20y%3D%22153%22%20font-size%3D%2213%22%20fill%3D%22%2336556a%22%3EThe%20coded%20checks%20passed.%3C%2Ftext%3E%3Ctext%20x%3D%2256%22%20y%3D%22177%22%20font-size%3D%2212%22%20fill%3D%22%2336556a%22%3ECheck%20if%20they%20cover%20the%20requirement.%3C%2Ftext%3E%0A%3Crect%20x%3D%22367%22%20y%3D%2286%22%20width%3D%22305%22%20height%3D%22118%22%20rx%3D%2210%22%20fill%3D%22%23fff0f1%22%20stroke%3D%22%23f1bfc8%22%2F%3E%3Ccircle%20cx%3D%22395%22%20cy%3D%22112%22%20r%3D%2213%22%20fill%3D%22%23b3394e%22%2F%3E%3Cpath%20d%3D%22M390%20107%20400%20117%20M400%20107%20390%20117%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222.5%22%2F%3E%3Ctext%20x%3D%22417%22%20y%3D%22119%22%20font-size%3D%2217%22%20font-weight%3D%22700%22%20fill%3D%22%23a13247%22%3EFAILED%3C%2Ftext%3E%3Ctext%20x%3D%22383%22%20y%3D%22153%22%20font-size%3D%2213%22%20fill%3D%22%2336556a%22%3ERead%20Expected%20and%20Received.%3C%2Ftext%3E%3Ctext%20x%3D%22383%22%20y%3D%22177%22%20font-size%3D%2212%22%20fill%3D%22%2336556a%22%3ECheck%20if%20the%20UI%20or%20selector%20is%20wrong.%3C%2Ftext%3E%0A%3Crect%20x%3D%22694%22%20y%3D%2286%22%20width%3D%22305%22%20height%3D%22118%22%20rx%3D%2210%22%20fill%3D%22%23f0f2f6%22%20stroke%3D%22%23d5dbe6%22%2F%3E%3Ccircle%20cx%3D%22722%22%20cy%3D%22112%22%20r%3D%2213%22%20fill%3D%22%23778399%22%2F%3E%3Cpath%20d%3D%22M717%20112h10%22%20stroke%3D%22%23fff%22%20stroke-width%3D%223%22%2F%3E%3Ctext%20x%3D%22744%22%20y%3D%22119%22%20font-size%3D%2217%22%20font-weight%3D%22700%22%20fill%3D%22%23586579%22%3ESKIPPED%3C%2Ftext%3E%3Ctext%20x%3D%22710%22%20y%3D%22153%22%20font-size%3D%2213%22%20fill%3D%22%2336556a%22%3EThe%20test%20did%20not%20execute.%3C%2Ftext%3E%3Ctext%20x%3D%22710%22%20y%3D%22177%22%20font-size%3D%2212%22%20fill%3D%22%2336556a%22%3ENever%20report%20it%20as%20a%20pass.%3C%2Ftext%3E%0A%3Cpath%20d%3D%22M40%20231h960%22%20stroke%3D%22%23dce4ee%22%2F%3E%0A%3Cg%20font-size%3D%2214%22%20fill%3D%22%232e2b61%22%20font-weight%3D%22700%22%3E%3Ctext%20x%3D%2241%22%20y%3D%22267%22%3E01%20%C2%B7%20Read%20expect(...)%3C%2Ftext%3E%3Ctext%20x%3D%22288%22%20y%3D%22267%22%3E02%20%C2%B7%20Inspect%20Actions%3C%2Ftext%3E%3Ctext%20x%3D%22542%22%20y%3D%22267%22%3E03%20%C2%B7%20Reopen%20%2F%20reload%3C%2Ftext%3E%3Ctext%20x%3D%22804%22%20y%3D%22267%22%3E04%20%C2%B7%20Record%20evidence%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Passed means assertions succeeded, failed means investigate, skipped means not executed; then read expected result, inspect actions, reload and record evidence" loading="lazy"><figcaption>A status is not enough: check the assertion and actual result.</figcaption></figure>
+<div class="legend">
+<div><b><i class="dot green"></i> Passed</b>Assertions succeeded.</div>
+<div><b><i class="dot red"></i> Failed</b>Inspect the failing step.</div>
+<div><b><i class="dot gray"></i> Skipped</b>Not executed; not a pass.</div>
+</div>
+<div class="walk-example">
+<div class="walk-top"><span class="mini-tag">EXAMPLE · DEPARTMENT</span><strong>What counts as a real check?</strong></div>
+<div class="two-up">
+<div><b>Action only</b><div class="snippet">await field.press('Enter');</div><p>Pressing Enter does not prove anything was saved.</p></div>
+<div><b>Assertion</b><div class="snippet">await expect(page.getByText(name, { exact: true })).toBeVisible();</div><p>Checks that the new department appears.</p></div>
+</div>
+<div class="note compact"><b>Persistence check:</b> The existing department test then reloads the page, opens Departments again, and checks the name one more time.</div>
+</div>
+
+<div class="pw-gallery-intro"><h3>Example: a failed test in Trace Viewer</h3><p>Use the error panel to read the failing action and locator. This sample is from Playwright, not from HR PRO.</p></div>
+<div class="pw-gallery pw-single">
+<figure class="pw-shot">
+  <a href="https://playwright.dev/assets/images/trace-viewer-failed-test-5ec04c65e0f0c1ffca58529f6789c752.png" target="_blank" rel="noopener noreferrer" title="Open a larger Playwright screenshot">
+    <img src="https://playwright.dev/assets/images/trace-viewer-failed-test-5ec04c65e0f0c1ffca58529f6789c752.png" alt="Official Playwright Trace Viewer screenshot showing a failed Click action, browser preview and error details" loading="lazy" decoding="async">
+  </a>
+  <figcaption><strong>Find the failing step</strong><span>The red action tells you where to investigate. Read its error before changing any code.</span><a href="https://playwright.dev/docs/trace-viewer-intro" target="_blank" rel="noopener noreferrer">Playwright documentation ↗</a></figcaption>
+</figure>
+</div>
+<details class="guide-details"><summary>If a test fails — troubleshooting steps</summary><div class="details-inner">
+<ol class="step-list">
+<li><div><b>Read Expected and Received.</b> Identify the failing <code>expect(...)</code> statement.</div></li>
+<li><div><b>Inspect the screenshot and Actions.</b> Was the correct page, user role and data used?</div></li>
+<li><div><b>Decide what is wrong.</b> A renamed field may mean a locator needs repair; the wrong saved value may be an HR PRO defect; missing setup data may mean the environment isn't ready.</div></li>
+<li><div><b>Fix only what evidence supports.</b> Rerun, check the result manually, then record a defect in GitHub when the application truly violates the expected behavior.</div></li>
+</ol>
+</div></details><div class="note warn"><b>Never “fix” a failing test by changing the expected result just to make it green.</b> If the requirement says one saved department, keep <code>toHaveCount(1)</code>—don't change it to 2 to hide a duplicate.</div>
 </section>
-<footer class="foot">HR PRO QA Guide · First run → project tour → workflow → syntax → troubleshooting. <a href="https://github.com/nitsuwa/hr-pro-automation" target="_blank" rel="noopener noreferrer">Open GitHub repository</a>. This guide teaches testing; it does not provide accounts or permissions.</footer>
+<section class="section" id="syntax">
+<div class="kicker">05 / THE IMPORTANT CODE</div><h2>Understand actions and assertions</h2>
+<p>Playwright tests use <b>TypeScript</b>. First learn actions and assertions.</p>
+<div class="two-up syntax-intro">
+<div><span class="mini-tag">ACTION</span><h3>Do something in HR PRO</h3><div class="snippet">await button.click();<br>await field.fill(name);</div><p>Clicks a button or types in a field.</p></div>
+<div><span class="mini-tag">ASSERTION</span><h3>Check what should happen</h3><div class="snippet">await expect(button).toBeVisible();<br>await expect(row).toHaveCount(1);</div><p>If the result isn't correct, Playwright marks the test failed.</p></div>
+</div>
+<div class="codebox"><div class="codebar"><span>TYPESCRIPT · REALISTIC HR PRO NAVIGATION EXAMPLE</span><button type="button" title="Copy exact code to clipboard" data-copy="syntax-code">Copy</button></div><pre id="syntax-code" data-language="typescript" aria-label="Playwright TypeScript example">import { test, expect } from '../../../playwright/fixtures/hrpro.fixture';
+
+test('QA-EXAMPLE | Settings opens', async ({ page, loginAs }) => {
+  await loginAs('systemAdmin');           // use the shared test login
+  await page.goto('/settings');           // open HR PRO Settings
+  const tab = page.getByRole('button', {
+    name: 'Organization Setup', exact: true
+  });
+  await expect(tab).toBeVisible();        // verify the button exists
+});</pre></div>
+<details class="guide-details"><summary>More syntax — quick reference</summary><div class="details-inner"><table class="glossary"><thead><tr><th>Syntax</th><th>What it means</th></tr></thead><tbody>
+<tr><td><code>test('name', ...)</code></td><td>Starts a named test. Include its scenario ID when available.</td></tr>
+<tr><td><code>{ page, loginAs }</code></td><td>Uses the browser page and this repository's login helper.</td></tr>
+<tr><td><code>async</code> / <code>await</code></td><td>Waits for a browser action or assertion to finish.</td></tr>
+<tr><td><code>page.goto('/settings')</code></td><td>Navigates to the Settings page.</td></tr>
+<tr><td><code>getByRole('button', { name: '...' })</code></td><td>Finds a button by the label the user sees.</td></tr>
+<tr><td><code>.click()</code> / <code>.fill()</code></td><td>Performs an action.</td></tr>
+<tr><td><code>expect(...).toBeVisible()</code></td><td>Checks that something is shown.</td></tr>
+<tr><td><code>expect(...).toHaveCount(1)</code></td><td>Checks that exactly one matching record exists.</td></tr>
+<tr><td><code>expect(...).toHaveValue(value)</code></td><td>Checks a field's actual value.</td></tr>
+<tr><td><code>page.reload()</code></td><td>Refreshes the page; useful before checking persistence.</td></tr>
+</tbody></table></div></details>
+
+<div class="pw-gallery-intro"><h3>Playwright can help you generate assertions</h3><p>It can suggest what to check, but you must decide whether that assertion proves the HR PRO requirement.</p></div>
+<div class="pw-gallery pw-single">
+<figure class="pw-shot">
+  <a href="https://github.com/microsoft/playwright/assets/13063165/d131eb35-b2ca-4bf4-a8ac-88b6e40dcf07" target="_blank" rel="noopener noreferrer" title="Open a larger Playwright screenshot">
+    <img src="https://github.com/microsoft/playwright/assets/13063165/d131eb35-b2ca-4bf4-a8ac-88b6e40dcf07" alt="Official Playwright Codegen screenshot using Assert text on a selected item in a todo app" loading="lazy" decoding="async">
+  </a>
+  <figcaption><strong>E. Generate an assertion</strong><span>Record a text assertion, then review its expected value before adding it to your test.</span><a href="https://playwright.dev/docs/codegen" target="_blank" rel="noopener noreferrer">Playwright documentation ↗</a></figcaption>
+</figure>
+</div>
+<div class="note"><b>Key idea:</b> <code>getByRole(...)</code> locates a user-interface element. <code>expect(...)</code> is the check that makes your test meaningful. Read <a href="https://playwright.dev/docs/locators" target="_blank" rel="noopener noreferrer">locators</a> and <a href="https://playwright.dev/docs/test-assertions" target="_blank" rel="noopener noreferrer">assertions</a> in the official Playwright documentation when you need more.</div>
+</section>
+<section class="section" id="create">
+<div class="kicker">06 / CREATE YOUR OWN TEST</div><h2>From manual steps to automated checks</h2>
+<p>The steps are the same for <b>Excel cases</b> and <b>new features</b>. AI may draft the test; QA verifies it.</p>
+<div class="example-switcher" aria-label="Choose an example">
+<div class="example-switch-controls" role="group" aria-label="Requirement source">
+<button type="button" class="example-choice selected" data-example="excel" aria-pressed="true">From Excel</button>
+<button type="button" class="example-choice" data-example="new" aria-pressed="false">New feature (no Excel)</button>
+</div>
+<div class="example-panel" data-panel="excel">
+<b>Example: SET_177–181 — Create a department</b>
+<div class="requirement-sheet"><span>Manual steps</span><p>Settings → Organization Setup → Departments → Add Department → enter a unique QA name → save.</p><span>Expected result</span><p>Department appears once and is still there after refreshing the page.</p><span>Existing reference</span><p><a href="https://github.com/nitsuwa/hr-pro-automation/blob/main/tests/regression/setup/department-creation.spec.ts" target="_blank" rel="noopener noreferrer"><code>department-creation.spec.ts</code> ↗</a></p></div>
+<div class="hrpro-walkthrough" aria-label="Illustrated HR PRO Settings navigation">
+ <div class="hrpro-walk-top"><span class="mini-brand"><span class="tiny-squares" aria-hidden="true">▦</span> HR PRO</span><span>SETTINGS · EXAMPLE VIEW</span></div>
+ <div class="hrpro-menu"><span>Home</span><span>Timesheet</span><span>Employees</span><strong>① Settings</strong></div>
+ <div class="hrpro-inner"><div class="fake-tabs"><b>② Organization Setup</b><span>Users &amp; Access</span><span>Modules</span></div>
+ <div class="fake-tabs small"><span>General</span><b>③ Departments</b><span>Job Positions</span><span>Work Locations</span></div>
+ <div class="fake-list"><div>OPERATIONS</div><div>SECURITY</div><div>QA DEPARTMENT <small>Saved test record</small></div><strong>④ + Add Department</strong></div></div>
+</div>
+<p class="mini" style="margin-top:8px">Illustration of the HR PRO path, not a live screenshot. Follow the labels in your own approved test environment.</p>
+</div>
+<div class="example-panel" data-panel="new" hidden>
+<b>Example: Add employee search coverage</b>
+<div class="requirement-sheet"><span>Manual steps</span><p>With a fictional QA employee already present, open Employees, type its name in Search, and inspect the matching results.</p><span>Expected result</span><p>The matching QA employee appears in the filtered list and an unrelated name is not included.</p><span>Scenario ID</span><p>Choose a new ID under your team's naming convention; no Excel reference is needed.</p></div>
+</div>
+</div>
+<h3 class="subhead">Test-writing workflow</h3>
+<div class="guided-steps">
+<article><span class="step-bubble">1</span><div><h3>Write down the expected result</h3><p>Choose the role, scenario, and expected result. Note edge cases.</p><span class="do-this">Write a short Given / When / Then.</span></div></article>
+<article><span class="step-bubble">2</span><div><h3>Try the steps manually in HR PRO</h3><p>Try it in approved HR PRO QA. Record the actual labels and outcome.</p><span class="do-this">Note the clicks and what appeared.</span></div></article>
+<article><span class="step-bubble">3</span><div><h3>Inspect the actual controls</h3><p>Use Playwright UI Mode's <b>Pick locator</b> on a snapshot, or the <a href="https://playwright.dev/docs/codegen" target="_blank" rel="noopener noreferrer">Playwright code generator</a> in an approved QA environment.</p>
+<ol class="micro-steps">
+<li>In UI Mode, select a snapshot and use <b>Pick locator</b>.</li>
+<li>Copy real locators such as <code>getByRole('button', { name: 'Departments' })</code>. Reuse <code>loginAs</code>; never copy credentials.</li>
+</ol>
+<details class="guide-details"><summary>See locator screenshots and optional Codegen command</summary><div class="details-inner"><figure class="figure visual-figure"><img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%201040%20410%22%20role%3D%22img%22%20aria-labelledby%3D%22title%20desc%22%3E%3Ctitle%20id%3D%22title%22%3EInspecting%20an%20HR%20PRO%20button%20with%20a%20Playwright%20locator%3C%2Ftitle%3E%3Cdesc%20id%3D%22desc%22%3ELeft%3A%20illustrated%20HR%20PRO%20Settings%20navigation%20with%20Departments%20tab%20highlighted.%20Right%3A%20TypeScript%20snippet%20showing%20getByRole%20button%20Department%20and%20toBeVisible%20assertion.%3C%2Fdesc%3E%0A%3Crect%20width%3D%221040%22%20height%3D%22410%22%20rx%3D%2218%22%20fill%3D%22%23f3f5fa%22%2F%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%221006%22%20height%3D%22376%22%20rx%3D%2213%22%20fill%3D%22%23fff%22%20stroke%3D%22%23d9e2ee%22%2F%3E%0A%3Cg%20font-family%3D%22Arial%2Csans-serif%22%3E%3Crect%20x%3D%2234%22%20y%3D%2234%22%20width%3D%22586%22%20height%3D%22346%22%20rx%3D%2211%22%20fill%3D%22%23fff%22%20stroke%3D%22%23d9e2ee%22%2F%3E%3Crect%20x%3D%2234%22%20y%3D%2234%22%20width%3D%22586%22%20height%3D%2264%22%20rx%3D%2211%22%20fill%3D%22%23fff%22%2F%3E%3Cg%20fill%3D%22%23326abb%22%3E%3Crect%20x%3D%2257%22%20y%3D%2249%22%20width%3D%2217%22%20height%3D%2217%22%20rx%3D%222%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%2249%22%20width%3D%2217%22%20height%3D%2217%22%20rx%3D%222%22%20opacity%3D%22.8%22%2F%3E%3Crect%20x%3D%2257%22%20y%3D%2272%22%20width%3D%2217%22%20height%3D%2217%22%20rx%3D%222%22%20opacity%3D%22.75%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%2272%22%20width%3D%2217%22%20height%3D%2217%22%20rx%3D%222%22%2F%3E%3C%2Fg%3E%3Ctext%20x%3D%22116%22%20y%3D%2279%22%20font-size%3D%2223%22%20font-weight%3D%22800%22%20letter-spacing%3D%222%22%20fill%3D%22%23326abb%22%3EHR%20PRO%3C%2Ftext%3E%0A%3Crect%20x%3D%2234%22%20y%3D%22102%22%20width%3D%22586%22%20height%3D%2248%22%20fill%3D%22%232e2b61%22%2F%3E%3Cg%20font-size%3D%2214%22%20fill%3D%22%23e7ebf9%22%3E%3Ctext%20x%3D%2259%22%20y%3D%22132%22%3EHome%3C%2Ftext%3E%3Ctext%20x%3D%22135%22%20y%3D%22132%22%3ETimesheet%3C%2Ftext%3E%3Ctext%20x%3D%22238%22%20y%3D%22132%22%3EEmployees%3C%2Ftext%3E%3Ctext%20x%3D%22353%22%20y%3D%22132%22%3EReview%3C%2Ftext%3E%3C%2Fg%3E%3Crect%20x%3D%22497%22%20y%3D%22108%22%20width%3D%22104%22%20height%3D%2235%22%20rx%3D%225%22%20fill%3D%22%231e9187%22%2F%3E%3Ctext%20x%3D%22509%22%20y%3D%22131%22%20font-size%3D%2214%22%20font-weight%3D%22700%22%20fill%3D%22%23fff%22%3ESettings%3C%2Ftext%3E%0A%3Ctext%20x%3D%2258%22%20y%3D%22184%22%20fill%3D%22%232b285e%22%20font-size%3D%2222%22%20font-weight%3D%22700%22%3ESettings%3C%2Ftext%3E%3Ctext%20x%3D%2258%22%20y%3D%22212%22%20font-size%3D%2213%22%20fill%3D%22%2365728c%22%3EOrganization%20Setup%3C%2Ftext%3E%3Cpath%20d%3D%22M58%20220h548%22%20stroke%3D%22%23dbe1eb%22%2F%3E%3Crect%20x%3D%22164%22%20y%3D%22233%22%20width%3D%22129%22%20height%3D%2240%22%20rx%3D%226%22%20fill%3D%22%23dcf2ee%22%20stroke%3D%22%2311867e%22%20stroke-width%3D%222%22%2F%3E%3Ctext%20x%3D%22179%22%20y%3D%22258%22%20fill%3D%22%23126e66%22%20font-weight%3D%22700%22%20font-size%3D%2214%22%3EDepartments%3C%2Ftext%3E%3Ctext%20x%3D%2265%22%20y%3D%22258%22%20font-size%3D%2213%22%20fill%3D%22%2365728c%22%3EGeneral%3C%2Ftext%3E%3Ctext%20x%3D%22310%22%20y%3D%22258%22%20font-size%3D%2213%22%20fill%3D%22%2365728c%22%3EJob%20Positions%3C%2Ftext%3E%3Ctext%20x%3D%22452%22%20y%3D%22258%22%20font-size%3D%2213%22%20fill%3D%22%2365728c%22%3ELocations%3C%2Ftext%3E%0A%3Ctext%20x%3D%2261%22%20y%3D%22315%22%20font-size%3D%2213%22%20fill%3D%22%23516380%22%3E%E2%91%A0%20Find%20the%20visible%20button%20label%3C%2Ftext%3E%3Cpath%20d%3D%22M248%20296v-21%22%20stroke%3D%22%23149a8c%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%2F%3E%3Ccircle%20cx%3D%22248%22%20cy%3D%22286%22%20r%3D%225%22%20fill%3D%22%23149a8c%22%2F%3E%0A%3Crect%20x%3D%22642%22%20y%3D%2234%22%20width%3D%22363%22%20height%3D%22346%22%20rx%3D%2211%22%20fill%3D%22%2319223a%22%2F%3E%3Crect%20x%3D%22642%22%20y%3D%2234%22%20width%3D%22363%22%20height%3D%2250%22%20rx%3D%2211%22%20fill%3D%22%232e2b61%22%2F%3E%3Ctext%20x%3D%22660%22%20y%3D%2265%22%20font-size%3D%2215%22%20font-weight%3D%22700%22%20fill%3D%22%23e6eeff%22%3Eplaywright%20test%3C%2Ftext%3E%0A%3Ctext%20x%3D%22662%22%20y%3D%22122%22%20fill%3D%22%239fceff%22%20font-size%3D%2213%22%20font-family%3D%22Consolas%2Cmonospace%22%3E%E2%91%A1%20Locate%20by%20visible%20name%3C%2Ftext%3E%0A%3Ctext%20x%3D%22662%22%20y%3D%22160%22%20fill%3D%22%23e9edf5%22%20font-size%3D%2213%22%20font-family%3D%22Consolas%2Cmonospace%22%3Epage.getByRole(%3C%2Ftext%3E%3Ctext%20x%3D%22675%22%20y%3D%22186%22%20fill%3D%22%23efcf92%22%20font-size%3D%2213%22%20font-family%3D%22Consolas%2Cmonospace%22%3E'button'%2C%3C%2Ftext%3E%3Ctext%20x%3D%22675%22%20y%3D%22212%22%20fill%3D%22%23a1decf%22%20font-size%3D%2213%22%20font-family%3D%22Consolas%2Cmonospace%22%3E%7B%20name%3A%20'Departments'%20%7D%3C%2Ftext%3E%3Ctext%20x%3D%22662%22%20y%3D%22238%22%20fill%3D%22%23e9edf5%22%20font-size%3D%2213%22%20font-family%3D%22Consolas%2Cmonospace%22%3E)%3C%2Ftext%3E%0A%3Cpath%20d%3D%22M659%20258h327%22%20stroke%3D%22%234a5472%22%2F%3E%3Ctext%20x%3D%22662%22%20y%3D%22289%22%20fill%3D%22%239fceff%22%20font-size%3D%2213%22%20font-family%3D%22Consolas%2Cmonospace%22%3E%E2%91%A2%20Check%20the%20result%3C%2Ftext%3E%3Ctext%20x%3D%22662%22%20y%3D%22319%22%20fill%3D%22%23a1decf%22%20font-size%3D%2213%22%20font-family%3D%22Consolas%2Cmonospace%22%3Eexpect(...).toBeVisible()%3C%2Ftext%3E%0A%3Ctext%20x%3D%2259%22%20y%3D%22359%22%20font-size%3D%2211%22%20fill%3D%22%238794a5%22%3EIllustration%20%C2%B7%20labels%20may%20change%20as%20HR%20PRO%20is%20updated.%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Illustrated HR PRO Settings Departments button and the Playwright getByRole locator and toBeVisible assertion" loading="lazy"><figcaption><b>Inspect → locate → assert.</b> Copy the name you observe in HR PRO. This is an illustration, not an actual test screenshot.</figcaption></figure>
+<div class="pw-gallery-intro"><h3>Locator tools you can recognize</h3><p>These official examples show how Playwright identifies buttons and inputs. The sample screen is not HR PRO.</p></div>
+<div class="pw-gallery">
+<figure class="pw-shot">
+  <a href="https://user-images.githubusercontent.com/13063165/220958368-95b03620-3c9b-40a8-be74-01c96ba03cad.png" target="_blank" rel="noopener noreferrer" title="Open a larger Playwright screenshot">
+    <img src="https://user-images.githubusercontent.com/13063165/220958368-95b03620-3c9b-40a8-be74-01c96ba03cad.png" alt="Official VS Code Playwright extension screenshot with Pick locator and locator preview highlighted" loading="lazy" decoding="async">
+  </a>
+  <figcaption><strong>C. Pick locator in VS Code</strong><span>Choose Pick locator, hover over an element, then copy its generated locator.</span><a href="https://playwright.dev/docs/codegen" target="_blank" rel="noopener noreferrer">Playwright documentation ↗</a></figcaption>
+</figure>
+<figure class="pw-shot">
+  <a href="https://github.com/microsoft/playwright/assets/13063165/1d4c8f37-8325-4816-a665-d0e95e63f509" target="_blank" rel="noopener noreferrer" title="Open a larger Playwright screenshot">
+    <img src="https://github.com/microsoft/playwright/assets/13063165/1d4c8f37-8325-4816-a665-d0e95e63f509" alt="Official Playwright Codegen screenshot highlighting a link and suggesting a getByRole locator" loading="lazy" decoding="async">
+  </a>
+  <figcaption><strong>D. Inspect in the browser</strong><span>Codegen highlights the selected element and offers a locator you can review.</span><a href="https://playwright.dev/docs/codegen" target="_blank" rel="noopener noreferrer">Playwright documentation ↗</a></figcaption>
+</figure>
+</div>
+<div class="codebox mini-code"><div class="codebar"><span>OPTIONAL · LOCATOR DISCOVERY</span><button type="button" title="Copy exact code to clipboard" data-copy="codegen-code">Copy</button></div><pre id="codegen-code" data-language="powershell" aria-label="PowerShell commands">npx playwright codegen</pre></div></div></details><span class="do-this">Do this: collect the control names and locators, then stop recording. Don't save credentials or generated logins.</span></div></article>
+<article><span class="step-bubble">4</span><div><h3>Ask AI to draft the code—or write it yourself</h3><p>Provide the requirement, observed labels, and a similar test. Ask for <code>loginAs</code> and meaningful assertions.</p><span class="do-this">Review AI output before running it.</span></div></article>
+<article><span class="step-bubble">5</span><div><h3>Put the test in the right folder</h3><p>Add <code>tests/regression/setup/employee-search.spec.ts</code> for a Setup check. Reuse existing fixtures and page objects; update existing coverage instead of duplicating it.</p><span class="do-this">Use a clear scenario ID and name.</span></div></article>
+<article><span class="step-bubble">6</span><div><h3>Run one test and verify the business result</h3><p>Run your file in UI Mode. Review assertions and browser evidence; reload to verify saved data.</p>
+<div class="codebox mini-code"><div class="codebar"><span>RUN YOUR NEW EMPLOYEE SEARCH TEST · EXAMPLE</span><button type="button" title="Copy exact code to clipboard" data-copy="new-test-run">Copy</button></div><pre id="new-test-run" data-language="powershell" aria-label="PowerShell commands">npx playwright test tests/regression/setup/employee-search.spec.ts --ui --project=chromium</pre></div><span class="do-this">Do this: separate a bad selector, missing test data, and an actual HR PRO defect.</span></div></article>
+<article><span class="step-bubble">7</span><div><h3>Share the tested change</h3><p>Open a pull request with the result, evidence, and any limitations.</p></div></article>
+</div>
+<h3 class="subhead" id="ai">AI Help — copy a test-writing prompt</h3>
+<p>After manual testing, fill in the scenario, expected result, and actual UI labels.</p>
+<div class="codebox"><div class="codebar"><span>PROMPT FOR CHATGPT / CLAUDE · COPY &amp; CUSTOMIZE</span><button type="button" title="Copy exact code to clipboard" data-copy="ai-code">Copy</button></div><pre id="ai-code" data-language="plain" aria-label="Copyable AI prompt">Help me create ONE Playwright TypeScript test for our HR PRO project.
+
+Requirement / Excel ID (if any): [scenario and expected outcome]
+Manual steps observed in approved QA: [clicks and field labels]
+Actual UI locators or accessible names: [from Playwright Inspector]
+Test data and role: [fictional data, approved QA role]
+Similar existing test file: [path to .spec.ts]
+
+Use our hrpro.fixture and existing page objects.
+Include assertions for the expected business result, and a reload
+or reopen check if something is saved. Do not invent selectors,
+credentials or behavior. Mark anything unknown NEEDS INSPECTION.
+Return a small test plus instructions to run it in Playwright UI Mode.
+Do not claim it passed. I will review and verify it myself.</pre></div>
+<div class="note warn"><b>AI is a helper, not the test result.</b> Never send passwords, tokens, private employee information or unapproved screenshots. Never paste AI code into <code>main</code> without checking and running it first.</div>
+</section>
+<section class="section" id="github">
+ <div class="kicker">07 / TEAM WORKFLOW</div><h2>Update and share through GitHub</h2>
+ <p><b>main</b> holds the team version. Make new work on a separate branch, then request review.</p>
+ <div class="codebox"><div class="codebar"><span>POWERSHELL · UPDATE LOCAL MAIN</span><button type="button" title="Copy exact code to clipboard" data-copy="update-code">Copy</button></div><pre id="update-code" data-language="powershell" aria-label="PowerShell commands">git switch main
+git status
+git fetch origin
+git merge --ff-only origin/main</pre></div>
+ <p class="subtitle" style="font-size:13px">Continue only if <code>git status</code> shows a clean working tree. If there are local changes, ask the maintainer before switching or merging.</p>
+ <div class="codebox"><div class="codebar"><span>POWERSHELL · NEW WORK BRANCH (EXAMPLE)</span><button type="button" title="Copy exact code to clipboard" data-copy="branch-code">Copy</button></div><pre id="branch-code" data-language="powershell" aria-label="PowerShell commands">git switch -c qa/employee-search
+# Write and run your new test in VS Code.
+git add tests/regression/setup/employee-search.spec.ts
+git commit -m "test: verify employee search"
+git push -u origin qa/employee-search</pre></div>
+ <p>On GitHub, open a <b>Pull Request</b> targeting <code>main</code>. Include what was tested, the result, and any evidence. A reviewer checks before merging.</p>
+</section>
+<section class="section" id="references">
+ <div class="kicker">REFERENCE</div><h2>Useful links</h2>
+ <div class="resource-list">
+  <a href="https://github.com/nitsuwa/hr-pro-automation" target="_blank" rel="noopener noreferrer">HR PRO automation repository ↗<span>Test code, README, and pull requests (requires access)</span></a>
+  <a href="https://github.com/nitsuwa/hr-pro-automation/tree/main/tests/regression/setup" target="_blank" rel="noopener noreferrer">Existing Setup tests ↗<span>Examples to reuse for new coverage</span></a>
+  <a href="https://playwright.dev/docs/intro" target="_blank" rel="noopener noreferrer">Playwright getting started ↗<span>Official installation and basic test guide</span></a>
+  <a href="https://playwright.dev/docs/test-ui-mode" target="_blank" rel="noopener noreferrer">Playwright UI Mode ↗<span>Official screenshots and debugging walkthrough</span></a>
+  <a href="https://playwright.dev/docs/locators" target="_blank" rel="noopener noreferrer">Locators ↗<span>How to find buttons and fields reliably</span></a>
+  <a href="https://playwright.dev/docs/test-assertions" target="_blank" rel="noopener noreferrer">Assertions ↗<span>How to check expected results</span></a>
+ </div>
+</section>
+<div class="footer">HR PRO · QA Automation Guide · <a href="https://hr-pro-automation-help.vercel.app">Documentation website</a></div>
 </main>
+</div>
 <script>
-(function(){
- const root=document.documentElement,btn=document.getElementById('theme');
- try{root.dataset.theme=localStorage.getItem('hrpro-qa-theme')==='dark'?'dark':'light'}catch(e){}
- function label(){btn.textContent=root.dataset.theme==='dark'?'Light mode':'Dark mode'}label();
- btn.addEventListener('click',()=>{root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';try{localStorage.setItem('hrpro-qa-theme',root.dataset.theme)}catch(e){}label()});
- document.querySelectorAll('[data-copy]').forEach(button=>button.addEventListener('click',async()=>{
-  const node=document.getElementById(button.dataset.copy);if(!node)return;
-  const value=node.textContent;let ok=false;
-  try{await navigator.clipboard.writeText(value);ok=true}catch(e){
-   try{const ta=document.createElement('textarea');ta.value=value;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();ok=document.execCommand('copy');ta.remove()}catch(err){}
+(function() {
+  var button = document.getElementById('theme-toggle');
+  function setTheme(dark, persist) {
+    document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+    button.textContent = dark ? '☀ Light mode' : '☾ Dark mode';
+    button.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+    button.setAttribute('aria-pressed', String(dark));
+    if (persist) { try { localStorage.setItem('hrpro-qa-theme', dark ? 'dark' : 'light'); } catch (_) {} }
   }
-  button.textContent=ok?'Copied!':'Select and copy';setTimeout(()=>button.textContent='Copy',1600);
- }));
+  setTheme(document.documentElement.dataset.theme === 'dark', false);
+  button.addEventListener('click', function() {
+    setTheme(document.documentElement.dataset.theme !== 'dark', true);
+  });
+
+  // Small, self-contained syntax highlighter: no CDN, keeps code exactly copyable.
+  document.querySelectorAll('pre[data-language]').forEach(function(block) {
+    var language = block.getAttribute('data-language');
+    if (language === 'plain') return;
+    var original = block.textContent;
+    var tokens = /(\/\/[^\n]*|#[^\n]*|"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|\b(?:import|from|async|await|const|test|expect|return|let|if)\b|\b(?:git|npm|npx|cd)\b|--[\w-]+)/g;
+    var last = 0, match, fragment = document.createDocumentFragment();
+    while ((match = tokens.exec(original)) !== null) {
+      fragment.appendChild(document.createTextNode(original.slice(last,match.index)));
+      var token = match[0], span = document.createElement('span');
+      var comment = language === 'typescript' ? token.startsWith('//') : token.startsWith('#');
+      span.className = comment ? 'tok-comment'
+        : token.startsWith('"') || token.startsWith("'") ? 'tok-string'
+        : token.startsWith('--') ? 'tok-flag'
+        : /^(git|npm|npx|cd)$/.test(token) ? 'tok-command' : 'tok-keyword';
+      span.textContent = token;
+      fragment.appendChild(span);
+      last = tokens.lastIndex;
+    }
+    fragment.appendChild(document.createTextNode(original.slice(last)));
+    block.replaceChildren(fragment);
+  });
+
+  document.querySelectorAll('[data-copy]').forEach(function(copyBtn) {
+    copyBtn.addEventListener('click', async function() {
+      var source = document.getElementById(copyBtn.getAttribute('data-copy'));
+      if (!source) return;
+      var content = source.textContent;
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(content);
+        } else {
+          var range = document.createRange();
+          range.selectNodeContents(source);
+          var selection = window.getSelection();
+          selection.removeAllRanges();
+          selection.addRange(range);
+          if (!document.execCommand('copy')) throw new Error('Copy unavailable');
+          selection.removeAllRanges();
+        }
+        copyBtn.textContent = '✓ Copied';
+        copyBtn.classList.add('copied');
+      } catch (_) {
+        copyBtn.textContent = 'Select text';
+        copyBtn.classList.add('failed');
+      }
+      window.setTimeout(function() {
+        copyBtn.textContent = 'Copy';
+        copyBtn.classList.remove('copied', 'failed');
+      }, 1900);
+    });
+  });
+  var officialScreenshot = document.getElementById('playwright-screen');
+  if (officialScreenshot) {
+    officialScreenshot.addEventListener('error', function() {
+      if (officialScreenshot.dataset.fallback) {
+        officialScreenshot.src = officialScreenshot.dataset.fallback;
+        officialScreenshot.removeAttribute('data-fallback');
+      }
+    });
+  }
+  var exampleButtons = document.querySelectorAll('.example-choice');
+  exampleButtons.forEach(function(choice) {
+    choice.addEventListener('click', function() {
+      var selected = choice.getAttribute('data-example');
+      exampleButtons.forEach(function(button) {
+        var isSelected = button === choice;
+        button.classList.toggle('selected', isSelected);
+        button.setAttribute('aria-pressed', String(isSelected));
+      });
+      document.querySelectorAll('.example-panel').forEach(function(panel) {
+        panel.hidden = panel.getAttribute('data-panel') !== selected;
+      });
+    });
+  });
+
 })();
 </script>
-</body></html>
+<script>
+// Collapsible folder browser with checked paths from the current GitHub tree.
+(function(){
+  var records={"smoke":{"name":"tests/smoke/","desc":"Quick login and navigation checks. Start here.","where":"Add new critical-path smoke tests here.","path":"tests/smoke","type":"tree"},"regression":{"name":"tests/regression/setup/","desc":"Feature-level Setup tests, including record creation and validation.","where":"New Setup feature tests belong here.","path":"tests/regression/setup","type":"tree"},"infra":{"name":"tests/infrastructure/","desc":"Exploratory probes and inspection scripts; excluded from routine tests.","where":"Only put technical investigation scripts here.","path":"tests/infrastructure","type":"tree"},"fixtures":{"name":"playwright/fixtures/","desc":"Shared test setup and login helpers.","where":"Put reusable fixtures here, not standalone tests.","path":"playwright/fixtures","type":"tree"},"pages":{"name":"playwright/pages/","desc":"Reusable browser actions and element locators.","where":"Put reusable page objects here.","path":"playwright/pages","type":"tree"},"data":{"name":"playwright/data/","desc":"Demo account definitions and safe test inputs.","where":"Never commit real personal data or secrets.","path":"playwright/data","type":"tree"},"docs":{"name":"docs/help/","desc":"The HTML handover website and its images.","where":"Edit index.html for the guide; assets/ contains illustrations.","path":"docs/help","type":"tree"},"navfile":{"name":"navigation.spec.ts","desc":"Navigation smoke tests, including SMOKE-018 (Settings).","where":"Run this to learn a small, mostly read-only test.","path":"tests/smoke/navigation.spec.ts"},"loginfile":{"name":"login.spec.ts","desc":"Tests login and access behavior.","where":"A useful example for login assertions.","path":"tests/smoke/login.spec.ts"},"rolesfile":{"name":"demo-roles.spec.ts","desc":"Basic checks for the application’s demo roles.","where":"Look here for role-related smoke coverage.","path":"tests/smoke/demo-roles.spec.ts"},"deptfile":{"name":"department-creation.spec.ts","desc":"Creates a fictional department and checks the resulting state.","where":"Run only against an approved QA environment.","path":"tests/regression/setup/department-creation.spec.ts"},"employeefile":{"name":"employee-setup.spec.ts","desc":"Employee setup regression checks.","where":"Use as a reference for employee feature coverage.","path":"tests/regression/setup/employee-setup.spec.ts"},"catalogfile":{"name":"catalog-duplicates.spec.ts","desc":"Checks duplicate-record handling in Setup catalogs.","where":"Shows a negative/validation test pattern.","path":"tests/regression/setup/catalog-duplicates.spec.ts"},"isofile":{"name":"browser-storage-isolation.spec.ts","desc":"Technical check for browser storage isolation.","where":"Advanced inspection only; not part of the standard suite.","path":"tests/infrastructure/browser-storage-isolation.spec.ts"},"inspectfile":{"name":"setup-ui-inventory.spec.ts","desc":"Inventories visible Setup interface elements.","where":"Exploratory inspection rather than an everyday regression check.","path":"tests/infrastructure/setup-ui-inventory.spec.ts"},"fixturefile":{"name":"hrpro.fixture.ts","desc":"Shared authentication and test setup fixture.","where":"Import the fixture from your new test file.","path":"playwright/fixtures/hrpro.fixture.ts"},"loginpage":{"name":"login.page.ts","desc":"Encapsulates login page locators and actions.","where":"Reuse page methods instead of copying selectors.","path":"playwright/pages/login.page.ts"},"settingpage":{"name":"settings.page.ts","desc":"Encapsulates Settings page interactions.","where":"Use when several tests share the same UI actions.","path":"playwright/pages/settings.page.ts"},"demofile":{"name":"demo-accounts.ts","desc":"Defines demonstration account roles.","where":"Use approved fictional testing identities.","path":"playwright/data/demo-accounts.ts"},"htmlfile":{"name":"index.html","desc":"The public documentation website.","where":"This is the HTML file Vercel publishes.","path":"docs/help/index.html"},"assetfolder":{"name":"assets/","desc":"SVG illustrations used by the guide.","where":"Keep descriptive, accessible illustrations here.","path":"docs/help/assets","type":"tree"},"config":{"name":"playwright.config.ts","desc":"Browser configuration, target environment and reporting options.","where":"Check E2E_BASE_URL before running data-changing tests.","path":"playwright.config.ts"},"package":{"name":"package.json","desc":"Development dependencies and npm shortcuts.","where":"The guide uses npx playwright commands directly.","path":"package.json"},"readme":{"name":"README.md","desc":"Repository overview and quick links.","where":"Use it to orient new contributors.","path":"README.md"}};
+  var chooser=document.getElementById("folder-explorer");
+  if(!chooser)return;
+  chooser.addEventListener("click",function(event){
+    var target=event.target.closest("[data-explain]");
+    if(!target||!chooser.contains(target))return;
+    var record=records[target.getAttribute("data-explain")];if(!record)return;
+    chooser.querySelectorAll("[data-explain].active").forEach(function(node){node.classList.remove("active")});
+    target.classList.add("active");
+    document.getElementById("explorer-name").textContent=record.name;
+    document.getElementById("explorer-desc").textContent=record.desc;
+    document.getElementById("explorer-rule").textContent=record.where;
+    document.getElementById("explorer-link").href="https://github.com/nitsuwa/hr-pro-automation/"+(record.type==="tree"?"tree":"blob")+"/main/"+record.path;
+  });
+})();
+// Update reading position from the current section (and highlight top + side navigation).
+(function(){
+  var ids=["overview","beginner-start","install","run","commands","structure","verify","syntax","create","ai","github","references"];
+  var anchors=ids.map(function(id){return document.getElementById(id)}).filter(Boolean);
+  var links=document.querySelectorAll(".aside a[href^='#'],.primary-nav a[href^='#']");
+  var indicator=document.getElementById("reading-progress");
+  var pending=false;
+  function refresh(){
+    pending=false;
+    var current="overview", threshold=window.innerHeight*.28;
+    anchors.forEach(function(node){if(node.getBoundingClientRect().top<=threshold)current=node.id});
+    links.forEach(function(link){
+      var isActive=link.getAttribute("href")==="#"+current;
+      link.classList.toggle("active",isActive);
+      if(isActive)link.setAttribute("aria-current","location");
+      else link.removeAttribute("aria-current");
+    });
+    var max=document.documentElement.scrollHeight-window.innerHeight;
+    if(indicator)indicator.style.width=(max>0?Math.max(0,Math.min(100,window.scrollY/max*100)):0)+"%";
+  }
+  function schedule(){if(!pending){pending=true;requestAnimationFrame(refresh)}}
+  window.addEventListener("scroll",schedule,{passive:true});
+  window.addEventListener("resize",schedule,{passive:true});
+  window.addEventListener("hashchange",schedule);
+  schedule();
+})();
+</script>
+</body>
+</html>
