@@ -381,6 +381,9 @@ html[data-theme="dark"] ::selection{background:#356a75;color:#fff}
 #beginner-start .step-list li:last-child{border-bottom:0}
 #beginner-start .glossary{display:block;overflow-x:auto}
 #beginner-start .glossary th:first-child{min-width:175px}
+
+/* Practice exercise uses existing visual styling */
+#edit-test-practice .glossary{display:block;overflow-x:auto}#edit-test-practice .glossary td:first-child{min-width:170px}#edit-test-practice .flow{grid-template-columns:repeat(5,minmax(0,1fr))}@media(max-width:650px){#edit-test-practice .flow{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 </head>
 <body id="top">
@@ -609,9 +612,50 @@ test('QA-EXAMPLE | Settings opens', async ({ page, loginAs }) => {
 </section>
 <section class="section" id="create">
 <div class="kicker">06 / CREATE YOUR OWN TEST</div><h2>Make your own test, one step at a time</h2>
-<p>Start with something you already know how to do in HR PRO. This example uses <b>adding a Department</b>. You will try the steps in the practice website, inspect a working test, and learn how to make your own file.</p>
+<p>First, learn to edit a small, safe demo-role test. Then explore how the same method works for Departments, Employees, and other features. You will learn which code to change, not just which commands to copy.</p>
 <div class="note"><b>What you will make:</b> a <code>.spec.ts</code> file. This is a set of browser steps <em>plus</em> checks for the expected result. You don't need to memorize TypeScript, but you must confirm the page controls and expected results are real.</div>
-<div class="example-switcher" aria-label="Choose an example">
+<div class="walk-example" id="edit-test-practice">
+<div class="walk-top"><span class="mini-tag">HANDS-ON EXERCISE</span><strong>Edit an existing test into a new one</strong></div>
+<p><b>Goal:</b> Learn how to change an existing test, not just copy commands. You'll adapt the demo-account selection check so it selects <b>HR Officer</b> instead of <b>System Admin</b>. This exercise does not add or edit HR records.</p>
+<ol class="step-list">
+<li><div><b>Find the example:</b> In VS Code, open <code>tests/smoke/login.spec.ts</code>. Look for <b>SMOKE-002 | Demo account roles are available</b>. It selects System Admin from a dropdown. <b>Leave this original test unchanged.</b></div></li>
+<li><div><b>Create your practice file:</b> Right-click <code>tests/smoke</code> → New File → name it <code>demo-selection-practice.spec.ts</code>. Files ending with <code>.spec.ts</code> are recognized as tests.</div></li>
+<li><div><b>Read and adapt the example:</b> The code below opens the same page but selects HR Officer. Paste it into your new file. Read the table below to learn what you changed and what to edit for another test.</div></li>
+</ol>
+<div class="codebox"><div class="codebar"><span>COMPLETE PRACTICE TEST · TYPESCRIPT</span><button type="button" data-copy="practice-edit-code" title="Copy practice test code">Copy</button></div><pre id="practice-edit-code" data-language="typescript">import { test, expect } from '@playwright/test';
+
+test('PRACTICE-001 | HR Officer can be selected', async ({ page }) =&gt; {
+  await page.goto('/');
+
+  const roleMenu = page.getByRole('combobox');
+  await expect(roleMenu).toBeVisible();
+
+  await roleMenu.selectOption({
+    label: 'HR Officer (hrofficer@filmetrics.local)'
+  });
+
+  await expect(roleMenu.locator('option:checked')).toHaveText(
+    'HR Officer (hrofficer@filmetrics.local)'
+  );
+});</pre></div>
+<div class="note"><b>What changed compared with SMOKE-002?</b> The test name now describes HR Officer; the selected option changed from System Admin to HR Officer; and the final check confirms <b>HR Officer</b> is selected—not merely that the menu has some value.</div>
+<table class="glossary"><thead><tr><th>Code part</th><th>What to edit for a different test</th></tr></thead><tbody>
+<tr><td><code>test('...')</code></td><td>Change the test name to describe the new scenario. Use a unique ID for official tests.</td></tr>
+<tr><td><code>page.goto('/')</code></td><td>Change only if the test needs a different page; <code>/</code> means HR PRO's home page.</td></tr>
+<tr><td><code>getByRole('combobox')</code></td><td>This identifies the dropdown. For a different feature, locate the actual button or field on the website first.</td></tr>
+<tr><td><code>selectOption(...)</code></td><td>Change what the browser selects. Use the exact option label shown on the website.</td></tr>
+<tr><td><code>toHaveText(...)</code></td><td>Change what the test should verify. Here it must match the selected HR Officer option.</td></tr>
+</tbody></table>
+<p class="mini"><b>Leave the surrounding code alone at first:</b> the <code>import</code>, <code>test</code> structure, <code>async</code>/<code>await</code>, braces, and parentheses keep the test valid. Don't delete an assertion merely to get a green result.</p>
+<h3 class="subhead">4. Save and run your practice test</h3>
+<p>Press <b>Ctrl+S</b> in VS Code. Then paste the command below into the terminal, press Enter, and click ▶ beside <b>PRACTICE-001</b>.</p>
+<div class="codebox mini-code"><div class="codebar"><span>RUN ONLY THE FILE YOU CREATED</span><button type="button" data-copy="practice-edit-run">Copy</button></div><pre id="practice-edit-run" data-language="powershell">npx playwright test tests/smoke/demo-selection-practice.spec.ts --ui --project=chromium</pre></div>
+<p><b>Success looks like:</b> the dropdown appears and HR Officer is selected. If it fails, inspect the error and compare the label with the website. Don't change the expected result just to make it pass.</p>
+<h3 class="subhead">5. How to change a test for a different feature</h3>
+<div class="flow"><div><small>CHOOSE</small>What should work?</div><div><small>OBSERVE</small>Try it in HR PRO</div><div><small>EDIT</small>Name, steps, check</div><div><small>RUN</small>One new test</div><div><small>VERIFY</small>Inspect result</div></div>
+<p>If you're testing Employees or Departments, you can't simply replace the words “HR Officer.” Open the feature first, note which controls are used, then change <b>the actions and the expected result</b> together. Use a similar existing test file as your starting point.</p>
+<div class="note warn"><b>Practice vs. team tests:</b> Check whether a similar test already exists before submitting new coverage. Data-changing tests belong only on a designated practice website with fictional records.</div>
+</div><h3 class="subhead">Next example: Department or Employee tests</h3><p>These examples involve more browser actions and may create practice data. Choose the example that matches what you want to test.</p><div class="example-switcher" aria-label="Choose an example">
 <div class="example-switch-controls" role="group" aria-label="Requirement source">
 <button type="button" class="example-choice selected" data-example="excel" aria-pressed="true">From Excel</button>
 <button type="button" class="example-choice" data-example="new" aria-pressed="false">New feature (no Excel)</button>
@@ -633,13 +677,13 @@ test('QA-EXAMPLE | Settings opens', async ({ page, loginAs }) => {
 <div class="requirement-sheet"><span>Manual steps</span><p>With a fictional QA employee already present, open Employees, type its name in Search, and inspect the matching results.</p><span>Expected result</span><p>The matching QA employee appears in the filtered list and an unrelated name is not included.</p><span>Scenario ID</span><p>Choose a new ID under your team's naming convention; no Excel reference is needed.</p></div>
 </div>
 </div>
-<h3 class="subhead">Test-writing workflow</h3>
+<h3 class="subhead">Create a test for an HR PRO feature</h3>
 <details class="guide-details"><summary>See what the existing Department test checks (plain English)</summary><div class="details-inner">
 <ol class="micro-steps"><li><code>loginAs('systemAdmin')</code> signs in using the shared test helper.</li><li><code>page.goto('/settings')</code> opens Settings.</li><li><code>getByRole('button', ...).click()</code> selects Organization Setup and Departments.</li><li><code>field.fill(name)</code> enters a unique fictional department name; pressing Enter saves it.</li><li><code>expect(...).toBeVisible()</code> checks it appears, then checks again after a refresh.</li></ol>
 <p><a href="https://github.com/nitsuwa/hr-pro-automation/blob/main/tests/regression/setup/department-creation.spec.ts" target="_blank" rel="noopener noreferrer">Open the full existing Department test ↗</a>. You can learn from it without running it.</p>
 </div></details>
 <p class="sub">Example below: a department must appear after saving <b>and</b> still appear after refresh. The existing working example is <a href="https://github.com/nitsuwa/hr-pro-automation/blob/main/tests/regression/setup/department-creation.spec.ts" target="_blank" rel="noopener noreferrer"><code>department-creation.spec.ts</code></a>. This creates a fictional Department, so only run it where adding practice records is allowed.</p>
-<div class="guided-steps">
+<details class="guide-details"><summary>Open the full 7-step workflow for Departments and Employees</summary><div class="details-inner"><div class="guided-steps">
 <article><span class="step-bubble">1</span><div><h3>Decide what should happen</h3><p>Example: “When I save a new department, it should appear in the list and remain after I refresh.” Use fictional QA records.</p><span class="do-this">Write one expected result before writing code.</span></div></article>
 <article><span class="step-bubble">2</span><div><h3>Try it yourself in a designated HR PRO practice site</h3><p>Open Settings → Organization Setup → Departments → + Add Department. Enter a unique fictional name and save it. Refresh to see if it remains.</p><span class="do-this">Write down the real labels you saw. Do not add records on a live HR system.</span></div></article>
 <article><span class="step-bubble">3</span><div><h3>Find the buttons and fields in Playwright</h3><p>A <b>locator</b> tells Playwright which control to use. Look at the UI Mode snapshot, then use <b>Pick locator</b> to select the real Departments or Add Department button. If labels differ from this guide, use the actual ones.</p>
@@ -669,7 +713,7 @@ test('QA-EXAMPLE | Settings opens', async ({ page, loginAs }) => {
 <article><span class="step-bubble">6</span><div><h3>Run only the file you just saved</h3><p>Copy the example command below <b>only after</b> you create <code>employee-search.spec.ts</code>. If you chose a different name, change the filename in the command. Click ▶ next to your test in UI Mode. Check the Actions, the actual result, and any error—not just green/red.</p>
 <div class="codebox mini-code"><div class="codebar"><span>RUN YOUR NEW EMPLOYEE SEARCH TEST · EXAMPLE</span><button type="button" title="Copy exact code to clipboard" data-copy="new-test-run">Copy</button></div><pre id="new-test-run" data-language="powershell" aria-label="PowerShell commands">npx playwright test tests/regression/setup/employee-search.spec.ts --ui --project=chromium</pre></div><span class="do-this">If red: read the first error, check whether the button label or test data changed, and compare the result with your expected outcome.</span></div></article>
 <article><span class="step-bubble">7</span><div><h3>Share it for review</h3><p>Save the file, create a GitHub branch, commit and push your changes, then open a pull request. Include the scenario, your test result and any problems. See <a href="#github">Share changes</a> for the exact commands.</p></div></article>
-</div>
+</div></div></details>
 <h3 class="subhead" id="ai">AI Help — copy a test-writing prompt</h3>
 <p><b>Optional:</b> Fill in the brackets using only what you actually observed. AI gives a draft—not a verified test. Review the selectors and checks before running it.</p>
 <div class="codebox"><div class="codebar"><span>PROMPT FOR CHATGPT / CLAUDE · COPY &amp; CUSTOMIZE</span><button type="button" title="Copy exact code to clipboard" data-copy="ai-code">Copy</button></div><pre id="ai-code" data-language="plain" aria-label="Copyable AI prompt">Help me create ONE Playwright TypeScript test for our HR PRO project.
