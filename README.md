@@ -1,17 +1,13 @@
 <p align="left"><img src="docs/help/assets/hrpro-header.svg" alt="HR PRO QA Automation" width="470"></p>
 
-# HR PRO Automated Testing
+# HR PRO automated testing
 
-This project uses **Playwright** to automatically check HR PRO in a browser. It can do the same steps a manual tester does—open pages, enter test data, click buttons—and then **check whether the result is correct**.
+This project lets **Playwright** open the [HR PRO prototype](https://hrproprototype.netlify.app/), carry out steps, and check that expected results appear. You can run existing tests without coding experience. The [illustrated guide](https://hr-pro-automation-help.vercel.app/) shows screenshots, buttons, and real examples.
 
-**[Open the HR PRO QA Guide](https://hr-pro-automation-help.vercel.app)** · **[Create a test with AI](https://hr-pro-automation-help.vercel.app/#ai)**
+## Your first test (no login required)
 
-## Start here — run one test first
-
-**[Open the visual step-by-step guide](https://hr-pro-automation-help.vercel.app/#beginner-start)**. It includes pictures, copyable commands, and a guided example. No prior coding needed to run an existing test.
-
-1. Install [VS Code](https://code.visualstudio.com/), [Git](https://git-scm.com/), and [Node.js LTS](https://nodejs.org/).
-2. Open **VS Code → Terminal → New Terminal** and enter:
+1. Install [VS Code](https://code.visualstudio.com/), [Git](https://git-scm.com/), and [Node.js LTS](https://nodejs.org/). Then restart VS Code.
+2. Open **VS Code → Terminal → New Terminal**. Paste these lines **one at a time**, pressing Enter after each:
 
 ```powershell
 git clone https://github.com/nitsuwa/hr-pro-automation.git
@@ -20,70 +16,39 @@ npm ci
 npx playwright install chromium
 ```
 
-3. **Before you run:** Check that the test URL in `playwright.config.ts` or `E2E_BASE_URL` is an **approved non-production environment**, and you have an approved test account.
-4. Open a single test in Playwright UI Mode:
+This downloads the project and installs its testing tools.
+
+3. Paste this command into the same terminal to open Playwright's visual test window:
 
 ```powershell
-npx playwright test tests/smoke/navigation.spec.ts --grep "SMOKE-018" --ui --project=chromium
+npx playwright test tests/smoke/login.spec.ts --grep "SMOKE-001" --ui --project=chromium
 ```
 
-Click ▶ beside **SMOKE-018 | Settings opens successfully**. Review the browser and Actions panel. A green status means its checks passed, **not** that every part of HR PRO works.
+4. Find **SMOKE-001 | HR PRO login page loads** and click ▶. A green result means the sign-in heading, demo-account message, and Sign in button appeared. **No password or account is needed.**
 
-**Use one command at a time.** The commands install tools, open a test picker, or run a test; they are not code to paste into HR PRO. The guide explains what each command does.
+[**Follow the visual walkthrough →**](https://hr-pro-automation-help.vercel.app/#install)
 
-**Then explore:** [Project folders](https://hr-pro-automation-help.vercel.app/#structure) · [Other test commands](https://hr-pro-automation-help.vercel.app/#commands) · [Verify results](https://hr-pro-automation-help.vercel.app/#verify) · [Understand syntax](https://hr-pro-automation-help.vercel.app/#syntax) · [Create with AI](https://hr-pro-automation-help.vercel.app/#ai).
+**Which website?** The project already uses `https://hrproprototype.netlify.app/` by default. You do not need to edit `playwright.config.ts` or `E2E_BASE_URL` for your first test. These technical settings only control which website tests open.
 
-## Where are the tests?
+## What's inside?
 
-| Folder or file | What it's for |
-| --- | --- |
-| [`tests/smoke/`](tests/smoke/) | **Start here.** Login and navigation checks, such as `SMOKE-018` in [navigation.spec.ts](tests/smoke/navigation.spec.ts). |
-| [`tests/regression/setup/`](tests/regression/setup/) | HR PRO Setup feature checks—Departments, Employees, allowances and more. Put **new Setup tests** here. |
-| [`tests/infrastructure/`](tests/infrastructure/) | Advanced inspection scripts, **not routine regression tests**. |
-| [`playwright/fixtures/`](playwright/fixtures/) | Reusable login/test setup. |
-| [`playwright/pages/`](playwright/pages/) | Reusable actions and element locators. |
-| [`package.json`](package.json) / [`playwright.config.ts`](playwright.config.ts) | Available commands, target URL and Playwright settings. |
+| Folder/file | Meaning |
+|---|---|
+| [`tests/smoke/`](tests/smoke/) | Simple sign-in page and navigation checks. Start here. |
+| [`tests/regression/setup/`](tests/regression/setup/) | Tests for Departments, Employees, and other HR PRO features. Some change records. |
+| [`playwright/pages/`](playwright/pages/) | Reusable instructions for clicking buttons and filling fields. |
+| [`playwright/fixtures/`](playwright/fixtures/) | Shared setup, including demo-role sign-in. |
+| [`playwright.config.ts`](playwright.config.ts) | Website address and test browser settings. |
+| [`docs/help/index.html`](docs/help/index.html) | Visual guide. Can be opened locally as HTML. |
 
-**Need a quick command?** [Open the copy-and-paste command reference](https://hr-pro-automation-help.vercel.app/#commands).
+Advanced inspection scripts are in `tests/infrastructure/`; beginners can ignore them.
 
-**New test?** Create `tests/regression/setup/my-feature.spec.ts` for a Setup feature. [See the visual folder guide](https://hr-pro-automation-help.vercel.app/#structure).
+## How do I make a new test?
 
-## Create a test without guessing
+Follow the [illustrated Create a Test walkthrough](https://hr-pro-automation-help.vercel.app/#create). It shows how to pick a scenario, try it manually, locate real controls, learn from [an existing Department test](tests/regression/setup/department-creation.spec.ts), create a new file, run it, and share it.
 
-Follow the [complete Department example](https://hr-pro-automation-help.vercel.app/#create): write the expected result → try the steps in approved QA → inspect actual buttons → start from a similar existing `.spec.ts` file → add checks → run only your file in UI Mode → inspect the result → submit a pull request.
+**Workflow:** Choose a scenario → try it → write browser steps and checks → run and verify → share through a GitHub pull request.
 
-The real [department-creation.spec.ts](tests/regression/setup/department-creation.spec.ts) shows how to verify that a new test record still exists after refreshing. It **changes QA data**, so don't run it against production. A filename shown as an example does **not** exist until you create it.
+Tests that add, edit, or delete information must run only on designated practice environments with fictional records. Do not run them on live HR systems.
 
-Other commands are in the [optional command reference](https://hr-pro-automation-help.vercel.app/#commands). You do not need to run them all.
-
-## What does a test actually check?
-
-An **action** does something: `await button.click()`.
-
-An **assertion** verifies the expected outcome: `await expect(row).toHaveCount(1)`.
-
-**Passing** means the assertions succeeded—not necessarily that every part of the requirement was tested. Review the Playwright action timeline and expected result. [See how to verify results](https://hr-pro-automation-help.vercel.app/#verify).
-
-## Want to create a test? AI can help.
-
-Use the same process for an **Excel test case** or a **new feature not covered by Excel**:
-
-**Requirement → Try HR PRO manually → Inspect buttons and fields → Ask AI for a draft → Add assertions → Run and verify → Pull request.**
-
-[**Follow the guided AI-assisted test tutorial →**](https://hr-pro-automation-help.vercel.app/#create)
-
-<img src="docs/help/assets/locator-inspector.svg" alt="Illustrated HR PRO Departments screen beside a Playwright getByRole locator and an assertion" width="760">
-
-*Illustration: inspect the actual HR PRO control label, then use a Playwright locator and assertion. The [AI Help prompt](https://hr-pro-automation-help.vercel.app/#ai) shows what details to give ChatGPT or Claude.*
-
-The guide includes a **copyable AI prompt**, a real Department test example, a new Employee Search example, and instructions for finding locators. You do not need to know TypeScript before starting.
-
-AI suggests code; **the QA tester checks the real behavior**. Never send credentials or real employee data to AI.
-
-**More reference:** [Written manual](docs/help/USER_MANUAL.md) · [QA execution records](docs/QA_EXECUTION_LOG.md)
-
-## Sharing changes
-
-Work on a new branch, run and review your test, then submit a **GitHub pull request** targeting `main`. The [documentation website](https://hr-pro-automation-help.vercel.app) updates when guide changes are merged to `main`.
-
-**Official Playwright resources:** [UI Mode](https://playwright.dev/docs/test-ui-mode) · [Locators](https://playwright.dev/docs/locators) · [Assertions](https://playwright.dev/docs/test-assertions)
+**Need help?** Use the [guide's quick fixes](https://hr-pro-automation-help.vercel.app/#help-quick) or the [more detailed manual](docs/help/USER_MANUAL.md).
