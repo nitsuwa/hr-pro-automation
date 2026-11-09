@@ -4,6 +4,23 @@
 
 This document is a written reference. The website is the main step-by-step guide. HR PRO is the system being tested; **Playwright** runs browser checks; **GitHub** stores the code and its review history.
 
+## Zero-experience quick start
+
+**First decide:** To **read** the guide, open [the visual website](https://hr-pro-automation-help.vercel.app) (or save `docs/help/index.html` for local reading). To **run** tests, you need a computer with Git, Node.js LTS, VS Code and the project, plus approved non-production HR PRO access. The guide does not grant accounts or permissions.
+
+**Your first run, in order:**
+
+1. Open [Start here](https://hr-pro-automation-help.vercel.app/#beginner-start) for the beginner glossary, checklist, and troubleshooting.
+2. Install Git, Node.js LTS, and VS Code. Reopen VS Code once installations finish.
+3. Go to **Terminal → New Terminal**. Paste the commands from [Install](https://hr-pro-automation-help.vercel.app/#install) individually; press Enter and let each finish before the next.
+4. Confirm the configured HR PRO test URL is an **approved non-production** environment; use only approved fictional test accounts.
+5. Run the read-only **SMOKE-018 (Settings)** navigation check, and inspect the Playwright Actions/browser preview. Green alone is not enough: compare the actual result with the expectation.
+6. If you see an error, use the [troubleshooting table](https://hr-pro-automation-help.vercel.app/#beginner-start) rather than guessing or running the entire suite.
+
+**Terms:** A *repo* is a shared project folder; *clone* means download it; *terminal* is where you type commands; a *locator* finds a button or field; an *assertion* checks the result; a *fixture* provides reusable test setup; a *pull request* asks for code review.
+
+**Offline limit:** The HTML page can be opened locally, but externally hosted reference images/links and any connected testing environment require network access. Reading offline is different from executing tests offline.
+
 ## Before you begin: what the folders mean
 
 - `tests/smoke/` — basic login and navigation checks. Start with `navigation.spec.ts` and `SMOKE-018`.
