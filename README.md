@@ -20,7 +20,7 @@ npm ci
 npx playwright install chromium
 ```
 
-3. Confirm the HR PRO test URL in `playwright.config.ts` or `E2E_BASE_URL` is an **approved non-production environment**, and you have an approved test account.
+3. **Before you run:** Check that the test URL in `playwright.config.ts` or `E2E_BASE_URL` is an **approved non-production environment**, and you have an approved test account.
 4. Open a single test in Playwright UI Mode:
 
 ```powershell
@@ -28,6 +28,8 @@ npx playwright test tests/smoke/navigation.spec.ts --grep "SMOKE-018" --ui --pro
 ```
 
 Click ▶ beside **SMOKE-018 | Settings opens successfully**. Review the browser and Actions panel. A green status means its checks passed, **not** that every part of HR PRO works.
+
+**Use one command at a time.** The commands install tools, open a test picker, or run a test; they are not code to paste into HR PRO. The guide explains what each command does.
 
 **Then explore:** [Project folders](https://hr-pro-automation-help.vercel.app/#structure) · [Other test commands](https://hr-pro-automation-help.vercel.app/#commands) · [Verify results](https://hr-pro-automation-help.vercel.app/#verify) · [Understand syntax](https://hr-pro-automation-help.vercel.app/#syntax) · [Create with AI](https://hr-pro-automation-help.vercel.app/#ai).
 
@@ -46,9 +48,13 @@ Click ▶ beside **SMOKE-018 | Settings opens successfully**. Review the browser
 
 **New test?** Create `tests/regression/setup/my-feature.spec.ts` for a Setup feature. [See the visual folder guide](https://hr-pro-automation-help.vercel.app/#structure).
 
-## Other tests and new test creation
+## Create a test without guessing
 
-Use the [visual command guide](https://hr-pro-automation-help.vercel.app/#commands) to choose a test. Some Setup tests change records, so run those only against approved disposable QA environments with fictional data. Learn [test syntax](https://hr-pro-automation-help.vercel.app/#syntax), then use the [test creation walkthrough](https://hr-pro-automation-help.vercel.app/#create) to add an assertion and verify the result.
+Follow the [complete Department example](https://hr-pro-automation-help.vercel.app/#create): write the expected result → try the steps in approved QA → inspect actual buttons → start from a similar existing `.spec.ts` file → add checks → run only your file in UI Mode → inspect the result → submit a pull request.
+
+The real [department-creation.spec.ts](tests/regression/setup/department-creation.spec.ts) shows how to verify that a new test record still exists after refreshing. It **changes QA data**, so don't run it against production. A filename shown as an example does **not** exist until you create it.
+
+Other commands are in the [optional command reference](https://hr-pro-automation-help.vercel.app/#commands). You do not need to run them all.
 
 ## What does a test actually check?
 
