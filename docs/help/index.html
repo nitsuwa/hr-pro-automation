@@ -651,6 +651,10 @@ test('PRACTICE-001 | HR Officer can be selected', async ({ page }) =&gt; {
 <p>Press <b>Ctrl+S</b> in VS Code. Then paste the command below into the terminal, press Enter, and click ▶ beside <b>PRACTICE-001</b>.</p>
 <div class="codebox mini-code"><div class="codebar"><span>RUN ONLY THE FILE YOU CREATED</span><button type="button" data-copy="practice-edit-run">Copy</button></div><pre id="practice-edit-run" data-language="powershell">npx playwright test tests/smoke/demo-selection-practice.spec.ts --ui --project=chromium</pre></div>
 <p><b>Success looks like:</b> the dropdown appears and HR Officer is selected. If it fails, inspect the error and compare the label with the website. Don't change the expected result just to make it pass.</p>
+<details class="guide-details"><summary>Try changing it yourself: select Payroll Manager instead</summary><div class="details-inner">
+<p>Once the HR Officer practice test works, edit these <b>three places in your own new file</b>: (1) rename the test to “Payroll Manager can be selected”; (2) change the label inside <code>selectOption</code> to <code>Payroll Manager (payrollmanager@filmetrics.local)</code>; (3) change the expected label inside <code>toHaveText</code> to the <b>same</b> Payroll Manager text.</p>
+<p>Save the file, run it again, and check that it now selects Payroll Manager. This is how you learn to change the <em>action</em> and <em>expected result</em> together—not just paste a different command. Both labels come from the repository's demo-account list.</p>
+</div></details>
 <h3 class="subhead">5. How to change a test for a different feature</h3>
 <div class="flow"><div><small>CHOOSE</small>What should work?</div><div><small>OBSERVE</small>Try it in HR PRO</div><div><small>EDIT</small>Name, steps, check</div><div><small>RUN</small>One new test</div><div><small>VERIFY</small>Inspect result</div></div>
 <p>If you're testing Employees or Departments, you can't simply replace the words “HR Officer.” Open the feature first, note which controls are used, then change <b>the actions and the expected result</b> together. Use a similar existing test file as your starting point.</p>
