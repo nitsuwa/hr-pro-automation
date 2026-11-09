@@ -449,7 +449,7 @@ html[data-theme="dark"] ::selection{background:#356a75;color:#fff}
 <ol class="step-list">
 <li><div><b>Install <a href="https://code.visualstudio.com/" target="_blank" rel="noopener noreferrer">VS Code</a>, <a href="https://git-scm.com/" target="_blank" rel="noopener noreferrer">Git</a>, and <a href="https://nodejs.org/" target="_blank" rel="noopener noreferrer">Node.js LTS</a>.</b><p>VS Code shows the project; Git downloads it; Node.js runs the tests. Restart VS Code after installing.</p></div></li>
 <li><div><b>In VS Code, click Terminal → New Terminal.</b><p>A text panel opens at the bottom. Paste commands there, not on the HR PRO website.</p></div></li>
-<li><div><b>Run the four lines below, one by one.</b><p>Press Enter after each line and let it finish before entering the next. If a line fails, see <a href="#help-quick">Quick fixes</a>.</p></div></li></ol>
+<li><div><b>Run the four lines below, one by one.</b><p>For your first try, select and copy each line separately, paste it in the terminal, then press Enter. The <b>Copy</b> button copies all four lines at once, so use it only if you are comfortable running the full sequence. If a line fails, see <a href="#help-quick">Quick fixes</a>.</p></div></li></ol>
 <div class="codebox"><div class="codebar"><span>VS CODE TERMINAL · ONE-TIME SETUP</span><button type="button" data-copy="clone-code">Copy</button></div><pre id="clone-code" data-language="powershell">git clone https://github.com/nitsuwa/hr-pro-automation.git
 cd hr-pro-automation
 npm ci
@@ -757,7 +757,7 @@ git merge --ff-only origin/main</pre></div>
 </div></details>
 </section>
 <section class="section" id="references"><div id="help-quick" class="note"><b>Quick fixes:</b> If <code>git</code> is not recognized, install Git and restart VS Code. If <code>npm</code> is not recognized, install Node.js LTS and restart VS Code. If Playwright is missing, open the <code>hr-pro-automation</code> folder and run <code>npm ci</code>, then <code>npx playwright install chromium</code>. If the first test fails, check the error and make sure it opened <a href="https://hrproprototype.netlify.app/" target="_blank" rel="noopener noreferrer">the HR PRO prototype</a>. No sign-in is needed for that first test.</div>
- <div class="kicker">REFERENCE</div><h2>Useful links</h2>
+ <details class="guide-details"><summary>Can I open this guide without internet?</summary><div class="details-inner"><p>Yes. Save the HTML file <code>docs/help/index.html</code> to your computer and open it in Chrome or Edge. The text, local diagrams, menus, and practice code are available. Some reference screenshots are loaded from Playwright and GitHub, so they may not display offline. Running tests still requires the software and access to the HR PRO test website.</p></div></details><div class="kicker">REFERENCE</div><h2>Useful links</h2>
  <div class="resource-list">
   <a href="https://github.com/nitsuwa/hr-pro-automation" target="_blank" rel="noopener noreferrer">HR PRO automation repository ↗<span>Project files, instructions, and shared changes</span></a>
   <a href="https://github.com/nitsuwa/hr-pro-automation/tree/main/tests/regression/setup" target="_blank" rel="noopener noreferrer">Existing Setup tests ↗<span>Examples to reuse for new coverage</span></a>
