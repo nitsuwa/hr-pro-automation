@@ -375,6 +375,12 @@ html[data-theme="dark"] ::selection{background:#356a75;color:#fff}
 .guide-details .step-list{margin-top:4px}
 .guide-details .figure{margin:8px 0}
 @media(max-width:650px){.guide-details>.details-inner{padding:12px}.guide-details>summary{padding:12px}}
+
+/* First-day onboarding */
+#beginner-start .step-list li{padding:8px 0;border-bottom:1px solid var(--line)}
+#beginner-start .step-list li:last-child{border-bottom:0}
+#beginner-start .glossary{display:block;overflow-x:auto}
+#beginner-start .glossary th:first-child{min-width:175px}
 </style>
 </head>
 <body id="top">
@@ -416,7 +422,7 @@ html[data-theme="dark"] ::selection{background:#356a75;color:#fff}
  <div class="kicker">HR PRO / QUALITY ASSURANCE</div>
  <h1 id="guide-title">HR PRO Test Automation</h1>
  <p class="subtitle">How to run HR PRO browser tests, check the results, and maintain the Playwright repository.</p>
- <div class="buttons"><a class="btn" href="#structure">Start with folders →</a><a class="btn secondary" href="#run">Run a test</a><a class="btn secondary" href="#ai">Create with AI</a><a class="btn secondary" href="https://github.com/nitsuwa/hr-pro-automation" target="_blank" rel="noopener noreferrer">Open repository ↗</a></div>
+ <div class="buttons"><a class="btn" href="#beginner-start">New? Start here →</a><a class="btn secondary" href="#structure">Explore folders</a><a class="btn secondary" href="#run">Run a test</a><a class="btn secondary" href="#ai">Create with AI</a><a class="btn secondary" href="https://github.com/nitsuwa/hr-pro-automation" target="_blank" rel="noopener noreferrer">Open repository ↗</a></div>
 </section>
 <div class="overview" aria-label="How the system works">
  <article><div class="number">01 / TEST</div><b>Playwright runs the steps</b><p>It opens HR PRO, performs actions, and checks expected behavior.</p></article>
@@ -425,6 +431,43 @@ html[data-theme="dark"] ::selection{background:#356a75;color:#fff}
 </div>
 <figure class="figure visual-figure"><img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%201040%20288%22%20role%3D%22img%22%20aria-labelledby%3D%22title%20desc%22%3E%3Ctitle%20id%3D%22title%22%3EManual%20testing%20to%20Playwright%20automation%20workflow%3C%2Ftitle%3E%3Cdesc%20id%3D%22desc%22%3EFive%20connected%20steps%3A%20choose%20a%20requirement%2C%20inspect%20HR%20PRO%2C%20write%20a%20Playwright%20test%20with%20optional%20AI%2C%20run%20and%20verify%20the%20result%2C%20and%20share%20through%20a%20GitHub%20pull%20request.%3C%2Fdesc%3E%0A%3Crect%20width%3D%221040%22%20height%3D%22288%22%20rx%3D%2218%22%20fill%3D%22%23f3f5fa%22%2F%3E%3Crect%20x%3D%2219%22%20y%3D%2219%22%20width%3D%221002%22%20height%3D%22250%22%20rx%3D%2213%22%20fill%3D%22%23fff%22%20stroke%3D%22%23dbe3f0%22%2F%3E%0A%3Crect%20x%3D%2219%22%20y%3D%2219%22%20width%3D%221002%22%20height%3D%2247%22%20rx%3D%2213%22%20fill%3D%22%232e2b61%22%2F%3E%3Crect%20x%3D%2219%22%20y%3D%2247%22%20width%3D%221002%22%20height%3D%2219%22%20fill%3D%22%232e2b61%22%2F%3E%3Cg%20font-family%3D%22Arial%2Csans-serif%22%3E%3Ctext%20x%3D%2243%22%20y%3D%2249%22%20font-size%3D%2219%22%20font-weight%3D%22700%22%20fill%3D%22%23fff%22%3EFROM%20MANUAL%20CHECK%20TO%20AUTOMATED%20TEST%3C%2Ftext%3E%3Ctext%20x%3D%2243%22%20y%3D%2293%22%20font-size%3D%2214%22%20fill%3D%22%2367728e%22%3EFollow%20the%20same%20workflow%20for%20Excel%20scenarios%20and%20new%20HR%20PRO%20features.%3C%2Ftext%3E%0A%3Cg%20fill%3D%22%23f6f9fe%22%20stroke%3D%22%23d5dfed%22%3E%0A%3Crect%20x%3D%2239%22%20y%3D%22113%22%20width%3D%22176%22%20height%3D%22113%22%20rx%3D%2212%22%2F%3E%3Crect%20x%3D%22235%22%20y%3D%22113%22%20width%3D%22176%22%20height%3D%22113%22%20rx%3D%2212%22%2F%3E%3Crect%20x%3D%22431%22%20y%3D%22113%22%20width%3D%22176%22%20height%3D%22113%22%20rx%3D%2212%22%2F%3E%3Crect%20x%3D%22627%22%20y%3D%22113%22%20width%3D%22176%22%20height%3D%22113%22%20rx%3D%2212%22%2F%3E%3Crect%20x%3D%22823%22%20y%3D%22113%22%20width%3D%22176%22%20height%3D%22113%22%20rx%3D%2212%22%2F%3E%3C%2Fg%3E%0A%3Cg%20font-family%3D%22Arial%2Csans-serif%22%20font-size%3D%2212%22%20font-weight%3D%22700%22%20fill%3D%22%2313877e%22%3E%0A%3Ctext%20x%3D%2255%22%20y%3D%22137%22%3E01%20%2F%20PLAN%3C%2Ftext%3E%3Ctext%20x%3D%22251%22%20y%3D%22137%22%3E02%20%2F%20INSPECT%3C%2Ftext%3E%3Ctext%20x%3D%22447%22%20y%3D%22137%22%3E03%20%2F%20WRITE%3C%2Ftext%3E%3Ctext%20x%3D%22643%22%20y%3D%22137%22%3E04%20%2F%20VERIFY%3C%2Ftext%3E%3Ctext%20x%3D%22839%22%20y%3D%22137%22%3E05%20%2F%20SHARE%3C%2Ftext%3E%3C%2Fg%3E%0A%3Cg%20font-family%3D%22Arial%2Csans-serif%22%20font-weight%3D%22700%22%20font-size%3D%2217%22%20fill%3D%22%232b285e%22%3E%3Ctext%20x%3D%2255%22%20y%3D%22170%22%3ERequirement%3C%2Ftext%3E%3Ctext%20x%3D%22251%22%20y%3D%22170%22%3EHR%20PRO%20UI%3C%2Ftext%3E%3Ctext%20x%3D%22447%22%20y%3D%22170%22%3EPlaywright%3C%2Ftext%3E%3Ctext%20x%3D%22643%22%20y%3D%22170%22%3ERun%20%26amp%3B%20check%3C%2Ftext%3E%3Ctext%20x%3D%22839%22%20y%3D%22170%22%3EPull%20request%3C%2Ftext%3E%3C%2Fg%3E%0A%3Cg%20font-family%3D%22Arial%2Csans-serif%22%20font-size%3D%2212%22%20fill%3D%22%235d6880%22%3E%3Ctext%20x%3D%2255%22%20y%3D%22192%22%3EExpected%20outcome%3C%2Ftext%3E%3Ctext%20x%3D%22251%22%20y%3D%22192%22%3EReal%20controls%3C%2Ftext%3E%3Ctext%20x%3D%22447%22%20y%3D%22192%22%3EAI%20can%20draft%3C%2Ftext%3E%3Ctext%20x%3D%22643%22%20y%3D%22192%22%3EActions%20%2B%20assert%3C%2Ftext%3E%3Ctext%20x%3D%22839%22%20y%3D%22192%22%3ETeam%20reviews%3C%2Ftext%3E%3C%2Fg%3E%0A%3Cg%20stroke%3D%22%23189086%22%20stroke-width%3D%223%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M216%20169h16m-6%20-6%206%206-6%206%22%2F%3E%3Cpath%20d%3D%22M412%20169h16m-6%20-6%206%206-6%206%22%2F%3E%3Cpath%20d%3D%22M608%20169h16m-6%20-6%206%206-6%206%22%2F%3E%3Cpath%20d%3D%22M804%20169h16m-6%20-6%206%206-6%206%22%2F%3E%3C%2Fg%3E%0A%3Ctext%20x%3D%2242%22%20y%3D%22251%22%20font-family%3D%22Arial%2Csans-serif%22%20font-size%3D%2212%22%20fill%3D%22%235d6880%22%3ETRAINING%20ILLUSTRATION%20%C2%B7%20AI%20suggests%20code%3B%20QA%20checks%20the%20real%20HR%20PRO%20result.%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Five stages of automation: define requirement, inspect HR PRO, write Playwright test (AI optional), run and verify, share via pull request" loading="lazy"><figcaption><b>Workflow at a glance.</b> Every test starts with an expected result. AI can help write the code, but QA must verify the outcome.</figcaption></figure>
 
+<section class="section" id="beginner-start" aria-labelledby="beginner-title">
+ <div class="kicker">START HERE · NO CODING EXPERIENCE REQUIRED</div>
+ <h2 id="beginner-title">Your first day: follow these steps in order</h2>
+ <p><strong>What is this?</strong> HR PRO is the application. This repository contains automated checks for HR PRO. <strong>Playwright</strong> drives a browser through those checks. <strong>GitHub</strong> stores the files. You can learn to run an existing check before learning to write code.</p>
+ <div class="note"><strong>Choose your goal:</strong> Reading the guide? Just open this page—no installation needed. Running tests? You need the project, software, an approved test environment, and any required test account access. Writing new tests? Complete the first run and result review before starting the test-creation tutorial.</div>
+ <h3 class="subhead">First successful test: a beginner checklist</h3>
+ <ol class="step-list">
+  <li><div><b>Get permission and a safe test environment.</b><p>Ask your team administrator for repository access, the approved non-production HR PRO address, and approved test accounts. The guide cannot supply credentials or permissions. Do not use live employee data.</p></div></li>
+  <li><div><b>Install three free tools:</b> <a href="https://code.visualstudio.com/" target="_blank" rel="noopener noreferrer">VS Code</a> (editor), <a href="https://git-scm.com/" target="_blank" rel="noopener noreferrer">Git</a> (downloads project updates), and <a href="https://nodejs.org/" target="_blank" rel="noopener noreferrer">Node.js LTS</a> (runs the test tools).<p>When finished, close and reopen VS Code so its terminal recognizes the installations.</p></div></li>
+  <li><div><b>Open a terminal in VS Code.</b><p>Choose <strong>Terminal → New Terminal</strong>. This is a text box for commands, not a place to write test code.</p></div></li>
+  <li><div><b>Copy and run the first-time setup commands.</b><p>Use the command box in <a href="#install">Install the project</a> below. Press Enter after each command and let it finish before entering the next. If a command displays an error, use the troubleshooting table below instead of continuing.</p></div></li>
+  <li><div><b>Verify the environment before running anything.</b><p>Check <code>playwright.config.ts</code> or the <code>E2E_BASE_URL</code> setting against the approved HR PRO testing address. If you don't know whether it's safe, do not run the test until the environment owner confirms it.</p></div></li>
+  <li><div><b>Run only the first read-only example.</b><p>Enter <code>npx playwright test tests/smoke/navigation.spec.ts --grep "SMOKE-018" --ui --project=chromium</code>. In the Playwright window, select the <strong>SMOKE-018 (Settings)</strong> test and click ▶ Run.</p></div></li>
+  <li><div><b>Check what happened—not just the green mark.</b><p>Open the Actions panel and browser preview. Confirm the actual page matches the test's expected outcome. Green means the script's checks passed; it is not proof the entire HR PRO feature works.</p></div></li>
+ </ol>
+ <div class="two-up"><div><b>Expected result</b><p>You see the Playwright UI test list, can run the single Settings navigation check, and can explain which page it opened and what was checked.</p></div><div><b>After your first run</b><p>Use <a href="#verify">Verify results</a>, then <a href="#create">Create a test</a> if needed. Do not start with full regression runs—some modify test data.</p></div></div>
+ <h3 class="subhead">Plain-English dictionary</h3>
+ <table class="glossary"><thead><tr><th>Term</th><th>What it means</th></tr></thead><tbody>
+ <tr><td>Repository (repo)</td><td>Shared project folder kept on GitHub.</td></tr>
+ <tr><td>Clone</td><td>Download a working copy of that folder onto your computer.</td></tr>
+ <tr><td>Terminal</td><td>Where you paste a command and press Enter.</td></tr>
+ <tr><td>Test / assertion</td><td>A test follows steps; an assertion checks that an expected result actually happened.</td></tr>
+ <tr><td>Locator</td><td>How a test identifies a button, input, or other part of the page.</td></tr>
+ <tr><td>Fixture</td><td>Reusable preparation, such as setting up a test or logging in.</td></tr>
+ <tr><td>Branch / pull request</td><td>A separate place to propose edits / a request for the team to review those edits before sharing them.</td></tr>
+ </tbody></table>
+ <h3 class="subhead">Something went wrong? Start here.</h3>
+ <table class="glossary"><thead><tr><th>What you see</th><th>What to do</th></tr></thead><tbody>
+ <tr><td><code>git</code>, <code>node</code>, or <code>npm</code> not recognized</td><td>Finish installing Git or Node.js LTS, reopen VS Code, then open a new terminal. Check with <code>git --version</code> and <code>node --version</code>.</td></tr>
+ <tr><td><code>npx playwright</code> fails / missing modules</td><td>Make sure the terminal is inside the <code>hr-pro-automation</code> folder. Run <code>npm ci</code>, then <code>npx playwright install chromium</code>. Retry one smoke test.</td></tr>
+ <tr><td>Can't clone the repository</td><td>Check the internet connection and repository address. If access is restricted, request permission through your team's normal access process. No guide can bypass access restrictions.</td></tr>
+ <tr><td>Login fails or wrong HR PRO site opens</td><td>Stop and check the configured test URL and approved test-account access. Never paste personal passwords or production data into the guide or AI tools.</td></tr>
+ <tr><td>Test fails (red)</td><td>Open the Playwright error, Actions, and screenshot/trace if available. Compare the actual screen with the expected result. It could be the test, test data, environment, or an HR PRO issue—do not change expectations simply to make it green.</td></tr>
+ <tr><td>Guide opens offline but some pictures or links do not</td><td>The HTML guide works locally, but some linked external screenshots, documentation, and GitHub pages require internet. The actual Playwright tests also require installed software and access to the configured testing environment.</td></tr>
+ </tbody></table>
+ <div class="note warn"><strong>Safety boundary:</strong> Only run tests against an explicitly approved non-production HR PRO environment. Data-changing Setup and regression tests are not your first practice run. If permission, credentials, or the correct environment is missing, those must be provided by the responsible administrator.</div>
+</section>
 <section class="section" id="structure">
  <div class="kicker">01 / PROJECT TOUR</div><h2>Find the tests and folders</h2>
  <p>Expand a folder and select a file to see its purpose.</p>
@@ -802,7 +845,7 @@ git push -u origin qa/employee-search</pre></div>
 })();
 // Update reading position from the current section (and highlight top + side navigation).
 (function(){
-  var ids=["overview","structure","install","run","commands","verify","syntax","create","ai","github","references"];
+  var ids=["overview","beginner-start","structure","install","run","commands","verify","syntax","create","ai","github","references"];
   var anchors=ids.map(function(id){return document.getElementById(id)}).filter(Boolean);
   var links=document.querySelectorAll(".aside a[href^='#'],.primary-nav a[href^='#']");
   var indicator=document.getElementById("reading-progress");
