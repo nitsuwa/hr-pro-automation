@@ -18,6 +18,18 @@ This project uses **Playwright** to automatically check HR PRO in a browser. It 
 
 *Illustrated workflow: start with a requirement, inspect the real UI, write assertions, verify results, and request review.*
 
+## New to coding? Start here (no experience assumed)
+
+**You do not need to know how to code to read this guide or run a prepared test.** You **do** need a computer, a terminal, installed tools, and authorized access to a non-production HR PRO test environment to execute tests. Nothing in this repository supplies permissions or credentials.
+
+1. **Read the [first-day checklist](https://hr-pro-automation-help.vercel.app/#beginner-start)** before opening technical files. It explains the words, the purpose, the expected result, and what to do when something fails.
+2. **Just reading?** Open the [visual guide](https://hr-pro-automation-help.vercel.app). No software installation is required.
+3. **Ready to run?** Install VS Code, Git, and Node.js LTS; open **VS Code → Terminal → New Terminal**; follow the [installation instructions](https://hr-pro-automation-help.vercel.app/#install) one command at a time.
+4. **Your first run:** Use only the read-only Settings navigation check, **SMOKE-018**, from the [running tests walkthrough](https://hr-pro-automation-help.vercel.app/#run). Verify the actual page and Actions panel—not just the green status.
+5. **Stuck?** Find your error in the [plain-English troubleshooting section](https://hr-pro-automation-help.vercel.app/#beginner-start). Do not run data-changing tests until the environment owner confirms the target is approved.
+
+**Who should use what?** New team members: start with the visual guide and one smoke test. Existing QA testers: use the command reference and tests. Maintainers: use the GitHub branching and pull request instructions. The HTML guide lives at [`docs/help/index.html`](docs/help/index.html); download it for offline reading, but external links/images and the actual test environment may require internet.
+
 ## Where are the tests?
 
 | Folder or file | What it's for |
