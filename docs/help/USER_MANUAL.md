@@ -6,7 +6,7 @@ This document is a written reference. The website is the main step-by-step guide
 
 ## Quick start (recommended)
 
-The [short visual guide](https://hr-pro-automation-help.vercel.app/#run) starts with your first test, then explains what is in the repository, the workflow, Playwright syntax, and common errors. **Begin there.** This manual is the longer reference for later.
+The [visual beginner guide](https://hr-pro-automation-help.vercel.app/#beginner-start) starts with your first test, then explains what is in the repository, the workflow, Playwright syntax, and common errors. **Begin there.** This manual is the longer reference for later.
 
 Before running tests, confirm the target is an authorized **non-production** HR PRO environment and obtain approved test accounts. Use fictional data. The guide does not grant access.
 
@@ -118,6 +118,9 @@ test('QA-EXAMPLE | Settings opens', async ({ page, loginAs }) => {
 That snippet checks navigation only. Tests of saved settings should also verify persistence using assertions such as `toHaveValue(...)` or `toHaveCount(...)`.
 
 ## 5. Add tests for existing or new features
+
+**Beginner walkthrough:** See the [illustrated Create a Test section](https://hr-pro-automation-help.vercel.app/#create). It uses the actual Department creation script as an example. A new filename in the walkthrough is an example only: create that file in VS Code before trying to run it. Copy existing project fixture patterns rather than starting with an empty file. Inspect the actual controls and verify saved data after reload where relevant.
+
 
 1. Confirm the requirement, expected outcome, roles, and allowed fictional data.
 2. Try the workflow manually in HR PRO and inspect actual labels.
