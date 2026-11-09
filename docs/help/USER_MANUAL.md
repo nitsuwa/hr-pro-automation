@@ -117,19 +117,39 @@ test('QA-EXAMPLE | Settings opens', async ({ page, loginAs }) => {
 
 That snippet checks navigation only. Tests of saved settings should also verify persistence using assertions such as `toHaveValue(...)` or `toHaveCount(...)`.
 
-## 5. Add tests for existing or new features
+## 5. Learn how to edit a test for a new scenario
 
-**Beginner walkthrough:** See the [illustrated Create a Test section](https://hr-pro-automation-help.vercel.app/#create). It uses the actual Department creation script as an example. A new filename in the walkthrough is an example only: create that file in VS Code before trying to run it. Copy existing project fixture patterns rather than starting with an empty file. Inspect the actual controls and verify saved data after reload where relevant.
+Start with the [interactive editing lesson](https://hr-pro-automation-help.vercel.app/#edit-test-practice) in the visual guide, then use this reference when creating tests for other HR PRO features.
 
+### Practice: change the demo-role selection check
 
-1. Confirm the requirement, expected outcome, roles, and allowed fictional data.
-2. Try the workflow manually in HR PRO and inspect actual labels.
-3. Find a similar test in [Setup tests](../../tests/regression/setup/); reuse the login fixture and page objects.
-4. Add a small test with meaningful `expect(...)` assertions.
-5. Run the test in UI Mode, verify its result, and record evidence.
-6. Propose the change with a GitHub pull request.
+1. Open VS Code → `tests/smoke/login.spec.ts` → find **SMOKE-002**. Read the existing code. Do **not** overwrite that test.
+2. Right-click `tests/smoke/` → **New File** → enter `demo-selection-practice.spec.ts`.
+3. Copy the complete starter example from the [editing lesson](https://hr-pro-automation-help.vercel.app/#edit-test-practice) into **your new file**. It changes the role from System Admin to HR Officer.
+4. Identify **what changed**: the test title, the option in `selectOption({ label: ... })`, and the expected selected option in `toHaveText(...)`. Those last two values must agree.
+5. Press **Ctrl+S** and run only your new file:
 
-Use the [step-by-step creation tutorial](https://hr-pro-automation-help.vercel.app/#create) for both Excel cases and new features. It explains how to inspect controls, write assertions, and give AI a prompt based on real UI evidence. A person must review, run, and verify every generated test. Never share secrets or real employee records.
+```powershell
+npx playwright test tests/smoke/demo-selection-practice.spec.ts --ui --project=chromium
+```
+
+6. Click ▶ beside **PRACTICE-001**, then inspect the result and Actions. Green should mean that HR Officer is selected in the demo dropdown.
+7. **Now edit it yourself:** change the title, selected option, and expected text to **Payroll Manager (payrollmanager@filmetrics.local)**. Save, rerun, and check whether it selects Payroll Manager.
+
+This is a practice exercise, not necessarily missing team coverage. Check for existing tests before submitting a duplicate.
+
+### How to apply the method to any HR PRO feature
+
+- **Test name:** Say exactly what is being checked. Pick a unique ID for a real new test.
+- **Starting page:** Change `page.goto(...)` only when your scenario begins elsewhere.
+- **Buttons and fields:** Use the real labels you observed in the prototype. A *locator* is code that finds one of those controls.
+- **Actions:** Change what the test clicks, fills, or selects to match the new scenario.
+- **Expected result:** Add an `expect(...)` check that proves the outcome. For saved data, verify it again after refresh when appropriate.
+- **Project helpers:** Reuse the existing login fixture and page methods if you're building on a test that already uses them. Do not replace imports with random paths.
+
+For example, [`department-creation.spec.ts`](../../tests/regression/setup/department-creation.spec.ts) opens Settings, creates a fictional Department, and checks it appears before **and after** a refresh. You should **not** use the demo-role example unchanged for Department creation: it needs different actions and checks.
+
+Before running tests that add or edit records, use only a designated practice website with fictional data. To create a separate file, use the correct test folder and run just that file in UI Mode. AI can draft code, but it cannot establish whether the HR PRO website behaved correctly; review its changes, run the test, and inspect the result.
 
 ## 6. Share changes in GitHub
 
